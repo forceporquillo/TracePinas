@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/coordinator"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/app_bar_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/ColorDisable"
+        app:elevation="0dp">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/actionBarTitle"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/foregroundColor2"
+            android:fitsSystemWindows="true"
+            app:contentScrim="?attr/colorPrimary"
+            app:layout_scrollFlags="scroll|enterAlways">
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/todayStatistics"
+                    style="@style/AvoidCorona"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="@string/worldwide_cases"
+                    android:textColor="#000000"
+                    android:textSize="25sp" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <androidx.appcompat.widget.SearchView
+                    android:id="@+id/searchView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="25dp"
+                    android:layout_alignParentEnd="true" />
+
+            </RelativeLayout>
+        </androidx.appcompat.widget.Toolbar>
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipe_fresh"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
+
+        <com.force.codes.project.covid19.controller.custom.views.CustomScrollView
+            android:id="@+id/customScrollView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <RelativeLayout
+                    android:id="@+id/overview_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/foregroundColor2"
+                    android:elevation="2dp">
+
+                    <RelativeLayout
+                        android:id="@+id/countries_affected_container"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                        <RelativeLayout
+                            android:id="@+id/blue_border"
+                            android:layout_width="7dp"
+                            android:layout_height="35dp"
+                            android:layout_marginStart="5dp"
+                            android:background="@color/blue" />
+
+                        <TextView
+                            android:id="@+id/countries_affected"
+                            style="@style/affected_sources"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginStart="10dp"
+                            android:layout_toEndOf="@id/blue_border"
+                            android:text="@string/countries_affected"
+                            android:textColor="@color/blue" />
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/countries_affected_container"
+                        android:layout_marginBottom="0dp"
+                        android:elevation="1dp">
+
+                        <TextView
+                            android:id="@+id/source_text"
+                            style="@style/sources"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="5dp"
+                            android:layout_marginTop="4dp"
+                            android:layout_marginEnd="15dp"
+                            android:text="@string/sources" />
+
+                        <View
+                            android:id="@+id/info_icon"
+                            android:layout_width="10dp"
+                            android:layout_height="10dp"
+                            android:layout_below="@id/source_text"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginStart="5dp"
+                            android:layout_marginTop="6dp"
+                            android:background="@drawable/ic_info" />
+
+                        <TextView
+                            style="@style/sources"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/source_text"
+                            android:layout_gravity="center_vertical"
+                            android:layout_margin="@dimen/margin_2dp"
+                            android:layout_toEndOf="@id/info_icon"
+                            android:text="@string/hint_click_on_a_country_for_more_information"
+                            android:textColor="@color/blue" />
+                    </RelativeLayout>
+                </RelativeLayout>
+
+                <com.facebook.shimmer.ShimmerFrameLayout
+                    android:id="@+id/shimmer_container"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/overview_container"
+                    android:layout_marginTop="@dimen/margin_1dp"
+                    app:shimmer_duration="1500">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <include layout="@layout/country_rows_skeleton" />
+
+                        <include layout="@layout/country_rows_skeleton" />
+
+                        <include layout="@layout/country_rows_skeleton" />
+
+                        <include layout="@layout/country_rows_skeleton" />
+
+                        <include layout="@layout/country_rows_skeleton" />
+
+                        <include layout="@layout/country_rows_skeleton" />
+
+                        <include layout="@layout/country_rows_skeleton" />
+
+                        <include layout="@layout/country_rows_skeleton" />
+
+                    </LinearLayout>
+                </com.facebook.shimmer.ShimmerFrameLayout>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recycler_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/overview_container"
+                    android:layout_marginTop="@dimen/margin_2dp"
+                    android:background="@color/foregroundColor2"
+                    android:nestedScrollingEnabled="false" />
+            </RelativeLayout>
+        </com.force.codes.project.covid19.controller.custom.views.CustomScrollView>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+
+
+

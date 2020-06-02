@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+  ~ Created by Force Porquillo on 5/22/20 10:11 PM
+  ~ Copyright (c) 2020.  All rights reserved.
+  ~ Last modified 5/22/20 8:19 PM
+  ~
+  -->
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    ¶
+
+    <FrameLayout
+        android:id="@+id/fragment_container"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/animatedBottomBar" />
+
+    <nl.joery.animatedbottombar.AnimatedBottomBar
+        android:id="@+id/animatedBottomBar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:layout_alignParentBottom="true"
+        android:background="@color/white"
+        android:scrollIndicators="bottom"
+        app:abb_animationInterpolator="@android:anim/overshoot_interpolator"
+        app:abb_indicatorAppearance="round"
+        app:abb_indicatorColor="@color/darkColorAccent"
+        app:abb_indicatorHeight="2dp"
+        app:abb_indicatorLocation="top"
+        app:abb_indicatorMargin="4dp"
+        app:abb_selectedTabType="text"
+        app:abb_tabAnimation="slide"
+        app:abb_tabAnimationSelected="slide"
+        app:abb_tabColor="@color/grayScale"
+        app:abb_tabColorSelected="@color/darkColorAccent"
+        app:abb_tabs="@menu/tabs"
+        app:abb_textStyle="bold"
+        tools:ignore="UnusedAttribute" />
+
+</RelativeLayout>

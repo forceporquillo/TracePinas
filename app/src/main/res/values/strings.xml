@@ -1,0 +1,30 @@
+<resources>
+    <string name="app_name">COVID19</string>
+
+
+    <string name="sources">Sources: WHO, CDC, ECDC, NHC, of the PRC, JHU CSSE, DXY, QQ, and various international media</string>
+    <string name="hint_click_on_a_country_for_more_information">Hint: Click on a country for more
+        statistics information</string>
+
+    <string name="countries_affected">COUNTRIES AFFECTED</string>
+    <string name="dummy">Philippines</string>
+    <string name="dummy_continent">ASIA</string>
+
+    <string name="worldwide_cases">Worldwide</string>
+    <string name="deaths">Deaths:</string>
+    <string name="confirmed">Confirmed:</string>
+    <string name="recovered">Recovered:</string>
+    <string name="Home">Home</string>
+    <string name="Current">Live</string>
+    <string name="World">Worldwide</string>
+    <string name="FAQ">News</string>
+    <string name="About">About</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+
+    <string name="number_format">%,.2f </string>
+    <string name="last_updated">Last updated:</string>
+    <string name="updates">updates</string>
+</resources>
