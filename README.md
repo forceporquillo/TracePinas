@@ -1,5 +1,1 @@
-<<<<<<< HEAD
-2nd commit
-=======
-A clean architecture featuring **Model-View-ViewModel** pattern on this Covid19 tracker and self assessment test app.
->>>>>>> af23e16992b6881027cdf2e83e825b71ae47288f
+Implemented by Clean Architecture, Pagination, Dagger2, MVVM, LiveData, RX, Retrofit2, Room, and Android Data Binding
