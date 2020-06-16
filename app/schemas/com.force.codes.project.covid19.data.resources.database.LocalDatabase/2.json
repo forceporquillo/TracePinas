@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 2,
-    "identityHash": "494bc167f52855fb68e3fd5f1ae38989",
+    "identityHash": "78b249407b9f1ed179763d851eb18809",
     "entities": [
       {
         "tableName": "CountryDetails",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`Country` TEXT NOT NULL, `Long Updated` INTEGER NOT NULL, `Continent` TEXT, `Cases` INTEGER NOT NULL, `New Cases` INTEGER NOT NULL, `Deaths` INTEGER NOT NULL, `New Deaths` INTEGER NOT NULL, `Recovered` INTEGER NOT NULL, `Active` INTEGER NOT NULL, `Critical` INTEGER NOT NULL, `Cases Per One Million` REAL NOT NULL, `Deaths Per One Million` REAL NOT NULL, `Test` INTEGER NOT NULL, `Test Per One Million` INTEGER NOT NULL, PRIMARY KEY(`Country`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`Country` TEXT NOT NULL, `Date` INTEGER NOT NULL, `Continent` TEXT, `Cases` INTEGER NOT NULL, `New Cases` INTEGER NOT NULL, `Deaths` INTEGER NOT NULL, `New Deaths` INTEGER NOT NULL, `Recovered` INTEGER NOT NULL, `Active` INTEGER NOT NULL, `Critical` INTEGER NOT NULL, `Cases Per One Million` REAL NOT NULL, `Deaths Per One Million` REAL NOT NULL, `Test` INTEGER NOT NULL, `Test Per One Million` INTEGER NOT NULL, `Favorites` INTEGER NOT NULL, PRIMARY KEY(`Country`))",
         "fields": [
           {
             "fieldPath": "country",
@@ -16,7 +16,7 @@
           },
           {
             "fieldPath": "updated",
-            "columnName": "Long Updated",
+            "columnName": "Date",
             "affinity": "INTEGER",
             "notNull": true
           },
@@ -91,6 +91,12 @@
             "columnName": "Test Per One Million",
             "affinity": "INTEGER",
             "notNull": true
+          },
+          {
+            "fieldPath": "isFavorite",
+            "columnName": "Favorites",
+            "affinity": "INTEGER",
+            "notNull": true
           }
         ],
         "primaryKey": {
@@ -106,7 +112,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '494bc167f52855fb68e3fd5f1ae38989')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '78b249407b9f1ed179763d851eb18809')"
     ]
   }
 }

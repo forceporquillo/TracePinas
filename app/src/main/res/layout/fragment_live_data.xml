@@ -1,22 +1,316 @@
-<?xml version="1.0" encoding="utf-8"?><!--
-  ~ Created by Force Porquillo on 5/15/20 9:28 PM
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+  ~ Created by Force Porquillo on 6/5/20 1:44 AM
   ~ Copyright (c) 2020.  All rights reserved.
-  ~ Last modified 5/15/20 9:28 PM
+  ~ Last modified 6/4/20 12:57 AM
   ~
   -->
 
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/red"
-    tools:context=".views.fragments.homepage.HomeFragment">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <variable
+            name="viewModel"
+            type="com.force.codes.project.app.presentation_layer.views.fragments.live.LiveDataViewModel" />
+    </data>
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center"
-        android:text="@string/hello_blank_fragment" />
+        android:background="@color/foregroundColor2">
 
-</RelativeLayout>
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/appBarLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:elevation="0dp">
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/actionBarTitle"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="@color/foregroundColor2"
+                android:fitsSystemWindows="true"
+                app:layout_scrollFlags="scroll|enterAlways">
+
+                <RelativeLayout
+                    android:layout_marginTop="@dimen/margin_15dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin_15dp">
+
+                    <TextView
+                        android:id="@+id/live_overview"
+                        style="@style/fragment_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:textColor="#000000"
+                        android:text="@string/live_overview" />
+                </RelativeLayout>
+            </androidx.appcompat.widget.Toolbar>
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/swipeRefresh"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
+
+            <androidx.core.widget.NestedScrollView
+                android:id="@+id/scrollView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/assessmentCardView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginTop="@dimen/margin_10dp"
+                        android:layout_marginEnd="10dp"
+                        android:clickable="true"
+                        android:elevation="4dp"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentEnd="true"
+                        android:focusable="true"
+                        android:foreground="?android:attr/selectableItemBackground"
+                        app:cardBackgroundColor="@color/darkColorAccent"
+                        app:cardCornerRadius="8dp">
+
+                        <RelativeLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="15dp"
+                            android:layout_marginEnd="15dp">
+
+                            <TextView
+                                android:id="@+id/healthStatusTitle"
+                                style="@style/health_status"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="10dp"
+                                android:text="@string/report_covid" />
+
+                            <TextView
+                                android:id="@+id/healthStatusSubtitle"
+                                style="@style/health_status_small_text"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@id/healthStatusTitle"
+                                android:layout_alignParentStart="true"
+                                android:layout_marginBottom="15dp"
+                                android:paddingTop="5dp"
+                                android:text="@string/report_your_status" />
+
+                        </RelativeLayout>
+                    </androidx.cardview.widget.CardView>
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/globalCardView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/assessmentCardView"
+                        android:layout_margin="@dimen/margin_10dp"
+                        app:cardBackgroundColor="@color/white"
+                        app:cardCornerRadius="@dimen/_10dp"
+                        app:cardElevation="@dimen/_elevation_5dp">
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="@dimen/_10dp">
+
+                            <LinearLayout
+                                android:id="@+id/anim_container"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="10dp"
+                                android:layout_marginTop="@dimen/margin_10dp"
+                                android:layout_marginBottom="5dp"
+                                android:orientation="horizontal">
+
+                                <com.airbnb.lottie.LottieAnimationView
+                                    android:layout_width="@dimen/width_25dp"
+                                    android:layout_height="@dimen/width_25dp"
+                                    app:lottie_autoPlay="true"
+                                    app:lottie_loop="true"
+                                    app:lottie_rawRes="@raw/pulse_animation" />
+
+                                <TextView
+                                    style="@style/live_pulse"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center_vertical"
+                                    android:layout_marginStart="@dimen/margin_5dp"
+                                    android:text="@string/live" />
+
+                            </LinearLayout>
+
+                            <TextView
+                                android:id="@+id/global_overview"
+                                style="@style/global_overview_style"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@id/anim_container"
+                                android:layout_marginStart="@dimen/_10dp"
+                                android:layout_marginBottom="@dimen/margin_5dp"
+                                android:padding="@dimen/padding_2dp"
+                                android:text="@string/corona_virus_global" />
+
+                            <LinearLayout
+                                android:id="@+id/cases_parent_container"
+                                android:layout_width="105dp"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@id/global_overview"
+                                android:layout_marginStart="@dimen/margin_10dp"
+                                android:layout_marginBottom="0dp"
+                                android:gravity="center"
+                                android:orientation="vertical"
+                                android:padding="@dimen/padding_2dp">
+
+                                <TextView
+                                    style="@style/text_cases_titles"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center_horizontal"
+                                    android:text="@string/confirmed_cases"
+                                    android:textColor="#718096" />
+
+                                <TextView
+                                    style="@style/numbers"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="5dp"
+                                    android:text="@{viewModel.liveData.cases}"
+                                    android:textColor="@color/darkColorAccent"
+                                    android:textStyle="bold" />
+
+                                <TextView
+                                    style="@style/text_new_cases_titles"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center_horizontal"
+                                    android:gravity="center"
+                                    android:text="@{viewModel.liveData.todayDeaths != null ? String.format(@string/new_cases(viewModel.liveData.todayCases)) : @string/zero_cases}"
+                                    android:textColor="@color/blue" />
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:id="@+id/recovered_cases_container"
+                                android:layout_width="105dp"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@id/global_overview"
+                                android:layout_centerHorizontal="true"
+                                android:layout_marginStart="10dp"
+                                android:layout_marginEnd="10dp"
+                                android:layout_toEndOf="@id/cases_parent_container"
+                                android:orientation="vertical"
+                                android:padding="2dp">
+
+                                <TextView
+                                    style="@style/text_cases_titles"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center_horizontal"
+                                    android:text="@string/recovered_cases"
+                                    android:textColor="#718096" />
+
+                                <TextView
+                                    style="@style/numbers"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:layout_marginTop="5dp"
+                                    android:text="@{viewModel.liveData.recovered}"
+                                    android:textColor="@color/green"
+                                    android:textStyle="bold" />
+
+                                <TextView
+                                    style="@style/text_new_cases_titles"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center_horizontal"
+                                    android:gravity="center"
+                                    android:text="@{viewModel.liveData.todayDeaths != null ? String.format(@string/new_recoveries(viewModel.liveData.todayRecovered)) : @string/zero_recoveries}"
+                                    android:textColor="@color/green" />
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:id="@+id/deaths_cases_container"
+                                android:layout_width="100dp"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@id/global_overview"
+                                android:layout_alignParentEnd="true"
+                                android:layout_marginStart="10dp"
+                                android:layout_marginEnd="10dp"
+                                android:orientation="vertical"
+                                android:padding="2dp">
+
+                                <TextView
+                                    style="@style/text_cases_titles"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center_horizontal"
+                                    android:text="@string/deaths_cases"
+                                    android:textColor="#718096" />
+
+                                <TextView
+                                    style="@style/numbers"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:layout_marginTop="@dimen/margin_5dp"
+                                    android:text="@{viewModel.liveData.deaths}"
+                                    android:textColor="@color/red_live"
+                                    android:textStyle="bold" />
+
+                                <TextView
+                                    style="@style/text_new_cases_titles"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center_horizontal"
+                                    android:gravity="center"
+                                    android:text="@{viewModel.liveData.todayDeaths != null ? String.format(@string/new_deaths(viewModel.liveData.todayDeaths)) : @string/zero_deaths}"
+                                    android:textColor="@color/red_live" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:layout_below="@id/recovered_cases_container"
+                                android:layout_alignParentBottom="true"
+                                android:layout_marginStart="@dimen/margin_10dp"
+                                android:layout_marginTop="@dimen/margin_15dp"
+                                android:orientation="horizontal"
+                                android:padding="@dimen/padding_2dp">
+
+                                <TextView
+                                    style="@style/time_updated"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginEnd="@dimen/margin_5dp"
+                                    android:text="@string/last_updated" />
+
+                                <TextView
+                                    style="@style/time_updated_dynamic"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@{viewModel.liveData.updated}" />
+                            </LinearLayout>
+                        </RelativeLayout>
+                    </androidx.cardview.widget.CardView>
+                </RelativeLayout>
+            </androidx.core.widget.NestedScrollView>
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+</layout>
+

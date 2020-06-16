@@ -8,23 +8,19 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/tab_home"
-        android:icon="@drawable/ic_home"
+        android:icon="@drawable/ic_round_home"
         android:title="@string/Home" />
     <item
         android:id="@+id/tab_corona"
-        android:icon="@drawable/ic_virus"
+        android:icon="@drawable/ic_round_update"
         android:title="@string/Current" />
     <item
         android:id="@+id/tab_global"
-        android:icon="@drawable/ic_earth"
+        android:icon="@drawable/ic_round_language"
         android:title="@string/World" />
-    <item
-        android:id="@+id/tab_news"
-        android:icon="@drawable/ic_communication"
-        android:title="@string/updates" />
 
     <item
         android:id="@+id/tab_map"
-        android:icon="@drawable/ic_feed"
+        android:icon="@drawable/ic_round_map"
         android:title="@string/About" />
 </menu>

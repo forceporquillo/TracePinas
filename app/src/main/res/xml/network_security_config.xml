@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Created by Force Porquillo on 6/11/20 6:22 PM
+  ~ Copyright (c) 2020.  All rights reserved.
+  ~ FEU Institute of Technology
+  -->
+
+<network-security-config>
+    <domain-config cleartextTrafficPermitted="true">
+        <domain includeSubdomains="true">https://www.google.com/</domain>
+    </domain-config>
+</network-security-config>

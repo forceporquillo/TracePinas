@@ -9,8 +9,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/green"
-    tools:context=".views.fragments.homepage.HomeFragment">
+    android:background="@color/green">
 
     <!-- TODO: Update blank fragment layout -->
     <TextView

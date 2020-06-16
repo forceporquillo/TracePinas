@@ -12,7 +12,7 @@
     android:background="@color/foregroundColor2"
     android:clickable="true"
     android:focusable="true"
-    tools:context=".controller.components.CountryStatisticsFragment">
+    tools:context=".presentation_layer.views.fragments.statistics.StatisticsFragment">
 
     <!-- TODO: Update blank fragment layout -->
     <TextView

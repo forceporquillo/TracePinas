@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Created by Force Porquillo on 6/10/20 1:57 AM
+  ~ Copyright (c) 2020.  All rights reserved.
+  ~ FEU Institute of Technology
+  -->
+
+<com.google.android.gms.maps.MapView
+    android:id="@+id/mapViewLayout"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+</com.google.android.gms.maps.MapView>

@@ -1,8 +1,7 @@
 <!--
   ~ Created by Force Porquillo on 5/15/20 9:00 PM
   ~ Copyright (c) 2020.  All rights reserved.
-  ~ Last modified 5/15/20 9:00 PM
-  ~
+  ~ Last modified 6/11/20 1:24 AM
   -->
 
 <resources>
@@ -11,8 +10,12 @@
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/blue</item>
+        <item name="android:colorPrimaryDark">@color/foregroundColor2</item>
         <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="white_cursor_searchView" parent="Widget.AppCompat.SearchView">
+        <item name="colorControlActivated">#000000</item>
     </style>
 
     <style name="custom_toast_style">
@@ -29,7 +32,12 @@
 
     <style name="sources">
         <item name="fontFamily">@font/poppin_bold</item>
-        <item name="android:textSize">10sp</item>
+        <item name="android:textSize">11sp</item>
+    </style>
+
+    <style name="search_style">
+        <item name="fontFamily">@font/poppin_medium</item>
+        <item name="abb_textSize">13dp</item>
     </style>
 
     <style name="affected_sources">
@@ -41,9 +49,9 @@
         <item name="android:windowContentOverlay">@null</item>
     </style>
 
-    <style name="AvoidCorona">
+    <style name="fragment_title">
         <item name="fontFamily">@font/poppin_bold</item>
-        <item name="android:textSize">15sp</item>
+        <item name="android:textSize">25sp</item>
         <item name="android:textColor">#000000</item>
     </style>
 
@@ -55,17 +63,17 @@
 
     <style name="countrySubDetails">
         <item name="fontFamily">@font/poppin_regular</item>
-        <item name="android:textSize">9sp</item>
+        <item name="android:textSize">11sp</item>
     </style>
 
     <style name="continent">
         <item name="fontFamily">@font/poppin_regular</item>
-        <item name="android:textSize">12sp</item>
+        <item name="android:textSize">11sp</item>
     </style>
 
     <style name="countryDetails">
         <item name="fontFamily">@font/poppin_medium</item>
-        <item name="android:textSize">15sp</item>
+        <item name="android:textSize">16sp</item>
         <item name="android:textColor">#000000</item>
     </style>
 
@@ -73,5 +81,64 @@
         <item name="fontFamily">@font/poppin_regular</item>
         <item name="android:textSize">8sp</item>
         <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="health_status">
+        <item name="fontFamily">@font/poppin_regular</item>
+        <item name="android:textSize">13sp</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="health_status_small_text">
+        <item name="fontFamily">@font/poppin_regular</item>
+        <item name="android:textSize">10sp</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="global_overview_style">
+        <item name="fontFamily">@font/poppin_regular</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:textColor">#000000</item>
+    </style>
+
+    <style name="live_pulse">
+        <item name="fontFamily">@font/poppin_bold</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:textColor">@color/red_live</item>
+    </style>
+
+    <style name="text_cases_titles">
+        <item name="fontFamily">@font/poppin_bold</item>
+        <item name="android:textSize">12sp</item>
+    </style>
+
+    <style name="text_new_cases_titles">
+        <item name="fontFamily">@font/poppin_bold</item>
+        <item name="android:textSize">10sp</item>
+    </style>
+
+    <style name="numbers">
+        <item name="fontFamily">@font/poppin_medium</item>
+        <item name="android:textSize">19sp</item>
+    </style>
+
+    <style name="small_numbers">
+        <item name="fontFamily">@font/poppin_regular</item>
+        <item name="android:textSize">10sp</item>
+    </style>
+
+    <style name="time_updated">
+        <item name="fontFamily">@font/poppin_medium</item>
+        <item name="android:textSize">9sp</item>
+    </style>
+
+    <style name="time_updated_dynamic">
+        <item name="fontFamily">@font/poppin_bold</item>
+        <item name="android:textSize">10sp</item>
+    </style>
+
+    <style name="time_update">
+        <item name="android:fontFamily">@font/poppin_bold</item>
+        <item name="android:textSize">11sp</item>
     </style>
 </resources>

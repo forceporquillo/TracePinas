@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Created by Force Porquillo on 6/9/20 2:48 PM
+  ~ Copyright (c) 2020.  All rights reserved.
+  ~ FEU Institute of Technology
+  -->
+
+<layoutAnimation xmlns:android="http://schemas.android.com/apk/res/android"
+    android:animation="@anim/layout_anim_fall_down"
+    android:animationOrder="normal"
+    android:delay="15%" />

@@ -5,7 +5,7 @@ android {
     buildToolsVersion "29.0.3"
 
     defaultConfig {
-        applicationId "com.force.codes.project.covid19"
+        applicationId "com.force.codes.project.app"
         minSdkVersion 22
         targetSdkVersion 29
         versionCode 1
@@ -21,6 +21,10 @@ android {
         }
     }
 
+    testOptions {
+        unitTests.includeAndroidResources = true
+    }
+
     buildTypes {
         release {
             minifyEnabled false
@@ -28,15 +32,14 @@ android {
         }
     }
 
-    // enable lambda expression
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
-
-    // data binding
-    dataBinding {
-        enabled = true
+    
+    buildFeatures{
+        dataBinding = true
+        viewBinding = true
     }
 
     configurations.all() {
@@ -48,6 +51,10 @@ android {
 dependencies {
     def lifecycle_version = "2.2.0"
     def room_version = "2.2.5"
+    def lottieVersion = "3.4.0"
+    def paging_version = "2.1.2"
+
+    annotationProcessor 'androidx.annotation:annotation:1.1.0'
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
@@ -58,16 +65,13 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 
-    // imported Dependencies
+    // Material
     implementation 'com.google.android.material:material:1.1.0'
     implementation "androidx.coordinatorlayout:coordinatorlayout:1.1.0"
 
-    // card and recyclerView
+    // Card and RecyclerView
     implementation 'androidx.cardview:cardview:1.0.0'
     implementation 'androidx.recyclerview:recyclerview:1.1.0'
-
-    // image Binder
-    implementation 'com.squareup.picasso:picasso:2.71828'
 
     // Rest API
     implementation 'com.squareup.retrofit2:retrofit:2.8.1'
@@ -77,8 +81,7 @@ dependencies {
     // circle imageView
     implementation 'de.hdodenhof:circleimageview:3.1.0'
 
-    // Views Injection
-    //noinspection AnnotationProcessorOnCompilePath
+    // Views injection
     implementation 'com.jakewharton:butterknife:10.2.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:10.2.1'
 
@@ -124,7 +127,7 @@ dependencies {
     implementation 'com.google.dagger:dagger:2.27'
     annotationProcessor 'com.google.dagger:dagger-compiler:2.26'
 
-    // snackBar
+    // SnackBar
     implementation 'com.github.matecode:Snacky:1.1.5'
 
     // Skeleton
@@ -133,5 +136,29 @@ dependencies {
     // Timber logging
     implementation 'com.jakewharton.timber:timber:4.7.1'
 
-    implementation 'com.androidadvance:topsnackbar:1.1.1'
+    // Lottie virus animation
+    implementation "com.airbnb.android:lottie:$lottieVersion"
+
+    // ReactiveStreams support for LiveData
+    implementation "androidx.lifecycle:lifecycle-reactivestreams:$lifecycle_version"
+
+    // Memory leak checker
+    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.3'
+    releaseImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.2'
+
+    // PageList
+    implementation "androidx.paging:paging-runtime:$paging_version"
+
+    // Glide image
+    implementation 'com.github.bumptech.glide:glide:4.11.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'
+    implementation ("com.github.bumptech.glide:glide:4.11.0@aar") {
+        transitive = true
+    }
+
+    // Google maps
+    implementation 'com.google.android.gms:play-services-maps:17.0.0'
+
+    // Reactive network
+    implementation 'com.github.pwittchen:reactivenetwork-rx2:3.0.8'
 }

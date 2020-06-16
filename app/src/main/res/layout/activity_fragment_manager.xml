@@ -11,36 +11,39 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="match_parent"
+    android:background="@color/foregroundColor2">
 
-    ¶
-
-    <FrameLayout
+    <androidx.fragment.app.FragmentContainerView
         android:id="@+id/fragment_container"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@id/animatedBottomBar" />
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/divider_line" />
+
+    <View
+        android:id="@+id/divider_line"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_above="@id/animatedBottomBar"
+        android:background="@android:color/darker_gray" />
 
     <nl.joery.animatedbottombar.AnimatedBottomBar
         android:id="@+id/animatedBottomBar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:layout_alignParentBottom="true"
-        android:background="@color/white"
-        android:scrollIndicators="bottom"
-        app:abb_animationInterpolator="@android:anim/overshoot_interpolator"
+        android:background="@color/foregroundColor2"
         app:abb_indicatorAppearance="round"
         app:abb_indicatorColor="@color/darkColorAccent"
         app:abb_indicatorHeight="2dp"
         app:abb_indicatorLocation="top"
-        app:abb_indicatorMargin="4dp"
+        app:abb_indicatorMargin="0dp"
         app:abb_selectedTabType="text"
         app:abb_tabAnimation="slide"
-        app:abb_tabAnimationSelected="slide"
+        app:abb_tabAnimationSelected="fade"
         app:abb_tabColor="@color/grayScale"
         app:abb_tabColorSelected="@color/darkColorAccent"
         app:abb_tabs="@menu/tabs"
         app:abb_textStyle="bold"
-        tools:ignore="UnusedAttribute" />
-
+        android:clipChildren="false" />
 </RelativeLayout>
