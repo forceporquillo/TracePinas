@@ -21,6 +21,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.facebook.shimmer.ShimmerFrameLayout;
 import com.force.codes.project.app.R;
 import com.force.codes.project.app.app.Injection;
 import com.force.codes.project.app.databinding.FragmentWorldwideBinding;
@@ -54,6 +55,9 @@ public class WorldwideFragment extends BaseFragment implements FragmentCallback,
 
     @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
+
+    @BindView(R.id.shimmer_layout)
+    ShimmerFrameLayout shimmer;
 
     protected FragmentWorldwideBinding binding;
     private WorldwideViewModel worldwideViewModel;
@@ -91,6 +95,7 @@ public class WorldwideFragment extends BaseFragment implements FragmentCallback,
                 refreshLayout.setEnabled(true);
                 refreshLayout.setRefreshing(false);
                 recyclerView.setAdapter(countryAdapter);
+                shimmer.stopShimmer();
             }
         });
     }
@@ -128,6 +133,7 @@ public class WorldwideFragment extends BaseFragment implements FragmentCallback,
         super.onActivityCreated(savedInstanceState);
         swipeRefreshLayout().setEnabled(false);
         setRecyclerView();
+        shimmer.startShimmer();
     }
 
     @Override
