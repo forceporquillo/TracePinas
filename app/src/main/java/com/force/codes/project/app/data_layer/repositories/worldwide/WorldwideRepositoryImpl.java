@@ -13,7 +13,7 @@ import androidx.paging.LivePagedListBuilder;
 import androidx.paging.PagedList;
 
 import com.force.codes.project.app.data_layer.resources.api.ApiServiceAdapter;
-import com.force.codes.project.app.data_layer.resources.database.CountryDao;
+import com.force.codes.project.app.data_layer.resources.database.data.CountryDao;
 import com.force.codes.project.app.model.CountryDetails;
 import com.force.codes.project.app.service.executors.AppExecutors;
 

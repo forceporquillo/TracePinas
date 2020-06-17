@@ -11,13 +11,11 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -37,7 +35,6 @@ import com.force.codes.project.app.presentation_layer.views.fragments.statistics
 import com.force.codes.project.app.service.executors.AppExecutors;
 import com.force.codes.project.app.service.network.ConnectionCallback;
 import com.force.codes.project.app.service.network.NetworkConnectivity;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -48,9 +45,9 @@ import timber.log.Timber;
 
 public class WorldwideFragment extends BaseFragment implements FragmentCallback, View.OnClickListener, ConnectionCallback, OnRequestResponse{
 
-    private static final String UPDATING = "Updating data from server…";
-    private static final String ERROR = "Data might not be updated";
-    private static final String FAILED = "Failed to update data";
+    //private static final String UPDATING = "Updating data from server…";
+    //private static final String ERROR = "Data might not be updated";
+    //private static final String FAILED = "Failed to update data";
 
     @BindView(R.id.swipe_fresh)
     SwipeRefreshLayout refreshLayout;
@@ -64,11 +61,11 @@ public class WorldwideFragment extends BaseFragment implements FragmentCallback,
     // @BindView(R.id.customScrollView)
     // CustomScrollView scrollView;
 
-    @BindView(R.id.update)
-    TextView timeUpdate;
+    //@BindView(R.id.update)
+    //TextView timeUpdate;
 
-    @BindView(R.id.favorites_button)
-    FloatingActionButton favoritesButton;
+    //@BindView(R.id.favorites_button)
+    //FloatingActionButton favoritesButton;
 
     // @BindView(R.id.custom_widget_container)
     // LinearLayout customWidget;
@@ -92,7 +89,7 @@ public class WorldwideFragment extends BaseFragment implements FragmentCallback,
     public void onInternetConnectionChanged(Boolean isConnected){
         if(!isConnected){
             swipeRefreshLayout().setEnabled(false);
-            timeUpdate.setText(ERROR);
+            //timeUpdate.setText(ERROR);
         } else{
             swipeRefreshLayout().setEnabled(true);
         }
@@ -101,10 +98,7 @@ public class WorldwideFragment extends BaseFragment implements FragmentCallback,
     @Override
     public void onStart(){
         super.onStart();
-        Timber.d("onStart called");
-
         connectivity.startConnection();
-
         worldwideViewModel.getDataFromDatabase().observe(this, countryDetails -> {
             if(countryDetails.isEmpty()){
                 worldwideViewModel.forceUpdate();
@@ -120,36 +114,27 @@ public class WorldwideFragment extends BaseFragment implements FragmentCallback,
     @Override
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
-        Timber.d("onCreate called");
         connectivity = new NetworkConnectivity(this);
         countryAdapter = new CountryAdapter(this);
-
         WorldwideViewModelFactory modelFactory = Injection
                 .providesViewModelFactory(this, getContext(), new AppExecutors());
-
-        worldwideViewModel = new ViewModelProvider(
-                this, modelFactory).get(WorldwideViewModel.class);
+        worldwideViewModel = new ViewModelProvider(this, modelFactory)
+                .get(WorldwideViewModel.class);
+        worldwideViewModel.getDataFromDatabase();
     }
 
     @Override
     public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup
             container, Bundle savedInstanceState){
-
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_worldwide,
-                container, false);
-
+        binding = DataBindingUtil.inflate(inflater,
+                R.layout.fragment_worldwide, container, false);
         binding.invalidateAll();
         binding.setViewModel(worldwideViewModel);
         binding.setLifecycleOwner(this);
 
         final View root = binding.getRoot();
-
         unbinder = ButterKnife.bind(this, root);
-
         setRetainInstance(true);
-
-
-        //setAnimationUtils(root);
 
         return root;
     }
@@ -158,7 +143,7 @@ public class WorldwideFragment extends BaseFragment implements FragmentCallback,
     public void onActivityCreated(@Nullable Bundle savedInstanceState){
         super.onActivityCreated(savedInstanceState);
         swipeRefreshLayout().setEnabled(false);
-        favoritesButton.setOnClickListener(this);
+        //favoritesButton.setOnClickListener(this);
         setRecyclerView();
     }
 
@@ -171,7 +156,7 @@ public class WorldwideFragment extends BaseFragment implements FragmentCallback,
     public void onErrorResponse(Boolean onErrorRequest){
         if(onErrorRequest){
             swipeRefreshLayout().setRefreshing(false);
-            timeUpdate.setText(FAILED);
+            //timeUpdate.setText(FAILED);
         }
     }
 
@@ -182,7 +167,7 @@ public class WorldwideFragment extends BaseFragment implements FragmentCallback,
 
         refreshLayout.setOnRefreshListener(() -> {
             worldwideViewModel.getDataFromNetwork();
-            timeUpdate.setText(UPDATING);
+            //timeUpdate.setText(UPDATING);
         });
 
         return refreshLayout;

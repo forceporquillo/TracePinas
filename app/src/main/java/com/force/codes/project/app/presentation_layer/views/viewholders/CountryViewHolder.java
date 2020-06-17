@@ -11,7 +11,6 @@ import android.view.View;
 import android.widget.TextView;
 
 import androidx.databinding.BindingAdapter;
-
 import androidx.databinding.library.baseAdapters.BR;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -23,7 +22,6 @@ import com.force.codes.project.app.databinding.CountryRowsBinding;
 import com.force.codes.project.app.model.CountryDetails;
 import com.force.codes.project.app.presentation_layer.controller.custom.interfaces.FragmentCallback;
 import com.force.codes.project.app.presentation_layer.controller.custom.utils.StringUtils;
-
 
 import org.jetbrains.annotations.NotNull;
 
@@ -48,7 +46,7 @@ public class CountryViewHolder extends RecyclerView.ViewHolder implements View.O
     }
 
     @SuppressLint("SetTextI18n")
-    @BindingAdapter("app:TextUpdate")
+    @BindingAdapter({"textUpdate"})
     public static void setTextUpdate(TextView textUpdate, int newCases){
         StringUtils utils = new StringUtils();
 
@@ -59,7 +57,7 @@ public class CountryViewHolder extends RecyclerView.ViewHolder implements View.O
         }
     }
 
-    @BindingAdapter("app:ImageUrl")
+    @BindingAdapter({"imageUrl"})
     public static void setFlag(@NotNull CircleImageView flagPlaceholder, final String imageUrl){
         Glide.with(flagPlaceholder.getContext())
                 .asBitmap()

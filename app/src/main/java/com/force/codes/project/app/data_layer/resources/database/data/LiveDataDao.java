@@ -5,7 +5,10 @@
  * Last modified 6/16/20 10:30 PM
  */
 
-package com.force.codes.project.app.data_layer.resources.database;
+package com.force.codes.project.app.data_layer.resources.database.data;
 
+import androidx.room.Dao;
+
+@Dao
 public interface LiveDataDao{
 }

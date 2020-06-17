@@ -4,21 +4,70 @@
   ~ Created by Force Porquillo on 6/15/20 10:30 PM
   ~ FEU Institute of Technology
   ~ Copyright (c) 2020.  All rights reserved.
-  ~ Last modified 6/15/20 10:29 PM
+  ~ Last modified 6/17/20 04:00 AM
   -->
+
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <RelativeLayout
-        android:elevation="@dimen/elevation_4dp"
+        android:id="@id/container"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:background="@color/foregroundColor2"
+        android:elevation="8dp">
+
+        <RelativeLayout
+            android:id="@+id/worldwide_container"
+            android:layout_width="wrap_content"
+            android:layout_height="?attr/actionBarSize"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:id="@+id/update"
+                style="@style/time_update"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/worldwide"
+                android:layout_marginStart="15dp"
+                android:text="Tue, June 17, 2020 4:32:27" />
+
+            <TextView
+                android:id="@+id/worldwide"
+                style="@style/fragment_title"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_marginStart="15dp"
+                android:text="@string/worldwide_cases" />
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/favorites_button"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="@dimen/margin_15dp"
+                android:backgroundTint="#D3D3D3"
+                android:clickable="true"
+                android:focusable="true"
+                android:padding="6dp"
+                android:src="@drawable/icon_heart"
+                app:borderWidth="0dp"
+                app:elevation="0dp"
+                app:fabCustomSize="32dp"
+                app:fabSize="normal"
+                app:pressedTranslationZ="12dp"
+                app:rippleColor="@color/search_color">
+
+            </com.google.android.material.floatingactionbutton.FloatingActionButton>
+        </RelativeLayout>
 
         <LinearLayout
             android:id="@+id/custom_widget_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_below="@id/worldwide_container"
             android:orientation="horizontal"
             android:visibility="gone">
 
@@ -38,8 +87,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/custom_widget_container"
-            android:background="@color/foregroundColor2"
-            android:elevation="2dp">
+            android:background="@color/foregroundColor2">
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/search_container"
@@ -48,33 +96,33 @@
                 android:layout_marginStart="5dp"
                 android:layout_marginTop="@dimen/margin_5dp"
                 android:layout_marginEnd="@dimen/_10dp"
-                android:layout_marginBottom="10dp"
+                android:layout_marginBottom="@dimen/margin_10dp"
                 app:cardBackgroundColor="@color/search_color"
                 app:cardCornerRadius="10dp"
                 app:cardElevation="0dp">
 
-                <androidx.appcompat.widget.SearchView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center"
-                    android:background="@color/search_color"
-                    android:contextClickable="true"
-                    android:gravity="center"
-                    android:layoutDirection="ltr"
-                    android:textAlignment="center"
-                    android:theme="@style/white_cursor_searchView"
-                    app:queryBackground="@android:color/transparent"
-                    tools:targetApi="m" />
-
-                <TextView
-                    android:id="@+id/search_hint_text"
-                    style="@style/search_style"
+                <RelativeLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginStart="40dp"
-                    android:layout_marginTop="@dimen/margin_1dp"
-                    android:text="@string/search_country" />
+                    android:layout_height="wrap_content">
+
+                    <androidx.appcompat.widget.SearchView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentStart="true"
+                        android:layout_gravity="center"
+                        android:background="@color/search_color"
+                        android:contextClickable="true"
+                        android:gravity="center"
+                        android:layoutDirection="ltr"
+                        android:overScrollMode="always"
+                        android:textAlignment="center"
+                        android:theme="@style/white_cursor_searchView"
+                        app:iconifiedByDefault="false"
+                        app:queryBackground="@android:color/transparent"
+                        app:queryHint="Search Country"
+                        tools:targetApi="m" />
+                </RelativeLayout>
+
             </androidx.cardview.widget.CardView>
 
             <RelativeLayout
@@ -106,7 +154,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/countries_affected_container"
-                android:elevation="1dp">
+                android:elevation="8dp">
 
                 <TextView
                     android:id="@+id/source_text"
@@ -137,8 +185,14 @@
                     android:gravity="center_vertical"
                     android:text="@string/hint_click_on_a_country_for_more_information"
                     android:textColor="@color/blue" />
-
             </RelativeLayout>
         </RelativeLayout>
+
+        <View
+            android:id="@+id/divider_line"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@id/overview_container"
+            android:background="@android:color/darker_gray" />
     </RelativeLayout>
 </layout>

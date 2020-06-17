@@ -12,6 +12,8 @@ import com.github.pwittchen.reactivenetwork.library.rx2.Connectivity;
 import com.github.pwittchen.reactivenetwork.library.rx2.ReactiveNetwork;
 import com.github.pwittchen.reactivenetwork.library.rx2.internet.observing.InternetObservingSettings;
 
+import javax.inject.Inject;
+
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
@@ -29,17 +31,17 @@ public class NetworkConnectivity{
 
     private Context context;
     private Boolean connectionState = null; // check connection if idle or not.
-    private int networkOptions = 0;
+    private int networkOptions;
 
     public NetworkConnectivity(Context context, NetworkCallback callback){
         networkOptions = 1;
-        this.context = context;
+        this.context = context.getApplicationContext();
         this.networkCallback = callback;
     }
 
-    public NetworkConnectivity(ConnectionCallback connectionCallback){
+    public NetworkConnectivity(ConnectionCallback callback){
         networkOptions = 2;
-        this.connectionCallback = connectionCallback;
+        this.connectionCallback = callback;
     }
 
     private InternetObservingSettings observingSettings(){
@@ -70,14 +72,17 @@ public class NetworkConnectivity{
      * every two seconds with two seconds of timeout and consumes data transfer.
      */
     final void checkInternetConnectivity(){
-        disposable.add(ReactiveNetwork.observeInternetConnectivity(observingSettings())
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(connectionState -> {
-                    Timber.d("Successfully establish connection with WalledGardenStrategy");
-                    setConnectionConnectivity(connectionState);
-                }, Throwable::printStackTrace)
-        );
+        if(connectionState != null){
+            disposable.add(ReactiveNetwork.observeInternetConnectivity(observingSettings())
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(connectionState -> {
+                        Timber.d("Successfully establish connection with WalledGardenStrategy.");
+                        setConnectionConnectivity(connectionState);
+                    }, Throwable::printStackTrace)
+            );
+        }
+
     }
 
     /**
@@ -100,7 +105,7 @@ public class NetworkConnectivity{
     }
 
     public void startConnection(){
-        /*if(networkOptions == 1){ // check network only (not internet)
+        if(networkOptions == 1){ // check network only (not internet)
             if(networkCallback != null){
                 connectionState = true;
                 this.checkInternetConnectivity();
@@ -112,13 +117,11 @@ public class NetworkConnectivity{
             if(networkCallback != null){
                 connectionState = true;
                 this.checkInternetConnectivity();
-            }else{
+            } else{
                 throw new NullPointerException("You must implement and pass an instance " +
                         "of NetworkCallback interface.");
             }
-        }else{
-            throw new IllegalAccessException("");
-        }*/
+        }
     }
 
     public InternetObservingSettings pauseConnection(){
