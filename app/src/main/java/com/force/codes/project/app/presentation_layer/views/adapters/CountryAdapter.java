@@ -24,7 +24,7 @@ import com.force.codes.project.app.presentation_layer.views.viewholders.CountryV
 import org.jetbrains.annotations.NotNull;
 
 public class CountryAdapter extends PagedListAdapter<CountryDetails, CountryViewHolder>{
-`    private static final int HEADER_TOP = 0;
+    private static final int HEADER_TOP = 0;
     private FragmentCallback fragmentCallback;
 
     public CountryAdapter(FragmentCallback callback){
