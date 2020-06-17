@@ -20,12 +20,12 @@ import com.force.codes.project.app.service.executors.AppExecutors;
 import java.util.List;
 
 import io.reactivex.Flowable;
+import io.reactivex.schedulers.Schedulers;
 import timber.log.Timber;
-
 
 public class WorldwideRepositoryImpl implements WorldwideRepository{
     private CountryDao countryDao;
-    private ApiServiceAdapter adapter;
+    private ApiServiceAdapter serviceAdapter;
     private AppExecutors executors;
 
     public WorldwideRepositoryImpl(
@@ -33,13 +33,14 @@ public class WorldwideRepositoryImpl implements WorldwideRepository{
             final ApiServiceAdapter adapter,
             final AppExecutors executors){
         this.countryDao = countryDao;
-        this.adapter = adapter;
+        this.serviceAdapter = adapter;
         this.executors = executors;
     }
 
     @Override
     public Flowable<List<CountryDetails>> getDataFromRemoteService(){
-        return adapter.getSortedCases();
+        return serviceAdapter.getSortedCases()
+                .subscribeOn(Schedulers.computation());
     }
 
     @Override
@@ -47,7 +48,6 @@ public class WorldwideRepositoryImpl implements WorldwideRepository{
     getDataFromDatabase(PagedList.Config config){
         DataSource.Factory<Integer, CountryDetails>
                 detailsFactory = countryDao.getDataFromDatabase();
-        Timber.d("DataSource.Factory initiated...");
         return new LivePagedListBuilder<>(detailsFactory, config).build();
     }
 
@@ -57,10 +57,8 @@ public class WorldwideRepositoryImpl implements WorldwideRepository{
      */
     @Override
     public void saveDatabase(List<CountryDetails> detailsList){
-        executors.diskIO().execute(() -> {
-            countryDao.insertOrUpdate(detailsList);
-            Timber.d("database insert success...");
-        });
+        executors.diskIO().execute(() ->
+                countryDao.insertOrUpdate(detailsList));
     }
 
     /**

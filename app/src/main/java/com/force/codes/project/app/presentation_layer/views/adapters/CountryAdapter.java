@@ -8,28 +8,23 @@
 package com.force.codes.project.app.presentation_layer.views.adapters;
 
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
 import androidx.paging.PagedListAdapter;
 import androidx.recyclerview.widget.DiffUtil;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.force.codes.project.app.R;
 import com.force.codes.project.app.databinding.CountryRowsBinding;
 import com.force.codes.project.app.model.CountryDetails;
 import com.force.codes.project.app.presentation_layer.controller.custom.interfaces.FragmentCallback;
 import com.force.codes.project.app.presentation_layer.views.viewholders.CountryViewHolder;
-import com.force.codes.project.app.presentation_layer.views.viewholders.DetailsViewHolder;
 
 import org.jetbrains.annotations.NotNull;
 
-import timber.log.Timber;
-
-public class CountryAdapter extends PagedListAdapter<CountryDetails, RecyclerView.ViewHolder>{
-    private static final int HEADER_TOP = 0;
+public class CountryAdapter extends PagedListAdapter<CountryDetails, CountryViewHolder>{
+`    private static final int HEADER_TOP = 0;
     private FragmentCallback fragmentCallback;
 
     public CountryAdapter(FragmentCallback callback){
@@ -37,41 +32,22 @@ public class CountryAdapter extends PagedListAdapter<CountryDetails, RecyclerVie
         this.fragmentCallback = callback;
     }
 
-    @NotNull @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(@NotNull ViewGroup parent, int viewType){
+    @Override
+    @NotNull
+    public CountryViewHolder onCreateViewHolder(@NotNull ViewGroup parent, int viewType){
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-
-        // This inflates new layout view.
-        // Occupies 1 size of current pageList size at index 0.
-        /*if(HEADER_TOP == viewType){
-            final View view = inflater
-                    .inflate(R.layout.details_layout, parent, false);
-            return new DetailsViewHolder(view);
-        }*/
-
-        CountryRowsBinding rowsBinding = DataBindingUtil
-                .inflate(inflater, R.layout.country_rows, parent, false);
+        CountryRowsBinding rowsBinding = DataBindingUtil.inflate(inflater,
+                R.layout.country_rows, parent, false);
         return new CountryViewHolder(rowsBinding, fragmentCallback);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position){
+    public void onBindViewHolder(@NonNull CountryViewHolder holder, int position){
         CountryDetails countryDetails = getCountryAt(position);
 
-        // We cannot cast different viewHolders to
-        // non object inflater so we skip index 0.
-        //if(position != 0){
-            CountryViewHolder viewHolder = (CountryViewHolder) holder;
-
-            if(countryDetails != null){
-                viewHolder.bindTo(countryDetails);
-            } else{
-                // TODO: show loading anim. when data is !yet fully loaded.
-                // region ...
-                Timber.d("loading...");
-                // endregion
-            }
-        //}
+        if(countryDetails != null){
+            holder.bindTo(countryDetails);
+        }
     }
 
     @Override

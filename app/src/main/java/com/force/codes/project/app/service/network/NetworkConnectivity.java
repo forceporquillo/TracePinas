@@ -12,8 +12,6 @@ import com.github.pwittchen.reactivenetwork.library.rx2.Connectivity;
 import com.github.pwittchen.reactivenetwork.library.rx2.ReactiveNetwork;
 import com.github.pwittchen.reactivenetwork.library.rx2.internet.observing.InternetObservingSettings;
 
-import javax.inject.Inject;
-
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
@@ -48,6 +46,7 @@ public class NetworkConnectivity{
         return InternetObservingSettings.builder()
                 .initialInterval(initialInterval)
                 .interval(interval)
+                .host("www.google.com")
                 .timeout(timeout)
                 .build();
     }
@@ -72,16 +71,14 @@ public class NetworkConnectivity{
      * every two seconds with two seconds of timeout and consumes data transfer.
      */
     final void checkInternetConnectivity(){
-        if(connectionState != null){
-            disposable.add(ReactiveNetwork.observeInternetConnectivity(observingSettings())
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(connectionState -> {
-                        Timber.d("Successfully establish connection with WalledGardenStrategy.");
-                        setConnectionConnectivity(connectionState);
-                    }, Throwable::printStackTrace)
-            );
-        }
+        disposable.add(ReactiveNetwork.observeInternetConnectivity(observingSettings())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(connectionState -> {
+                    Timber.d("Successfully establish connection with WalledGardenStrategy.");
+                    setConnectionConnectivity(connectionState);
+                }, Throwable::printStackTrace)
+        );
 
     }
 
@@ -109,12 +106,12 @@ public class NetworkConnectivity{
             if(networkCallback != null){
                 connectionState = true;
                 this.checkInternetConnectivity();
-            }else{
+            } else{
                 throw new NullPointerException("You must implement and pass an instance " +
                         "of ConnectionCallback interface.");
             }
-        }else if(networkOptions == 2){ // ping connection every 2 seconds (google)
-            if(networkCallback != null){
+        } else if(networkOptions == 2){ // ping connection every 2 seconds (google)
+            if(connectionCallback != null){
                 connectionState = true;
                 this.checkInternetConnectivity();
             } else{

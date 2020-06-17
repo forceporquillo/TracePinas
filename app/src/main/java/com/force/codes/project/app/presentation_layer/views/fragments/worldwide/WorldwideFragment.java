@@ -55,21 +55,6 @@ public class WorldwideFragment extends BaseFragment implements FragmentCallback,
     @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
 
-    //@BindView(R.id.shimmer_container)
-    //ShimmerFrameLayout shimmerFrameLayout;
-
-    // @BindView(R.id.customScrollView)
-    // CustomScrollView scrollView;
-
-    //@BindView(R.id.update)
-    //TextView timeUpdate;
-
-    //@BindView(R.id.favorites_button)
-    //FloatingActionButton favoritesButton;
-
-    // @BindView(R.id.custom_widget_container)
-    // LinearLayout customWidget;
-
     protected FragmentWorldwideBinding binding;
     private WorldwideViewModel worldwideViewModel;
     private CountryAdapter countryAdapter;
@@ -89,7 +74,6 @@ public class WorldwideFragment extends BaseFragment implements FragmentCallback,
     public void onInternetConnectionChanged(Boolean isConnected){
         if(!isConnected){
             swipeRefreshLayout().setEnabled(false);
-            //timeUpdate.setText(ERROR);
         } else{
             swipeRefreshLayout().setEnabled(true);
         }
@@ -98,7 +82,7 @@ public class WorldwideFragment extends BaseFragment implements FragmentCallback,
     @Override
     public void onStart(){
         super.onStart();
-        connectivity.startConnection();
+//        connectivity.startConnection();
         worldwideViewModel.getDataFromDatabase().observe(this, countryDetails -> {
             if(countryDetails.isEmpty()){
                 worldwideViewModel.forceUpdate();
@@ -143,20 +127,13 @@ public class WorldwideFragment extends BaseFragment implements FragmentCallback,
     public void onActivityCreated(@Nullable Bundle savedInstanceState){
         super.onActivityCreated(savedInstanceState);
         swipeRefreshLayout().setEnabled(false);
-        //favoritesButton.setOnClickListener(this);
         setRecyclerView();
     }
-
-    /*private void setAnimationUtils(View root){
-        //Animation slideDownAnim = AnimationUtils.loadAnimation(root.getContext(), R.anim.pop_up_slide_down);
-        //Animation slideUpAnim = AnimationUtils.loadAnimation(root.getContext(), R.anim.pop_up_slide_up);
-    }*/
 
     @Override
     public void onErrorResponse(Boolean onErrorRequest){
         if(onErrorRequest){
             swipeRefreshLayout().setRefreshing(false);
-            //timeUpdate.setText(FAILED);
         }
     }
 
@@ -165,10 +142,8 @@ public class WorldwideFragment extends BaseFragment implements FragmentCallback,
                 R.color.blue, R.color.green, R.color.red
         );
 
-        refreshLayout.setOnRefreshListener(() -> {
-            worldwideViewModel.getDataFromNetwork();
-            //timeUpdate.setText(UPDATING);
-        });
+        refreshLayout.setOnRefreshListener(() ->
+                worldwideViewModel.getDataFromNetwork());
 
         return refreshLayout;
     }
@@ -180,14 +155,12 @@ public class WorldwideFragment extends BaseFragment implements FragmentCallback,
 
     @Override
     public void onPause(){
-        //shimmerFrameLayout.stopShimmer();
         Timber.d("onPause called");
         super.onPause();
     }
 
     @Override
     public void onStop(){
-        //shimmerFrameLayout.onDetachedFromWindow();
         super.onStop();
     }
 
@@ -227,8 +200,8 @@ public class WorldwideFragment extends BaseFragment implements FragmentCallback,
 
     @Override
     public void insertOrRemoveFavorites(CountryDetails details){
-        new AppExecutors().networkIO().execute(() ->
-                worldwideViewModel.addOrRemoveFavorites(details));
+        new AppExecutors().networkIO().execute(
+                () -> worldwideViewModel.addOrRemoveFavorites(details));
     }
 
     private void setRecyclerView(){

@@ -21,7 +21,7 @@ import com.force.codes.project.app.model.CountryDetails;
 @Database(
         entities = {
                 CountryDetails.class
-        }, version = 17)
+        }, version = 18)
 
 public abstract class LocalDatabase extends RoomDatabase{
     private static volatile LocalDatabase INSTANCE;
@@ -37,7 +37,8 @@ public abstract class LocalDatabase extends RoomDatabase{
         if(INSTANCE == null){
             synchronized(LocalDatabase.class){
                 if(INSTANCE == null){
-                    INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
+                    INSTANCE = Room.databaseBuilder(context
+                                    .getApplicationContext(),
                             LocalDatabase.class, "LocalDatabase")
                             .fallbackToDestructiveMigration()
                             .addCallback(roomCallback)
@@ -49,5 +50,6 @@ public abstract class LocalDatabase extends RoomDatabase{
     }
 
     public abstract CountryDao countryDao();
+
     public abstract LiveDataDao dataDao();
 }

@@ -14,16 +14,15 @@ import androidx.room.ColumnInfo;
 import com.google.gson.annotations.SerializedName;
 
 public class CountryInfo extends BaseObservable{
-
-    @ColumnInfo(name = "flag URL")
+    @ColumnInfo(name = "Flag Url")
     @SerializedName("flag")
     private String flag;
 
-    @ColumnInfo(name = "latitude")
+    @ColumnInfo(name = "Latitude")
     @SerializedName("lat")
     private String latitude;
 
-    @ColumnInfo(name = "longitude")
+    @ColumnInfo(name = "Longitude")
     @SerializedName("long")
     private String longitude;
 

@@ -74,8 +74,4 @@ public class CountryViewHolder extends RecyclerView.ViewHolder implements View.O
     public void onClick(View v){
         callback.CustomCardViewListener(getAdapterPosition());
     }
-
-    public void updateFavorites(CountryDetails details){
-        callback.insertOrRemoveFavorites(details);
-    }
 }
