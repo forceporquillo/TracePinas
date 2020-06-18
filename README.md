@@ -1,6 +1,6 @@
-# COVID CARE
+# HENLO FREN
 
-A COVID19 tracker and self-assessment test app (Inspired from Corona Tracker a web-version)
+WALA PANG PROJECT DESCRIPTION DI PA TAPOS.
 
 ## Getting Started
 
