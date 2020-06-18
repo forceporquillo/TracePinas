@@ -1,13 +1,15 @@
 # COVID CARE
 
-A COVID19 tracker and self-assessment test app (Inspired from Corona Tracker a web-version)
-
-## Getting Started
-
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
+A COVID19 tracker and self-assessment test app 
+(Inspired from Corona Tracker a web-version)
 
 ## Summary
-
+-   Use  [MVVM](https://en.wikipedia.org/wiki/Model_View_ViewModel)  using  [architecture components](https://developer.android.com/topic/libraries/architecture/index.html)  with to separate Android Framework with a  [clean architecture](http://blog.8thlight.com/uncle-bob/2012/08/13/the-clean-architecture.html)  to my domain logic.
+-   Use  [Android Databinding](https://developer.android.com/topic/libraries/data-binding/index.html)  wih  [LiveData](https://developer.android.com/topic/libraries/architecture/livedata.html)  to glue  [ViewModel](https://developer.android.com/topic/libraries/architecture/viewmodel.html)  and Android.
+-   Asynchronous communications implemented with  [Rx](http://reactivex.io/).
+-   Rest API from  [Novel COVID API](https://corona.lmao.ninja/).
+-   Store data using  [Room](https://developer.android.com/topic/libraries/architecture/room.html).
+-  Uses Pie Charts from [https://github.com/PhilJay/MPAndroidChart](https://github.com/PhilJay/MPAndroidChart) to graph data statistically.
 ## Installation
 This project requires a newer version of Android Studio such as 
 - Android Studio 4.0
@@ -66,6 +68,14 @@ This project requires a newer version of Android Studio such as
 
 **Leak Canary** - memory leaks detection.
 
+**Google Maps**
+**PieView**
+**SwipeRefreshLayout**
+**HTTP Interceptor**
+**Animated Bottombar**
+
+
+## Network Repository API
 
 
 ## Author
@@ -78,6 +88,7 @@ This project requires a newer version of Android Studio such as
 
 
 Copyright 2020 Force Porquillo
+
 Licensed under the Apache License, Version 2.0 (the "License");  
 you may not use this file except in compliance with the License.  
 You may obtain a copy of the License at  
