@@ -46,6 +46,7 @@ This project requires a newer version of Android Studio such as
 - **Data Binding** - bind the UI components in the layout to **data** resources using a declarative format rather than programmatically.
 
 **ReactiveX 2.x**
+
 -- RxJava/Android
 - Composing asynchronous and event-based programs by using observable sequences.
 
