@@ -78,13 +78,21 @@
                         android:orientation="vertical">
 
                         <include layout="@layout/country_rows_skeleton" />
+
                         <include layout="@layout/country_rows_skeleton" />
+
                         <include layout="@layout/country_rows_skeleton" />
+
                         <include layout="@layout/country_rows_skeleton" />
+
                         <include layout="@layout/country_rows_skeleton" />
+
                         <include layout="@layout/country_rows_skeleton" />
+
                         <include layout="@layout/country_rows_skeleton" />
+
                         <include layout="@layout/country_rows_skeleton" />
+
                         <include layout="@layout/country_rows_skeleton" />
 
                     </LinearLayout>

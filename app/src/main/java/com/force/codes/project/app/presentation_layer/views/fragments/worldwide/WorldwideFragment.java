@@ -46,10 +46,6 @@ import timber.log.Timber;
 
 public class WorldwideFragment extends BaseFragment implements FragmentCallback, View.OnClickListener, ConnectionCallback, OnRequestResponse{
 
-    //private static final String UPDATING = "Updating data from server…";
-    //private static final String ERROR = "Data might not be updated";
-    //private static final String FAILED = "Failed to update data";
-
     @BindView(R.id.swipe_fresh)
     SwipeRefreshLayout refreshLayout;
 
@@ -59,12 +55,12 @@ public class WorldwideFragment extends BaseFragment implements FragmentCallback,
     @BindView(R.id.shimmer_layout)
     ShimmerFrameLayout shimmer;
 
-    protected FragmentWorldwideBinding binding;
+    private FragmentWorldwideBinding binding;
     private WorldwideViewModel worldwideViewModel;
-    private CountryAdapter countryAdapter;
-    private Unbinder unbinder;
-
     private NetworkConnectivity connectivity;
+    private CountryAdapter countryAdapter;
+    private AppExecutors executors;
+    private Unbinder unbinder;
 
     WorldwideFragment(){
 
@@ -94,8 +90,8 @@ public class WorldwideFragment extends BaseFragment implements FragmentCallback,
                 countryAdapter.submitList(countryDetails);
                 refreshLayout.setEnabled(true);
                 refreshLayout.setRefreshing(false);
-                recyclerView.setAdapter(countryAdapter);
                 shimmer.stopShimmer();
+                recyclerView.setAdapter(countryAdapter);
             }
         });
     }
@@ -103,10 +99,13 @@ public class WorldwideFragment extends BaseFragment implements FragmentCallback,
     @Override
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
+
+        executors = new AppExecutors();
         connectivity = new NetworkConnectivity(this);
         countryAdapter = new CountryAdapter(this);
+
         WorldwideViewModelFactory modelFactory = Injection
-                .providesViewModelFactory(this, getContext(), new AppExecutors());
+                .providesViewModelFactory(this, getContext(), executors);
         worldwideViewModel = new ViewModelProvider(this, modelFactory)
                 .get(WorldwideViewModel.class);
         worldwideViewModel.getDataFromDatabase();
@@ -145,8 +144,7 @@ public class WorldwideFragment extends BaseFragment implements FragmentCallback,
 
     private SwipeRefreshLayout swipeRefreshLayout(){
         refreshLayout.setColorSchemeResources(
-                R.color.blue, R.color.green, R.color.red
-        );
+                R.color.blue, R.color.green, R.color.red);
 
         refreshLayout.setOnRefreshListener(() ->
                 worldwideViewModel.getDataFromNetwork());
@@ -180,13 +178,12 @@ public class WorldwideFragment extends BaseFragment implements FragmentCallback,
     public void onDestroyView(){
         super.onDestroyView();
 
-        if(recyclerView.getAdapter() != null){
-            recyclerView.setAdapter(null);
-        }
+        //if(recyclerView.getAdapter() != null){
+        // recyclerView.setAdapter(null);
+        //}
 
         Timber.d("onDestroyView called");
         connectivity.destroyConnection();
-
         binding.unbind();
         binding = null;
         unbinder.unbind();
@@ -206,11 +203,11 @@ public class WorldwideFragment extends BaseFragment implements FragmentCallback,
 
     @Override
     public void insertOrRemoveFavorites(CountryDetails details){
-        new AppExecutors().networkIO().execute(
-                () -> worldwideViewModel.addOrRemoveFavorites(details));
+        executors.networkIO().execute(() ->
+                worldwideViewModel.addOrRemoveFavorites(details));
     }
 
-    private void setRecyclerView(){
+    final void setRecyclerView(){
         recyclerView.setLayoutManager(
                 new LinearLayoutManager(getContext()));
 
