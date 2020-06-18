@@ -41,7 +41,7 @@ This project requires a newer version of Android Studio such as
 **Android Architecture Components**:  [Google Github repository](https://github.com/android/architecture-components-samples)
 - **ViewModel** - Save the activity/fragment state across configuration changes.  
 - **LiveData** - For connect the DB and network layers with the view.  
- - **PageList** - Loads data in gradual chunks (pages) from a **DataSource.
+ - **PageList** - Loads data in gradual chunks (pages) from a **DataSource**.
 - **Room** - stores country data in local database.
 - **Data Binding** - bind the UI components in the layout to **data** resources using a declarative format rather than programmatically.
 
