@@ -103,9 +103,6 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-viewmodel:$lifecycle_version"
     implementation "androidx.lifecycle:lifecycle-extensions:$lifecycle_version"
 
-    // CustomToast
-    implementation 'com.muddzdev:styleabletoast:2.2.3'
-
     // PieView
     implementation 'com.github.razerdp:AnimatedPieView:1.2.6'
 
@@ -126,9 +123,6 @@ dependencies {
     // Dagger2
     implementation 'com.google.dagger:dagger:2.27'
     annotationProcessor 'com.google.dagger:dagger-compiler:2.26'
-
-    // SnackBar
-    implementation 'com.github.matecode:Snacky:1.1.5'
 
     // Skeleton
     implementation 'com.facebook.shimmer:shimmer:0.5.0'
