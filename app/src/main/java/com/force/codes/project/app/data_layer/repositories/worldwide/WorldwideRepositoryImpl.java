@@ -12,7 +12,6 @@ import androidx.paging.DataSource;
 import androidx.paging.LivePagedListBuilder;
 import androidx.paging.PagedList;
 
-import com.force.codes.project.app.data_layer.model.Response;
 import com.force.codes.project.app.data_layer.resources.api.ApiServiceAdapter;
 import com.force.codes.project.app.data_layer.resources.database.data.CountryDao;
 import com.force.codes.project.app.data_layer.model.CountryDetails;

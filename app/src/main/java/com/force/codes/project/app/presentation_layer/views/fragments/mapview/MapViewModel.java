@@ -9,5 +9,18 @@ package com.force.codes.project.app.presentation_layer.views.fragments.mapview;
 
 import androidx.lifecycle.ViewModel;
 
-class MapViewModel extends ViewModel{
+import com.force.codes.project.app.data_layer.repositories.map.MapRepository;
+
+import io.reactivex.disposables.CompositeDisposable;
+
+public class MapViewModel extends ViewModel{
+    private MapRepository mapRepository;
+    private CompositeDisposable compositeDisposable;
+
+    public MapViewModel(MapRepository mapRepository, CompositeDisposable disposable){
+        this.mapRepository = mapRepository;
+        this.compositeDisposable = disposable;
+    }
+
+
 }

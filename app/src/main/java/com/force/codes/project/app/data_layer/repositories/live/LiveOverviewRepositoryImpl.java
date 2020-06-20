@@ -24,6 +24,5 @@ public class LiveOverviewRepositoryImpl implements LiveOverviewRepository{
     public Flowable<WorldData> getWorldDataFromNetwork(){
        return apiServiceAdapter.getWorldData()
                .subscribeOn(Schedulers.io());
-
     }
 }

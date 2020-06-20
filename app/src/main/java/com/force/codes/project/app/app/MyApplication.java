@@ -11,6 +11,8 @@ import android.app.Application;
 import android.util.Log;
 
 import com.force.codes.project.app.BuildConfig;
+import com.force.codes.project.app.data_layer.resources.api.RetrofitClient;
+import com.force.codes.project.app.data_layer.resources.database.LocalDatabase;
 import com.force.codes.project.app.presentation_layer.controller.custom.utils.CustomCrashLibrary;
 
 import org.jetbrains.annotations.NotNull;
@@ -20,11 +22,12 @@ import leakcanary.AppWatcher;
 import leakcanary.ObjectWatcher;
 import timber.log.Timber;
 
-public class DebugTreeApplication extends Application{
-
+public class MyApplication extends Application{
     @Override
     public void onCreate(){
         super.onCreate();
+
+        LocalDatabase.setInstance(this);
 
         if(BuildConfig.DEBUG){
             Timber.plant(new Timber.DebugTree());

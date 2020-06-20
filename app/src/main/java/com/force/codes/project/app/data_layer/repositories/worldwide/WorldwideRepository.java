@@ -11,7 +11,6 @@ import androidx.lifecycle.LiveData;
 import androidx.paging.PagedList;
 
 import com.force.codes.project.app.data_layer.model.CountryDetails;
-import com.force.codes.project.app.data_layer.model.Response;
 
 import java.util.List;
 

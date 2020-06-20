@@ -7,5 +7,28 @@
 
 package com.force.codes.project.app.data_layer.repositories.map;
 
-class MapRepositoryImpl{
+import com.force.codes.project.app.data_layer.model.ListData;
+import com.force.codes.project.app.data_layer.resources.api.ApiServiceAdapter;
+import com.force.codes.project.app.data_layer.resources.database.data.MapDao;
+
+import io.reactivex.Flowable;
+
+public class MapRepositoryImpl implements MapRepository{
+    private MapDao mapDao;
+    private ApiServiceAdapter serviceAdapter;
+
+    public MapRepositoryImpl(MapDao mapDao, ApiServiceAdapter serviceAdapter){
+        this.mapDao = mapDao;
+        this.serviceAdapter = serviceAdapter;
+    }
+
+    @Override
+    public Flowable<ListData> getListDataFromNetwork(){
+        return null;
+    }
+
+    @Override
+    public void insertOrUpdate(ListData listData){
+
+    }
 }

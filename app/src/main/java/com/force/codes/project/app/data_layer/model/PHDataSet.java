@@ -10,9 +10,9 @@ import com.google.gson.annotations.SerializedName;
 import org.jetbrains.annotations.NotNull;
 
 @Entity
-public class DataItem{
+public class PHDataSet{
 
-	public DataItem(@NonNull String caseCode, String latitude, String longitude){
+	public PHDataSet(@NonNull String caseCode, String latitude, String longitude){
 		this.caseCode = caseCode;
 		this.latitude = latitude;
 		this.longitude = longitude;

@@ -18,8 +18,11 @@ import android.view.Window;
 import android.view.WindowManager;
 
 import androidx.annotation.Nullable;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.force.codes.project.app.R;
+import com.force.codes.project.app.app.Injection;
+import com.force.codes.project.app.factory.MapViewModelFactory;
 import com.force.codes.project.app.presentation_layer.views.fragments.BaseFragment;
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.maps.GoogleMap;
@@ -44,6 +47,7 @@ public class MapFragment extends BaseFragment implements OnMapReadyCallback{
     private Unbinder unbinder;
     private View view;
 
+    MapViewModel mapViewModel;
     public MapFragment(){
         // Required empty public constructor
     }
@@ -59,6 +63,11 @@ public class MapFragment extends BaseFragment implements OnMapReadyCallback{
     @Override
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
+
+        MapViewModelFactory modelFactory = Injection
+                .providesMapViewModelFactory();
+        mapViewModel = new ViewModelProvider(this, modelFactory)
+                .get(MapViewModel.class);
     }
 
     @Override

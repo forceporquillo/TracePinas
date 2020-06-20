@@ -7,5 +7,12 @@
 
 package com.force.codes.project.app.data_layer.repositories.map;
 
+import com.force.codes.project.app.data_layer.model.ListData;
+
+import io.reactivex.Flowable;
+
 public interface MapRepository{
+    Flowable<ListData> getListDataFromNetwork();
+
+    void insertOrUpdate(ListData listData);
 }
