@@ -76,17 +76,7 @@ public class FragmentContainerActivity extends BaseActivity implements BottomIte
                     .setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
         }
 
-        Timber.tag("LifeCycles");
 
-        AppWatcher.getConfig().
-
-                getWatchActivities();
-        AppWatcher.getConfig().
-
-                getWatchFragments();
-
-        ObjectWatcher objectWatcher = AppWatcher.INSTANCE.getObjectWatcher();
-        objectWatcher.getRetainedObjectCount();
 
         if(savedInstanceState != null)
             fragment =
