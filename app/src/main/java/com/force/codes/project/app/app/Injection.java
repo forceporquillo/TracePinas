@@ -13,19 +13,13 @@ import com.force.codes.project.app.data_layer.repositories.live.LiveOverviewRepo
 import com.force.codes.project.app.data_layer.repositories.live.LiveOverviewRepositoryImpl;
 import com.force.codes.project.app.data_layer.repositories.worldwide.WorldwideRepository;
 import com.force.codes.project.app.data_layer.repositories.worldwide.WorldwideRepositoryImpl;
+import com.force.codes.project.app.data_layer.resources.api.ApiConstants;
 import com.force.codes.project.app.data_layer.resources.api.RetrofitClient;
 import com.force.codes.project.app.data_layer.resources.database.LocalDatabase;
 import com.force.codes.project.app.factory.LiveDataViewModelFactory;
 import com.force.codes.project.app.factory.WorldwideViewModelFactory;
 import com.force.codes.project.app.presentation_layer.controller.custom.interfaces.OnRequestResponse;
 import com.force.codes.project.app.service.executors.AppExecutors;
-
-/**
- * @object Injection
- * Manually injecting each data sources entities for flexibility
- * in client side. Testing can be easily performed using mock up objects.
- * Lessens the boilerplate code and module complexity.
- **/
 
 public class Injection{
     public static WorldwideViewModelFactory providesViewModelFactory(OnRequestResponse response, Context context, AppExecutors appExecutors){
@@ -35,7 +29,7 @@ public class Injection{
 
     private static WorldwideRepositoryImpl providesDataSource(Context context, AppExecutors appExecutors){
         LocalDatabase localDatabase = LocalDatabase.getInstance(context);
-        RetrofitClient retrofitClient = RetrofitClient.getInstance();
+        RetrofitClient retrofitClient = RetrofitClient.getInstance(ApiConstants.BASE_URL);
         return new WorldwideRepositoryImpl(localDatabase.countryDao(), retrofitClient.providesApiServiceAdapter(), appExecutors);
     }
 
@@ -45,7 +39,7 @@ public class Injection{
     }
 
     private static LiveOverviewRepositoryImpl providesDataSource(){
-        RetrofitClient retrofitClient = RetrofitClient.getInstance();
+        RetrofitClient retrofitClient = RetrofitClient.getInstance(ApiConstants.BASE_URL);
         return new LiveOverviewRepositoryImpl(retrofitClient.providesApiServiceAdapter());
     }
 }

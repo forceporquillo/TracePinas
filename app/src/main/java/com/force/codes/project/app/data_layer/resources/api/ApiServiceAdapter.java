@@ -8,11 +8,13 @@ package com.force.codes.project.app.data_layer.resources.api;
  */
 
 import com.force.codes.project.app.data_layer.model.CountryDetails;
+import com.force.codes.project.app.data_layer.model.Response;
 import com.force.codes.project.app.data_layer.model.WorldData;
 
 import java.util.List;
 
 import io.reactivex.Flowable;
+import io.reactivex.Observable;
 import retrofit2.http.GET;
 
 public interface ApiServiceAdapter{
@@ -21,4 +23,7 @@ public interface ApiServiceAdapter{
 
     @GET("all")
     Flowable<WorldData> getWorldData();
+
+    @GET("doh-data-drop")
+    Flowable<Response> getResponse();
 }

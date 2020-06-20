@@ -11,6 +11,7 @@ import androidx.lifecycle.LiveData;
 import androidx.paging.PagedList;
 
 import com.force.codes.project.app.data_layer.model.CountryDetails;
+import com.force.codes.project.app.data_layer.model.Response;
 
 import java.util.List;
 
@@ -24,6 +25,10 @@ public interface WorldwideRepository{
     void saveDatabase(List<CountryDetails> details);
 
     void updateFavorites(CountryDetails details);
+
+    Flowable<Response> getResponseFromNetwork();
+
+    void insertResponse(Response response);
 }
 
 

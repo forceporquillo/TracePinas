@@ -108,7 +108,8 @@ public class WorldwideFragment extends BaseFragment implements FragmentCallback,
                 .providesViewModelFactory(this, getContext(), executors);
         worldwideViewModel = new ViewModelProvider(this, modelFactory)
                 .get(WorldwideViewModel.class);
-        worldwideViewModel.getDataFromDatabase();
+        //worldwideViewModel.getDataFromDatabase();
+        worldwideViewModel.addTestData();
     }
 
     @Override

@@ -11,12 +11,12 @@ import android.app.Application;
 import android.util.Log;
 
 import com.force.codes.project.app.BuildConfig;
+import com.force.codes.project.app.presentation_layer.controller.custom.utils.CustomCrashLibrary;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import leakcanary.AppWatcher;
-import leakcanary.LeakCanary;
 import leakcanary.ObjectWatcher;
 import timber.log.Timber;
 
@@ -44,14 +44,14 @@ public class DebugTreeApplication extends Application{
                 return;
             }
 
-            FakeCrashLibrary.log(priority, tag, message);
+            CustomCrashLibrary.log(priority, tag, message);
 
             if(t != null){
                 if(priority == Log.ERROR){
-                    FakeCrashLibrary.logError(t);
+                    CustomCrashLibrary.logError(t);
                 }
             }else if(priority == Log.WARN){
-                FakeCrashLibrary.logWarning(t);
+                CustomCrashLibrary.logWarning(null);
             }
         }
     }

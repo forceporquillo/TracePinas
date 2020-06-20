@@ -23,10 +23,13 @@ import androidx.room.Query;
 import androidx.room.Transaction;
 import androidx.room.Update;
 
+import com.force.codes.project.app.data_layer.model.Response;
 import com.force.codes.project.app.data_layer.resources.database.DBConstants;
 import com.force.codes.project.app.data_layer.model.CountryDetails;
 
 import java.util.List;
+
+import io.reactivex.Flowable;
 
 @Dao
 public interface CountryDao{
@@ -39,4 +42,10 @@ public interface CountryDao{
 
     @Update
     void insertOrRemoveFavorites(CountryDetails details);
+
+    @Query("SELECT * FROM Response")
+    Flowable<Response> getResponse();
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    void insertData(Response data);
 }

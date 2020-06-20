@@ -12,16 +12,24 @@ import androidx.annotation.NonNull;
 import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
+import androidx.room.TypeConverters;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
+import com.force.codes.project.app.data_layer.model.Coverter.Converter;
+import com.force.codes.project.app.data_layer.model.Response;
 import com.force.codes.project.app.data_layer.resources.database.data.CountryDao;
 import com.force.codes.project.app.data_layer.resources.database.data.LiveDataDao;
 import com.force.codes.project.app.data_layer.model.CountryDetails;
 
 @Database(
         entities = {
-                CountryDetails.class
-        }, version = 18)
+                CountryDetails.class,
+                Response.class
+        }, version = 23)
+
+@TypeConverters(
+        Converter.class
+)
 
 public abstract class LocalDatabase extends RoomDatabase{
     private static volatile LocalDatabase INSTANCE;
@@ -39,7 +47,7 @@ public abstract class LocalDatabase extends RoomDatabase{
                 if(INSTANCE == null){
                     INSTANCE = Room.databaseBuilder(context
                                     .getApplicationContext(),
-                            LocalDatabase.class, "LocalDatabase")
+                            LocalDatabase.class, "COVID19DATA.db")
                             .fallbackToDestructiveMigration()
                             .addCallback(roomCallback)
                             .build();

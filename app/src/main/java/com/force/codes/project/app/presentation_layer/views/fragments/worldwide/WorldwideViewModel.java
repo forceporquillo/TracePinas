@@ -11,8 +11,8 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
 import androidx.paging.PagedList;
 
-import com.force.codes.project.app.data_layer.repositories.worldwide.WorldwideRepository;
 import com.force.codes.project.app.data_layer.model.CountryDetails;
+import com.force.codes.project.app.data_layer.repositories.worldwide.WorldwideRepository;
 import com.force.codes.project.app.presentation_layer.controller.custom.interfaces.OnRequestResponse;
 import com.force.codes.project.app.service.executors.AppExecutors;
 
@@ -41,23 +41,14 @@ public class WorldwideViewModel extends ViewModel{
         this.longDate = observableLong;
     }
 
-    /**
-     * Custom lazy loading configurations to our pageList adapter
-     * with an initial load of 100 and page size of 70.
-     */
+
     static final PagedList.Config config = new PagedList.Config.Builder()
             .setPageSize(11)
             .setMaxSize(215)
             .setEnablePlaceholders(false)
             .build();
 
-    /**
-     * Check if it is null if !null {@return liveData} from local database.
-     * If local database emits == null or no items call {@method getDataFromNetwork}
-     * to insert or update data from local database.
-     * <p>
-     * This {@return LiveData} from local database.
-     */
+
     public LiveData<PagedList<CountryDetails>> getDataFromDatabase(){
         if(listLiveData == null){
             return listLiveData = repository.getDataFromDatabase(config);
@@ -66,13 +57,13 @@ public class WorldwideViewModel extends ViewModel{
         return listLiveData;
     }
 
-    /**
-     * This emits large size of data from remote repository and save to local database.
-     * <p>
-     * This {@method getDataFromNetwork()} is not directly subscribed to the main thread
-     * to prevent blocking the UI. And, Since our client API doesn't support pagination,
-     * we instead subscribed to a local repository whenever data changed.
-     */
+    public void addTestData(){
+        compositeDisposable.add(repository.getResponseFromNetwork()
+                .subscribeOn(Schedulers.computation())
+                .doOnError(Timber::e)
+                .subscribe(repository::insertResponse));
+    }
+
     public void getDataFromNetwork(){
         compositeDisposable.add(Flowable.just(1)
                 .subscribeOn(Schedulers.computation())

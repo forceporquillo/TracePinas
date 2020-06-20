@@ -18,17 +18,17 @@ public class RetrofitClient{
     private static RetrofitClient INSTANCE;
     private static Retrofit retrofit;
 
-    private RetrofitClient(){
+    private RetrofitClient(String baseUrl){
         retrofit = new Retrofit.Builder()
-                .baseUrl(ApiConstants.BASE_URL)
+                .baseUrl(baseUrl)
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .client(providesOkHttpClient)
                 .build();
     }
 
-    final static OkHttpClient providesOkHttpClient = new OkHttpClient
-            .Builder()
+    final static OkHttpClient providesOkHttpClient
+            = new OkHttpClient.Builder()
             .connectTimeout(10, TimeUnit.SECONDS)
             .writeTimeout(10, TimeUnit.SECONDS)
             .addInterceptor(providesInterceptor())
@@ -41,9 +41,9 @@ public class RetrofitClient{
         return interceptor;
     }
 
-    public static RetrofitClient getInstance(){
+    public static RetrofitClient getInstance(String baseUrl){
         if(INSTANCE == null){
-            INSTANCE = new RetrofitClient();
+            INSTANCE = new RetrofitClient(baseUrl);
         }
         return INSTANCE;
     }

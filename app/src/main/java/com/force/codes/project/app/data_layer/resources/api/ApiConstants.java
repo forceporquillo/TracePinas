@@ -7,7 +7,7 @@ package com.force.codes.project.app.data_layer.resources.api;
  *
  */
 
-class ApiConstants{
-    static final String BASE_URL = "https://corona.lmao.ninja/v2/";
-
+public class ApiConstants{
+    public static final String BASE_URL = "https://corona.lmao.ninja/v2/";
+    public static final String LOCAL_URL = "https://coronavirus-ph-api.herokuapp.com/";
 }

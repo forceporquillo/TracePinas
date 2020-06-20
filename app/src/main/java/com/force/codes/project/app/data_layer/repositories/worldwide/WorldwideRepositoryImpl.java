@@ -12,6 +12,7 @@ import androidx.paging.DataSource;
 import androidx.paging.LivePagedListBuilder;
 import androidx.paging.PagedList;
 
+import com.force.codes.project.app.data_layer.model.Response;
 import com.force.codes.project.app.data_layer.resources.api.ApiServiceAdapter;
 import com.force.codes.project.app.data_layer.resources.database.data.CountryDao;
 import com.force.codes.project.app.data_layer.model.CountryDetails;
@@ -68,5 +69,16 @@ public class WorldwideRepositoryImpl implements WorldwideRepository{
     public void updateFavorites(CountryDetails details){
         executors.diskIO().execute(() ->
                 countryDao.insertOrRemoveFavorites(details));
+    }
+
+    @Override
+    public Flowable<Response> getResponseFromNetwork(){
+       return serviceAdapter.getResponse();
+    }
+
+    @Override
+    public void insertResponse(Response response){
+        executors.diskIO().execute(() ->
+                countryDao.insertData(response));
     }
 }

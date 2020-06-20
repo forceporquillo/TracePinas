@@ -5,9 +5,9 @@
  * Last modified 6/20/20 4:16 PM
  */
 
-package com.force.codes.project.app.presentation_layer.controller.support;
+package com.force.codes.project.app.presentation_layer.controller.custom.utils;
 
-public class FakeCrashLibrary{
+public class CustomCrashLibrary{
     public static void log(int priority, String tag, String message) {
         // TODO add log entry to circular buffer.
     }
@@ -20,7 +20,7 @@ public class FakeCrashLibrary{
         // TODO report non-fatal error.
     }
 
-    private FakeCrashLibrary() {
+    private CustomCrashLibrary() {
         throw new AssertionError("No instances.");
     }
 }
