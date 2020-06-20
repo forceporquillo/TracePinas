@@ -1,4 +1,4 @@
-package com.force.codes.project.app.model;
+package com.force.codes.project.app.data_layer.model;
 
 /*
  * Created by Force Porquillo on 6/5/20 3:28 PM

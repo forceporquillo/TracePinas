@@ -1,7 +1,13 @@
-# COVID CARE
-
+## HENLO FREN
 A COVID19 tracker and self-assessment test app 
 (Inspired from Corona Tracker a web-version)
+=======
+WALA PANG PROJECT DESCRIPTION DI PA TAPOS.
+
+## Getting Started
+
+These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
+>>>>>>> 62c2a9ab57b37f55eef4541370a5555294caf470
 
 ## Summary
 -   Use  [MVVM](https://en.wikipedia.org/wiki/Model_View_ViewModel)  using  [architecture components](https://developer.android.com/topic/libraries/architecture/index.html)  with to separate Android Framework with a  [clean architecture](http://blog.8thlight.com/uncle-bob/2012/08/13/the-clean-architecture.html)  to my domain logic.
@@ -43,7 +49,7 @@ This project requires a newer version of Android Studio such as
 **Android Architecture Components**:  [Google Github repository](https://github.com/android/architecture-components-samples)
 - **ViewModel** - Save the activity/fragment state across configuration changes.  
 - **LiveData** - For connect the DB and network layers with the view.  
- - **PageList** - Loads data in gradual chunks (pages) from a **DataSource.
+ - **PageList** - Loads data in gradual chunks (pages) from a **DataSource**.
 - **Room** - stores country data in local database.
 - **Data Binding** - bind the UI components in the layout to **data** resources using a declarative format rather than programmatically.
 

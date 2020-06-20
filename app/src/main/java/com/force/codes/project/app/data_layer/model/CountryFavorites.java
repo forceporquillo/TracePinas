@@ -1,16 +1,12 @@
-package com.force.codes.project.app.model;
+package com.force.codes.project.app.data_layer.model;
 
 /*
- * Created by Force Porquillo on 6/5/20 3:28 PM
+ * Created by Force Porquillo on 6/13/20 1:19 AM
  * Copyright (c) 2020.  All rights reserved.
- * Last modified 6/5/20 3:22 PM
- *
+ * FEU Institute of Technology
  */
 
 import androidx.annotation.NonNull;
-import androidx.databinding.BaseObservable;
-import androidx.databinding.Bindable;
-import androidx.databinding.library.baseAdapters.BR;
 import androidx.room.ColumnInfo;
 import androidx.room.Embedded;
 import androidx.room.Entity;
@@ -18,8 +14,9 @@ import androidx.room.PrimaryKey;
 
 import com.google.gson.annotations.SerializedName;
 
-@Entity(tableName = "CountryDetails")
-public class CountryDetails extends BaseObservable{
+@Entity
+public
+class CountryFavorites{
     @NonNull
     @PrimaryKey
     @ColumnInfo(name = "Country")
@@ -89,17 +86,6 @@ public class CountryDetails extends BaseObservable{
         return countryInfo;
     }
 
-    @Bindable
-    @NonNull
-    public String getCountry(){
-        return country;
-    }
-
-    public void setCountry(@NonNull String country){
-        notifyPropertyChanged(BR.country);
-        this.country = country;
-    }
-
     public int getTodayRecovered() {
         return todayRecovered;
     }
@@ -120,17 +106,25 @@ public class CountryDetails extends BaseObservable{
         this.updated = updated;
     }
 
+    @NonNull
+    public String getCountry(){
+        return country;
+    }
+
+    public void setCountry(@NonNull String country){
+        this.country = country;
+    }
+
     public String getContinent(){
         return continent;
     }
-
 
     public void setContinent(String continent){
         this.continent = continent;
     }
 
     public int getCases(){
-       return cases;
+        return cases;
     }
 
     public void setCases(int cases){
