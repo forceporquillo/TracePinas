@@ -51,20 +51,12 @@ public class WorldwideRepositoryImpl implements WorldwideRepository{
         return new LivePagedListBuilder<>(detailsFactory, config).build();
     }
 
-    /**
-     * @param detailsList insert or update list to database.
-     * @method saveDatabase() insert or update list in the background thread.
-     */
     @Override
     public void saveDatabase(List<CountryDetails> detailsList){
         executors.diskIO().execute(() ->
                 countryDao.insertOrUpdate(detailsList));
     }
 
-    /**
-     * @method addOrRemoveFavorites()
-     * inserts favorite country to local database.
-     */
     @Override
     public void updateFavorites(CountryDetails details){
         executors.diskIO().execute(() ->
