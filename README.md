@@ -48,10 +48,18 @@ This project requires a newer version of Android Studio such as
 ## Core Dependencies
 **Android Architecture Components**:  [Google Github repository](https://github.com/android/architecture-components-samples)
 - **ViewModel** - Save the activity/fragment state across configuration changes.  
-- **LiveData** - For connect the DB and network layers with the view.  
+- **LiveData** - A data holder class that observes the data changes in our database and automatically emmits data in our UI whenever new data is inserted in DB.
  - **PageList** - Loads data in gradual chunks (pages) from a **DataSource**.
 - **Room** - stores country data in local database.
 - **Data Binding** - bind the UI components in the layout to **data** resources using a declarative format rather than programmatically.
+
+**ReactiveX 2.x**
+
+-- RxJava/Android
+- Composing asynchronous and event-based programs by using observable sequences.
+
+-- RxNetwork
+- Listening **network connection state** and **Internet connectivity** with approach to **RxJava Observables.**
 
 **Retrofit2**  
 - The application get the content by http request using OkHttp3.  
@@ -64,13 +72,6 @@ This project requires a newer version of Android Studio such as
   
 **RecyclerView**  
 - Display the country data as list in effectively.  
- 
-**ReactiveX 2.x**
--- RxJava/Android
-- Composing asynchronous and event-based programs by using observable sequences.
-
--- RxNetwork
-- Listening **network connection state** and **Internet connectivity** with approach to **RxJava Observables.**
 
 **Leak Canary** - memory leaks detection.
 
