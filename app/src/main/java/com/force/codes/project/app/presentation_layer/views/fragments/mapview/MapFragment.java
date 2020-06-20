@@ -9,13 +9,11 @@ package com.force.codes.project.app.presentation_layer.views.fragments.mapview;
 
 import android.content.res.Resources;
 import android.graphics.Color;
-import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
-import android.view.WindowManager;
 
 import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModelProvider;
@@ -24,14 +22,15 @@ import com.force.codes.project.app.R;
 import com.force.codes.project.app.app.Injection;
 import com.force.codes.project.app.factory.MapViewModelFactory;
 import com.force.codes.project.app.presentation_layer.views.fragments.BaseFragment;
-import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.CameraPosition;
+import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MapStyleOptions;
-import com.google.android.gms.maps.model.MarkerOptions;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -44,10 +43,13 @@ public class MapFragment extends BaseFragment implements OnMapReadyCallback{
     @BindView(R.id.map_view)
     MapView mapView;
 
+    private GoogleMap googleMap;
+
     private Unbinder unbinder;
     private View view;
 
     MapViewModel mapViewModel;
+
     public MapFragment(){
         // Required empty public constructor
     }
@@ -61,19 +63,55 @@ public class MapFragment extends BaseFragment implements OnMapReadyCallback{
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState){
-        super.onCreate(savedInstanceState);
+    public void onMapReady(GoogleMap googleMap){
+        this.googleMap = googleMap;
 
-        MapViewModelFactory modelFactory = Injection
-                .providesMapViewModelFactory();
-        mapViewModel = new ViewModelProvider(this, modelFactory)
-                .get(MapViewModel.class);
+        try{
+            googleMap.setMapStyle(MapStyleOptions
+                    .loadRawResourceStyle(view.getContext(), R.raw.map_style_milk));
+        } catch(Resources.NotFoundException e){
+            Timber.e(e);
+        }
     }
 
     @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState){
-        super.onActivityCreated(savedInstanceState);
+    public void onStart(){
+        super.onStart();
+        mapView.onStart();
 
+        mapViewModel.getLiveData().observe(this, listData -> {
+            if(listData.getData().size() == 0){
+                new Handler().postDelayed(() -> {
+                    for(int i = 0; i < listData.getData().size(); ++i){
+
+                        String latitude = listData.getData().get(i).getLatitude();
+                        String longitude = listData.getData().get(i).getLongitude();
+
+                        assert longitude != null;
+                        assert latitude != null;
+
+                        if(!latitude.equals("") && !longitude.equals("")){
+                            double lat = Double.parseDouble(latitude);
+                            double lng = Double.parseDouble(longitude);
+
+                            LatLng latLng = new LatLng(lat, lng);
+                            LatLng ph = new LatLng(16.566233, 121.262634);
+
+                            googleMap.moveCamera(CameraUpdateFactory
+                                    .newCameraPosition(new CameraPosition(ph, 1, 0, 0))
+                            );
+
+                            googleMap.addCircle(new CircleOptions()
+                                    .center(latLng)
+                                    .radius(1000)
+                                    .strokeWidth(1)
+                                    .strokeColor(Color.RED)
+                                    .fillColor(Color.RED)); // transparent
+                        }
+                    }
+                }, 50);
+            }
+        });
     }
 
     @Override
@@ -94,15 +132,19 @@ public class MapFragment extends BaseFragment implements OnMapReadyCallback{
     }
 
     @Override
-    public void onMapReady(GoogleMap googleMap){
-        try{
-            googleMap.setMapStyle(MapStyleOptions
-                    .loadRawResourceStyle(view.getContext(), R.raw.map_style_milk));
-        } catch(Resources.NotFoundException e){
-            e.printStackTrace();
-        }
+    public void onCreate(Bundle savedInstanceState){
+        super.onCreate(savedInstanceState);
 
-        googleMap.addMarker(new MarkerOptions().position(new LatLng(0, 0)).title("Marker"));
+        MapViewModelFactory modelFactory = Injection
+                .providesMapViewModelFactory();
+        mapViewModel = new ViewModelProvider(this, modelFactory)
+                .get(MapViewModel.class);
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState){
+        super.onActivityCreated(savedInstanceState);
+
     }
 
     @Override
@@ -112,6 +154,10 @@ public class MapFragment extends BaseFragment implements OnMapReadyCallback{
 
         if(mapView != null){
             mapView = null;
+        }
+
+        if(googleMap != null){
+            googleMap = null;
         }
 
         unbinder.unbind();
@@ -132,12 +178,6 @@ public class MapFragment extends BaseFragment implements OnMapReadyCallback{
     public void onLowMemory(){
         super.onLowMemory();
         mapView.onLowMemory();
-    }
-
-    @Override
-    public void onStart(){
-        super.onStart();
-        mapView.onStart();
     }
 
     @Override
