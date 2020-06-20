@@ -18,12 +18,12 @@ import androidx.lifecycle.ViewModelProviders;
 import com.force.codes.project.app.R;
 import com.force.codes.project.app.presentation_layer.views.fragments.BaseFragment;
 
-public class FavoritesFragment extends BaseFragment{
+public class HelpCenterFragment extends BaseFragment{
 
-    private FavoritesViewModel mViewModel;
+    private HelpCenterViewModel mViewModel;
 
-    public static FavoritesFragment newInstance(){
-        return new FavoritesFragment();
+    public static HelpCenterFragment newInstance(){
+        return new HelpCenterFragment();
     }
 
     @Override
@@ -35,7 +35,7 @@ public class FavoritesFragment extends BaseFragment{
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState){
         super.onActivityCreated(savedInstanceState);
-        mViewModel = ViewModelProviders.of(this).get(FavoritesViewModel.class);
+        mViewModel = ViewModelProviders.of(this).get(HelpCenterViewModel.class);
         // TODO: Use the ViewModel
     }
 

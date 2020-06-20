@@ -15,7 +15,6 @@ import android.view.ViewGroup;
 import androidx.fragment.app.Fragment;
 
 import com.force.codes.project.app.R;
-import com.force.codes.project.app.model.CountryDetails;
 import com.force.codes.project.app.presentation_layer.views.fragments.BaseFragment;
 
 /**

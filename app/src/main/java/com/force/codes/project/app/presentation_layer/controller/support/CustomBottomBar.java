@@ -5,7 +5,7 @@
  * Last modified 6/19/20 12:07 AM
  */
 
-package com.force.codes.project.app.presentation_layer.controller.view;
+package com.force.codes.project.app.presentation_layer.controller.support;
 
 import android.content.Context;
 import android.view.View;
@@ -16,7 +16,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.force.codes.project.app.R;
 import com.force.codes.project.app.presentation_layer.controller.custom.interfaces.BottomItemListener;
-import com.force.codes.project.app.presentation_layer.controller.view.model.BottomItem;
+import com.force.codes.project.app.presentation_layer.controller.custom.model.BottomItem;
+import com.force.codes.project.app.presentation_layer.views.adapters.BottomBarAdapter;
 
 import java.util.ArrayList;
 import java.util.Arrays;

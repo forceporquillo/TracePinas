@@ -5,7 +5,7 @@
  * Last modified 6/19/20 12:10 AM
  */
 
-package com.force.codes.project.app.presentation_layer.controller.view.model;
+package com.force.codes.project.app.presentation_layer.controller.custom.model;
 
 public class BottomItem{
     private int itemId;

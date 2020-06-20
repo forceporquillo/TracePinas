@@ -3,8 +3,8 @@
     <color name="colorPrimary">#6200EE</color>
     <color name="colorPrimaryDark">#3700B3</color>
     <color name="colorAccent">#03DAC5</color>
-    <color name="foregroundColor2">#F1F5FC</color>
-
+    <color name="foregroundColor2">#FFFFFF</color>
+    <color name="statusBar">#FFFFFF</color>
 
     <color name="darkColorAccent">#3279D2</color>
     <color name="grayScale">#434547</color>

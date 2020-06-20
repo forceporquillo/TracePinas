@@ -10,7 +10,7 @@ package com.force.codes.project.app.data_layer.repositories.worldwide;
 import androidx.lifecycle.LiveData;
 import androidx.paging.PagedList;
 
-import com.force.codes.project.app.model.CountryDetails;
+import com.force.codes.project.app.data_layer.model.CountryDetails;
 
 import java.util.List;
 

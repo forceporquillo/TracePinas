@@ -16,7 +16,7 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
 
 import com.force.codes.project.app.data_layer.resources.database.data.CountryDao;
 import com.force.codes.project.app.data_layer.resources.database.data.LiveDataDao;
-import com.force.codes.project.app.model.CountryDetails;
+import com.force.codes.project.app.data_layer.model.CountryDetails;
 
 @Database(
         entities = {

@@ -10,7 +10,6 @@ package com.force.codes.project.app.presentation_layer.views.activities.containe
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
-import android.view.WindowManager;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -20,46 +19,41 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.force.codes.project.app.R;
+import com.force.codes.project.app.presentation_layer.controller.custom.interfaces.BottomItemListener;
+import com.force.codes.project.app.presentation_layer.controller.custom.model.BottomItem;
+import com.force.codes.project.app.presentation_layer.controller.support.CustomBottomBar;
 import com.force.codes.project.app.presentation_layer.views.activities.BaseActivity;
+import com.force.codes.project.app.presentation_layer.views.fragments.favorites.HelpCenterFragment;
 import com.force.codes.project.app.presentation_layer.views.fragments.home.HomeFragment;
-import com.force.codes.project.app.presentation_layer.views.fragments.live.LiveDataFragment;
 import com.force.codes.project.app.presentation_layer.views.fragments.mapview.MapFragment;
+import com.force.codes.project.app.presentation_layer.views.fragments.newsfeed.NewsFragment;
 import com.force.codes.project.app.presentation_layer.views.fragments.worldwide.WorldwideFragment;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Objects;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
-import io.reactivex.disposables.CompositeDisposable;
-import kotlin.TypeCastException;
 import leakcanary.AppWatcher;
 import leakcanary.ObjectWatcher;
-import nl.joery.animatedbottombar.AnimatedBottomBar;
 import timber.log.Timber;
 
-public class FragmentContainerActivity extends BaseActivity{
+public class FragmentContainerActivity extends BaseActivity implements BottomItemListener{
     private static final String SAVE_FRAGMENT_STATE = "save_fragment_state";
-
-    @BindView(R.id.animatedBottomBar)
-    AnimatedBottomBar animatedBottomBar;
+    private static final int STATISTICS = 0;
+    private static final int NEWS = 1;
+    private static final int WORLDWIDE = 2;
+    private static final int MAP = 3;
+    private static final int HELP = 4;
 
     private FragmentManager fragmentManager;
     private Fragment fragment = null;
-    private CompositeDisposable compositeDisposable;
-
-    private Unbinder unbinder;
+    private Fragment delegateFrag = null;
 
     public FragmentContainerActivity(){
-        compositeDisposable = new CompositeDisposable();
+
     }
 
     @Override
     protected void onStart(){
         super.onStart();
-        setBottomBarNavigation();
     }
 
     @Override
@@ -75,114 +69,94 @@ public class FragmentContainerActivity extends BaseActivity{
     protected void onCreate(@Nullable Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fragment_manager);
+        CustomBottomBar bottomBar = new CustomBottomBar(findViewById(R.id.bottom_bar), this, this);
 
-        unbinder = ButterKnife.bind(this);
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT){
+            getWindow().getDecorView()
+                    .setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+        }
 
-        getWindow().getDecorView()
-                .setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+        Timber.tag("LifeCycles");
 
-        Timber.plant(new Timber.DebugTree());
+        AppWatcher.getConfig().
 
-        final int currentApiVersion = Build.VERSION.SDK_INT;
+                getWatchActivities();
+        AppWatcher.getConfig().
 
-        if(currentApiVersion <= Build.VERSION_CODES.LOLLIPOP)
-            getWindow().setFlags(
-                    WindowManager.LayoutParams.FLAG_HARDWARE_ACCELERATED,
-                    WindowManager.LayoutParams.FLAG_HARDWARE_ACCELERATED);
-
-        AppWatcher.getConfig().getWatchActivities();
-        AppWatcher.getConfig().getWatchFragments();
+                getWatchFragments();
 
         ObjectWatcher objectWatcher = AppWatcher.INSTANCE.getObjectWatcher();
         objectWatcher.getRetainedObjectCount();
 
         if(savedInstanceState != null)
-            fragment = getSupportFragmentManager()
-                    .getFragment(savedInstanceState, SAVE_FRAGMENT_STATE);
+            fragment =
 
-        setDefaultFragment(savedInstanceState);
+                    getSupportFragmentManager()
+                            .
+
+                                    getFragment(savedInstanceState, SAVE_FRAGMENT_STATE);
+
+        setPrimaryFragment(savedInstanceState);
+
+        setBottomBarItems(bottomBar);
+
     }
 
-
-    @Override
-    protected void onDestroy(){
-        super.onDestroy();
-
-        animatedBottomBar = null;
-
-        if(compositeDisposable != null && compositeDisposable.isDisposed()){
-            compositeDisposable.dispose();
-        }
-
-        unbinder.unbind();
-    }
-
-    private FragmentTransaction setDelegateFragment(Fragment fragment, int lastIndex, int newIndex){
-        String fragmentTag = fragment.getClass().getName();
-        fragmentManager = getSupportFragmentManager();
-        FragmentTransaction transaction = fragmentManager.beginTransaction();
-
-        if(lastIndex > newIndex)
-            transaction.setCustomAnimations(R.anim.enter_from_left, R.anim.exit_to_right);
-        else if(lastIndex > lastIndex - 1) // pref. to use this
-            transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left);
-        else throw new TypeCastException("cannot instantiate fragment transition");
-
-        if(fragmentManager.findFragmentByTag(fragmentTag) == null){
-            return transaction.add(R.id.fragment_container, fragment, fragmentTag).addToBackStack(fragmentTag);
-        } else{
-            return transaction.show(Objects.requireNonNull(fragmentManager.findFragmentByTag(fragmentTag)));
-        }
-    }
-
-    private void setDefaultFragment(Bundle savedInstanceState){
+    final void setPrimaryFragment(Bundle savedInstanceState){
         if(savedInstanceState == null){
-            animatedBottomBar.selectTabById(R.id.tab_home, true);
             fragmentManager = getSupportFragmentManager();
             fragmentManager.beginTransaction()
                     .replace(R.id.fragment_container, HomeFragment.newInstance())
-                    .addToBackStack("HomeFragment")
+                    .addToBackStack(HomeFragment.class.getSimpleName())
                     .commit();
         }
     }
 
-    private void setBottomBarNavigation(){
-        animatedBottomBar.setOnTabSelectListener(new AnimatedBottomBar.OnTabSelectListener(){
-            @Override
-            public void onTabSelected(int lastIndex, AnimatedBottomBar.Tab lastTab, int newIndex, @NotNull AnimatedBottomBar.Tab newTab){
-                switch(newTab.getId()){
-                    case R.id.tab_home:
-                        fragment = HomeFragment.newInstance();
-                        break;
-                    case R.id.tab_corona:
-                        fragment = LiveDataFragment.newInstance();
-                        break;
-                    case R.id.tab_global:
-                        fragment = WorldwideFragment.newInstance();
-                        break;
+    final void setBottomBarItems(CustomBottomBar bottomBar){
+        final BottomItem[] bottomItems = new BottomItem[5];
 
-                    case R.id.tab_map:
-                        fragment = MapFragment.newInstance();
-                        break;
-                }
+        bottomItems[0] = new BottomItem(STATISTICS, "Statistics", R.drawable.ic_outline_stats, R.drawable.ic_outline_colored_stats);
+        bottomItems[1] = new BottomItem(NEWS, "News", R.drawable.ic_outline_news, R.drawable.ic_outline_colored_news);
+        bottomItems[2] = new BottomItem(WORLDWIDE, "Worldwide", R.drawable.ic_outline_worldwide, R.drawable.ic_outline_colored_worldwide);
+        bottomItems[3] = new BottomItem(MAP, "Map", R.drawable.ic_outline_map, R.drawable.ic_outline_colored_map);
+        bottomItems[4] = new BottomItem(HELP, "Help", R.drawable.ic_outline_phone, R.drawable.ic_outline_colored_phone);
 
-                fragmentManager = getSupportFragmentManager();
-                FragmentTransaction transaction = fragmentManager.beginTransaction();
+        bottomBar.addBottomItem(bottomItems);
+        bottomBar.setPrimary(STATISTICS);
+    }
 
-               /*if(lastIndex > newIndex)
-                    transaction.setCustomAnimations(R.anim.enter_from_left, R.anim.exit_to_right);
-                else if(lastIndex > lastIndex - 1) // pref. to use this
-                    transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left);*/
+    @RequiresApi(api = Build.VERSION_CODES.M)
+    @Override
+    public void itemSelect(int itemId){
+        switch(itemId){
+            case STATISTICS:
+                fragment = HomeFragment.newInstance();
+                break;
+            case NEWS:
+                fragment = NewsFragment.newInstance();
+                break;
+            case WORLDWIDE:
+                fragment = WorldwideFragment.newInstance();
+                break;
+            case MAP:
+                fragment = MapFragment.newInstance();
+                break;
+            case HELP:
+                fragment = HelpCenterFragment.newInstance();
+                break;
+        }
 
-                transaction.replace(R.id.fragment_container, fragment).addToBackStack(lastTab
-                        .getTitle()).commit();
-            }
+        delegateFrag = fragment;
 
-            @Override
-            public void onTabReselected(int lastIndex, @NotNull AnimatedBottomBar.Tab lastTab){
-                Timber.d("Reselected tab: %s", lastIndex);
-            }
-        });
+        setDelegateFragment(fragment).commit();
+    }
+
+
+    @NotNull
+    private FragmentTransaction setDelegateFragment(Fragment fragment){
+        fragmentManager = getSupportFragmentManager();
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        return transaction.replace(R.id.fragment_container, fragment).addToBackStack(null);
     }
 
     @Override
@@ -191,12 +165,15 @@ public class FragmentContainerActivity extends BaseActivity{
             super.onBackPressed();
         else
             finish();
+    }
 
+    @Override
+    protected void onDestroy(){
+        super.onDestroy();
     }
 
     @Override
     protected void onResume(){
         super.onResume();
     }
-
 }

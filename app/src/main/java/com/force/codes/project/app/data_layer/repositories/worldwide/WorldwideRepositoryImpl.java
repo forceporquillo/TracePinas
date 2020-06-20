@@ -14,14 +14,13 @@ import androidx.paging.PagedList;
 
 import com.force.codes.project.app.data_layer.resources.api.ApiServiceAdapter;
 import com.force.codes.project.app.data_layer.resources.database.data.CountryDao;
-import com.force.codes.project.app.model.CountryDetails;
+import com.force.codes.project.app.data_layer.model.CountryDetails;
 import com.force.codes.project.app.service.executors.AppExecutors;
 
 import java.util.List;
 
 import io.reactivex.Flowable;
 import io.reactivex.schedulers.Schedulers;
-import timber.log.Timber;
 
 public class WorldwideRepositoryImpl implements WorldwideRepository{
     private CountryDao countryDao;

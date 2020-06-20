@@ -10,7 +10,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/foregroundColor2"
-    tools:context="com.force.codes.project.app.presentation_layer.views.fragments.favorites.FavoritesFragment">
+    tools:context="com.force.codes.project.app.presentation_layer.views.fragments.favorites.HelpCenterFragment">
 
     <TextView
         android:layout_width="match_parent"

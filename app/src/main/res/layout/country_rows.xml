@@ -12,7 +12,7 @@
     <data>
         <variable
             name="details"
-            type="com.force.codes.project.app.model.CountryDetails" />
+            type="com.force.codes.project.app.data_layer.model.CountryDetails" />
     </data>
 
     <androidx.cardview.widget.CardView

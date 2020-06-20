@@ -1,3 +1,10 @@
+/*
+ * Created by Force Porquillo on 6/19/20 2:13 PM
+ * FEU Institute of Technology
+ * Copyright (c) 2020.  All rights reserved.
+ * Last modified 6/19/20 2:13 PM
+ */
+
 package com.force.codes.project.app.data_layer.model;
 
 /*

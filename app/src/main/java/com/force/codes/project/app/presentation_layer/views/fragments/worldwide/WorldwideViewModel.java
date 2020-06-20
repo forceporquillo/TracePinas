@@ -12,7 +12,7 @@ import androidx.lifecycle.ViewModel;
 import androidx.paging.PagedList;
 
 import com.force.codes.project.app.data_layer.repositories.worldwide.WorldwideRepository;
-import com.force.codes.project.app.model.CountryDetails;
+import com.force.codes.project.app.data_layer.model.CountryDetails;
 import com.force.codes.project.app.presentation_layer.controller.custom.interfaces.OnRequestResponse;
 import com.force.codes.project.app.service.executors.AppExecutors;
 

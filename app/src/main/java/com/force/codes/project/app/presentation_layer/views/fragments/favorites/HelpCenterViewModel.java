@@ -8,6 +8,6 @@ package com.force.codes.project.app.presentation_layer.views.fragments.favorites
 
 import androidx.lifecycle.ViewModel;
 
-public class FavoritesViewModel extends ViewModel{
+public class HelpCenterViewModel extends ViewModel{
     // TODO: Implement the ViewModel
 }

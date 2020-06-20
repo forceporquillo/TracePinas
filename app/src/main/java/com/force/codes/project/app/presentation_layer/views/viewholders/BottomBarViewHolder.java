@@ -5,7 +5,7 @@
  * Last modified 6/16/20 8:30 AM
  */
 
-package com.force.codes.project.app.presentation_layer.controller.view;
+package com.force.codes.project.app.presentation_layer.views.viewholders;
 
 import android.graphics.Color;
 import android.view.View;

@@ -13,7 +13,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.force.codes.project.app.data_layer.repositories.live.LiveOverviewRepository;
-import com.force.codes.project.app.model.WorldData;
+import com.force.codes.project.app.data_layer.model.WorldData;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;

@@ -7,7 +7,7 @@ package com.force.codes.project.app.data_layer.repositories.live;
  *
  */
 
-import com.force.codes.project.app.model.WorldData;
+import com.force.codes.project.app.data_layer.model.WorldData;
 
 import io.reactivex.Flowable;
 

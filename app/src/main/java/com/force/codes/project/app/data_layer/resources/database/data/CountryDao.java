@@ -24,7 +24,7 @@ import androidx.room.Transaction;
 import androidx.room.Update;
 
 import com.force.codes.project.app.data_layer.resources.database.DBConstants;
-import com.force.codes.project.app.model.CountryDetails;
+import com.force.codes.project.app.data_layer.model.CountryDetails;
 
 import java.util.List;
 
