@@ -1,13 +1,10 @@
-## HENLO FREN
-A COVID19 tracker and self-assessment test app 
-(Inspired from Corona Tracker a web-version)
-=======
-WALA PANG PROJECT DESCRIPTION DI PA TAPOS.
+# COVID19
+A COVID19 statistics tracker and self-assessment test app.
+(Inspired from Corona Tracker a web-version).
 
 ## Getting Started
 
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
->>>>>>> 62c2a9ab57b37f55eef4541370a5555294caf470
 
 ## Summary
 -   Use  [MVVM](https://en.wikipedia.org/wiki/Model_View_ViewModel)  using  [architecture components](https://developer.android.com/topic/libraries/architecture/index.html)  with to separate Android Framework with a  [clean architecture](http://blog.8thlight.com/uncle-bob/2012/08/13/the-clean-architecture.html)  to my domain logic.
