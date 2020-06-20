@@ -25,10 +25,6 @@ public interface WorldwideRepository{
     void saveDatabase(List<CountryDetails> details);
 
     void updateFavorites(CountryDetails details);
-
-    Flowable<Response> getResponseFromNetwork();
-
-    void insertResponse(Response response);
 }
 
 

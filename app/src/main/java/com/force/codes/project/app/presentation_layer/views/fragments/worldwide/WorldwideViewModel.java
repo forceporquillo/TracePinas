@@ -57,13 +57,6 @@ public class WorldwideViewModel extends ViewModel{
         return listLiveData;
     }
 
-    public void addTestData(){
-        compositeDisposable.add(repository.getResponseFromNetwork()
-                .subscribeOn(Schedulers.computation())
-                .doOnError(Timber::e)
-                .subscribe(repository::insertResponse));
-    }
-
     public void getDataFromNetwork(){
         compositeDisposable.add(Flowable.just(1)
                 .subscribeOn(Schedulers.computation())
@@ -88,40 +81,17 @@ public class WorldwideViewModel extends ViewModel{
         );
     }
 
-    /**
-     * This {@return null} when in offline mode and observable Long when
-     * connected. We only emmit updated time from remote service.
-     * <p>
-     * This observes changes when connected to the network.
-     */
     public ObservableLong getTimeUpdate(){
         return longDate;
     }
 
-    /**
-     * This updates our favorite local repository
-     * table whenever we add or remove data.
-     * <p>
-     * {@link AppExecutors} database queries are run in a custom ThreadPool.
-     *
-     * @param details providing data to update our local repository.
-     */
+
     public void addOrRemoveFavorites(CountryDetails details){
         appExecutors.diskIO().execute(() ->
                 repository.updateFavorites(details));
     }
 
-    /**
-     * This disposed our {@link Flowable} observable to prevent memory leaks.
-     * This method will be called whenever this {@link ViewModel} is no
-     * longer used and or {@link WorldwideFragment} has been destroyed.
-     * <p>
-     * We attached our {@link CompositeDisposable} in this {@method onCleared()}
-     * to help us ease in clearing observables when ending a stream.
-     * <p>
-     * Since this {@link WorldwideViewModel} is lifeCycle aware to its
-     * parent host {@link WorldwideFragment}.
-     */
+
     @Override
     protected void onCleared(){
         super.onCleared();

@@ -70,15 +70,4 @@ public class WorldwideRepositoryImpl implements WorldwideRepository{
         executors.diskIO().execute(() ->
                 countryDao.insertOrRemoveFavorites(details));
     }
-
-    @Override
-    public Flowable<Response> getResponseFromNetwork(){
-       return serviceAdapter.getResponse();
-    }
-
-    @Override
-    public void insertResponse(Response response){
-        executors.diskIO().execute(() ->
-                countryDao.insertData(response));
-    }
 }
