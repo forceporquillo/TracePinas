@@ -1,4 +1,5 @@
-linguist-language=Java
+*.java linguist-language=Java
 linguist-language=Kotlin
 linguist-language=XML
 linguist-language=JSON
+*.sql linguist-detectable = true
