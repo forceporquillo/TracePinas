@@ -22,7 +22,7 @@ import leakcanary.AppWatcher;
 import leakcanary.ObjectWatcher;
 import timber.log.Timber;
 
-public class MyApplication extends Application{
+public class GlobalApplication extends Application{
     @Override
     public void onCreate(){
         super.onCreate();
@@ -33,7 +33,8 @@ public class MyApplication extends Application{
             Timber.plant(new Timber.DebugTree());
             AppWatcher.getConfig().getWatchActivities();
             AppWatcher.getConfig().getWatchFragments();
-            ObjectWatcher objectWatcher = AppWatcher.INSTANCE.getObjectWatcher();
+            ObjectWatcher objectWatcher = AppWatcher.INSTANCE
+                    .getObjectWatcher();
             objectWatcher.getRetainedObjectCount();
         }else{
             Timber.plant(new CrashReportingTree());
