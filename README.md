@@ -1,7 +1,4 @@
-# COVID19
-A COVID19 statistics tracker and self-assessment test app.
-(Inspired from Corona Tracker a web-version).
-
+[![Foo](https://flowapp.info/backers/)](https://www.buymeacoffee.com/forcecodes)
 ## Getting Started
 
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
