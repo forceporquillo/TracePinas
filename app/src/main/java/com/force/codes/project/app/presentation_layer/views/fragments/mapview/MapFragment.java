@@ -50,6 +50,8 @@ public class MapFragment extends BaseFragment implements OnMapReadyCallback{
 
     MapViewModel mapViewModel;
 
+    private Boolean success;
+
     public MapFragment(){
         // Required empty public constructor
     }
@@ -67,7 +69,7 @@ public class MapFragment extends BaseFragment implements OnMapReadyCallback{
         this.googleMap = googleMap;
 
         try{
-            googleMap.setMapStyle(MapStyleOptions
+            success = googleMap.setMapStyle(MapStyleOptions
                     .loadRawResourceStyle(view.getContext(), R.raw.map_style_milk));
         } catch(Resources.NotFoundException e){
             Timber.e(e);
@@ -81,35 +83,41 @@ public class MapFragment extends BaseFragment implements OnMapReadyCallback{
 
         mapViewModel.getLiveData().observe(this, listData -> {
             if(listData.getData().size() == 0){
-                new Handler().postDelayed(() -> {
-                    for(int i = 0; i < listData.getData().size(); ++i){
+                mapViewModel.getDataFromNetwork();
+            } else{
+                if(success){
+                    new Handler().postDelayed(() -> {
+                        for(int i = 0; i < 500; ++i){
 
-                        String latitude = listData.getData().get(i).getLatitude();
-                        String longitude = listData.getData().get(i).getLongitude();
+                            String latitude = listData.getData().get(i).getLatitude();
+                            String longitude = listData.getData().get(i).getLongitude();
 
-                        assert longitude != null;
-                        assert latitude != null;
+                            assert longitude != null;
+                            assert latitude != null;
 
-                        if(!latitude.equals("") && !longitude.equals("")){
-                            double lat = Double.parseDouble(latitude);
-                            double lng = Double.parseDouble(longitude);
+                            if(!latitude.equals("") && !longitude.equals("")){
+                                double lat = Double.parseDouble(latitude);
+                                double lng = Double.parseDouble(longitude);
 
-                            LatLng latLng = new LatLng(lat, lng);
-                            LatLng ph = new LatLng(16.566233, 121.262634);
+                                LatLng latLng = new LatLng(lat, lng);
+                                LatLng ph = new LatLng(16.566233, 121.262634);
 
-                            googleMap.moveCamera(CameraUpdateFactory
-                                    .newCameraPosition(new CameraPosition(ph, 1, 0, 0))
-                            );
+                                googleMap.moveCamera(CameraUpdateFactory
+                                        .newCameraPosition(new CameraPosition(ph, 1, 0, 0))
+                                );
 
-                            googleMap.addCircle(new CircleOptions()
-                                    .center(latLng)
-                                    .radius(1000)
-                                    .strokeWidth(1)
-                                    .strokeColor(Color.RED)
-                                    .fillColor(Color.RED)); // transparent
+                                googleMap.addCircle(new CircleOptions()
+                                        .center(latLng)
+                                        .radius(500)
+                                        .strokeWidth(1)
+                                        .strokeColor(Color.RED)
+                                        .fillColor(Color.RED)); // transparent
+                            }
                         }
-                    }
-                }, 50);
+                    }, 0);
+                }else{
+
+                }
             }
         });
     }
@@ -134,7 +142,6 @@ public class MapFragment extends BaseFragment implements OnMapReadyCallback{
     @Override
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
-
         MapViewModelFactory modelFactory = Injection
                 .providesMapViewModelFactory();
         mapViewModel = new ViewModelProvider(this, modelFactory)
