@@ -54,7 +54,7 @@ public class Injection{
     private static MapRepositoryImpl providesMapDataSource(){
         LocalDatabase localDatabase = LocalDatabase.getInstance();
         RetrofitClient retrofitClient = RetrofitClient.getInstance(ApiConstants.LOCAL_URL);
-        return new MapRepositoryImpl(localDatabase.mapDao(), retrofitClient.providesApiServiceAdapter());
+        return new MapRepositoryImpl(localDatabase.mapDao(), retrofitClient.providesApiServiceAdapter(), new AppExecutors());
     }
 }
 
