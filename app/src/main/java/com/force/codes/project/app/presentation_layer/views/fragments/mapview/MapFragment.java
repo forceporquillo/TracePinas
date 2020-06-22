@@ -14,7 +14,6 @@ import android.graphics.Color;
 import android.location.Location;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -136,64 +135,41 @@ public class MapFragment extends BaseFragment implements
         super.onStart();
         mapView.onStart();
         mapViewModel.getLocalLiveData().observe(this, listData -> {
-            if(listData.getData().size() == 0){
-                // if no data present in DB fetch from network api.
-                mapViewModel.getDataFromNetwork();
-            } else{
-                // reducing time complexity by decoupling necessary
-                // data since our listData is nested list of objects.
-                final ArrayList<LatLng> latLang = new ArrayList<>();
-                final Map<LatLng, Integer> mapOfCases = new HashMap<>();
+            final ArrayList<LatLng> latLang = new ArrayList<>();
+            final Map<LatLng, Integer> mapOfCases = new HashMap<>();
 
-                // check if data is verified and not null. if not,
-                // iterate each list of geo. coordinates, parse
-                // string as double and add to arrayList.
-                // Run data computation on separate custom thread.
-                executors.computationalThread().execute(() -> {
-                    listData.getData().forEach(phDataSet -> {
-                        String stringLat = phDataSet.getLatitude();
-                        String stringLng = phDataSet.getLongitude();
+            executors.computationalThread().execute(() -> {
+                listData.getData().forEach(phDataSet -> {
+                    String stringLat = phDataSet.getLatitude();
+                    String stringLng = phDataSet.getLongitude();
 
-                        assert stringLat != null;
-                        assert stringLng != null;
+                    assert stringLat != null;
+                    assert stringLng != null;
 
-                        if(!stringLat.equals("") && !stringLng.equals("")){
-                            double lat = Double.parseDouble(stringLat);
-                            double lang = Double.parseDouble(stringLng);
-                            LatLng latLng = new LatLng(lat, lang);
-                            latLang.add(latLng);
-                        }
-                    });
-
-                    // TODO: reduce time complexity since we have 32,000+ data.
-                    // we only need 1 coordinate representative in each location.
-                    // finding duplicate coordinates using hashMap and instead of
-                    // iterating each list and adding to map where complexity is O(k+logN),
-                    // thus this results in app unresponsive. So, we linearly scan and
-                    // find each case with same coordinate and respectively adds these
-                    // cases in a particular coordinate as cases counts.
-                    latLang.forEach(latLng -> {
-                        if(mapOfCases.containsKey(latLng)){
-                            mapOfCases.put(latLng, mapOfCases.get(latLng) + 1);
-                        } else{
-                            mapOfCases.put(latLng, 1);
-                        }
-                    });
-
-                    if(getActivity() == null)
-                        return;
-
-                    if(!permissionDenied){
-                        // update UI thread
-                        // iterating each coordinates and adding circular cluster
-                        // marker to google map together with numCases as popup title.
-                        getActivity().runOnUiThread(() -> {
-                            if(success) new Handler().postDelayed(() -> mapOfCases
-                                    .forEach((latLng, cases) -> addCircles(latLng)), 150);
-                        });
+                    if(!stringLat.isEmpty() && !stringLng.isEmpty()){
+                        latLang.add(new LatLng(
+                                Double.parseDouble(stringLat),
+                                Double.parseDouble(stringLng))
+                        );
                     }
                 });
-            }
+
+                latLang.forEach(latLng -> {
+                    if(mapOfCases.containsKey(latLng)){
+                        mapOfCases.put(latLng, mapOfCases.get(latLng) + 1);
+                    } else{
+                        mapOfCases.put(latLng, 1);
+                    }
+                });
+
+                if(!permissionDenied){
+                    executors.mainHandler().execute(() -> {
+                        if(success){
+                            mapOfCases.forEach((latLng, cases) -> addCircles(latLng));
+                        }
+                    });
+                }
+            });
         });
     }
 
@@ -264,7 +240,7 @@ public class MapFragment extends BaseFragment implements
                 .providesMapViewModelFactory();
         mapViewModel = new ViewModelProvider(this, modelFactory)
                 .get(MapViewModel.class);
-        //mapViewModel.getDataFromNetwork();
+        mapViewModel.getDataFromNetwork();
     }
 
     @Override
