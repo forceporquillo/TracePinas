@@ -7,21 +7,30 @@ package com.force.codes.project.app.presentation_layer.views.fragments.mapview;
  *
  */
 
+import android.Manifest;
+import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.graphics.Color;
+import android.location.Location;
+import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.force.codes.project.app.R;
 import com.force.codes.project.app.app.Injection;
 import com.force.codes.project.app.factory.MapViewModelFactory;
 import com.force.codes.project.app.presentation_layer.views.fragments.BaseFragment;
+import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
@@ -31,6 +40,11 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MapStyleOptions;
+import com.google.android.gms.maps.model.Marker;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -38,19 +52,22 @@ import butterknife.Unbinder;
 import timber.log.Timber;
 
 
-public class MapFragment extends BaseFragment implements OnMapReadyCallback{
+public class MapFragment extends BaseFragment implements
+        GoogleMap.OnMyLocationButtonClickListener, GoogleMap.OnMyLocationClickListener,
+        OnMapReadyCallback, GoogleMap.OnMarkerClickListener, ActivityCompat.OnRequestPermissionsResultCallback{
 
     @BindView(R.id.map_view)
     MapView mapView;
 
-    private GoogleMap googleMap;
+    private GoogleMap map;
 
     private Unbinder unbinder;
     private View view;
+    private MapViewModel mapViewModel;
 
-    MapViewModel mapViewModel;
-
-    private Boolean success;
+    private static final int LOCATION_PERMISSION_REQUEST_CODE = 1;
+    private boolean permissionDenied = false;
+    private boolean success;
 
     public MapFragment(){
         // Required empty public constructor
@@ -66,60 +83,165 @@ public class MapFragment extends BaseFragment implements OnMapReadyCallback{
 
     @Override
     public void onMapReady(GoogleMap googleMap){
-        this.googleMap = googleMap;
+        map = googleMap;
 
         try{
             success = googleMap.setMapStyle(MapStyleOptions
-                    .loadRawResourceStyle(view.getContext(), R.raw.map_style_milk));
+                    .loadRawResourceStyle(view.getContext(),
+                            R.raw.map_style_milk));
         } catch(Resources.NotFoundException e){
             Timber.e(e);
         }
+
+        LatLng latLng = new LatLng(12.8797, 121.7740);
+
+        googleMap.setMinZoomPreference(2);
+        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 6));
+
+        googleMap.setOnMyLocationButtonClickListener(this);
+        googleMap.setOnMyLocationClickListener(this);
+
+        enableLocation();
     }
 
+    @Override
+    public boolean onMarkerClick(Marker marker){
+        CameraPosition cameraPosition = new CameraPosition.Builder()
+                .zoom(10)
+                .build();
+
+        CameraUpdate cameraUpdate = CameraUpdateFactory.newCameraPosition(cameraPosition);
+        map.animateCamera(cameraUpdate);
+
+        return true;
+    }
+
+    @Override
+    public void onMyLocationClick(@NonNull Location location){
+
+    }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        if(permissionDenied){
+            //TODO: add dialogue fragment.
+            permissionDenied = false;
+        }
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public void onStart(){
         super.onStart();
         mapView.onStart();
-
-        mapViewModel.getLiveData().observe(this, listData -> {
+        mapViewModel.getLocalLiveData().observe(this, listData -> {
             if(listData.getData().size() == 0){
+                // if no data present in DB.,
+                // fetch from network api.
                 mapViewModel.getDataFromNetwork();
             } else{
+                // check if map style is initialize
                 if(success){
-                    new Handler().postDelayed(() -> {
-                        for(int i = 0; i < 500; ++i){
+                    // reducing time complexity
+                    final Map<LatLng, Integer> mapOfCasesPerCoordinates = new HashMap<>();
+                    final ArrayList<LatLng> latLang = new ArrayList<>();
 
-                            String latitude = listData.getData().get(i).getLatitude();
-                            String longitude = listData.getData().get(i).getLongitude();
+                    // check if data is verified and not null.
+                    // if not, iterate each list of geo. coordinates, parse
+                    // string as double and add to arrayList.
+                    new Thread(() -> {
+                        listData.getData()
+                                .forEach(phDataSet -> {
+                                    String stringLat = phDataSet.getLatitude();
+                                    String stringLng = phDataSet.getLongitude();
 
-                            assert longitude != null;
-                            assert latitude != null;
+                                    assert stringLat != null;
+                                    assert stringLng != null;
 
-                            if(!latitude.equals("") && !longitude.equals("")){
-                                double lat = Double.parseDouble(latitude);
-                                double lng = Double.parseDouble(longitude);
+                                    if(!stringLat.equals("") && !stringLng.equals("")){
+                                        double lat = Double.parseDouble(stringLat);
+                                        double lang = Double.parseDouble(stringLng);
+                                        LatLng latLng = new LatLng(lat, lang);
+                                        latLang.add(latLng);
+                                    }
+                                });
 
-                                LatLng latLng = new LatLng(lat, lng);
-                                LatLng ph = new LatLng(16.566233, 121.262634);
+                        // TODO: This reduce time complexity since we have 32,000+ data.
+                        // we only need 1 coordinate representative in each location.
+                        // finding duplicate coordinates using hashMap and instead of
+                        // iterating each list, we linearly scan and find cases
+                        // with same coordinate and respectively add these cases
+                        // in a particular coordinate in numOfCasesPerCoordinates map.
+                        latLang.forEach(latLng -> {
+                            try{
+                                if(mapOfCasesPerCoordinates.containsKey(latLng)){
+                                    mapOfCasesPerCoordinates.put(latLng,
+                                            mapOfCasesPerCoordinates.get(latLng) + 1);
+                                } else{
+                                    mapOfCasesPerCoordinates.put(latLng, 1);
+                                }
+                            } catch(NullPointerException e){
+                                Timber.e(e);
+                            }
+                        });
 
-                                googleMap.moveCamera(CameraUpdateFactory
-                                        .newCameraPosition(new CameraPosition(ph, 1, 0, 0))
+                        if(getActivity() == null){
+                            return;
+                        }
+
+
+                        getActivity().runOnUiThread(() -> {
+                            // iterating each coordinates and put a circular
+                            // marker to google map together with numCases.
+                            mapOfCasesPerCoordinates.forEach((gc, numCases) -> {
+                                map.addCircle(new CircleOptions()
+                                        .center(new LatLng(gc.latitude, gc.longitude))
+                                        .radius(1500)
+                                        .strokeWidth(2)
+                                        .strokeColor(Color.RED)
+                                        .fillColor(Color.argb(50, 255, 3, 3))
                                 );
 
-                                googleMap.addCircle(new CircleOptions()
-                                        .center(latLng)
-                                        .radius(500)
-                                        .strokeWidth(1)
-                                        .strokeColor(Color.RED)
-                                        .fillColor(Color.RED)); // transparent
-                            }
-                        }
-                    }, 0);
-                }else{
-
+                                System.out.println("total num of cases " + numCases + " in coordinate " + gc);
+                            });
+                        });
+                    }).start();
                 }
             }
         });
+    }
+
+    private void enableLocation(){
+        if(ContextCompat.checkSelfPermission(view.getContext(),
+                Manifest.permission.ACCESS_FINE_LOCATION) ==
+                PackageManager.PERMISSION_GRANTED){
+            if(map != null){
+                map.setMyLocationEnabled(true);
+            }
+        } else{
+            requestPermissions(new String[]{
+                    Manifest.permission.ACCESS_COARSE_LOCATION,
+                    android.Manifest.permission.ACCESS_FINE_LOCATION
+            }, LOCATION_PERMISSION_REQUEST_CODE);
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults){
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        if(requestCode == LOCATION_PERMISSION_REQUEST_CODE){
+            enableLocation();
+        } else{
+            permissionDenied = true;
+        }
+    }
+
+    @Override
+    public boolean onMyLocationButtonClick(){
+        Toast.makeText(view.getContext(), "Current location:", Toast.LENGTH_LONG).show();
+        return false;
     }
 
     @Override
@@ -146,12 +268,13 @@ public class MapFragment extends BaseFragment implements OnMapReadyCallback{
                 .providesMapViewModelFactory();
         mapViewModel = new ViewModelProvider(this, modelFactory)
                 .get(MapViewModel.class);
+
+        mapViewModel.getDataFromNetwork();
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState){
         super.onActivityCreated(savedInstanceState);
-
     }
 
     @Override
@@ -163,8 +286,8 @@ public class MapFragment extends BaseFragment implements OnMapReadyCallback{
             mapView = null;
         }
 
-        if(googleMap != null){
-            googleMap = null;
+        if(map != null){
+            map = null;
         }
 
         unbinder.unbind();
