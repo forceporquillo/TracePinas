@@ -14,6 +14,7 @@ import android.graphics.Color;
 import android.location.Location;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -56,16 +57,13 @@ public class MapFragment extends BaseFragment implements
         GoogleMap.OnMyLocationButtonClickListener, GoogleMap.OnMyLocationClickListener,
         OnMapReadyCallback, GoogleMap.OnMarkerClickListener, ActivityCompat.OnRequestPermissionsResultCallback{
 
+    private static final int LOCATION_PERMISSION_REQUEST_CODE = 1;
     @BindView(R.id.map_view)
     MapView mapView;
-
     private GoogleMap map;
-
     private Unbinder unbinder;
     private View view;
     private MapViewModel mapViewModel;
-
-    private static final int LOCATION_PERMISSION_REQUEST_CODE = 1;
     private boolean permissionDenied = false;
     private boolean success;
 
@@ -141,15 +139,18 @@ public class MapFragment extends BaseFragment implements
                 // fetch from network api.
                 mapViewModel.getDataFromNetwork();
             } else{
+                // TODO: add global cases.
                 // check if map style is initialize
                 if(success){
-                    // reducing time complexity
+                    // reducing time complexity by decoupling necessary
+                    // data since our listData is nested list of objects.
                     final Map<LatLng, Integer> mapOfCasesPerCoordinates = new HashMap<>();
                     final ArrayList<LatLng> latLang = new ArrayList<>();
 
-                    // check if data is verified and not null.
-                    // if not, iterate each list of geo. coordinates, parse
+                    // check if data is verified and not null. if not,
+                    // iterate each list of geo. coordinates, parse
                     // string as double and add to arrayList.
+                    // Run data computation on separate thread.
                     new Thread(() -> {
                         listData.getData()
                                 .forEach(phDataSet -> {
@@ -172,7 +173,7 @@ public class MapFragment extends BaseFragment implements
                         // finding duplicate coordinates using hashMap and instead of
                         // iterating each list, we linearly scan and find cases
                         // with same coordinate and respectively add these cases
-                        // in a particular coordinate in numOfCasesPerCoordinates map.
+                        // in a particular coordinate as num cases counts.
                         latLang.forEach(latLng -> {
                             try{
                                 if(mapOfCasesPerCoordinates.containsKey(latLng)){
@@ -190,22 +191,26 @@ public class MapFragment extends BaseFragment implements
                             return;
                         }
 
+                        // check if permission is granted
+                        if(permissionDenied){
+                            getActivity().runOnUiThread(() -> {
+                                // iterating each coordinates and adding circular cluster
+                                // marker to google map together with numCases as popup title.
+                                new Handler().postDelayed(() ->
+                                        mapOfCasesPerCoordinates.forEach((gc, numCases) -> {
+                                                    map.addCircle(new CircleOptions()
+                                                            .center(new LatLng(gc.latitude, gc.longitude))
+                                                            .radius(1500)
+                                                            .strokeWidth(2)
+                                                            .strokeColor(Color.RED)
+                                                            .fillColor(Color.argb(50, 255, 3, 3))
+                                                    );
 
-                        getActivity().runOnUiThread(() -> {
-                            // iterating each coordinates and put a circular
-                            // marker to google map together with numCases.
-                            mapOfCasesPerCoordinates.forEach((gc, numCases) -> {
-                                map.addCircle(new CircleOptions()
-                                        .center(new LatLng(gc.latitude, gc.longitude))
-                                        .radius(1500)
-                                        .strokeWidth(2)
-                                        .strokeColor(Color.RED)
-                                        .fillColor(Color.argb(50, 255, 3, 3))
+                                                    System.out.println("total num of cases " + numCases + " in coordinate " + gc);
+                                                }), 350
                                 );
-
-                                System.out.println("total num of cases " + numCases + " in coordinate " + gc);
                             });
-                        });
+                        }
                     }).start();
                 }
             }
