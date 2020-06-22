@@ -31,6 +31,7 @@ import com.force.codes.project.app.R;
 import com.force.codes.project.app.app.Injection;
 import com.force.codes.project.app.factory.MapViewModelFactory;
 import com.force.codes.project.app.presentation_layer.views.fragments.BaseFragment;
+import com.force.codes.project.app.service.executors.AppExecutors;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -66,6 +67,7 @@ public class MapFragment extends BaseFragment implements
     private MapViewModel mapViewModel;
     private boolean permissionDenied = false;
     private boolean success;
+    private AppExecutors executors;
 
     public MapFragment(){
         // Required empty public constructor
@@ -135,86 +137,74 @@ public class MapFragment extends BaseFragment implements
         mapView.onStart();
         mapViewModel.getLocalLiveData().observe(this, listData -> {
             if(listData.getData().size() == 0){
-                // if no data present in DB.,
-                // fetch from network api.
+                // if no data present in DB fetch from network api.
                 mapViewModel.getDataFromNetwork();
             } else{
-                // TODO: add global cases.
-                // check if map style is initialize
-                if(success){
-                    // reducing time complexity by decoupling necessary
-                    // data since our listData is nested list of objects.
-                    final Map<LatLng, Integer> mapOfCasesPerCoordinates = new HashMap<>();
-                    final ArrayList<LatLng> latLang = new ArrayList<>();
+                // reducing time complexity by decoupling necessary
+                // data since our listData is nested list of objects.
+                final ArrayList<LatLng> latLang = new ArrayList<>();
+                final Map<LatLng, Integer> mapOfCases = new HashMap<>();
 
-                    // check if data is verified and not null. if not,
-                    // iterate each list of geo. coordinates, parse
-                    // string as double and add to arrayList.
-                    // Run data computation on separate thread.
-                    new Thread(() -> {
-                        listData.getData()
-                                .forEach(phDataSet -> {
-                                    String stringLat = phDataSet.getLatitude();
-                                    String stringLng = phDataSet.getLongitude();
+                // check if data is verified and not null. if not,
+                // iterate each list of geo. coordinates, parse
+                // string as double and add to arrayList.
+                // Run data computation on separate custom thread.
+                executors.computationalThread().execute(() -> {
+                    listData.getData().forEach(phDataSet -> {
+                        String stringLat = phDataSet.getLatitude();
+                        String stringLng = phDataSet.getLongitude();
 
-                                    assert stringLat != null;
-                                    assert stringLng != null;
+                        assert stringLat != null;
+                        assert stringLng != null;
 
-                                    if(!stringLat.equals("") && !stringLng.equals("")){
-                                        double lat = Double.parseDouble(stringLat);
-                                        double lang = Double.parseDouble(stringLng);
-                                        LatLng latLng = new LatLng(lat, lang);
-                                        latLang.add(latLng);
-                                    }
-                                });
+                        if(!stringLat.equals("") && !stringLng.equals("")){
+                            double lat = Double.parseDouble(stringLat);
+                            double lang = Double.parseDouble(stringLng);
+                            LatLng latLng = new LatLng(lat, lang);
+                            latLang.add(latLng);
+                        }
+                    });
 
-                        // TODO: This reduce time complexity since we have 32,000+ data.
-                        // we only need 1 coordinate representative in each location.
-                        // finding duplicate coordinates using hashMap and instead of
-                        // iterating each list, we linearly scan and find cases
-                        // with same coordinate and respectively add these cases
-                        // in a particular coordinate as num cases counts.
-                        latLang.forEach(latLng -> {
-                            try{
-                                if(mapOfCasesPerCoordinates.containsKey(latLng)){
-                                    mapOfCasesPerCoordinates.put(latLng,
-                                            mapOfCasesPerCoordinates.get(latLng) + 1);
-                                } else{
-                                    mapOfCasesPerCoordinates.put(latLng, 1);
-                                }
-                            } catch(NullPointerException e){
-                                Timber.e(e);
-                            }
+                    // TODO: reduce time complexity since we have 32,000+ data.
+                    // we only need 1 coordinate representative in each location.
+                    // finding duplicate coordinates using hashMap and instead of
+                    // iterating each list and adding to map where complexity is O(k+logN),
+                    // thus this results in app unresponsive. So, we linearly scan and
+                    // find each case with same coordinate and respectively adds these
+                    // cases in a particular coordinate as cases counts.
+                    latLang.forEach(latLng -> {
+                        if(mapOfCases.containsKey(latLng)){
+                            mapOfCases.put(latLng, mapOfCases.get(latLng) + 1);
+                        } else{
+                            mapOfCases.put(latLng, 1);
+                        }
+                    });
+
+                    if(getActivity() == null)
+                        return;
+
+                    if(!permissionDenied){
+                        // update UI thread
+                        // iterating each coordinates and adding circular cluster
+                        // marker to google map together with numCases as popup title.
+                        getActivity().runOnUiThread(() -> {
+                            if(success) new Handler().postDelayed(() -> mapOfCases
+                                    .forEach((latLng, cases) -> addCircles(latLng)), 150);
                         });
-
-                        if(getActivity() == null){
-                            return;
-                        }
-
-                        // check if permission is granted
-                        if(permissionDenied){
-                            getActivity().runOnUiThread(() -> {
-                                // iterating each coordinates and adding circular cluster
-                                // marker to google map together with numCases as popup title.
-                                new Handler().postDelayed(() ->
-                                        mapOfCasesPerCoordinates.forEach((gc, numCases) -> {
-                                                    map.addCircle(new CircleOptions()
-                                                            .center(new LatLng(gc.latitude, gc.longitude))
-                                                            .radius(1500)
-                                                            .strokeWidth(2)
-                                                            .strokeColor(Color.RED)
-                                                            .fillColor(Color.argb(50, 255, 3, 3))
-                                                    );
-
-                                                    System.out.println("total num of cases " + numCases + " in coordinate " + gc);
-                                                }), 350
-                                );
-                            });
-                        }
-                    }).start();
-                }
+                    }
+                });
             }
         });
+    }
+
+    private void addCircles(LatLng gc){
+        map.addCircle(new CircleOptions()
+                .center(new LatLng(gc.latitude, gc.longitude))
+                .radius(1500)
+                .strokeWidth(2)
+                .strokeColor(Color.RED)
+                .fillColor(Color.argb(50, 255, 3, 3)));
+
     }
 
     private void enableLocation(){
@@ -269,12 +259,12 @@ public class MapFragment extends BaseFragment implements
     @Override
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
+        executors = new AppExecutors();
         MapViewModelFactory modelFactory = Injection
                 .providesMapViewModelFactory();
         mapViewModel = new ViewModelProvider(this, modelFactory)
                 .get(MapViewModel.class);
-
-        mapViewModel.getDataFromNetwork();
+        //mapViewModel.getDataFromNetwork();
     }
 
     @Override
