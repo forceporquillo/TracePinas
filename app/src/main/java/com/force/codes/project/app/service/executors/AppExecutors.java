@@ -45,7 +45,7 @@ public class AppExecutors{
         return networkIO;
     }
 
-    public Executor publishOnUIThread(){
+    public Executor mainHandler(){
         return mainThread;
     }
 
@@ -58,7 +58,7 @@ public class AppExecutors{
 
         @Override
         public void execute(@NotNull Runnable command){
-            mainThreadHandler.post(command);
+            mainThreadHandler.postDelayed(command, 150);
         }
     }
 }
