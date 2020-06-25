@@ -10,6 +10,7 @@ package com.force.codes.project.app.presentation_layer.views.activities.containe
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
+import android.view.WindowManager;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -30,10 +31,6 @@ import com.force.codes.project.app.presentation_layer.views.fragments.newsfeed.N
 import com.force.codes.project.app.presentation_layer.views.fragments.worldwide.WorldwideFragment;
 
 import org.jetbrains.annotations.NotNull;
-
-import leakcanary.AppWatcher;
-import leakcanary.ObjectWatcher;
-import timber.log.Timber;
 
 public class FragmentContainerActivity extends BaseActivity implements BottomItemListener{
     private static final String SAVE_FRAGMENT_STATE = "save_fragment_state";
@@ -69,27 +66,33 @@ public class FragmentContainerActivity extends BaseActivity implements BottomIte
     protected void onCreate(@Nullable Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fragment_manager);
-        CustomBottomBar bottomBar = new CustomBottomBar(findViewById(R.id.bottom_bar), this, this);
 
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT){
+        CustomBottomBar bottomBar = new CustomBottomBar(
+                findViewById(R.id.bottom_bar),
+                this, this);
+
+        int versionCode = Build.VERSION.SDK_INT;
+        if(versionCode >= Build.VERSION_CODES.LOLLIPOP_MR1){
             getWindow().getDecorView()
                     .setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+//            getWindow().setFlags(
+//                    WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
+//                    WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
+//            );
         }
 
+        if(Build.VERSION.SDK_INT >= 22){
+            getWindow().setFlags(WindowManager.LayoutParams.FLAG_HARDWARE_ACCELERATED,
+                    WindowManager.LayoutParams.FLAG_HARDWARE_ACCELERATED);
+        }
 
-
-        if(savedInstanceState != null)
-            fragment =
-
-                    getSupportFragmentManager()
-                            .
-
-                                    getFragment(savedInstanceState, SAVE_FRAGMENT_STATE);
+        if(savedInstanceState != null){
+            fragment = getSupportFragmentManager()
+                    .getFragment(savedInstanceState, SAVE_FRAGMENT_STATE);
+        }
 
         setPrimaryFragment(savedInstanceState);
-
         setBottomBarItems(bottomBar);
-
     }
 
     final void setPrimaryFragment(Bundle savedInstanceState){
