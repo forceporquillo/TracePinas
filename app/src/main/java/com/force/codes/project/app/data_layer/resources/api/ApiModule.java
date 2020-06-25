@@ -7,7 +7,7 @@ package com.force.codes.project.app.data_layer.resources.api;
  *
  */
 
-public class ApiConstants{
+public class ApiModule{
     public static final String CORONA_SORTED = "https://corona.lmao.ninja/v2/countries?sort=cases";
     public static final String CORONA_GLOBAL_CASES = "https://corona.lmao.ninja/v2/all";
     public static final String LOCAL_URL = "https://coronavirus-ph-api.herokuapp.com/doh-data-drop";

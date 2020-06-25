@@ -27,8 +27,8 @@ public class RetrofitClient{
                 .build();
     }
 
-    final static OkHttpClient providesOkHttpClient
-            = new OkHttpClient.Builder()
+    final static OkHttpClient providesOkHttpClient =
+            new OkHttpClient.Builder()
             .connectTimeout(10, TimeUnit.SECONDS)
             .writeTimeout(10, TimeUnit.SECONDS)
             .addInterceptor(providesInterceptor())
