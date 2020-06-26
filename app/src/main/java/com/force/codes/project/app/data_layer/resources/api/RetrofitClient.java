@@ -18,17 +18,17 @@ public class RetrofitClient{
     private static RetrofitClient INSTANCE;
     private static Retrofit retrofit;
 
-    private RetrofitClient(String baseUrl){
+    private RetrofitClient(){
         retrofit = new Retrofit.Builder()
-                .baseUrl(baseUrl)
+                .baseUrl("https://corona.lmao.ninja/v2/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .client(providesOkHttpClient)
                 .build();
     }
 
-    final static OkHttpClient providesOkHttpClient
-            = new OkHttpClient.Builder()
+    final static OkHttpClient providesOkHttpClient =
+            new OkHttpClient.Builder()
             .connectTimeout(10, TimeUnit.SECONDS)
             .writeTimeout(10, TimeUnit.SECONDS)
             .addInterceptor(providesInterceptor())
@@ -41,9 +41,9 @@ public class RetrofitClient{
         return interceptor;
     }
 
-    public static RetrofitClient getInstance(String baseUrl){
+    public static RetrofitClient getInstance(){
         if(INSTANCE == null){
-            INSTANCE = new RetrofitClient(baseUrl);
+            INSTANCE = new RetrofitClient();
         }
         return INSTANCE;
     }

@@ -14,5 +14,7 @@ import io.reactivex.Flowable;
 public interface MapRepository{
     Flowable<ListData> getListDataFromNetwork();
 
+    Flowable<ListData> getDataFromDatabase();
+
     void insertOrUpdate(ListData listData);
 }

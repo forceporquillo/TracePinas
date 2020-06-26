@@ -15,14 +15,18 @@ import java.util.List;
 
 import io.reactivex.Flowable;
 import retrofit2.http.GET;
+import retrofit2.http.Url;
 
 public interface ApiServiceAdapter{
-    @GET("countries?sort=cases")
-    Flowable<List<CountryDetails>> getSortedCases();
+    @GET
+    Flowable<List<CountryDetails>>
+    getSortedCases(@Url String url);
 
-    @GET("all")
-    Flowable<WorldData> getWorldData();
+    @GET
+    Flowable<WorldData>
+    getWorldData(@Url String url);
 
-    @GET("doh-data-drop")
-    Flowable<ListData> getResponse();
+    @GET
+    Flowable<ListData>
+    getResponse(@Url String url);
 }
