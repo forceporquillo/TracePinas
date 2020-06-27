@@ -1,3 +1,10 @@
+/*
+ * Created by Force Porquillo on 6/26/20 9:49 PM
+ * FEU Institute of Technology
+ * Copyright (c) 2020.  All rights reserved.
+ * Last modified 6/21/20 1:07 AM
+ */
+
 package com.force.codes.project.app.data_layer.model;
 
 import androidx.annotation.NonNull;

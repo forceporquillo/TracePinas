@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Created by Force Porquillo on 6/24/20 6:55 PM
+  ~ FEU Institute of Technology
+  ~ Copyright (c) 2020.  All rights reserved.
+  ~ Last modified 6/24/20 6:55 PM
+  -->
+
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <shape android:shape="rectangle">
+            <gradient android:angle="-90" android:startColor="#ffffff"
+                android:endColor="#ffffff" />
+            <corners
+                android:bottomLeftRadius="5dp"
+                android:bottomRightRadius="5dp"
+                android:topLeftRadius="5dp"
+                android:topRightRadius="5dp" />
+
+        </shape>
+    </item>
+    <item android:top="20dp">
+        <shape android:shape="rectangle">
+            <gradient android:angle="-90" android:startColor="#ffffff"
+                android:endColor="#ffffff" />
+            <corners
+                android:bottomLeftRadius="5dp"
+                android:bottomRightRadius="5dp"
+                android:topLeftRadius="5dp"
+                android:topRightRadius="5dp" />     </shape>
+    </item>
+</layer-list>

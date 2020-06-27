@@ -13,10 +13,11 @@ import androidx.room.RoomDatabase;
 import androidx.room.TypeConverters;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
-import com.force.codes.project.app.app.MyApplication;
+import com.force.codes.project.app.app.GlobalApplication;
 import com.force.codes.project.app.data_layer.model.CountryDetails;
-import com.force.codes.project.app.data_layer.model.TypeConverter.Converter;
+import com.force.codes.project.app.data_layer.model.GlobalData;
 import com.force.codes.project.app.data_layer.model.ListData;
+import com.force.codes.project.app.data_layer.model.TypeConverter.Converter;
 import com.force.codes.project.app.data_layer.resources.database.data.CountryDao;
 import com.force.codes.project.app.data_layer.resources.database.data.LiveDataDao;
 import com.force.codes.project.app.data_layer.resources.database.data.MapDao;
@@ -24,8 +25,9 @@ import com.force.codes.project.app.data_layer.resources.database.data.MapDao;
 @Database(
         entities = {
                 CountryDetails.class,
-                ListData.class
-        }, version = 24)
+                ListData.class,
+                GlobalData.class
+        }, version = 31)
 
 @TypeConverters({
         Converter.class
@@ -44,7 +46,7 @@ public abstract class LocalDatabase extends RoomDatabase{
         return INSTANCE;
     }
 
-    public static void setInstance(MyApplication application){
+    public static void setInstance(GlobalApplication application){
         if(INSTANCE == null){
             synchronized(LocalDatabase.class){
                 if(INSTANCE == null){

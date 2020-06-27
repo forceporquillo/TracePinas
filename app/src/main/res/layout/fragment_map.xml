@@ -6,29 +6,65 @@
   -->
 
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:fitsSystemWindows="true"
     android:layout_height="match_parent">
 
-    <androidx.appcompat.widget.Toolbar
-        android:background="@color/foregroundColor2"
-        android:elevation="2dp"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/worldwide"
-            style="@style/fragment_title"
+        <androidx.appcompat.widget.Toolbar
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:elevation="8dp">
+
+            <TextView
+                android:id="@+id/worldwide"
+                style="@style/fragment_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/affected_areas" />
+
+        </androidx.appcompat.widget.Toolbar>
+
+        <View
+            android:id="@+id/bottom_divider"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@android:color/darker_gray" />
+
+        <RelativeLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/affected_areas" />
+            android:layout_height="45dp">
 
-    </androidx.appcompat.widget.Toolbar>
+            <TextView
+                android:id="@+id/spinner_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="15dp"
+                android:text="@string/currently_displayed"
+                android:theme="@style/search_style" />
 
-    <com.google.android.gms.maps.MapView
-        android:background="@color/colorPrimary"
-        android:fitsSystemWindows="true"
-        android:id="@+id/map_view"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+            <org.angmarch.views.NiceSpinner
+                android:layout_centerVertical="true"
+                android:id="@+id/nice_spinner"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:background="@drawable/corners_bg"
+                android:textColor="@color/blue"
+                app:arrowTint="@color/blue"
+                app:fontFamily="@font/poppin_regular"
+                app:textTint="@color/blue" />
+        </RelativeLayout>
+
+        <com.google.android.gms.maps.MapView
+            android:id="@+id/map_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/foregroundColor2" />
+    </LinearLayout>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

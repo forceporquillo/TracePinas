@@ -41,7 +41,6 @@ public class WorldwideViewModel extends ViewModel{
         this.longDate = observableLong;
     }
 
-
     static final PagedList.Config config = new PagedList.Config.Builder()
             .setPageSize(11)
             .setMaxSize(215)

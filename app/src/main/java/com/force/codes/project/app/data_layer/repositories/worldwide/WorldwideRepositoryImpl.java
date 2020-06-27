@@ -1,7 +1,7 @@
 package com.force.codes.project.app.data_layer.repositories.worldwide;
 
 /*
- * Created by Force Porquillo on 6/4/20 8:01 PM
+ * Created by Force Porquillo on 5/7/20 8:01 PM
  * Copyright (c) 2020.  All rights reserved.
  * Last modified 6/4/20 7:53 PM
  *
@@ -12,6 +12,7 @@ import androidx.paging.DataSource;
 import androidx.paging.LivePagedListBuilder;
 import androidx.paging.PagedList;
 
+import com.force.codes.project.app.data_layer.resources.api.ApiModule;
 import com.force.codes.project.app.data_layer.resources.api.ApiServiceAdapter;
 import com.force.codes.project.app.data_layer.resources.database.data.CountryDao;
 import com.force.codes.project.app.data_layer.model.CountryDetails;
@@ -38,7 +39,7 @@ public class WorldwideRepositoryImpl implements WorldwideRepository{
 
     @Override
     public Flowable<List<CountryDetails>> getDataFromRemoteService(){
-        return serviceAdapter.getSortedCases()
+        return serviceAdapter.getSortedCases(ApiModule.CORONA_SORTED)
                 .subscribeOn(Schedulers.computation());
     }
 
