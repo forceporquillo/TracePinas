@@ -22,10 +22,10 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -33,8 +33,9 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.force.codes.project.app.R;
 import com.force.codes.project.app.app.Injection;
+import com.force.codes.project.app.data_layer.model.GlobalData;
 import com.force.codes.project.app.factory.MapViewModelFactory;
-import com.force.codes.project.app.presentation_layer.views.adapters.CustomInfoWindowMap;
+import com.force.codes.project.app.presentation_layer.views.adapters.CustomInfoWindowAdapter;
 import com.force.codes.project.app.presentation_layer.views.fragments.BaseFragment;
 import com.force.codes.project.app.service.executors.AppExecutors;
 import com.google.android.gms.maps.CameraUpdate;
@@ -52,11 +53,16 @@ import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import org.angmarch.views.NiceSpinner;
+import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.TestOnly;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -72,10 +78,16 @@ public class MapFragment extends BaseFragment implements
         GoogleMap.OnMyLocationButtonClickListener, GoogleMap.OnMyLocationClickListener,
         OnMapReadyCallback, GoogleMap.OnMarkerClickListener, ActivityCompat.OnRequestPermissionsResultCallback, GoogleMap.OnMapClickListener{
 
+    private static final int BUILD_VERSION = Build.VERSION.SDK_INT;
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1;
+    private static final String GLOBAL_CASES = "Global Cases";
+    private static final String PHILIPPINES = "Philippines";
 
     @BindView(R.id.map_view)
     MapView mapView;
+
+    @BindView(R.id.nice_spinner)
+    NiceSpinner niceSpinner;
 
     private GoogleMap map;
     private Unbinder unbinder;
@@ -84,7 +96,7 @@ public class MapFragment extends BaseFragment implements
     private boolean permissionDenied = false;
     private boolean isMapReady;
     private AppExecutors executors;
-    private CustomInfoWindowMap infoWindowMap;
+    private List<String> dataSet;
 
     public MapFragment(){
         // Required empty public constructor
@@ -104,22 +116,17 @@ public class MapFragment extends BaseFragment implements
 
         try{
             isMapReady = googleMap.setMapStyle(MapStyleOptions
-                    .loadRawResourceStyle(view.getContext(),
-                            R.raw.map_style_milk));
-
-            if(isMapReady){
-                enableLocation();
-            }
-
+                    .loadRawResourceStyle(view.getContext(), R.raw.map_style_milk));
+            if(isMapReady)
+                enableMyLocation();
         } catch(Resources.NotFoundException e){
             Timber.e(e);
         }
 
         LatLng latLng = new LatLng(12.8797, 121.7740);
-
         googleMap.setMinZoomPreference(2);
-        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 6));
 
+        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 7));
         googleMap.setOnMyLocationButtonClickListener(this);
         googleMap.setOnMyLocationClickListener(this);
     }
@@ -146,60 +153,8 @@ public class MapFragment extends BaseFragment implements
     public void onStart(){
         super.onStart();
         mapView.onStart();
-        mapViewModel.getLocalLiveData().observe(this, listData -> {
-            // decouples necessary data to reduce time complexity.
-            final ArrayList<LatLng> latLang = new ArrayList<>();
-            final Map<LatLng, Integer> mapOfCases = new HashMap<>();
-            final Map<LatLng, String> location = new HashMap<>();
-            final ArrayList<String> address = new ArrayList<>();
-
-            executors.computationalThread().execute(() -> {
-                listData.getData().forEach(phDataSet -> {
-                    // region ...
-                    String stringLat = phDataSet.getLatitude();
-                    String stringLng = phDataSet.getLongitude();
-                    assert stringLat != null;
-                    assert stringLng != null;
-                    // endregion
-                    if(!stringLat.isEmpty() && !stringLng.isEmpty()){
-                        latLang.add(new LatLng(
-                                Double.parseDouble(stringLat),
-                                Double.parseDouble(stringLng))
-                        );
-
-                        address.add(phDataSet.getLocation());
-                    }
-                });
-
-                latLang.forEach(latLng -> {
-                    try{
-                        if(mapOfCases.containsKey(latLng)){
-                            mapOfCases.put(latLng, mapOfCases.get(latLng) + 1);
-                        } else{
-                            mapOfCases.put(latLng, 1);
-                        }
-                    } catch(NullPointerException e){
-                        e.printStackTrace();
-                    }
-                });
-
-                if(!permissionDenied){
-                    executors.mainHandler().execute(() -> {
-                        if(isMapReady){
-                            map.setInfoWindowAdapter(infoWindowMap =
-                                    new CustomInfoWindowMap(view.getContext(), mapOfCases)
-                            );
-
-                            mapOfCases.forEach((latLng, cases) -> {
-                                Marker marker = map.addMarker(
-                                        getCircleMarkers(latLng));
-                                marker.setTag(mapOfCases);
-                            });
-                        }
-                    });
-                }
-            });
-        });
+        getLocalLiveData();
+        setSpinner();
     }
 
     @NotNull
@@ -214,13 +169,14 @@ public class MapFragment extends BaseFragment implements
     }
 
     @NotNull
-    private MarkerOptions getCircleMarkers(@NotNull LatLng gc){
-        return new MarkerOptions().
-                position(new LatLng(gc.latitude, gc.longitude)).
-                icon(bitmapDescriptorFromVector(view.getContext()));
+    private MarkerOptions getMarkerOptions(@NotNull LatLng gc, int cases){
+        return new MarkerOptions()
+                .position(new LatLng(
+                        gc.latitude, gc.longitude))
+                .icon(bitmapDescriptorFromVector(view.getContext()));
     }
 
-    private void enableLocation(){
+    private void enableMyLocation(){
         if(ContextCompat.checkSelfPermission(view.getContext(),
                 Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED){
             if(map != null){
@@ -238,11 +194,31 @@ public class MapFragment extends BaseFragment implements
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults){
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 
-        if(requestCode == LOCATION_PERMISSION_REQUEST_CODE){
-            enableLocation();
-        } else{
+        if(requestCode != LOCATION_PERMISSION_REQUEST_CODE){
             permissionDenied = true;
+            return;
         }
+
+        enableMyLocation();
+    }
+
+    @TestOnly
+    @Override
+    public boolean onMyLocationButtonClick(){
+        if(permissionDenied){
+            return true;
+        }
+        executors.computationIO().execute(() -> {
+            Geocoder convertCoordinate = new Geocoder(view.getContext(), Locale.getDefault());
+            try{
+                List<Address> address = convertCoordinate.getFromLocation(11.5810, 122.1178, 1);
+                executors.mainThread().execute(() ->
+                        Toast.makeText(view.getContext(), address.get(0).getLocality(), Toast.LENGTH_LONG).show());
+            } catch(IOException e){
+                e.printStackTrace();
+            }
+        });
+        return false;
     }
 
     @Override
@@ -255,75 +231,139 @@ public class MapFragment extends BaseFragment implements
         //
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public void onResume(){
         super.onResume();
         mapView.onResume();
-
-        if(isMapReady){
-            Toast.makeText(view.getContext(), "Map is ready...", Toast.LENGTH_SHORT).show();
-        }
-    }
-
-    @Override
-    public boolean onMyLocationButtonClick(){
-        if(permissionDenied){
-            return true;
-        }
-        executors.computationalThread().execute(() -> {
-            Geocoder convertCoordinate = new Geocoder(view.getContext(), Locale.getDefault());
-            try{
-                List<Address> address = convertCoordinate.getFromLocation(11.5810, 122.1178, 1);
-                executors.mainHandler().execute(() ->
-                        Toast.makeText(view.getContext(), address.get(0).getLocality(), Toast.LENGTH_LONG).show());
-            } catch(IOException e){
-                e.printStackTrace();
-            }
-        });
-        return false;
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
         view = inflater.inflate(R.layout.fragment_map, container, false);
         unbinder = ButterKnife.bind(this, view);
-
         mapView.onCreate(savedInstanceState);
         mapView.getMapAsync(this);
 
         try{
             MapsInitializer.initialize(view.getContext());
         } catch(Exception e){
-            e.printStackTrace();
+            Timber.e(e);
         }
 
         return view;
     }
 
-    @Override
-    public void onCreate(Bundle savedInstanceState){
-        super.onCreate(savedInstanceState);
-        executors = new AppExecutors();
-        MapViewModelFactory modelFactory = Injection.
-                providesMapViewModelFactory();
-        mapViewModel = new ViewModelProvider(this, modelFactory).
-                get(MapViewModel.class);
-        mapViewModel.getDataFromNetwork();
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    private void setSpinner(){
+        niceSpinner.attachDataSource(dataSet);
+        niceSpinner.setOnSpinnerItemSelectedListener((parent, view, position, id) -> {
+            String atPosition = (String) parent.getItemAtPosition(position);
+            switch(atPosition){
+                case PHILIPPINES:
+                    map.clear();
+                    getLocalLiveData();
+                    break;
+                case GLOBAL_CASES:
+                    map.clear();
+                    getGlobalLiveData();
+                    break;
+            }
+        });
+    }
+
+    private static boolean isEmpty(@NotNull String lat, String lng){
+        return lat.isEmpty() && lng.isEmpty();
+    }
+
+    @NotNull
+    @Contract("_, _ -> new")
+    private static LatLng coordinate(String lat, String lng){
+        return new LatLng(Double.parseDouble(lat), Double.parseDouble(lng));
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    private void getLocalLiveData(){
+        mapViewModel.getLocalLiveData().observe(getViewLifecycleOwner(), listData -> {
+            final ArrayList<LatLng> latLang = new ArrayList<>();
+            final Map<LatLng, Integer> mapOfCases = new HashMap<>();
+
+            executors.computationIO().execute(() -> {
+                listData.getData().forEach(phDataSet -> {
+                    final String lat = phDataSet.getLatitude();
+                    final String lng = phDataSet.getLongitude();
+
+                    assert lat != null;
+                    assert lng != null;
+
+                    if(!isEmpty(lat, lng)){
+                        latLang.add(coordinate(lat, lng));
+                    }
+                });
+
+                latLang.forEach(latLng -> {
+                    Integer numCases = mapOfCases.get(latLng);
+                    mapOfCases.put(latLng, (numCases == null) ? 1 : numCases + 1);
+                });
+
+                executors.mainThread().execute(() -> {
+                    if(isMapReady){
+                        map.setInfoWindowAdapter(new CustomInfoWindowAdapter(view.getContext()));
+                        final Marker[] marker = new Marker[1];
+                        mapOfCases.forEach((latLng, numCases) -> {
+                            marker[0] = map.addMarker(getMarkerOptions(latLng, numCases));
+                            marker[0].setSnippet(numCases.toString());
+                            marker[0].setTag(latLng);
+                        });
+                    }
+                });
+            });
+        });
+    }
+
+    private void getGlobalLiveData(){
+        mapViewModel.getGlobalLiveData().observe(getViewLifecycleOwner(), globalData ->
+                executors.computationIO().execute(() -> {
+                    for(GlobalData gd : globalData){
+                        executors.mainThread().execute(() -> {
+                            Marker marker = map.addMarker(getMarkerOptions(new LatLng(
+                                    gd.getLatitude(), gd.getLongitude()), gd.getActive()));
+                            marker.setTitle(gd.getCombinedKey());
+                            marker.setSnippet(String.valueOf(gd.getConfirmed()));
+                        });
+                    }
+                })
+        );
     }
 
     @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState){
-        super.onActivityCreated(savedInstanceState);
+    public void onCreate(Bundle savedInstanceState){
+        super.onCreate(savedInstanceState);
+
+        // enable gpu rendering on lower devices.
+        // target device N and below
+        if(BUILD_VERSION <= Build.VERSION_CODES.N){
+            if(getActivity() == null){
+                return;
+            }
+
+            Timber.i("Hardware acceleration turned on");
+            getActivity().getWindow().setFlags(WindowManager.LayoutParams.FLAG_HARDWARE_ACCELERATED,
+                    WindowManager.LayoutParams.FLAG_HARDWARE_ACCELERATED);
+        }
+
+        dataSet = new LinkedList<>(Arrays.asList(PHILIPPINES, GLOBAL_CASES));
+        executors = new AppExecutors();
+        MapViewModelFactory modelFactory = Injection.providesMapViewModelFactory();
+        mapViewModel = new ViewModelProvider(this, modelFactory).get(MapViewModel.class);
+        mapViewModel.getLocalDataFromNetwork();
+        mapViewModel.getGlobalDataFromNetwork();
     }
 
     @Override
     public void onDestroyView(){
         super.onDestroyView();
         mapView.onDestroy();
-
-        if(infoWindowMap.getContext() != null){
-            infoWindowMap.clearContext();
-        }
 
         if(mapView != null){
             mapView = null;
@@ -333,7 +373,16 @@ public class MapFragment extends BaseFragment implements
             map = null;
         }
 
+        view = null;
         unbinder.unbind();
+
+        if(BUILD_VERSION <= Build.VERSION_CODES.N){
+            if(getActivity() != null){
+                Timber.e("Hardware acceleration turned off");
+                getActivity().getWindow().clearFlags(
+                        WindowManager.LayoutParams.FLAG_HARDWARE_ACCELERATED);
+            }
+        }
     }
 
     @Override

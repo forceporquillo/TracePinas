@@ -7,8 +7,9 @@ package com.force.codes.project.app.data_layer.repositories.live;
  *
  */
 
-import com.force.codes.project.app.data_layer.resources.api.ApiServiceAdapter;
 import com.force.codes.project.app.data_layer.model.WorldData;
+import com.force.codes.project.app.data_layer.resources.api.ApiModule;
+import com.force.codes.project.app.data_layer.resources.api.ApiServiceAdapter;
 
 import io.reactivex.Flowable;
 import io.reactivex.schedulers.Schedulers;
@@ -22,7 +23,7 @@ public class LiveOverviewRepositoryImpl implements LiveOverviewRepository{
 
     @Override
     public Flowable<WorldData> getWorldDataFromNetwork(){
-       return apiServiceAdapter.getWorldData()
-               .subscribeOn(Schedulers.io());
+        return apiServiceAdapter.getWorldData(ApiModule.CORONA_GLOBAL_CASES)
+                .subscribeOn(Schedulers.io());
     }
 }

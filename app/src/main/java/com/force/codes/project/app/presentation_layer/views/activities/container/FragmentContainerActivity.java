@@ -75,15 +75,6 @@ public class FragmentContainerActivity extends BaseActivity implements BottomIte
         if(versionCode >= Build.VERSION_CODES.LOLLIPOP_MR1){
             getWindow().getDecorView()
                     .setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
-//            getWindow().setFlags(
-//                    WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
-//                    WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
-//            );
-        }
-
-        if(Build.VERSION.SDK_INT >= 22){
-            getWindow().setFlags(WindowManager.LayoutParams.FLAG_HARDWARE_ACCELERATED,
-                    WindowManager.LayoutParams.FLAG_HARDWARE_ACCELERATED);
         }
 
         if(savedInstanceState != null){
@@ -140,7 +131,6 @@ public class FragmentContainerActivity extends BaseActivity implements BottomIte
         }
 
         delegateFrag = fragment;
-
         setDelegateFragment(fragment).commit();
     }
 

@@ -9,46 +9,38 @@ package com.force.codes.project.app.presentation_layer.views.adapters;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.location.Address;
-import android.location.Geocoder;
 import android.os.Build;
+import android.text.SpannableString;
+import android.text.style.ForegroundColorSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
 
 import androidx.annotation.RequiresApi;
+import androidx.core.content.ContextCompat;
 
 import com.force.codes.project.app.R;
-import com.force.codes.project.app.service.executors.AppExecutors;
+import com.force.codes.project.app.presentation_layer.controller.custom.utils.StringUtils;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
-
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class CustomInfoWindowMap implements GoogleMap.InfoWindowAdapter{
+import static android.text.Spanned.SPAN_EXCLUSIVE_EXCLUSIVE;
+
+public class CustomInfoWindowAdapter implements GoogleMap.InfoWindowAdapter{
     @BindView(R.id.province)
     TextView province;
 
     @BindView(R.id.total_infected)
     TextView totalInfected;
 
-    private final View infoWindowView;
-
-    private final AppExecutors executors;
-    private final Context context;
+    private View infoWindowView;
+    private StringUtils utils = new StringUtils();
 
     @SuppressLint("InflateParams")
-    public CustomInfoWindowMap(Context context, AppExecutors executors){
-        this.context = context;
-        this.executors = executors;
-
+    public CustomInfoWindowAdapter(Context context){
         infoWindowView = LayoutInflater.from(context).
                 inflate(R.layout.custom_info_window, null);
         ButterKnife.bind(this, infoWindowView);
@@ -57,16 +49,29 @@ public class CustomInfoWindowMap implements GoogleMap.InfoWindowAdapter{
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public View getInfoWindow(Marker marker){
-        final String cases = marker.getSnippet();
-        final String provinces = marker.getTitle();
-        //province.setText(provinces);
-        totalInfected.setText(cases);
-
+        province.setText(marker.getTitle());
+        totalInfected.setText(spannableString(utils.formatNumber(marker.getSnippet())));
         return infoWindowView;
     }
 
     @Override
     public View getInfoContents(Marker marker){
         return infoWindowView;
+    }
+
+    final SpannableString spannableString(String snippet){
+        String appendText = infoWindowView
+                .getResources()
+                .getString(R.string.TOTAL, snippet);
+
+        SpannableString spannableString = new SpannableString(appendText);
+        spannableString.setSpan(colorSpan(infoWindowView),
+                15, appendText.length(), SPAN_EXCLUSIVE_EXCLUSIVE);
+        return spannableString;
+    }
+
+    private static ForegroundColorSpan colorSpan(View infoWindowView){
+        return new ForegroundColorSpan(ContextCompat
+                .getColor(infoWindowView.getContext(), R.color.blue));
     }
 }

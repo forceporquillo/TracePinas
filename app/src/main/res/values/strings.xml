@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Project Force</string>
+    <string name="app_name">Tito 4S</string>
 
     <string name="hint_click_on_a_country_for_more_information">Hint: Click on a country for more
         statistics information</string>
@@ -64,4 +64,7 @@
     <string name="date_format">%1$ta, %1$tB %1$td %1$tT %1$tY</string>
     <string name="no_internet_connection">No Internet Connection</string>
     <string name="affected_areas">Infected Areas</string>
+    <string name="currently_displayed">Currently Displayed</string>
+    <string name="TOTAL">Total Infected: %1s</string>
+    <string name="DEFAULT">Philippines</string>
 </resources>

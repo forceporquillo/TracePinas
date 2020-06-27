@@ -23,13 +23,10 @@ import androidx.room.Query;
 import androidx.room.Transaction;
 import androidx.room.Update;
 
-import com.force.codes.project.app.data_layer.model.ListData;
 import com.force.codes.project.app.data_layer.resources.database.DBConstants;
 import com.force.codes.project.app.data_layer.model.CountryDetails;
 
 import java.util.List;
-
-import io.reactivex.Flowable;
 
 @Dao
 public interface CountryDao{

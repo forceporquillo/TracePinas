@@ -12,10 +12,12 @@ import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 
+import com.force.codes.project.app.data_layer.model.GlobalData;
 import com.force.codes.project.app.data_layer.model.ListData;
 
+import java.util.List;
+
 import io.reactivex.Flowable;
-import io.reactivex.Observable;
 
 @Dao
 public interface MapDao{
@@ -23,5 +25,11 @@ public interface MapDao{
     void savePhData(ListData listData);
 
     @Query("SELECT * FROM ListData")
-    Flowable<ListData> getDataFromNetwork();
+    Flowable<ListData> getPHDataFromNetwork();
+
+    @Query("SELECT * FROM GlobalData")
+    Flowable<List<GlobalData>> getGlobalDataFromNetwork();
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    void saveGlobalData(List<GlobalData> globalData);
 }
