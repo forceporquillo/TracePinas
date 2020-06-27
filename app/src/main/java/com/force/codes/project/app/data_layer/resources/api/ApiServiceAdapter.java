@@ -3,11 +3,12 @@ package com.force.codes.project.app.data_layer.resources.api;
 /*
  * Created by Force Porquillo on 6/5/20 3:28 PM
  * Copyright (c) 2020.  All rights reserved.
- * Last modified 6/5/20 3:22 PM
+ * Last modified 6/12/20 3:22 PM
  *
  */
 
 import com.force.codes.project.app.data_layer.model.CountryDetails;
+import com.force.codes.project.app.data_layer.model.GlobalData;
 import com.force.codes.project.app.data_layer.model.ListData;
 import com.force.codes.project.app.data_layer.model.WorldData;
 
@@ -23,10 +24,14 @@ public interface ApiServiceAdapter{
     getSortedCases(@Url String url);
 
     @GET
-    Flowable<WorldData>
-    getWorldData(@Url String url);
+    Flowable<List<GlobalData>>
+    getGlobalData(@Url String url);
 
     @GET
     Flowable<ListData>
     getResponse(@Url String url);
+
+    @GET
+    Flowable<WorldData>
+    getWorldData(@Url String url);
 }
