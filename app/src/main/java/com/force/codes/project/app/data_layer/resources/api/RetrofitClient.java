@@ -20,7 +20,7 @@ public class RetrofitClient{
 
     private RetrofitClient(){
         retrofit = new Retrofit.Builder()
-                .baseUrl("https://corona.lmao.ninja/v2/")
+                .baseUrl(ApiModule.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .client(providesOkHttpClient)
@@ -29,8 +29,6 @@ public class RetrofitClient{
 
     final static OkHttpClient providesOkHttpClient =
             new OkHttpClient.Builder()
-            .connectTimeout(10, TimeUnit.SECONDS)
-            .writeTimeout(10, TimeUnit.SECONDS)
             .addInterceptor(providesInterceptor())
             .build();
 

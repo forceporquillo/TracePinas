@@ -3,7 +3,7 @@ package com.force.codes.project.app.service.executors;
 /*
  * Created by Force Porquillo on 6/2/20 6:15 AM
  * Copyright (c) 2020.  All rights reserved.
- * Last modified 6/4/20 6:18 AM
+ * Last modified 6/23/20 2:32 AM
  *
  */
 
@@ -14,16 +14,15 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
-import java.util.concurrent.ThreadPoolExecutor;
-import java.util.concurrent.TimeUnit;
 
 public class AppExecutors{
-    private static final int THREAD_COUNT = 3;
+    private static final int THREAD_COUNT = Runtime
+            .getRuntime().availableProcessors() * 2;
+
     private final Executor diskIO;
     private final Executor networkIO;
     private final Executor mainThread;
     private final Executor computationThread;
-
 
     private AppExecutors(Executor diskIO, Executor networkIO, Executor mainThread, Executor computationThread){
         this.diskIO = diskIO;
@@ -45,11 +44,11 @@ public class AppExecutors{
         return networkIO;
     }
 
-    public Executor mainHandler(){
+    public Executor mainThread(){
         return mainThread;
     }
 
-    public Executor computationalThread(){
+    public Executor computationIO(){
         return computationThread;
     }
 
@@ -58,7 +57,7 @@ public class AppExecutors{
 
         @Override
         public void execute(@NotNull Runnable command){
-            mainThreadHandler.postDelayed(command, 150);
+            mainThreadHandler.post(command);
         }
     }
 }
