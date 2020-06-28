@@ -7,28 +7,21 @@
 package com.force.codes.project.app.factory;
 
 import androidx.annotation.NonNull;
-import androidx.databinding.ObservableLong;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.force.codes.project.app.data_layer.repositories.worldwide.WorldwideRepository;
 import com.force.codes.project.app.presentation_layer.controller.custom.interfaces.OnRequestResponse;
 import com.force.codes.project.app.presentation_layer.views.fragments.worldwide.WorldwideViewModel;
-import com.force.codes.project.app.service.executors.AppExecutors;
 
 import io.reactivex.disposables.CompositeDisposable;
 
 public class WorldwideViewModelFactory implements ViewModelProvider.Factory{
     private WorldwideRepository worldwideRepository;
-    private AppExecutors appExecutors;
     private OnRequestResponse response;
 
-    public WorldwideViewModelFactory(
-            WorldwideRepository worldwideRepository,
-            AppExecutors appExecutors,
-            OnRequestResponse response){
+    public WorldwideViewModelFactory(WorldwideRepository worldwideRepository, OnRequestResponse response){
         this.worldwideRepository = worldwideRepository;
-        this.appExecutors = appExecutors;
         this.response = response;
     }
 
@@ -37,10 +30,9 @@ public class WorldwideViewModelFactory implements ViewModelProvider.Factory{
     @Override
     public <T extends ViewModel> T create(@NonNull Class<T> modelClass){
         if(modelClass.isAssignableFrom(WorldwideViewModel.class)){
-            return (T) new WorldwideViewModel(worldwideRepository,
-                    appExecutors, new CompositeDisposable(), response, new ObservableLong());
+            return (T) new WorldwideViewModel(worldwideRepository, new CompositeDisposable(), response);
         }
         throw new IllegalArgumentException("Unknown ViewModel class");
     }
-};
+}
 

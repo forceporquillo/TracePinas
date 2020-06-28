@@ -22,8 +22,6 @@ public interface WorldwideRepository{
     LiveData<PagedList<CountryDetails>> getDataFromDatabase(PagedList.Config config);
 
     void saveDatabase(List<CountryDetails> details);
-
-    void updateFavorites(CountryDetails details);
 }
 
 

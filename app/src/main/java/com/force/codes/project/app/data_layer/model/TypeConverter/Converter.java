@@ -9,7 +9,6 @@ package com.force.codes.project.app.data_layer.model.TypeConverter;
 
 import androidx.room.TypeConverter;
 
-
 import com.force.codes.project.app.data_layer.model.PHDataSet;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -18,13 +17,14 @@ import java.lang.reflect.Type;
 import java.util.Collections;
 import java.util.List;
 
-public class Converter {
+public class Converter{
     @TypeConverter
     public static List<PHDataSet> stringToObjectList(String value){
         if(value == null){
             return Collections.emptyList();
         }
-        Type listType = new TypeToken<List<PHDataSet>>() {}.getType();
+        Type listType = new TypeToken<List<PHDataSet>>(){
+        }.getType();
         return new Gson().fromJson(value, listType);
     }
 

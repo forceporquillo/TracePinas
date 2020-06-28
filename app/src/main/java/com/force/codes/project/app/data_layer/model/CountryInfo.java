@@ -31,23 +31,23 @@ public class CountryInfo extends BaseObservable{
         return flag;
     }
 
+    public void setFlag(String flag){
+        this.flag = flag;
+    }
+
     public String getLatitude(){
         return latitude;
+    }
+
+    public void setLatitude(String latitude){
+        this.latitude = latitude;
     }
 
     public String getLongitude(){
         return longitude;
     }
 
-    public void setFlag(String flag) {
-        this.flag = flag;
-    }
-
-    public void setLatitude(String latitude) {
-        this.latitude = latitude;
-    }
-
-    public void setLongitude(String longitude) {
+    public void setLongitude(String longitude){
         this.longitude = longitude;
     }
 }

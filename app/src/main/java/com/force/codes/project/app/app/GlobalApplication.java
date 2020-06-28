@@ -8,11 +8,9 @@
 package com.force.codes.project.app.app;
 
 import android.app.Application;
-import android.os.Build;
 import android.util.Log;
 
 import com.force.codes.project.app.BuildConfig;
-import com.force.codes.project.app.data_layer.resources.api.RetrofitClient;
 import com.force.codes.project.app.data_layer.resources.database.LocalDatabase;
 import com.force.codes.project.app.presentation_layer.controller.custom.utils.CustomCrashLibrary;
 
@@ -37,7 +35,7 @@ public class GlobalApplication extends Application{
             ObjectWatcher objectWatcher = AppWatcher.INSTANCE
                     .getObjectWatcher();
             objectWatcher.getRetainedObjectCount();
-        }else{
+        } else{
             Timber.plant(new CrashReportingTree());
         }
     }
@@ -55,7 +53,7 @@ public class GlobalApplication extends Application{
                 if(priority == Log.ERROR){
                     CustomCrashLibrary.logError(t);
                 }
-            }else if(priority == Log.WARN){
+            } else if(priority == Log.WARN){
                 CustomCrashLibrary.logWarning(null);
             }
         }

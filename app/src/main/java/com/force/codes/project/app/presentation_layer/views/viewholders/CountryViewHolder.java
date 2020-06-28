@@ -11,14 +11,15 @@ import android.view.View;
 import android.widget.TextView;
 
 import androidx.databinding.BindingAdapter;
+import androidx.databinding.library.baseAdapters.BR;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.force.codes.project.app.R;
-import com.force.codes.project.app.databinding.CountryRowsBinding;
 import com.force.codes.project.app.data_layer.model.CountryDetails;
+import com.force.codes.project.app.databinding.CountryRowsBinding;
 import com.force.codes.project.app.presentation_layer.controller.custom.interfaces.FragmentCallback;
 import com.force.codes.project.app.presentation_layer.controller.custom.utils.StringUtils;
 
@@ -36,12 +37,6 @@ public class CountryViewHolder extends RecyclerView.ViewHolder implements View.O
         rowsBinding.getRoot().setOnClickListener(this);
         this.rowsBinding = rowsBinding;
         this.callback = callback;
-    }
-
-    public void bindTo(CountryDetails details){
-        rowsBinding.setDetails(details);
-        //rowsBinding.setVariable(BR.details, details);
-        rowsBinding.executePendingBindings();
     }
 
     @SuppressLint("SetTextI18n")
@@ -67,6 +62,12 @@ public class CountryViewHolder extends RecyclerView.ViewHolder implements View.O
                 .placeholder(R.drawable.cupertino_loading)
                 .load(imageUrl)
                 .into(flagPlaceholder);
+    }
+
+    public void bindTo(CountryDetails details){
+        rowsBinding.setDetails(details);
+        rowsBinding.setVariable(BR.details, details);
+        rowsBinding.executePendingBindings();
     }
 
     @Override

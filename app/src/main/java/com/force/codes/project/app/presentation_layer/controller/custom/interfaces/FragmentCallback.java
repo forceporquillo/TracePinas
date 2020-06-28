@@ -8,9 +8,6 @@ package com.force.codes.project.app.presentation_layer.controller.custom.interfa
  *
  */
 
-import com.force.codes.project.app.data_layer.model.CountryDetails;
-
 public interface FragmentCallback{
     void CustomCardViewListener(int position);
-    void insertOrRemoveFavorites(CountryDetails details);
 }

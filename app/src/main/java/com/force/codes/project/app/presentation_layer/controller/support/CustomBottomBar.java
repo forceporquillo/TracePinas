@@ -10,7 +10,6 @@ package com.force.codes.project.app.presentation_layer.controller.support;
 import android.content.Context;
 import android.view.View;
 
-
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 

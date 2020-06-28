@@ -16,8 +16,8 @@ import androidx.paging.PagedListAdapter;
 import androidx.recyclerview.widget.DiffUtil;
 
 import com.force.codes.project.app.R;
-import com.force.codes.project.app.databinding.CountryRowsBinding;
 import com.force.codes.project.app.data_layer.model.CountryDetails;
+import com.force.codes.project.app.databinding.CountryRowsBinding;
 import com.force.codes.project.app.presentation_layer.controller.custom.interfaces.FragmentCallback;
 import com.force.codes.project.app.presentation_layer.views.viewholders.CountryViewHolder;
 
@@ -25,6 +25,20 @@ import org.jetbrains.annotations.NotNull;
 
 public class CountryAdapter extends PagedListAdapter<CountryDetails, CountryViewHolder>{
     private static final int HEADER_TOP = 0;
+    private static DiffUtil.ItemCallback<CountryDetails> DIFF_CALLBACK = new DiffUtil
+            .ItemCallback<CountryDetails>(){
+        @Override
+        public boolean areItemsTheSame(
+                @NonNull CountryDetails oldItem, @NonNull CountryDetails newItem){
+            return oldItem.getCountry().equals(newItem.getCountry());
+        }
+
+        @Override
+        public boolean areContentsTheSame(
+                @NonNull CountryDetails oldItem, @NonNull CountryDetails newItem){
+            return oldItem.getCountry().equals(newItem.getCountry());
+        }
+    };
     private FragmentCallback fragmentCallback;
 
     public CountryAdapter(FragmentCallback callback){
@@ -58,19 +72,4 @@ public class CountryAdapter extends PagedListAdapter<CountryDetails, CountryView
     private CountryDetails getCountryAt(int position){
         return getItem(position);
     }
-
-    private static DiffUtil.ItemCallback<CountryDetails> DIFF_CALLBACK = new DiffUtil
-            .ItemCallback<CountryDetails>(){
-        @Override
-        public boolean areItemsTheSame(
-                @NonNull CountryDetails oldItem, @NonNull CountryDetails newItem){
-            return oldItem.getCountry().equals(newItem.getCountry());
-        }
-
-        @Override
-        public boolean areContentsTheSame(
-                @NonNull CountryDetails oldItem, @NonNull CountryDetails newItem){
-            return oldItem.getCountry().equals(newItem.getCountry());
-        }
-    };
 }

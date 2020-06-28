@@ -20,9 +20,8 @@ public class GlobalData{
     @NonNull
     @PrimaryKey
     @ColumnInfo(name = "ID")
-    @SerializedName("ui")
+    @SerializedName("uid")
     private int uid;
-
     @SerializedName("lastUpdate")
     @Expose
     private long lastUpdate;
@@ -59,75 +58,75 @@ public class GlobalData{
         this.uid = uid;
     }
 
-    public long getLastUpdate() {
+    public long getLastUpdate(){
         return lastUpdate;
     }
 
-    public void setLastUpdate(long lastUpdate) {
+    public void setLastUpdate(long lastUpdate){
         this.lastUpdate = lastUpdate;
     }
 
-    public double getLatitude() {
+    public double getLatitude(){
         return latitude;
     }
 
-    public void setLatitude(double latitude) {
+    public void setLatitude(double latitude){
         this.latitude = latitude;
     }
 
-    public double getLongitude() {
+    public double getLongitude(){
         return longitude;
     }
 
-    public void setLongitude(double longitude) {
+    public void setLongitude(double longitude){
         this.longitude = longitude;
     }
 
-    public int getConfirmed() {
+    public int getConfirmed(){
         return confirmed;
     }
 
-    public void setConfirmed(int confirmed) {
+    public void setConfirmed(int confirmed){
         this.confirmed = confirmed;
     }
 
-    public int getRecovered() {
+    public int getRecovered(){
         return recovered;
     }
 
-    public void setRecovered(int recovered) {
+    public void setRecovered(int recovered){
         this.recovered = recovered;
     }
 
-    public int getDeaths() {
+    public int getDeaths(){
         return deaths;
     }
 
-    public void setDeaths(int deaths) {
+    public void setDeaths(int deaths){
         this.deaths = deaths;
     }
 
-    public int getActive() {
+    public int getActive(){
         return active;
     }
 
-    public void setActive(int active) {
+    public void setActive(int active){
         this.active = active;
     }
 
-    public String getCombinedKey() {
+    public String getCombinedKey(){
         return combinedKey;
     }
 
-    public void setCombinedKey(String combinedKey) {
+    public void setCombinedKey(String combinedKey){
         this.combinedKey = combinedKey;
     }
 
-    public double getIncidentRate() {
+    public double getIncidentRate(){
         return incidentRate;
     }
 
-    public void setIncidentRate(double incidentRate) {
+    public void setIncidentRate(double incidentRate){
         this.incidentRate = incidentRate;
     }
 

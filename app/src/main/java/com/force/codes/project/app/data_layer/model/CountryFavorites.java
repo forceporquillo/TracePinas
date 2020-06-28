@@ -88,20 +88,20 @@ public class CountryFavorites{
     @Embedded
     private CountryInfo countryInfo;
 
-    public CountryInfo getCountryInfo() {
+    public CountryInfo getCountryInfo(){
         return countryInfo;
     }
 
-    public int getTodayRecovered() {
+    public void setCountryInfo(CountryInfo countryInfo){
+        this.countryInfo = countryInfo;
+    }
+
+    public int getTodayRecovered(){
         return todayRecovered;
     }
 
-    public void setTodayRecovered(int todayRecovered) {
+    public void setTodayRecovered(int todayRecovered){
         this.todayRecovered = todayRecovered;
-    }
-
-    public void setCountryInfo(CountryInfo countryInfo) {
-        this.countryInfo = countryInfo;
     }
 
     public long getUpdated(){
