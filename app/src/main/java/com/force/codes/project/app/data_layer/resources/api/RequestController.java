@@ -14,13 +14,19 @@ import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class RetrofitClient{
+public class RequestController{
     private static final int TIMEOUT_MILLIS = 1000;
-
-    private static RetrofitClient INSTANCE;
+    final static OkHttpClient providesOkHttpClient =
+            new OkHttpClient.Builder()
+                    .connectTimeout(TIMEOUT_MILLIS, TimeUnit.MILLISECONDS)
+                    .readTimeout(TIMEOUT_MILLIS, TimeUnit.MILLISECONDS)
+                    .writeTimeout(TIMEOUT_MILLIS, TimeUnit.MILLISECONDS)
+                    .addInterceptor(providesInterceptor())
+                    .build();
+    private static RequestController INSTANCE;
     private static Retrofit retrofit;
 
-    private RetrofitClient(){
+    private RequestController(){
         retrofit = new Retrofit.Builder()
                 .baseUrl(ApiModule.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
@@ -29,14 +35,6 @@ public class RetrofitClient{
                 .build();
     }
 
-    final static OkHttpClient providesOkHttpClient =
-            new OkHttpClient.Builder()
-                    .connectTimeout(TIMEOUT_MILLIS, TimeUnit.MILLISECONDS)
-                    .readTimeout(TIMEOUT_MILLIS, TimeUnit.MILLISECONDS)
-                    .writeTimeout(TIMEOUT_MILLIS, TimeUnit.MILLISECONDS)
-                    .addInterceptor(providesInterceptor())
-                    .build();
-
     private static HttpLoggingInterceptor providesInterceptor(){
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
         interceptor.level(HttpLoggingInterceptor.Level.HEADERS);
@@ -44,9 +42,9 @@ public class RetrofitClient{
         return interceptor;
     }
 
-    public static RetrofitClient getInstance(){
+    public static RequestController getInstance(){
         if(INSTANCE == null){
-            INSTANCE = new RetrofitClient();
+            INSTANCE = new RequestController();
         }
         return INSTANCE;
     }

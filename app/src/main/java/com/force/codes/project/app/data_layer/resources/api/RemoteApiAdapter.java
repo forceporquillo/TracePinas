@@ -18,7 +18,7 @@ import io.reactivex.Flowable;
 import retrofit2.http.GET;
 import retrofit2.http.Url;
 
-public interface ApiServiceAdapter{
+public interface RemoteApiAdapter{
     @GET
     Flowable<List<CountryDetails>>
     getSortedCases(@Url String url);
@@ -29,7 +29,7 @@ public interface ApiServiceAdapter{
 
     @GET
     Flowable<PHData>
-    getResponse(@Url String url);
+    getPhData(@Url String url);
 
     @GET
     Flowable<WorldData>
