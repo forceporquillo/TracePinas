@@ -13,6 +13,8 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.force.codes.project.app.R;
 import com.force.codes.project.app.presentation_layer.views.fragments.statistics.StatisticsFragment;
+import com.force.codes.project.app.service.network.ConnectionCallback;
+import com.google.android.gms.common.api.GoogleApiClient;
 
 public abstract class BaseFragment extends Fragment{
     public FragmentTransaction setDelegateFragment(Fragment fragment){

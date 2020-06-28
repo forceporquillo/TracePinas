@@ -15,6 +15,8 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RetrofitClient{
+    private static final int TIMEOUT_MILLIS = 1000;
+
     private static RetrofitClient INSTANCE;
     private static Retrofit retrofit;
 
@@ -29,8 +31,11 @@ public class RetrofitClient{
 
     final static OkHttpClient providesOkHttpClient =
             new OkHttpClient.Builder()
-            .addInterceptor(providesInterceptor())
-            .build();
+                    .connectTimeout(TIMEOUT_MILLIS, TimeUnit.MILLISECONDS)
+                    .readTimeout(TIMEOUT_MILLIS, TimeUnit.MILLISECONDS)
+                    .writeTimeout(TIMEOUT_MILLIS, TimeUnit.MILLISECONDS)
+                    .addInterceptor(providesInterceptor())
+                    .build();
 
     private static HttpLoggingInterceptor providesInterceptor(){
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
@@ -46,8 +51,8 @@ public class RetrofitClient{
         return INSTANCE;
     }
 
-    public ApiServiceAdapter providesApiServiceAdapter(){
-        return retrofit.create(ApiServiceAdapter.class);
+    public RemoteApiAdapter providesApiServiceAdapter(){
+        return retrofit.create(RemoteApiAdapter.class);
     }
 }
 
