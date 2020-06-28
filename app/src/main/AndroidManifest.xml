@@ -26,13 +26,13 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/maps_api_key" />
 
-        <activity android:name="com.force.codes.project.app.presentation_layer.views.activities.container.FragmentContainerActivity">
+        <activity android:name="com.force.codes.project.app.presentation_layer.views.container.FragmentContainerActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.force.codes.project.app.presentation_layer.views.activities.BaseActivity" />
+        <activity android:name="com.force.codes.project.app.presentation_layer.views.BaseActivity" />
     </application>
 </manifest>

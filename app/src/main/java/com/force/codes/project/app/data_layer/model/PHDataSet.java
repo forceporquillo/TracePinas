@@ -7,7 +7,6 @@
 
 package com.force.codes.project.app.data_layer.model;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
@@ -19,27 +18,22 @@ import org.jetbrains.annotations.NotNull;
 @Entity
 public class PHDataSet{
 
-    public PHDataSet(){
-    }
-
     @PrimaryKey
     @SerializedName("case_code")
     private String caseCode;
-
     @SerializedName("latitude")
     private String latitude;
-
     @SerializedName("longitude")
     private String longitude;
-
     @SerializedName("age")
     private String age;
-
     @SerializedName("sex")
     private String sex;
-
     @SerializedName("location")
     private String location;
+
+    public PHDataSet(){
+    }
 
     public String getLocation(){
         return location;
@@ -65,17 +59,13 @@ public class PHDataSet{
         this.sex = sex;
     }
 
-    public void setCaseCode(@NotNull String caseCode){
-        this.caseCode = caseCode;
-    }
-
     @NotNull
     public String getCaseCode(){
         return caseCode;
     }
 
-    public void setLatitude(String latitude){
-        this.latitude = latitude;
+    public void setCaseCode(@NotNull String caseCode){
+        this.caseCode = caseCode;
     }
 
     @Nullable
@@ -83,12 +73,16 @@ public class PHDataSet{
         return latitude;
     }
 
-    public void setLongitude(String longitude){
-        this.longitude = longitude;
+    public void setLatitude(String latitude){
+        this.latitude = latitude;
     }
 
     @Nullable
     public String getLongitude(){
         return longitude;
+    }
+
+    public void setLongitude(String longitude){
+        this.longitude = longitude;
     }
 }

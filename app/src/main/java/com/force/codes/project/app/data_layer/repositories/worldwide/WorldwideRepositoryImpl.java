@@ -12,10 +12,10 @@ import androidx.paging.DataSource;
 import androidx.paging.LivePagedListBuilder;
 import androidx.paging.PagedList;
 
-import com.force.codes.project.app.data_layer.resources.api.ApiModule;
-import com.force.codes.project.app.data_layer.resources.api.ApiServiceAdapter;
-import com.force.codes.project.app.data_layer.resources.database.data.CountryDao;
 import com.force.codes.project.app.data_layer.model.CountryDetails;
+import com.force.codes.project.app.data_layer.resources.api.ApiModule;
+import com.force.codes.project.app.data_layer.resources.api.RemoteApiAdapter;
+import com.force.codes.project.app.data_layer.resources.database.data.CountryDao;
 import com.force.codes.project.app.service.executors.AppExecutors;
 
 import java.util.List;
@@ -25,12 +25,12 @@ import io.reactivex.schedulers.Schedulers;
 
 public class WorldwideRepositoryImpl implements WorldwideRepository{
     private CountryDao countryDao;
-    private ApiServiceAdapter serviceAdapter;
+    private RemoteApiAdapter serviceAdapter;
     private AppExecutors executors;
 
     public WorldwideRepositoryImpl(
             final CountryDao countryDao,
-            final ApiServiceAdapter adapter,
+            final RemoteApiAdapter adapter,
             final AppExecutors executors){
         this.countryDao = countryDao;
         this.serviceAdapter = adapter;
@@ -44,8 +44,7 @@ public class WorldwideRepositoryImpl implements WorldwideRepository{
     }
 
     @Override
-    public LiveData<PagedList<CountryDetails>>
-    getDataFromDatabase(PagedList.Config config){
+    public LiveData<PagedList<CountryDetails>> getDataFromDatabase(PagedList.Config config){
         DataSource.Factory<Integer, CountryDetails>
                 detailsFactory = countryDao.getDataFromDatabase();
         return new LivePagedListBuilder<>(detailsFactory, config).build();
@@ -53,13 +52,6 @@ public class WorldwideRepositoryImpl implements WorldwideRepository{
 
     @Override
     public void saveDatabase(List<CountryDetails> detailsList){
-        executors.diskIO().execute(() ->
-                countryDao.insertOrUpdate(detailsList));
-    }
-
-    @Override
-    public void updateFavorites(CountryDetails details){
-        executors.diskIO().execute(() ->
-                countryDao.insertOrRemoveFavorites(details));
+        executors.diskIO().execute(() -> countryDao.insertOrUpdate(detailsList));
     }
 }

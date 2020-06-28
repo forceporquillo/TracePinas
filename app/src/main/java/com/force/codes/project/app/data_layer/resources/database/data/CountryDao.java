@@ -21,22 +21,18 @@ import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 import androidx.room.Transaction;
-import androidx.room.Update;
 
-import com.force.codes.project.app.data_layer.resources.database.DBConstants;
 import com.force.codes.project.app.data_layer.model.CountryDetails;
+import com.force.codes.project.app.data_layer.resources.database.DBModule;
 
 import java.util.List;
 
 @Dao
 public interface CountryDao{
     @Transaction
-    @Query(DBConstants.QUERY_ALL_DATA)
+    @Query(DBModule.QUERY_ALL_DATA)
     DataSource.Factory<Integer, CountryDetails> getDataFromDatabase();
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertOrUpdate(List<CountryDetails> details);
-
-    @Update
-    void insertOrRemoveFavorites(CountryDetails details);
 }

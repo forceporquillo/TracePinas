@@ -92,8 +92,12 @@ public class CountryDetails extends BaseObservable{
     @Embedded
     private CountryInfo countryInfo;
 
-    public CountryInfo getCountryInfo() {
+    public CountryInfo getCountryInfo(){
         return countryInfo;
+    }
+
+    public void setCountryInfo(CountryInfo countryInfo){
+        this.countryInfo = countryInfo;
     }
 
     @NonNull
@@ -107,16 +111,12 @@ public class CountryDetails extends BaseObservable{
         this.country = country;
     }
 
-    public int getTodayRecovered() {
+    public int getTodayRecovered(){
         return todayRecovered;
     }
 
-    public void setTodayRecovered(int todayRecovered) {
+    public void setTodayRecovered(int todayRecovered){
         this.todayRecovered = todayRecovered;
-    }
-
-    public void setCountryInfo(CountryInfo countryInfo) {
-        this.countryInfo = countryInfo;
     }
 
     public long getUpdated(){
@@ -137,7 +137,7 @@ public class CountryDetails extends BaseObservable{
     }
 
     public int getCases(){
-       return cases;
+        return cases;
     }
 
     public void setCases(int cases){

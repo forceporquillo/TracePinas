@@ -15,8 +15,7 @@ import com.force.codes.project.app.data_layer.repositories.map.MapRepository;
 import com.force.codes.project.app.data_layer.repositories.map.MapRepositoryImpl;
 import com.force.codes.project.app.data_layer.repositories.worldwide.WorldwideRepository;
 import com.force.codes.project.app.data_layer.repositories.worldwide.WorldwideRepositoryImpl;
-import com.force.codes.project.app.data_layer.resources.api.ApiModule;
-import com.force.codes.project.app.data_layer.resources.api.RetrofitClient;
+import com.force.codes.project.app.data_layer.resources.api.RequestController;
 import com.force.codes.project.app.data_layer.resources.database.LocalDatabase;
 import com.force.codes.project.app.factory.LiveDataViewModelFactory;
 import com.force.codes.project.app.factory.MapViewModelFactory;
@@ -26,14 +25,14 @@ import com.force.codes.project.app.service.executors.AppExecutors;
 
 public class Injection{
     public static WorldwideViewModelFactory providesViewModelFactory(OnRequestResponse response, Context context, AppExecutors appExecutors){
-        WorldwideRepository worldwideRepository = providesWorldwideDataSource(context, appExecutors);
-        return new WorldwideViewModelFactory(worldwideRepository, appExecutors, response);
+        WorldwideRepository worldwideRepository = providesWorldwideDataSource(appExecutors);
+        return new WorldwideViewModelFactory(worldwideRepository, response);
     }
 
-    private static WorldwideRepositoryImpl providesWorldwideDataSource(Context context, AppExecutors appExecutors){
+    private static WorldwideRepositoryImpl providesWorldwideDataSource(AppExecutors appExecutors){
         LocalDatabase localDatabase = LocalDatabase.getInstance();
-        RetrofitClient retrofitClient = RetrofitClient.getInstance();
-        return new WorldwideRepositoryImpl(localDatabase.countryDao(), retrofitClient.providesApiServiceAdapter(), appExecutors);
+        RequestController requestController = RequestController.getInstance();
+        return new WorldwideRepositoryImpl(localDatabase.countryDao(), requestController.providesApiServiceAdapter(), appExecutors);
     }
 
     public static LiveDataViewModelFactory providesViewModelFactory(AppExecutors appExecutors){
@@ -42,8 +41,8 @@ public class Injection{
     }
 
     private static LiveOverviewRepositoryImpl providesWorldwideDataSource(){
-        RetrofitClient retrofitClient = RetrofitClient.getInstance();
-        return new LiveOverviewRepositoryImpl(retrofitClient.providesApiServiceAdapter());
+        RequestController requestController = RequestController.getInstance();
+        return new LiveOverviewRepositoryImpl(requestController.providesApiServiceAdapter());
     }
 
     public static MapViewModelFactory providesMapViewModelFactory(){
@@ -53,8 +52,8 @@ public class Injection{
 
     private static MapRepositoryImpl providesMapDataSource(){
         LocalDatabase localDatabase = LocalDatabase.getInstance();
-        RetrofitClient retrofitClient = RetrofitClient.getInstance();
-        return new MapRepositoryImpl(localDatabase.mapDao(), retrofitClient.providesApiServiceAdapter(), new AppExecutors());
+        RequestController requestController = RequestController.getInstance();
+        return new MapRepositoryImpl(localDatabase.mapDao(), requestController.providesApiServiceAdapter());
     }
 }
 

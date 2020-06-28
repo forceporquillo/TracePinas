@@ -9,21 +9,21 @@ package com.force.codes.project.app.data_layer.repositories.live;
 
 import com.force.codes.project.app.data_layer.model.WorldData;
 import com.force.codes.project.app.data_layer.resources.api.ApiModule;
-import com.force.codes.project.app.data_layer.resources.api.ApiServiceAdapter;
+import com.force.codes.project.app.data_layer.resources.api.RemoteApiAdapter;
 
 import io.reactivex.Flowable;
 import io.reactivex.schedulers.Schedulers;
 
 public class LiveOverviewRepositoryImpl implements LiveOverviewRepository{
-    private final ApiServiceAdapter apiServiceAdapter;
+    private final RemoteApiAdapter remoteApiAdapter;
 
-    public LiveOverviewRepositoryImpl(ApiServiceAdapter apiServiceAdapter){
-        this.apiServiceAdapter = apiServiceAdapter;
+    public LiveOverviewRepositoryImpl(RemoteApiAdapter remoteApiAdapter){
+        this.remoteApiAdapter = remoteApiAdapter;
     }
 
     @Override
     public Flowable<WorldData> getWorldDataFromNetwork(){
-        return apiServiceAdapter.getWorldData(ApiModule.CORONA_GLOBAL_CASES)
+        return remoteApiAdapter.getWorldData(ApiModule.CORONA_GLOBAL_CASES)
                 .subscribeOn(Schedulers.io());
     }
 }

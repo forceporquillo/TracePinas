@@ -16,7 +16,7 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
 import com.force.codes.project.app.app.GlobalApplication;
 import com.force.codes.project.app.data_layer.model.CountryDetails;
 import com.force.codes.project.app.data_layer.model.GlobalData;
-import com.force.codes.project.app.data_layer.model.ListData;
+import com.force.codes.project.app.data_layer.model.PHData;
 import com.force.codes.project.app.data_layer.model.TypeConverter.Converter;
 import com.force.codes.project.app.data_layer.resources.database.data.CountryDao;
 import com.force.codes.project.app.data_layer.resources.database.data.LiveDataDao;
@@ -25,22 +25,22 @@ import com.force.codes.project.app.data_layer.resources.database.data.MapDao;
 @Database(
         entities = {
                 CountryDetails.class,
-                ListData.class,
+                PHData.class,
                 GlobalData.class
-        }, version = 31)
+        }, version = 37)
 
 @TypeConverters({
         Converter.class
 })
 public abstract class LocalDatabase extends RoomDatabase{
-    private static volatile LocalDatabase INSTANCE;
-
     static RoomDatabase.Callback roomCallback = new RoomDatabase.Callback(){
         @Override
         public void onCreate(@NonNull SupportSQLiteDatabase sqLiteDatabase){
             super.onCreate(sqLiteDatabase);
         }
     };
+    
+    private static volatile LocalDatabase INSTANCE;
 
     public static LocalDatabase getInstance(){
         return INSTANCE;

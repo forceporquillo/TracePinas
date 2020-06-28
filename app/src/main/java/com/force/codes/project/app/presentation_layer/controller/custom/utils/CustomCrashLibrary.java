@@ -8,19 +8,19 @@
 package com.force.codes.project.app.presentation_layer.controller.custom.utils;
 
 public class CustomCrashLibrary{
-    public static void log(int priority, String tag, String message) {
+    private CustomCrashLibrary(){
+        throw new AssertionError("No instances.");
+    }
+
+    public static void log(int priority, String tag, String message){
         // TODO add log entry to circular buffer.
     }
 
-    public static void logWarning(Throwable t) {
+    public static void logWarning(Throwable t){
         // TODO report non-fatal warning.
     }
 
-    public static void logError(Throwable t) {
+    public static void logError(Throwable t){
         // TODO report non-fatal error.
-    }
-
-    private CustomCrashLibrary() {
-        throw new AssertionError("No instances.");
     }
 }

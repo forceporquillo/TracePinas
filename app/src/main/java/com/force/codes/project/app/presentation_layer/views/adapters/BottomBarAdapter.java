@@ -16,8 +16,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.force.codes.project.app.R;
 import com.force.codes.project.app.presentation_layer.controller.custom.interfaces.BottomItemListener;
-import com.force.codes.project.app.presentation_layer.views.viewholders.BottomBarViewHolder;
 import com.force.codes.project.app.presentation_layer.controller.custom.model.BottomItem;
+import com.force.codes.project.app.presentation_layer.views.viewholders.BottomBarViewHolder;
 
 import java.util.ArrayList;
 
@@ -73,7 +73,7 @@ public class BottomBarAdapter extends RecyclerView.Adapter<BottomBarViewHolder>{
     }
 
     private void setOnClickItem(BottomBarViewHolder holder, final int itemId, final int itemDefIcon, final int itemFillIcon){
-        holder.parentContainer.setOnClickListener(v-> {
+        holder.parentContainer.setOnClickListener(v -> {
             bottomItemListener.itemSelect(itemId);
             selected = itemId;
             holder.selectedStyle(selected, itemId, itemDefIcon, itemFillIcon);

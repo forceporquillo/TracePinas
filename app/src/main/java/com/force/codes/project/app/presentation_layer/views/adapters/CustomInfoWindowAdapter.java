@@ -30,14 +30,14 @@ import butterknife.ButterKnife;
 import static android.text.Spanned.SPAN_EXCLUSIVE_EXCLUSIVE;
 
 public class CustomInfoWindowAdapter implements GoogleMap.InfoWindowAdapter{
+    // region ...
     @BindView(R.id.province)
     TextView province;
 
     @BindView(R.id.total_infected)
     TextView totalInfected;
-
+    // endregion
     private View infoWindowView;
-    private StringUtils utils = new StringUtils();
 
     @SuppressLint("InflateParams")
     public CustomInfoWindowAdapter(Context context){
@@ -46,12 +46,19 @@ public class CustomInfoWindowAdapter implements GoogleMap.InfoWindowAdapter{
         ButterKnife.bind(this, infoWindowView);
     }
 
+    private static ForegroundColorSpan colorSpan(View infoWindowView){
+        return new ForegroundColorSpan(ContextCompat.getColor(
+                infoWindowView.getContext(), R.color.blue));
+    }
+
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public View getInfoWindow(Marker marker){
         province.setText(marker.getTitle());
-        totalInfected.setText(spannableString(utils.formatNumber(marker.getSnippet())));
+        totalInfected.setText(spannableString(new StringUtils()
+                .formatNumber(marker.getSnippet())));
         return infoWindowView;
+
     }
 
     @Override
@@ -59,19 +66,13 @@ public class CustomInfoWindowAdapter implements GoogleMap.InfoWindowAdapter{
         return infoWindowView;
     }
 
-    final SpannableString spannableString(String snippet){
-        String appendText = infoWindowView
-                .getResources()
-                .getString(R.string.TOTAL, snippet);
-
-        SpannableString spannableString = new SpannableString(appendText);
+    final SpannableString spannableString(String numCases){
+        String totalInfected = infoWindowView.getResources()
+                .getString(R.string.TOTAL, numCases);
+        SpannableString spannableString = new SpannableString(totalInfected);
         spannableString.setSpan(colorSpan(infoWindowView),
-                15, appendText.length(), SPAN_EXCLUSIVE_EXCLUSIVE);
+                totalInfected.length() - numCases.length(),
+                totalInfected.length(), SPAN_EXCLUSIVE_EXCLUSIVE);
         return spannableString;
-    }
-
-    private static ForegroundColorSpan colorSpan(View infoWindowView){
-        return new ForegroundColorSpan(ContextCompat
-                .getColor(infoWindowView.getContext(), R.color.blue));
     }
 }

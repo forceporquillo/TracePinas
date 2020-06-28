@@ -13,7 +13,8 @@ import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 
 import com.force.codes.project.app.data_layer.model.GlobalData;
-import com.force.codes.project.app.data_layer.model.ListData;
+import com.force.codes.project.app.data_layer.model.PHData;
+import com.force.codes.project.app.data_layer.resources.database.DBModule;
 
 import java.util.List;
 
@@ -22,13 +23,13 @@ import io.reactivex.Flowable;
 @Dao
 public interface MapDao{
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void savePhData(ListData listData);
+    void savePhData(PHData PHData);
 
-    @Query("SELECT * FROM ListData")
-    Flowable<ListData> getPHDataFromNetwork();
+    @Query(DBModule.QUERY_ALL_PH_DATA)
+    Flowable<PHData> getPHDataFromDB();
 
-    @Query("SELECT * FROM GlobalData")
-    Flowable<List<GlobalData>> getGlobalDataFromNetwork();
+    @Query(DBModule.QUERY_ALL_GLOBAL_DATA)
+    Flowable<List<GlobalData>> getGlobalDataFromDB();
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void saveGlobalData(List<GlobalData> globalData);
