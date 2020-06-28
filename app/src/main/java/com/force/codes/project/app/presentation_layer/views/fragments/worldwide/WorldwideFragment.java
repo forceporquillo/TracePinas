@@ -26,11 +26,10 @@ import com.force.codes.project.app.R;
 import com.force.codes.project.app.app.Injection;
 import com.force.codes.project.app.databinding.FragmentWorldwideBinding;
 import com.force.codes.project.app.factory.WorldwideViewModelFactory;
-import com.force.codes.project.app.data_layer.model.CountryDetails;
 import com.force.codes.project.app.presentation_layer.controller.custom.interfaces.FragmentCallback;
 import com.force.codes.project.app.presentation_layer.controller.custom.interfaces.OnRequestResponse;
+import com.force.codes.project.app.presentation_layer.views.BaseFragment;
 import com.force.codes.project.app.presentation_layer.views.adapters.CountryAdapter;
-import com.force.codes.project.app.presentation_layer.views.fragments.BaseFragment;
 import com.force.codes.project.app.presentation_layer.views.fragments.favorites.HelpCenterFragment;
 import com.force.codes.project.app.presentation_layer.views.fragments.statistics.StatisticsFragment;
 import com.force.codes.project.app.service.executors.AppExecutors;
@@ -199,12 +198,6 @@ public class WorldwideFragment extends BaseFragment implements FragmentCallback,
     public void CustomCardViewListener(int position){
         Fragment fragment = StatisticsFragment.newInstance();
         super.setDelegateFragment(fragment).commit();
-    }
-
-    @Override
-    public void insertOrRemoveFavorites(CountryDetails details){
-        executors.networkIO().execute(() ->
-                worldwideViewModel.addOrRemoveFavorites(details));
     }
 
     final void setRecyclerView(){

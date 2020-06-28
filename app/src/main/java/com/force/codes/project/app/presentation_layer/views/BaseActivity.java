@@ -4,7 +4,7 @@
  * FEU Institute of Technology
  */
 
-package com.force.codes.project.app.presentation_layer.views.activities;
+package com.force.codes.project.app.presentation_layer.views;
 
 /*
  * Created by Force Porquillo on 6/2/20 12:50 PM

@@ -16,7 +16,7 @@ import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.force.codes.project.app.R;
-import com.force.codes.project.app.presentation_layer.views.fragments.BaseFragment;
+import com.force.codes.project.app.presentation_layer.views.BaseFragment;
 
 public class HelpCenterFragment extends BaseFragment{
 
