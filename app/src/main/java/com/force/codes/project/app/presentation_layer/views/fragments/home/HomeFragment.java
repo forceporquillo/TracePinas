@@ -15,7 +15,7 @@ import android.view.ViewGroup;
 import androidx.fragment.app.Fragment;
 
 import com.force.codes.project.app.R;
-import com.force.codes.project.app.presentation_layer.views.fragments.BaseFragment;
+import com.force.codes.project.app.presentation_layer.views.BaseFragment;
 
 import timber.log.Timber;
 

@@ -31,13 +31,12 @@ import timber.log.Timber;
  */
 public class LiveDataFragment extends Fragment{
 
+    protected FragmentLiveDataBinding binding;
     private LiveDataViewModel dataViewModel;
 
     public LiveDataFragment(){
         // Required empty public constructor
     }
-
-    protected FragmentLiveDataBinding binding;
 
     public static LiveDataFragment newInstance(){
         LiveDataFragment fragment = new LiveDataFragment();

@@ -18,15 +18,12 @@ import io.reactivex.schedulers.Schedulers;
 import timber.log.Timber;
 
 public class NetworkConnectivity{
-    private NetworkCallback networkCallback;
-    private ConnectionCallback connectionCallback;
-
-    private CompositeDisposable disposable = new CompositeDisposable();
-
     private static final int initialInterval = 0;
     private static final int interval = 2;
     private static final int timeout = 2000;
-
+    private NetworkCallback networkCallback;
+    private ConnectionCallback connectionCallback;
+    private CompositeDisposable disposable = new CompositeDisposable();
     private Context context;
     private Boolean connectionState = null; // check connection if idle or not.
     private int networkOptions;

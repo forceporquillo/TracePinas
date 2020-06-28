@@ -6,6 +6,7 @@
   -->
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -31,7 +32,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:text="Pandan, Antique"
                 android:textColor="#000000"
                 android:textSize="16sp"
                 android:textStyle="bold" />
@@ -45,8 +45,9 @@
                 android:textStyle="bold"
                 android:layout_marginStart="@dimen/margin_5dp"
                 android:layout_marginEnd="@dimen/margin_5dp"
-                android:textSize="12sp"
-                android:layout_marginTop="3dp"/>
+                android:textSize="11sp"
+                android:layout_marginTop="3dp"
+                tools:ignore="SmallSp" />
         </RelativeLayout>
     </androidx.cardview.widget.CardView>
 </RelativeLayout>

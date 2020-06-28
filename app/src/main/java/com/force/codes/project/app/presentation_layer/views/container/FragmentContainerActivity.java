@@ -1,4 +1,11 @@
-package com.force.codes.project.app.presentation_layer.views.activities.container;
+/*
+ * Created by Force Porquillo on 6/28/20 6:30 PM
+ * FEU Institute of Technology
+ * Copyright (c) 2020.  All rights reserved.
+ * Last modified 6/27/20 5:07 AM
+ */
+
+package com.force.codes.project.app.presentation_layer.views.container;
 
 /*
  * Created by Force Porquillo on 6/2/20 12:50 PM
@@ -10,7 +17,6 @@ package com.force.codes.project.app.presentation_layer.views.activities.containe
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
-import android.view.WindowManager;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -23,7 +29,7 @@ import com.force.codes.project.app.R;
 import com.force.codes.project.app.presentation_layer.controller.custom.interfaces.BottomItemListener;
 import com.force.codes.project.app.presentation_layer.controller.custom.model.BottomItem;
 import com.force.codes.project.app.presentation_layer.controller.support.CustomBottomBar;
-import com.force.codes.project.app.presentation_layer.views.activities.BaseActivity;
+import com.force.codes.project.app.presentation_layer.views.BaseActivity;
 import com.force.codes.project.app.presentation_layer.views.fragments.favorites.HelpCenterFragment;
 import com.force.codes.project.app.presentation_layer.views.fragments.home.HomeFragment;
 import com.force.codes.project.app.presentation_layer.views.fragments.mapview.MapFragment;

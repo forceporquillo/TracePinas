@@ -4,7 +4,7 @@
  * FEU Institute of Technology
  */
 
-package com.force.codes.project.app.presentation_layer.views.fragments;
+package com.force.codes.project.app.presentation_layer.views;
 
 
 import androidx.fragment.app.Fragment;

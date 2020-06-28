@@ -9,7 +9,7 @@ package com.force.codes.project.app.data_layer.resources.api;
 
 import com.force.codes.project.app.data_layer.model.CountryDetails;
 import com.force.codes.project.app.data_layer.model.GlobalData;
-import com.force.codes.project.app.data_layer.model.ListData;
+import com.force.codes.project.app.data_layer.model.PHData;
 import com.force.codes.project.app.data_layer.model.WorldData;
 
 import java.util.List;
@@ -28,7 +28,7 @@ public interface ApiServiceAdapter{
     getGlobalData(@Url String url);
 
     @GET
-    Flowable<ListData>
+    Flowable<PHData>
     getResponse(@Url String url);
 
     @GET
