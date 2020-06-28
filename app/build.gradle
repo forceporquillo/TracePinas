@@ -10,7 +10,7 @@ android {
         targetSdkVersion 29
         versionCode 1
         versionName "1.0"
-
+        vectorDrawables.useSupportLibrary = true
         javaCompileOptions {
             annotationProcessorOptions {
                 arguments = [
@@ -123,7 +123,7 @@ dependencies {
     implementation 'com.github.razerdp:AnimatedPieView:1.2.6'
 
     // SwipeRefresh layout
-    implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.0.0"
+    implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
 
     // AnimatedBottomBar
     implementation 'nl.joery.animatedbottombar:library:1.0.8'
@@ -177,4 +177,6 @@ dependencies {
     implementation 'com.google.maps.android:android-maps-utils:2.0.0'
 
     implementation 'com.github.arcadefire:nice-spinner:1.4.4'
+
+    implementation "androidx.vectordrawable:vectordrawable-seekable:1.0.0-alpha01"
 }
