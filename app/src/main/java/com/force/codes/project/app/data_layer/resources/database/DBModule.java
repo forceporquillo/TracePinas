@@ -7,8 +7,8 @@ package com.force.codes.project.app.data_layer.resources.database;
  *
  */
 
-public class DBConstants{
+public class DBModule{
     public static final String QUERY_ALL_DATA = "SELECT * FROM CountryDetails";
-    public static final String QUERY_FAVORITE_COUNTRY = "SELECT FROM CountryDetails LIMIT 12";
-    public static final String DELETE_FAVORITES = "DELETE FROM CountryDetails WHERE country =:country_id";
+    public static final String QUERY_ALL_PH_DATA = "SELECT * FROM PHData";
+    public static final String QUERY_ALL_GLOBAL_DATA = "SELECT * FROM GlobalData";
 }
