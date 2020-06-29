@@ -17,7 +17,7 @@ import com.force.codes.project.app.app.GlobalApplication;
 import com.force.codes.project.app.data_layer.model.CountryDetails;
 import com.force.codes.project.app.data_layer.model.GlobalData;
 import com.force.codes.project.app.data_layer.model.PHData;
-import com.force.codes.project.app.data_layer.model.TypeConverter.Converter;
+import com.force.codes.project.app.data_layer.model.TypeConverter.RoomTypeConverter;
 import com.force.codes.project.app.data_layer.resources.database.data.CountryDao;
 import com.force.codes.project.app.data_layer.resources.database.data.LiveDataDao;
 import com.force.codes.project.app.data_layer.resources.database.data.MapDao;
@@ -30,7 +30,7 @@ import com.force.codes.project.app.data_layer.resources.database.data.MapDao;
         }, version = 37)
 
 @TypeConverters({
-        Converter.class
+        RoomTypeConverter.class
 })
 public abstract class LocalDatabase extends RoomDatabase{
     static RoomDatabase.Callback roomCallback = new RoomDatabase.Callback(){

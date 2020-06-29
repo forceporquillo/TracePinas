@@ -16,6 +16,5 @@ import io.reactivex.Flowable;
 
 public interface MapRepository{
     Flowable<PHData> getPHDataFromNetwork();
-
     Flowable<List<GlobalData>> getGlobalDataFromNetwork();
 }

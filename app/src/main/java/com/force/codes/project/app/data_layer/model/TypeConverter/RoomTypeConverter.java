@@ -17,14 +17,16 @@ import java.lang.reflect.Type;
 import java.util.Collections;
 import java.util.List;
 
-public class Converter{
+public class RoomTypeConverter{
     @TypeConverter
     public static List<PHDataSet> stringToObjectList(String value){
         if(value == null){
             return Collections.emptyList();
         }
+
         Type listType = new TypeToken<List<PHDataSet>>(){
         }.getType();
+
         return new Gson().fromJson(value, listType);
     }
 

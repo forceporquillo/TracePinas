@@ -10,6 +10,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
 import androidx.paging.PagedList;
 
+import com.force.codes.project.app.app.PageListConstants;
 import com.force.codes.project.app.data_layer.model.CountryDetails;
 import com.force.codes.project.app.data_layer.repositories.worldwide.WorldwideRepository;
 import com.force.codes.project.app.presentation_layer.controller.custom.interfaces.OnRequestResponse;
@@ -20,10 +21,11 @@ import io.reactivex.schedulers.Schedulers;
 
 public class WorldwideViewModel extends ViewModel{
     static final PagedList.Config config = new PagedList.Config.Builder()
-            .setPageSize(11)
-            .setMaxSize(215)
+            .setPageSize(PageListConstants.PAGE_SIZE)
+            .setMaxSize(PageListConstants.PAGE_MAX_SIZE)
             .setEnablePlaceholders(false)
             .build();
+
     private final WorldwideRepository repository;
     private final CompositeDisposable compositeDisposable;
     private LiveData<PagedList<CountryDetails>> listLiveData;
