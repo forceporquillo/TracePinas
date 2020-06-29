@@ -1,11 +1,12 @@
+/*
+ * Created by Force Porquillo on 6/2/20 9:02 PM
+ * FEU Institute of Technology
+ * Copyright (c) 2020.  All rights reserved.
+ * Last modified 6/29/20 8:39 PM
+ */
+
 package com.force.codes.project.app.service.executors;
 
-/*
- * Created by Force Porquillo on 6/2/20 6:15 AM
- * Copyright (c) 2020.  All rights reserved.
- * Last modified 6/23/20 2:32 AM
- *
- */
 
 import android.os.Handler;
 import android.os.Looper;
@@ -16,6 +17,7 @@ import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
 public class AppExecutors{
+    // get device processor count
     private static final int THREAD_COUNT = Runtime
             .getRuntime().availableProcessors() * 2;
 
@@ -24,7 +26,9 @@ public class AppExecutors{
     private final Executor mainThread;
     private final Executor computationThread;
 
-    private AppExecutors(Executor diskIO, Executor networkIO, Executor mainThread, Executor computationThread){
+
+    private AppExecutors(Executor diskIO, Executor networkIO, Executor mainThread,
+                         Executor computationThread){
         this.diskIO = diskIO;
         this.networkIO = networkIO;
         this.mainThread = mainThread;
@@ -59,5 +63,10 @@ public class AppExecutors{
         public void execute(@NotNull Runnable command){
             mainThreadHandler.post(command);
         }
+
+        public void delay(Runnable runnable, int i){
+            mainThreadHandler.postDelayed(runnable, i);
+        }
     }
+
 }

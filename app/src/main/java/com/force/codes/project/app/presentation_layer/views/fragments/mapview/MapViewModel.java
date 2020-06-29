@@ -33,7 +33,7 @@ public class MapViewModel extends ViewModel{
     }
 
     public void getAllPhData(){
-        compositeDisposable.add(mapRepository.getPHDataFromNetwork()
+        compositeDisposable.add(mapRepository.getAllPHData()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(phData ->
                         mutablePhData.setValue(phData), Timber::e));
@@ -44,7 +44,7 @@ public class MapViewModel extends ViewModel{
     }
 
     public void getListGlobalData(){
-        compositeDisposable.add(mapRepository.getGlobalDataFromNetwork()
+        compositeDisposable.add(mapRepository.getAllGlobalData()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(globalData ->
                         mutableGlobalData.setValue(globalData), Timber::e));

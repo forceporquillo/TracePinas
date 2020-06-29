@@ -1,11 +1,11 @@
-package com.force.codes.project.app.presentation_layer.views.fragments.mapview;
-
 /*
- * Created by Force Porquillo on 6/2/20 12:50 PM
+ * Created by Force Porquillo on 6/2/20 8:55 PM
+ * FEU Institute of Technology
  * Copyright (c) 2020.  All rights reserved.
- * Last modified 6/2/20 6:24 AM
- *
+ * Last modified 6/29/20 8:54 PM
  */
+
+package com.force.codes.project.app.presentation_layer.views.fragments.mapview;
 
 import android.Manifest;
 import android.annotation.TargetApi;
@@ -52,7 +52,6 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import org.angmarch.views.NiceSpinner;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.TestOnly;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -68,7 +67,6 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import timber.log.Timber;
 
-
 public class MapFragment extends BaseFragment implements
         GoogleMap.OnMyLocationButtonClickListener,
         OnMapReadyCallback,
@@ -79,6 +77,7 @@ public class MapFragment extends BaseFragment implements
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1;
     private static final String GLOBAL_CASES = "Global Cases";
     private static final String PHILIPPINES = "Philippines";
+    private static final int DELAY = 1200;
 
     @BindView(R.id.map_view)
     MapView mapView;
@@ -95,6 +94,8 @@ public class MapFragment extends BaseFragment implements
     private boolean isMapReady;
     private AppExecutors executors;
     private List<String> dataSet;
+    private Runnable[] runnable;
+    private Marker[] marker = new Marker[1];
 
     public MapFragment(){
         // Required empty public constructor
@@ -105,19 +106,6 @@ public class MapFragment extends BaseFragment implements
         Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
-    }
-
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    private static Bitmap getBitmapFromVector(Context context, int cases){
-        Drawable drawable = ContextCompat.getDrawable(context, R.drawable.circle_marker);
-        assert drawable != null;
-        final int radiusPerCases = (int) computeRadiusPerCases(cases);
-        Bitmap bitmap = Bitmap.createBitmap(drawable.getIntrinsicWidth() * radiusPerCases,
-                drawable.getIntrinsicHeight() * radiusPerCases, Bitmap.Config.ARGB_8888);
-        Canvas canvas = new Canvas(bitmap);
-        drawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
-        drawable.draw(canvas);
-        return bitmap;
     }
 
     // SEPARATION OF CONCERNS.
@@ -151,19 +139,16 @@ public class MapFragment extends BaseFragment implements
         return latitude == 0.0 && longitude == 0.0;
     }
 
-    private CameraUpdate setCameraPosition(int x){
-        LatLng latLng;
-        int v;
+    private CameraUpdate setCameraPosition(String snippet){
+        final LatLng latLng = new LatLng(12.8797, 121.7740);
+        int zoomVelocity;
 
-        if(x == 1){
-            latLng = new LatLng(12.8797, 121.7740);
-            v = 7;
+        if(snippet.equals(PHILIPPINES)){
+            zoomVelocity = 7;
         } else{
-            latLng = new LatLng(12.8797, 121.7740);
-            v = 4;
+            zoomVelocity = 4;
         }
-
-        return CameraUpdateFactory.newLatLngZoom(latLng, v);
+        return CameraUpdateFactory.newLatLngZoom(latLng, zoomVelocity);
     }
 
     @Override
@@ -180,16 +165,6 @@ public class MapFragment extends BaseFragment implements
 
         googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(12.8797, 121.7740), 7));
         googleMap.setOnMyLocationButtonClickListener(this);
-    }
-
-    @RequiresApi(api = Build.VERSION_CODES.N)
-    @Override
-    public void onStart(){
-        super.onStart();
-        mapView.onStart();
-
-        getLocalLiveData();
-        setSpinner();
     }
 
     @Override
@@ -219,7 +194,6 @@ public class MapFragment extends BaseFragment implements
         enableMyLocation();
     }
 
-    @TestOnly
     @Override
     public boolean onMyLocationButtonClick(){
         if(permissionDenied){
@@ -251,22 +225,28 @@ public class MapFragment extends BaseFragment implements
             switch(atPosition){
                 case PHILIPPINES:
                     map.clear();
-                    map.animateCamera(setCameraPosition(1));
-                    new Handler().postDelayed(this::getLocalLiveData, 1250);
+                    map.animateCamera(setCameraPosition(PHILIPPINES));
+                    runnable[0] = () -> getLocalLiveData(marker);
+                    setDelayAnimation(runnable[0]);
                     break;
                 case GLOBAL_CASES:
                     map.clear();
-                    map.animateCamera(setCameraPosition(2));
-                    new Handler().postDelayed(this::getGlobalLiveData, 1200);
+                    map.animateCamera(setCameraPosition(GLOBAL_CASES));
+                    runnable[0] = () -> getGlobalLiveData(marker);
+                    setDelayAnimation(runnable[0]);
                     break;
                 default:
-                    break;
+                    throw new IllegalStateException("Unexpected value: " + atPosition);
             }
         });
     }
 
+    static void setDelayAnimation(Runnable runnable){
+        new Handler().postDelayed(runnable, DELAY);
+    }
+
     @RequiresApi(api = Build.VERSION_CODES.N)
-    private void getLocalLiveData(){
+    private void getLocalLiveData(Marker[] marker){
         mapViewModel.getMutablePhData().observe(this, listData -> {
             final ArrayList<LatLng> latLang = new ArrayList<>();
             final Map<LatLng, Integer> mapOfCases = new HashMap<>();
@@ -292,7 +272,6 @@ public class MapFragment extends BaseFragment implements
 
                 executors.mainThread().execute(() -> {
                     if(isMapReady){
-                        final Marker[] marker = new Marker[1];
                         mapOfCases.forEach((latLng, numCases) -> {
                             marker[0] = map.addMarker(getMarkerOptions(latLng, numCases));
                             marker[0].setSnippet(numCases.toString());
@@ -305,22 +284,16 @@ public class MapFragment extends BaseFragment implements
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
-    private void getGlobalLiveData(){
-        mapViewModel.getMutableGlobalData().observe(this, data -> {
-            executors.computationIO().execute(() -> {
-                final Marker[] marker = new Marker[1];
+    private void getGlobalLiveData(Marker[] marker){
+        mapViewModel.getMutableGlobalData().observe(this, data ->
                 data.forEach(gd -> {
-                    executors.mainThread().execute(() -> {
-                        if(!isEmpty(gd.getLatitude(), gd.getLongitude())){
-                            marker[0] = map.addMarker(getMarkerOptions(new LatLng(
-                                    gd.getLatitude(), gd.getLongitude()), gd.getConfirmed()));
-                            marker[0].setTitle(gd.getCombinedKey());
-                            marker[0].setSnippet(String.valueOf(gd.getConfirmed()));
-                        }
-                    });
-                });
-            });
-        });
+                    if(!isEmpty(gd.getLatitude(), gd.getLongitude())){
+                        marker[0] = map.addMarker(getMarkerOptions(new LatLng(
+                                gd.getLatitude(), gd.getLongitude()), gd.getConfirmed()));
+                        marker[0].setTitle(gd.getCombinedKey());
+                        marker[0].setSnippet(String.valueOf(gd.getConfirmed()));
+                    }
+                }));
     }
 
     @NotNull
@@ -328,6 +301,19 @@ public class MapFragment extends BaseFragment implements
         return new MarkerOptions().position(new LatLng(gc.latitude, gc.longitude)).alpha(0.7f)
                 .flat(true).icon(BitmapDescriptorFactory.fromBitmap(
                         getBitmapFromVector(view.getContext(), cases)));
+    }
+
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    private static Bitmap getBitmapFromVector(Context context, int cases){
+        Drawable drawable = ContextCompat.getDrawable(context, R.drawable.circle_marker);
+        assert drawable != null;
+        final int radiusPerCases = (int) computeRadiusPerCases(cases);
+        Bitmap bitmap = Bitmap.createBitmap(drawable.getIntrinsicWidth() * radiusPerCases,
+                drawable.getIntrinsicHeight() * radiusPerCases, Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(bitmap);
+        drawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
+        drawable.draw(canvas);
+        return bitmap;
     }
 
     private void enableMyLocation(){
@@ -346,23 +332,39 @@ public class MapFragment extends BaseFragment implements
     @Override
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
-        // enable gpu rendering on lower devices such as N. below.
-        if(BUILD_VERSION <= Build.VERSION_CODES.N){
-            if(getActivity() == null){
-                return;
+        assert getActivity() != null;
+        if(savedInstanceState == null){
+            if(BUILD_VERSION <= Build.VERSION_CODES.N){
+                getActivity().getWindow().setFlags(WindowManager.LayoutParams.FLAG_HARDWARE_ACCELERATED,
+                        WindowManager.LayoutParams.FLAG_HARDWARE_ACCELERATED);
+                isHardwareEnabled = true;
             }
-            Timber.i("Hardware acceleration turned on");
-            getActivity().getWindow().setFlags(WindowManager.LayoutParams.FLAG_HARDWARE_ACCELERATED,
-                    WindowManager.LayoutParams.FLAG_HARDWARE_ACCELERATED);
-            isHardwareEnabled = true;
+            // region ...
+            runnable = new Runnable[1];
+            dataSet = new LinkedList<>(Arrays.asList(PHILIPPINES, GLOBAL_CASES));
+            executors = new AppExecutors();
+            // endregion
+            MapViewModelFactory modelFactory = Injection.providesMapViewModelFactory();
+            mapViewModel = new ViewModelProvider(this, modelFactory).get(MapViewModel.class);
+            mapViewModel.getListGlobalData();
+            mapViewModel.getAllPhData();
         }
+    }
 
-        dataSet = new LinkedList<>(Arrays.asList(PHILIPPINES, GLOBAL_CASES));
-        executors = new AppExecutors();
-        MapViewModelFactory modelFactory = Injection.providesMapViewModelFactory();
-        mapViewModel = new ViewModelProvider(this, modelFactory).get(MapViewModel.class);
-        mapViewModel.getListGlobalData();
-        mapViewModel.getAllPhData();
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    @Override
+    public void onStart(){
+        super.onStart();
+        mapView.onStart();
+        getLocalLiveData(marker);
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    @Override
+    public void onResume(){
+        super.onResume();
+        mapView.onResume();
+        setSpinner();
     }
 
     @Override
@@ -390,13 +392,6 @@ public class MapFragment extends BaseFragment implements
                     WindowManager.LayoutParams.FLAG_HARDWARE_ACCELERATED);
             isHardwareEnabled = false;
         }
-    }
-
-    @RequiresApi(api = Build.VERSION_CODES.N)
-    @Override
-    public void onResume(){
-        super.onResume();
-        mapView.onResume();
     }
 
     @Override

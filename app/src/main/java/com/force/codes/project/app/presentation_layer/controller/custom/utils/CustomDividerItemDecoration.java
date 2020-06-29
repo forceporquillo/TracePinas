@@ -80,8 +80,7 @@ public class CustomDividerItemDecoration extends RecyclerView.ItemDecoration{
         final int childCount = parent.getChildCount();
         for(int i = 0; i < childCount; i++){
             final View child = parent.getChildAt(i);
-            final RecyclerView.LayoutParams params = (RecyclerView.LayoutParams) child
-                    .getLayoutParams();
+            final RecyclerView.LayoutParams params = (RecyclerView.LayoutParams) child.getLayoutParams();
             final int left = child.getRight() + params.rightMargin;
             final int right = left + drawable.getIntrinsicHeight();
             drawable.setBounds(left, top + dpToPx(margin), right, bottom - dpToPx(margin));
@@ -93,9 +92,9 @@ public class CustomDividerItemDecoration extends RecyclerView.ItemDecoration{
     public void getItemOffsets(@NotNull Rect outRect, @NotNull View view, @NotNull RecyclerView parent, @NotNull RecyclerView.State state){
         if(orientation == VERTICAL_LIST){
             outRect.set(0, 0, 0, drawable.getIntrinsicHeight());
-        } else{
-            outRect.set(0, 0, drawable.getIntrinsicWidth(), 0);
+            return;
         }
+        outRect.set(0, 0, drawable.getIntrinsicWidth(), 0);
     }
 
     private int dpToPx(int dp){
@@ -103,3 +102,7 @@ public class CustomDividerItemDecoration extends RecyclerView.ItemDecoration{
         return Math.round(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, r.getDisplayMetrics()));
     }
 }
+
+
+
+
