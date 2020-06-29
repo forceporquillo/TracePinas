@@ -139,6 +139,23 @@ public class MapFragment extends BaseFragment implements
         return latitude == 0.0 && longitude == 0.0;
     }
 
+    static void setDelayAnimation(Runnable runnable){
+        new Handler().postDelayed(runnable, DELAY);
+    }
+
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    private static Bitmap getBitmapFromVector(Context context, int cases){
+        Drawable drawable = ContextCompat.getDrawable(context, R.drawable.circle_marker);
+        assert drawable != null;
+        final int radiusPerCases = (int) computeRadiusPerCases(cases);
+        Bitmap bitmap = Bitmap.createBitmap(drawable.getIntrinsicWidth() * radiusPerCases,
+                drawable.getIntrinsicHeight() * radiusPerCases, Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(bitmap);
+        drawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
+        drawable.draw(canvas);
+        return bitmap;
+    }
+
     private CameraUpdate setCameraPosition(String snippet){
         final LatLng latLng = new LatLng(12.8797, 121.7740);
         int zoomVelocity;
@@ -241,10 +258,6 @@ public class MapFragment extends BaseFragment implements
         });
     }
 
-    static void setDelayAnimation(Runnable runnable){
-        new Handler().postDelayed(runnable, DELAY);
-    }
-
     @RequiresApi(api = Build.VERSION_CODES.N)
     private void getLocalLiveData(Marker[] marker){
         mapViewModel.getMutablePhData().observe(this, listData -> {
@@ -301,19 +314,6 @@ public class MapFragment extends BaseFragment implements
         return new MarkerOptions().position(new LatLng(gc.latitude, gc.longitude)).alpha(0.7f)
                 .flat(true).icon(BitmapDescriptorFactory.fromBitmap(
                         getBitmapFromVector(view.getContext(), cases)));
-    }
-
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    private static Bitmap getBitmapFromVector(Context context, int cases){
-        Drawable drawable = ContextCompat.getDrawable(context, R.drawable.circle_marker);
-        assert drawable != null;
-        final int radiusPerCases = (int) computeRadiusPerCases(cases);
-        Bitmap bitmap = Bitmap.createBitmap(drawable.getIntrinsicWidth() * radiusPerCases,
-                drawable.getIntrinsicHeight() * radiusPerCases, Bitmap.Config.ARGB_8888);
-        Canvas canvas = new Canvas(bitmap);
-        drawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
-        drawable.draw(canvas);
-        return bitmap;
     }
 
     private void enableMyLocation(){

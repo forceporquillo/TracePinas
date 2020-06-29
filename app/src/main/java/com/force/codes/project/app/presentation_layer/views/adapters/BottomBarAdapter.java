@@ -21,13 +21,13 @@ import com.force.codes.project.app.presentation_layer.views.viewholders.BottomBa
 
 import java.util.ArrayList;
 
-public class BottomBarAdapter extends RecyclerView.Adapter<BottomBarViewHolder>{
-    private ArrayList<BottomItem> bottomItems;
+public class BottomBarAdapter extends RecyclerView.Adapter <BottomBarViewHolder>{
+    private ArrayList <BottomItem> bottomItems;
     private int itemWidth;
     private int selected;
     private BottomItemListener bottomItemListener;
 
-    public BottomBarAdapter(int selected, ArrayList<BottomItem> bottomItems, int itemWidth, BottomItemListener bottomItemListener){
+    public BottomBarAdapter(int selected, ArrayList <BottomItem> bottomItems, int itemWidth, BottomItemListener bottomItemListener){
         this.selected = selected;
         this.bottomItems = bottomItems;
         this.itemWidth = itemWidth;

@@ -46,7 +46,7 @@ public class CountryViewHolder extends RecyclerView.ViewHolder implements View.O
 
         if(newCases > 0){
             textUpdate.setText(utils.formatNumber(String.valueOf(newCases)) + " new cases...");
-        } else{
+        }else{
             textUpdate.setText(utils.formatNumber(String.valueOf(newCases)) + " henlo fren...");
         }
     }

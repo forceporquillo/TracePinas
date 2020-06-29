@@ -24,8 +24,8 @@ import timber.log.Timber;
 public class MapViewModel extends ViewModel{
     private MapRepository mapRepository;
     private CompositeDisposable compositeDisposable;
-    private MutableLiveData<PHData> mutablePhData = new MutableLiveData<>();
-    private MutableLiveData<List<GlobalData>> mutableGlobalData = new MutableLiveData<>();
+    private MutableLiveData <PHData> mutablePhData = new MutableLiveData <>();
+    private MutableLiveData <List <GlobalData>> mutableGlobalData = new MutableLiveData <>();
 
     public MapViewModel(MapRepository mapRepository, CompositeDisposable disposable){
         this.mapRepository = mapRepository;
@@ -39,7 +39,7 @@ public class MapViewModel extends ViewModel{
                         mutablePhData.setValue(phData), Timber::e));
     }
 
-    public LiveData<PHData> getMutablePhData(){
+    public LiveData <PHData> getMutablePhData(){
         return mutablePhData;
     }
 
@@ -50,7 +50,7 @@ public class MapViewModel extends ViewModel{
                         mutableGlobalData.setValue(globalData), Timber::e));
     }
 
-    public LiveData<List<GlobalData>> getMutableGlobalData(){
+    public LiveData <List <GlobalData>> getMutableGlobalData(){
         return mutableGlobalData;
     }
 

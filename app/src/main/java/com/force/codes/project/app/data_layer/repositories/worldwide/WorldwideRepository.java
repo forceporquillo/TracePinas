@@ -17,11 +17,11 @@ import java.util.List;
 import io.reactivex.Flowable;
 
 public interface WorldwideRepository{
-    Flowable<List<CountryDetails>> getDataFromRemoteService();
+    Flowable <List <CountryDetails>> getDataFromRemoteService();
 
-    LiveData<PagedList<CountryDetails>> getDataFromDatabase(PagedList.Config config);
+    LiveData <PagedList <CountryDetails>> getDataFromDatabase(PagedList.Config config);
 
-    void saveDatabase(List<CountryDetails> details);
+    void saveDatabase(List <CountryDetails> details);
 }
 
 

@@ -22,7 +22,7 @@ public class LiveOverviewRepositoryImpl implements LiveOverviewRepository{
     }
 
     @Override
-    public Flowable<WorldData> getWorldDataFromNetwork(){
+    public Flowable <WorldData> getWorldDataFromNetwork(){
         return remoteApiAdapter.getWorldData(ApiModule.CORONA_GLOBAL_CASES)
                 .subscribeOn(Schedulers.io());
     }

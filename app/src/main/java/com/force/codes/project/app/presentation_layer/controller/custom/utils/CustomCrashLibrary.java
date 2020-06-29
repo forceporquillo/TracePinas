@@ -19,7 +19,7 @@ public class CustomCrashLibrary{
     }
 
     public static void logWarning(Throwable t){
-       Timber.e(t);
+        Timber.e(t);
     }
 
     public static void logError(Throwable t){

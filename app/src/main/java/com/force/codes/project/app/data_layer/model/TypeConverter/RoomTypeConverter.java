@@ -19,19 +19,19 @@ import java.util.List;
 
 public class RoomTypeConverter{
     @TypeConverter
-    public static List<PHDataSet> stringToObjectList(String value){
+    public static List <PHDataSet> stringToObjectList(String value){
         if(value == null){
             return Collections.emptyList();
         }
 
-        Type listType = new TypeToken<List<PHDataSet>>(){
+        Type listType = new TypeToken <List <PHDataSet>>(){
         }.getType();
 
         return new Gson().fromJson(value, listType);
     }
 
     @TypeConverter
-    public static String objectListToString(List<PHDataSet> objects){
+    public static String objectListToString(List <PHDataSet> objects){
         return new Gson().toJson(objects);
     }
 }

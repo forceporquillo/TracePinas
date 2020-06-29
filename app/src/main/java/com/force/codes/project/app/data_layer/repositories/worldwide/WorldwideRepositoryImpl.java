@@ -38,20 +38,20 @@ public class WorldwideRepositoryImpl implements WorldwideRepository{
     }
 
     @Override
-    public Flowable<List<CountryDetails>> getDataFromRemoteService(){
+    public Flowable <List <CountryDetails>> getDataFromRemoteService(){
         return serviceAdapter.getSortedCases(ApiModule.CORONA_SORTED)
                 .subscribeOn(Schedulers.computation());
     }
 
     @Override
-    public LiveData<PagedList<CountryDetails>> getDataFromDatabase(PagedList.Config config){
-        DataSource.Factory<Integer, CountryDetails>
+    public LiveData <PagedList <CountryDetails>> getDataFromDatabase(PagedList.Config config){
+        DataSource.Factory <Integer, CountryDetails>
                 detailsFactory = countryDao.getDataFromDatabase();
-        return new LivePagedListBuilder<>(detailsFactory, config).build();
+        return new LivePagedListBuilder <>(detailsFactory, config).build();
     }
 
     @Override
-    public void saveDatabase(List<CountryDetails> detailsList){
+    public void saveDatabase(List <CountryDetails> detailsList){
         executors.diskIO().execute(() -> countryDao.insertOrUpdate(detailsList));
     }
 }

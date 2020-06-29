@@ -31,8 +31,8 @@ import java.util.List;
 public interface CountryDao{
     @Transaction
     @Query(DBModule.QUERY_ALL_DATA)
-    DataSource.Factory<Integer, CountryDetails> getDataFromDatabase();
+    DataSource.Factory <Integer, CountryDetails> getDataFromDatabase();
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insertOrUpdate(List<CountryDetails> details);
+    void insertOrUpdate(List <CountryDetails> details);
 }

@@ -73,7 +73,7 @@ public class WorldwideFragment extends BaseFragment implements FragmentCallback,
     public void onInternetConnectionChanged(Boolean isConnected){
         if(!isConnected){
             swipeRefreshLayout().setEnabled(false);
-        } else{
+        }else{
             swipeRefreshLayout().setEnabled(true);
         }
     }
@@ -85,7 +85,7 @@ public class WorldwideFragment extends BaseFragment implements FragmentCallback,
         worldwideViewModel.getDataFromDatabase().observe(this, countryDetails -> {
             if(countryDetails.isEmpty()){
                 worldwideViewModel.forceUpdate();
-            } else{
+            }else{
                 countryAdapter.submitList(countryDetails);
                 refreshLayout.setEnabled(true);
                 refreshLayout.setRefreshing(false);

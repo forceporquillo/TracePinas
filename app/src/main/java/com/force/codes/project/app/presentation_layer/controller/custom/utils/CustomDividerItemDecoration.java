@@ -52,7 +52,7 @@ public class CustomDividerItemDecoration extends RecyclerView.ItemDecoration{
     public void onDrawOver(@NotNull Canvas canvas, @NotNull RecyclerView parent, @NotNull RecyclerView.State state){
         if(orientation == VERTICAL_LIST){
             drawVertical(canvas, parent);
-        } else{
+        }else{
             drawHorizontal(canvas, parent);
         }
     }

@@ -28,7 +28,7 @@ public class WorldwideViewModelFactory implements ViewModelProvider.Factory{
     @SuppressWarnings("unchecked")
     @NonNull
     @Override
-    public <T extends ViewModel> T create(@NonNull Class<T> modelClass){
+    public <T extends ViewModel> T create(@NonNull Class <T> modelClass){
         if(modelClass.isAssignableFrom(WorldwideViewModel.class)){
             return (T) new WorldwideViewModel(worldwideRepository, new CompositeDisposable(), response);
         }

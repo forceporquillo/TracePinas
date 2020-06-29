@@ -103,15 +103,15 @@ public class NetworkConnectivity{
             if(networkCallback != null){
                 connectionState = true;
                 this.checkInternetConnectivity();
-            } else{
+            }else{
                 throw new NullPointerException("You must implement and pass an instance " +
                         "of ConnectionCallback interface.");
             }
-        } else if(networkOptions == 2){ // ping connection every 2 seconds (google)
+        }else if(networkOptions == 2){ // ping connection every 2 seconds (google)
             if(connectionCallback != null){
                 connectionState = true;
                 this.checkInternetConnectivity();
-            } else{
+            }else{
                 throw new NullPointerException("You must implement and pass an instance " +
                         "of NetworkCallback interface.");
             }

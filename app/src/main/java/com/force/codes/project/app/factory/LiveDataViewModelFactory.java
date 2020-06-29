@@ -24,7 +24,7 @@ public class LiveDataViewModelFactory implements ViewModelProvider.Factory{
     @SuppressWarnings("unchecked")
     @NonNull
     @Override
-    public <T extends ViewModel> T create(@NonNull Class<T> modelClass){
+    public <T extends ViewModel> T create(@NonNull Class <T> modelClass){
         if(modelClass.isAssignableFrom(LiveDataViewModel.class)){
             return (T) new LiveDataViewModel(repository);
         }

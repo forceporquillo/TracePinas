@@ -20,7 +20,7 @@ import io.reactivex.schedulers.Schedulers;
 import timber.log.Timber;
 
 public class LiveDataViewModel extends ViewModel{
-    public MutableLiveData<WorldData> liveData = new MutableLiveData<>();
+    public MutableLiveData <WorldData> liveData = new MutableLiveData <>();
 
     private LiveOverviewRepository repository;
 
@@ -28,7 +28,7 @@ public class LiveDataViewModel extends ViewModel{
         this.repository = repository;
     }
 
-    public LiveData<WorldData> getDataFromNetwork(){
+    public LiveData <WorldData> getDataFromNetwork(){
         return LiveDataReactiveStreams.fromPublisher(
                 repository.getWorldDataFromNetwork()
                         .subscribeOn(Schedulers.io())

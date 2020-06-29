@@ -25,7 +25,7 @@ public class CustomBottomBar{
     private final static int ITEM_LIMIT = 5;
     private Context context;
     private RecyclerView recyclerView;
-    private ArrayList<BottomItem> bottomItems;
+    private ArrayList <BottomItem> bottomItems;
     private BottomItemListener bottomItemListener;
 
     public CustomBottomBar(View view, Context context, BottomItemListener bottomItemListener){
@@ -36,7 +36,7 @@ public class CustomBottomBar{
 
     private void setType(View view){
         recyclerView = view.findViewById(R.id.bottom_bar_recyclerview);
-        bottomItems = new ArrayList<>();
+        bottomItems = new ArrayList <>();
     }
 
     public void addBottomItem(final BottomItem[] item){

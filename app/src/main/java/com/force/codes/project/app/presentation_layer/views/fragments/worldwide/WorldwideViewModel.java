@@ -28,7 +28,7 @@ public class WorldwideViewModel extends ViewModel{
 
     private final WorldwideRepository repository;
     private final CompositeDisposable compositeDisposable;
-    private LiveData<PagedList<CountryDetails>> listLiveData;
+    private LiveData <PagedList <CountryDetails>> listLiveData;
     private OnRequestResponse requestResponse;
 
     public WorldwideViewModel(
@@ -40,7 +40,7 @@ public class WorldwideViewModel extends ViewModel{
         this.requestResponse = response;
     }
 
-    public LiveData<PagedList<CountryDetails>> getDataFromDatabase(){
+    public LiveData <PagedList <CountryDetails>> getDataFromDatabase(){
         if(listLiveData == null){
             return listLiveData = repository.getDataFromDatabase(config);
         }

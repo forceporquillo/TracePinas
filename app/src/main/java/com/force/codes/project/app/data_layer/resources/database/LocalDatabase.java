@@ -39,7 +39,7 @@ public abstract class LocalDatabase extends RoomDatabase{
             super.onCreate(sqLiteDatabase);
         }
     };
-    
+
     private static volatile LocalDatabase INSTANCE;
 
     public static LocalDatabase getInstance(){

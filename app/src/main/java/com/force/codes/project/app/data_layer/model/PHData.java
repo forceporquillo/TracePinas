@@ -21,22 +21,22 @@ import java.util.List;
 public class PHData{
     @TypeConverters(RoomTypeConverter.class)
     @SerializedName("data")
-    private List<PHDataSet> data;
+    private List <PHDataSet> data;
     @NonNull
     @PrimaryKey
     @SerializedName("success")
     private boolean success;
 
-    public PHData(List<PHDataSet> data, boolean success){
+    public PHData(List <PHDataSet> data, boolean success){
         this.data = data;
         this.success = success;
     }
 
-    public List<PHDataSet> getData(){
+    public List <PHDataSet> getData(){
         return data;
     }
 
-    public void setData(List<PHDataSet> data){
+    public void setData(List <PHDataSet> data){
         this.data = data;
     }
 

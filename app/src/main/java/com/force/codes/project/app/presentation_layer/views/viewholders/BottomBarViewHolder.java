@@ -52,7 +52,7 @@ public class BottomBarViewHolder extends RecyclerView.ViewHolder{
         if(itemId == selected){
             itemTitle.setTextColor(Color.rgb(50, 121, 210));
             bottomIcon.setImageResource(itemFillIcon);
-        } else{
+        }else{
             itemTitle.setTextColor(Color.rgb(191, 191, 191));
             bottomIcon.setImageResource(itemDefIcon);
         }

@@ -12,5 +12,5 @@ import com.force.codes.project.app.data_layer.model.WorldData;
 import io.reactivex.Flowable;
 
 public interface LiveOverviewRepository{
-    Flowable<WorldData> getWorldDataFromNetwork();
+    Flowable <WorldData> getWorldDataFromNetwork();
 }

@@ -28,7 +28,7 @@ public class MapRepositoryImpl implements MapRepository{
     }
 
     @Override
-    public Flowable<PHData> getAllPHData(){
+    public Flowable <PHData> getAllPHData(){
         return Flowable.mergeDelayError(serviceAdapter
                 .getPhData(ApiModule.LOCAL_URL)
                 .doOnNext(mapDao::savePhData)
@@ -37,7 +37,7 @@ public class MapRepositoryImpl implements MapRepository{
     }
 
     @Override
-    public Flowable<List<GlobalData>> getAllGlobalData(){
+    public Flowable <List <GlobalData>> getAllGlobalData(){
         return Flowable.mergeDelayError(serviceAdapter
                 .getGlobalData(ApiModule.GLOBAL_CASE)
                 .doOnNext(mapDao::saveGlobalData)

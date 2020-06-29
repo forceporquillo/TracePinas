@@ -15,6 +15,7 @@ import java.util.List;
 import io.reactivex.Flowable;
 
 public interface MapRepository{
-    Flowable<PHData> getAllPHData();
-    Flowable<List<GlobalData>> getAllGlobalData();
+    Flowable <PHData> getAllPHData();
+
+    Flowable <List <GlobalData>> getAllGlobalData();
 }
