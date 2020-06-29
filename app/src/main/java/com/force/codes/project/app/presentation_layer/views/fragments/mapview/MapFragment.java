@@ -93,7 +93,7 @@ public class MapFragment extends BaseFragment implements
     private boolean isHardwareEnabled = false;
     private boolean isMapReady;
     private AppExecutors executors;
-    private List<String> dataSet;
+    private List <String> dataSet;
     private Runnable[] runnable;
     private Marker[] marker = new Marker[1];
 
@@ -112,7 +112,7 @@ public class MapFragment extends BaseFragment implements
     private static int computeRadiusPerCases(int cases){
         if(cases / 5000 == 0 || cases / 5000 < 0){
             return 5;
-        } else if(cases <= 1000 && cases != 0){
+        }else if(cases <= 1000 && cases != 0){
             return 10;
         }
 
@@ -145,7 +145,7 @@ public class MapFragment extends BaseFragment implements
 
         if(snippet.equals(PHILIPPINES)){
             zoomVelocity = 7;
-        } else{
+        }else{
             zoomVelocity = 4;
         }
         return CameraUpdateFactory.newLatLngZoom(latLng, zoomVelocity);
@@ -177,7 +177,7 @@ public class MapFragment extends BaseFragment implements
 
         try{
             MapsInitializer.initialize(view.getContext());
-        } catch(Exception e){
+        }catch(Exception e){
             Timber.e(e);
         }
 
@@ -202,10 +202,10 @@ public class MapFragment extends BaseFragment implements
         executors.computationIO().execute(() -> {
             Geocoder convertCoordinate = new Geocoder(view.getContext(), Locale.getDefault());
             try{
-                List<Address> address = convertCoordinate.getFromLocation(11.5810, 122.1178, 1);
+                List <Address> address = convertCoordinate.getFromLocation(11.5810, 122.1178, 1);
                 executors.mainThread().execute(() ->
                         Toast.makeText(view.getContext(), address.get(0).getLocality(), Toast.LENGTH_LONG).show());
-            } catch(IOException e){
+            }catch(IOException e){
                 e.printStackTrace();
             }
         });
@@ -248,8 +248,8 @@ public class MapFragment extends BaseFragment implements
     @RequiresApi(api = Build.VERSION_CODES.N)
     private void getLocalLiveData(Marker[] marker){
         mapViewModel.getMutablePhData().observe(this, listData -> {
-            final ArrayList<LatLng> latLang = new ArrayList<>();
-            final Map<LatLng, Integer> mapOfCases = new HashMap<>();
+            final ArrayList <LatLng> latLang = new ArrayList <>();
+            final Map <LatLng, Integer> mapOfCases = new HashMap <>();
 
             // iterate long computation task in separate
             // custom thread to avoid blocking ui thread.
@@ -322,7 +322,7 @@ public class MapFragment extends BaseFragment implements
             if(map != null){
                 map.setMyLocationEnabled(true);
             }
-        } else{
+        }else{
             requestPermissions(new String[]{Manifest.permission.ACCESS_COARSE_LOCATION,
                     android.Manifest.permission.ACCESS_FINE_LOCATION
             }, LOCATION_PERMISSION_REQUEST_CODE);
@@ -341,7 +341,7 @@ public class MapFragment extends BaseFragment implements
             }
             // region ...
             runnable = new Runnable[1];
-            dataSet = new LinkedList<>(Arrays.asList(PHILIPPINES, GLOBAL_CASES));
+            dataSet = new LinkedList <>(Arrays.asList(PHILIPPINES, GLOBAL_CASES));
             executors = new AppExecutors();
             // endregion
             MapViewModelFactory modelFactory = Injection.providesMapViewModelFactory();
@@ -372,14 +372,9 @@ public class MapFragment extends BaseFragment implements
         super.onDestroyView();
         mapView.onDestroy();
 
-        if(mapView != null){
-            mapView = null;
-        }
-
-        if(map != null){
-            map = null;
-        }
-
+        mapView = null;
+        map = null;
+        marker = null;
         view = null;
         unbinder.unbind();
 

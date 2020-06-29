@@ -7,20 +7,22 @@
 
 package com.force.codes.project.app.presentation_layer.controller.custom.utils;
 
+import timber.log.Timber;
+
 public class CustomCrashLibrary{
     private CustomCrashLibrary(){
         throw new AssertionError("No instances.");
     }
 
     public static void log(int priority, String tag, String message){
-        // TODO add log entry to circular buffer.
+        Timber.log(priority, message, tag);
     }
 
     public static void logWarning(Throwable t){
-        // TODO report non-fatal warning.
+       Timber.e(t);
     }
 
     public static void logError(Throwable t){
-        // TODO report non-fatal error.
+        Timber.e(t);
     }
 }

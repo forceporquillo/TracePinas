@@ -22,40 +22,21 @@ import leakcanary.ObjectWatcher;
 import timber.log.Timber;
 
 public class GlobalApplication extends Application{
+
+    DebugTreeApplication debugTreeApplication;
+
     @Override
     public void onCreate(){
         super.onCreate();
 
         LocalDatabase.setInstance(this);
 
+        debugTreeApplication = new DebugTreeApplication(this);
+
         if(BuildConfig.DEBUG){
-            Timber.plant(new Timber.DebugTree());
-            AppWatcher.getConfig().getWatchActivities();
-            AppWatcher.getConfig().getWatchFragments();
-            ObjectWatcher objectWatcher = AppWatcher.INSTANCE
-                    .getObjectWatcher();
-            objectWatcher.getRetainedObjectCount();
-        } else{
-            Timber.plant(new CrashReportingTree());
-        }
-    }
-
-    private static class CrashReportingTree extends Timber.Tree{
-        @Override
-        protected void log(int priority, @Nullable String tag, @NotNull String message, @Nullable Throwable t){
-            if(priority == Log.VERBOSE || priority == Log.DEBUG){
-                return;
-            }
-
-            CustomCrashLibrary.log(priority, tag, message);
-
-            if(t != null){
-                if(priority == Log.ERROR){
-                    CustomCrashLibrary.logError(t);
-                }
-            } else if(priority == Log.WARN){
-                CustomCrashLibrary.logWarning(null);
-            }
+           debugTreeApplication.DebugTree();
+        }else{
+            Timber.plant(new DebugTreeApplication.CrashReportingTree());
         }
     }
 }
