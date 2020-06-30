@@ -12,7 +12,7 @@ import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.force.codes.project.app.data_layer.repositories.map.MapRepository;
-import com.force.codes.project.app.presentation_layer.views.viewmodel.MapViewModel;
+import com.force.codes.project.app.presentation_layer.views.fragments.mapview.MapViewModel;
 
 import io.reactivex.disposables.CompositeDisposable;
 
@@ -28,7 +28,7 @@ public class MapViewModelFactory implements ViewModelProvider.Factory{
     @Override
     public <T extends ViewModel> T create(@NonNull Class <T> modelClass){
         if(modelClass.isAssignableFrom(MapViewModel.class)){
-            return (T) new MapViewModel(mapRepository);
+            return (T) new MapViewModel(mapRepository, new CompositeDisposable());
         }
         throw new IllegalArgumentException("Unknown ViewModel class");
     }

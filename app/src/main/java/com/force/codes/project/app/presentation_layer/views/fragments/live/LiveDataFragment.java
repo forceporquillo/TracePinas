@@ -1,11 +1,4 @@
-/*
- * Created by Force Porquillo on 7/1/20 3:46 AM
- * FEU Institute of Technology
- * Copyright (c) 2020.  All rights reserved.
- * Last modified 6/29/20 6:19 AM
- */
-
-package com.force.codes.project.app.presentation_layer.views.fragments;
+package com.force.codes.project.app.presentation_layer.views.fragments.live;
 
 /*
  * Created by Force Porquillo on 6/2/20 12:50 PM
@@ -25,7 +18,6 @@ import androidx.lifecycle.ViewModelProvider;
 import com.force.codes.project.app.app.Injection;
 import com.force.codes.project.app.databinding.FragmentLiveDataBinding;
 import com.force.codes.project.app.factory.LiveDataViewModelFactory;
-import com.force.codes.project.app.presentation_layer.views.viewmodel.LiveDataViewModel;
 import com.force.codes.project.app.service.executors.AppExecutors;
 
 import org.jetbrains.annotations.NotNull;

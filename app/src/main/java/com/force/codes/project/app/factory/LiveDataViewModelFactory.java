@@ -12,7 +12,7 @@ import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.force.codes.project.app.data_layer.repositories.live.LiveOverviewRepository;
-import com.force.codes.project.app.presentation_layer.views.viewmodel.LiveDataViewModel;
+import com.force.codes.project.app.presentation_layer.views.fragments.live.LiveDataViewModel;
 
 public class LiveDataViewModelFactory implements ViewModelProvider.Factory{
     private LiveOverviewRepository repository;
