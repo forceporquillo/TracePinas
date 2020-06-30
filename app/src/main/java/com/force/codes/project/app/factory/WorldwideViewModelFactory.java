@@ -12,7 +12,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.force.codes.project.app.data_layer.repositories.worldwide.WorldwideRepository;
 import com.force.codes.project.app.presentation_layer.controller.custom.interfaces.OnRequestResponse;
-import com.force.codes.project.app.presentation_layer.views.fragments.worldwide.WorldwideViewModel;
+import com.force.codes.project.app.presentation_layer.views.viewmodel.WorldwideViewModel;
 
 import io.reactivex.disposables.CompositeDisposable;
 
@@ -30,7 +30,7 @@ public class WorldwideViewModelFactory implements ViewModelProvider.Factory{
     @Override
     public <T extends ViewModel> T create(@NonNull Class <T> modelClass){
         if(modelClass.isAssignableFrom(WorldwideViewModel.class)){
-            return (T) new WorldwideViewModel(worldwideRepository, new CompositeDisposable(), response);
+            return (T) new WorldwideViewModel(worldwideRepository, response);
         }
         throw new IllegalArgumentException("Unknown ViewModel class");
     }

@@ -1,4 +1,11 @@
-package com.force.codes.project.app.presentation_layer.views.fragments.live;
+/*
+ * Created by Force Porquillo on 7/1/20 3:46 AM
+ * FEU Institute of Technology
+ * Copyright (c) 2020.  All rights reserved.
+ * Last modified 6/30/20 3:12 AM
+ */
+
+package com.force.codes.project.app.presentation_layer.views.viewmodel;
 
 /*
  * Created by Force Porquillo on 6/3/20 10:47 PM
@@ -19,7 +26,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import timber.log.Timber;
 
-public class LiveDataViewModel extends ViewModel{
+public class LiveDataViewModel extends BaseViewModel{
     public MutableLiveData <WorldData> liveData = new MutableLiveData <>();
 
     private LiveOverviewRepository repository;

@@ -5,7 +5,7 @@
  * Last modified 6/16/20 8:49 PM
  */
 
-package com.force.codes.project.app.presentation_layer.views.fragments.worldwide;
+package com.force.codes.project.app.presentation_layer.views.fragments;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -30,8 +30,7 @@ import com.force.codes.project.app.presentation_layer.controller.custom.interfac
 import com.force.codes.project.app.presentation_layer.controller.custom.interfaces.OnRequestResponse;
 import com.force.codes.project.app.presentation_layer.views.BaseFragment;
 import com.force.codes.project.app.presentation_layer.views.adapters.CountryAdapter;
-import com.force.codes.project.app.presentation_layer.views.fragments.favorites.HelpCenterFragment;
-import com.force.codes.project.app.presentation_layer.views.fragments.statistics.StatisticsFragment;
+import com.force.codes.project.app.presentation_layer.views.viewmodel.WorldwideViewModel;
 import com.force.codes.project.app.service.executors.AppExecutors;
 import com.force.codes.project.app.service.network.ConnectionCallback;
 import com.force.codes.project.app.service.network.NetworkConnectivity;

@@ -5,7 +5,7 @@
  * Last modified 6/29/20 8:54 PM
  */
 
-package com.force.codes.project.app.presentation_layer.views.fragments.mapview;
+package com.force.codes.project.app.presentation_layer.views.fragments;
 
 import android.Manifest;
 import android.annotation.TargetApi;
@@ -36,6 +36,7 @@ import com.force.codes.project.app.app.Injection;
 import com.force.codes.project.app.factory.MapViewModelFactory;
 import com.force.codes.project.app.presentation_layer.views.BaseFragment;
 import com.force.codes.project.app.presentation_layer.views.adapters.CustomInfoWindowAdapter;
+import com.force.codes.project.app.presentation_layer.views.viewmodel.MapViewModel;
 import com.force.codes.project.app.service.executors.AppExecutors;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -374,7 +375,7 @@ public class MapFragment extends BaseFragment implements
 
         mapView = null;
         map = null;
-        marker = null;
+        marker[0] = null;
         view = null;
         unbinder.unbind();
 
