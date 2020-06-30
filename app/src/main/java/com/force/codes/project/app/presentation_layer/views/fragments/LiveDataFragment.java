@@ -1,4 +1,11 @@
-package com.force.codes.project.app.presentation_layer.views.fragments.live;
+/*
+ * Created by Force Porquillo on 7/1/20 4:04 AM
+ * FEU Institute of Technology
+ * Copyright (c) 2020.  All rights reserved.
+ * Last modified 7/1/20 4:01 AM
+ */
+
+package com.force.codes.project.app.presentation_layer.views.fragments;
 
 /*
  * Created by Force Porquillo on 6/2/20 12:50 PM
@@ -18,6 +25,7 @@ import androidx.lifecycle.ViewModelProvider;
 import com.force.codes.project.app.app.Injection;
 import com.force.codes.project.app.databinding.FragmentLiveDataBinding;
 import com.force.codes.project.app.factory.LiveDataViewModelFactory;
+import com.force.codes.project.app.presentation_layer.views.viewmodels.LiveDataViewModel;
 import com.force.codes.project.app.service.executors.AppExecutors;
 
 import org.jetbrains.annotations.NotNull;

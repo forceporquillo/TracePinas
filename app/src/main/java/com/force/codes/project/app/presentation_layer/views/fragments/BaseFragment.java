@@ -4,7 +4,7 @@
  * FEU Institute of Technology
  */
 
-package com.force.codes.project.app.presentation_layer.views;
+package com.force.codes.project.app.presentation_layer.views.fragments;
 
 
 import androidx.fragment.app.Fragment;
@@ -12,7 +12,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.force.codes.project.app.R;
-import com.force.codes.project.app.presentation_layer.views.fragments.statistics.StatisticsFragment;
+import com.force.codes.project.app.presentation_layer.views.fragments.StatisticsFragment;
 
 public abstract class BaseFragment extends Fragment{
     public FragmentTransaction setDelegateFragment(Fragment fragment){

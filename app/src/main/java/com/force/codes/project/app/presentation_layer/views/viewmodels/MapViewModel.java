@@ -1,4 +1,11 @@
-package com.force.codes.project.app.presentation_layer.views.fragments.mapview;
+/*
+ * Created by Force Porquillo on 7/1/20 4:04 AM
+ * FEU Institute of Technology
+ * Copyright (c) 2020.  All rights reserved.
+ * Last modified 7/1/20 4:01 AM
+ */
+
+package com.force.codes.project.app.presentation_layer.views.viewmodels;
 
 /*
  * Created by Force Porquillo on 6/4/20 6:06 AM
@@ -19,24 +26,25 @@ import java.util.List;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.disposables.Disposable;
 import timber.log.Timber;
 
-public class MapViewModel extends ViewModel{
+public class MapViewModel extends BaseViewModel{
     private MapRepository mapRepository;
-    private CompositeDisposable compositeDisposable;
     private MutableLiveData <PHData> mutablePhData = new MutableLiveData <>();
     private MutableLiveData <List <GlobalData>> mutableGlobalData = new MutableLiveData <>();
 
-    public MapViewModel(MapRepository mapRepository, CompositeDisposable disposable){
+    public MapViewModel(MapRepository mapRepository){
         this.mapRepository = mapRepository;
-        this.compositeDisposable = disposable;
     }
 
     public void getAllPhData(){
-        compositeDisposable.add(mapRepository.getAllPHData()
+        Disposable disposable = mapRepository.getAllPHData()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(phData ->
-                        mutablePhData.setValue(phData), Timber::e));
+                        mutablePhData.setValue(phData), Timber::e);
+
+        addToUnsubscribed(disposable);
     }
 
     public LiveData <PHData> getMutablePhData(){
@@ -44,19 +52,15 @@ public class MapViewModel extends ViewModel{
     }
 
     public void getListGlobalData(){
-        compositeDisposable.add(mapRepository.getAllGlobalData()
+        Disposable disposable = mapRepository.getAllGlobalData()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(globalData ->
-                        mutableGlobalData.setValue(globalData), Timber::e));
+                        mutableGlobalData.setValue(globalData), Timber::e);
+        addToUnsubscribed(disposable);
     }
 
     public LiveData <List <GlobalData>> getMutableGlobalData(){
         return mutableGlobalData;
     }
 
-    @Override
-    protected void onCleared(){
-        super.onCleared();
-        compositeDisposable.dispose();
-    }
 }

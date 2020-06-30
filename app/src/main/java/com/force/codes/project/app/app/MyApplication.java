@@ -14,9 +14,7 @@ import com.force.codes.project.app.data_layer.resources.database.LocalDatabase;
 
 import timber.log.Timber;
 
-public class GlobalApplication extends Application{
-
-    DebugTreeApplication debugTreeApplication;
+public class MyApplication extends Application{
 
     @Override
     public void onCreate(){
@@ -24,10 +22,12 @@ public class GlobalApplication extends Application{
 
         LocalDatabase.setInstance(this);
 
-        debugTreeApplication = new DebugTreeApplication(this);
+        setDebugInstance(new DebugTreeApplication(this));
+    }
 
+    private static void setDebugInstance(DebugTreeApplication debugInstance){
         if(BuildConfig.DEBUG){
-            debugTreeApplication.DebugTree();
+            debugInstance.DebugTree();
         }else{
             Timber.plant(new DebugTreeApplication.CrashReportingTree());
         }
