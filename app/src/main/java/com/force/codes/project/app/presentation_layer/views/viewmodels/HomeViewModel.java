@@ -14,7 +14,5 @@ package com.force.codes.project.app.presentation_layer.views.viewmodels;
  *
  */
 
-import androidx.lifecycle.ViewModel;
-
 class HomeViewModel extends BaseViewModel{
 }
