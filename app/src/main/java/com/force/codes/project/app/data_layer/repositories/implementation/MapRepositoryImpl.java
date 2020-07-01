@@ -5,10 +5,11 @@
  * Last modified 6/20/20 8:30 PM
  */
 
-package com.force.codes.project.app.data_layer.repositories.map;
+package com.force.codes.project.app.data_layer.repositories.implementation;
 
 import com.force.codes.project.app.data_layer.model.GlobalData;
 import com.force.codes.project.app.data_layer.model.PHData;
+import com.force.codes.project.app.data_layer.repositories.interfaces.MapRepository;
 import com.force.codes.project.app.data_layer.resources.api.ApiModule;
 import com.force.codes.project.app.data_layer.resources.api.RemoteApiAdapter;
 import com.force.codes.project.app.data_layer.resources.database.data.MapDao;

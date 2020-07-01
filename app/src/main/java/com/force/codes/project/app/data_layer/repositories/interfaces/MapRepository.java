@@ -5,7 +5,7 @@
  * Last modified 6/20/20 8:59 PM
  */
 
-package com.force.codes.project.app.data_layer.repositories.map;
+package com.force.codes.project.app.data_layer.repositories.interfaces;
 
 import com.force.codes.project.app.data_layer.model.GlobalData;
 import com.force.codes.project.app.data_layer.model.PHData;

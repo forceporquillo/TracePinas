@@ -1,4 +1,11 @@
-package com.force.codes.project.app.data_layer.repositories.worldwide;
+/*
+ * Created by Force Porquillo on 7/1/20 7:08 AM
+ * FEU Institute of Technology
+ * Copyright (c) 2020.  All rights reserved.
+ * Last modified 6/30/20 3:12 AM
+ */
+
+package com.force.codes.project.app.data_layer.repositories.implementation;
 
 /*
  * Created by Force Porquillo on 5/7/20 8:01 PM
@@ -13,6 +20,7 @@ import androidx.paging.LivePagedListBuilder;
 import androidx.paging.PagedList;
 
 import com.force.codes.project.app.data_layer.model.CountryDetails;
+import com.force.codes.project.app.data_layer.repositories.interfaces.WorldwideRepository;
 import com.force.codes.project.app.data_layer.resources.api.ApiModule;
 import com.force.codes.project.app.data_layer.resources.api.RemoteApiAdapter;
 import com.force.codes.project.app.data_layer.resources.database.data.CountryDao;
