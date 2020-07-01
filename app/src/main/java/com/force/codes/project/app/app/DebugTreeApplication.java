@@ -10,8 +10,6 @@ package com.force.codes.project.app.app;
 import android.app.Application;
 import android.util.Log;
 
-import com.force.codes.project.app.presentation_layer.controller.custom.utils.CustomCrashLibrary;
-
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -32,8 +30,8 @@ public class DebugTreeApplication{
         AppWatcher.getConfig().getWatchFragments();
         AppWatcher.getConfig().getWatchFragmentViews();
         AppWatcher.getConfig().getWatchViewModels();
-        ObjectWatcher objectWatcher = AppWatcher.INSTANCE.getObjectWatcher();
-        objectWatcher.getRetainedObjectCount();
+        ObjectWatcher watcher = AppWatcher.INSTANCE.getObjectWatcher();
+        watcher.getRetainedObjectCount();
     }
 
     public static class CrashReportingTree extends Timber.Tree{
@@ -50,10 +48,29 @@ public class DebugTreeApplication{
             if(t != null){
                 if(priority == Log.ERROR){
                     CustomCrashLibrary.logError(t);
+                }else if(priority == Log.WARN){
+                    CustomCrashLibrary.logWarning(t);
                 }
-            }else if(priority == Log.WARN){
-                CustomCrashLibrary.logWarning(null);
             }
+        }
+    }
+
+    public static class CustomCrashLibrary{
+
+        private CustomCrashLibrary(){
+            throw new AssertionError("No instances.");
+        }
+
+        public static void log(int priority, String tag, String message){
+            Timber.log(priority, message, tag);
+        }
+
+        public static void logWarning(Throwable t){
+            Timber.e(t);
+        }
+
+        public static void logError(Throwable t){
+            Timber.e(t);
         }
     }
 }

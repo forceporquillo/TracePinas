@@ -110,17 +110,16 @@ public class MapFragment extends BaseFragment implements
 
     // SEPARATION OF CONCERNS.
     private static int computeRadiusPerCases(int cases){
-        if(cases / 5000 == 0 || cases / 5000 < 0){
+        if(cases / 5000 == 0 || cases / 5000 < 0)
             return 5;
-        }else if(cases <= 1000 && cases != 0){
+        else if(cases <= 1000 && cases != 0)
             return 10;
-        }
 
         int temp = cases / 5000;
 
-        if(temp <= 0){
+        if(temp <= 0)
             return 4;
-        }
+
 
         return temp + 2;
     }
@@ -160,11 +159,11 @@ public class MapFragment extends BaseFragment implements
         final LatLng latLng = new LatLng(12.8797, 121.7740);
         int zoomVelocity;
 
-        if(snippet.equals(PHILIPPINES)){
+        if(snippet.equals(PHILIPPINES))
             zoomVelocity = 7;
-        }else{
+        else
             zoomVelocity = 4;
-        }
+
         return CameraUpdateFactory.newLatLngZoom(latLng, zoomVelocity);
     }
 
@@ -264,8 +263,6 @@ public class MapFragment extends BaseFragment implements
             final ArrayList <LatLng> latLang = new ArrayList <>();
             final Map <LatLng, Integer> mapOfCases = new HashMap <>();
 
-            // iterate long computation task in separate
-            // custom thread to avoid blocking ui thread.
             executors.computationIO().execute(() -> {
                 listData.getData().forEach(phDataSet -> {
                     final String lat = phDataSet.getLatitude();
@@ -277,7 +274,6 @@ public class MapFragment extends BaseFragment implements
                     }
                 });
 
-                // count duplicates of latLang and add as numCases per coordinates.
                 latLang.forEach(latLng -> {
                     Integer numCases = mapOfCases.get(latLng);
                     mapOfCases.put(latLng, (numCases == null) ? 1 : numCases + 1);
@@ -319,9 +315,8 @@ public class MapFragment extends BaseFragment implements
     private void enableMyLocation(){
         if(ContextCompat.checkSelfPermission(view.getContext(),
                 Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED){
-            if(map != null){
+            if(map != null)
                 map.setMyLocationEnabled(true);
-            }
         }else{
             requestPermissions(new String[]{Manifest.permission.ACCESS_COARSE_LOCATION,
                     android.Manifest.permission.ACCESS_FINE_LOCATION

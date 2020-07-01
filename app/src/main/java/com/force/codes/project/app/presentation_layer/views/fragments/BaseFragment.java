@@ -12,7 +12,6 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.force.codes.project.app.R;
-import com.force.codes.project.app.presentation_layer.views.fragments.StatisticsFragment;
 
 public abstract class BaseFragment extends Fragment{
     public FragmentTransaction setDelegateFragment(Fragment fragment){

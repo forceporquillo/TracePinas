@@ -11,10 +11,8 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.force.codes.project.app.data_layer.repositories.map.MapRepository;
+import com.force.codes.project.app.data_layer.repositories.interfaces.MapRepository;
 import com.force.codes.project.app.presentation_layer.views.viewmodels.MapViewModel;
-
-import io.reactivex.disposables.CompositeDisposable;
 
 public class MapViewModelFactory implements ViewModelProvider.Factory{
     private MapRepository mapRepository;

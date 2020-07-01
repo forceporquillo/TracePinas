@@ -11,7 +11,7 @@
 
         <variable
             name="viewModel"
-            type="com.force.codes.project.app.presentation_layer.views.fragments.worldwide.WorldwideViewModel" />
+            type="com.force.codes.project.app.presentation_layer.views.viewmodels.WorldwideViewModel" />
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout

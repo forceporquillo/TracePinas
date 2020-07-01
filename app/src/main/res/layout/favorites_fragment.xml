@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ Created by Force Porquillo on 6/11/20 12:22 PM
   ~ Copyright (c) 2020.  All rights reserved.
   ~ FEU Institute of Technology
@@ -10,7 +9,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/foregroundColor2"
-    tools:context="com.force.codes.project.app.presentation_layer.views.fragments.favorites.HelpCenterFragment">
+    tools:context="com.force.codes.project.app.presentation_layer.views.fragments.HelpCenterFragment">
 
     <TextView
         android:layout_width="match_parent"

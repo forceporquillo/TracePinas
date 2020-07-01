@@ -8,20 +8,20 @@
   -->
 
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/item_card_view"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    tools:viewBindingIgnore="true"
     android:layout_marginTop="2dp"
-    app:cardBackgroundColor="@color/foregroundColor2">
+    app:cardBackgroundColor="@color/foregroundColor2"
+    tools:viewBindingIgnore="true">
 
     <RelativeLayout
-        android:layout_marginTop="5dp"
-        android:layout_marginBottom="5dp"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
         android:padding="4dp">
 
         <de.hdodenhof.circleimageview.CircleImageView
@@ -34,51 +34,51 @@
             android:src="@color/placeholder_bg" />
 
         <RelativeLayout
-            android:layout_marginTop="2dp"
-            android:layout_marginBottom="2dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/margin_10dp"
+            android:layout_marginTop="2dp"
+            android:layout_marginBottom="2dp"
             android:layout_toEndOf="@id/worldwide_flag_skeleton"
             tools:ignore="RelativeOverlap">
 
-                <View
-                    android:id="@+id/skeleton_country"
-                    android:layout_width="60dp"
-                    android:layout_height="14dp"
-                    android:background="@color/placeholder_bg" />
+            <View
+                android:id="@+id/skeleton_country"
+                android:layout_width="60dp"
+                android:layout_height="14dp"
+                android:background="@color/placeholder_bg" />
 
-                <View
-                    android:layout_marginTop="1dp"
-                    android:layout_toEndOf="@id/skeleton_country"
-                    android:layout_width="45dp"
-                    android:layout_height="12dp"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginStart="@dimen/margin_15dp"
-                    android:background="@color/placeholder_bg" />
+            <View
+                android:layout_width="45dp"
+                android:layout_height="12dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="@dimen/margin_15dp"
+                android:layout_marginTop="1dp"
+                android:layout_toEndOf="@id/skeleton_country"
+                android:background="@color/placeholder_bg" />
 
-                <View
-                    android:layout_marginTop="4dp"
-                    android:id="@+id/skeleton_body"
-                    android:layout_below="@id/skeleton_country"
-                    android:layout_width="250dp"
-                    android:layout_height="7dp"
-                    android:background="@color/placeholder_bg"
-                    android:layout_marginBottom="2dp"/>
+            <View
+                android:id="@+id/skeleton_body"
+                android:layout_width="250dp"
+                android:layout_height="7dp"
+                android:layout_below="@id/skeleton_country"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="2dp"
+                android:background="@color/placeholder_bg" />
 
-                <View
-                    android:id="@+id/skeleton_body_2"
-                    android:layout_below="@id/skeleton_body"
-                    android:layout_width="250dp"
-                    android:layout_height="7dp"
-                    android:background="@color/placeholder_bg"
-                    android:layout_marginBottom="2dp"/>
+            <View
+                android:id="@+id/skeleton_body_2"
+                android:layout_width="250dp"
+                android:layout_height="7dp"
+                android:layout_below="@id/skeleton_body"
+                android:layout_marginBottom="2dp"
+                android:background="@color/placeholder_bg" />
 
-                <View
-                    android:layout_below="@id/skeleton_body_2"
-                    android:layout_width="180dp"
-                    android:layout_height="7dp"
-                    android:background="@color/placeholder_bg" />
+            <View
+                android:layout_width="180dp"
+                android:layout_height="7dp"
+                android:layout_below="@id/skeleton_body_2"
+                android:background="@color/placeholder_bg" />
         </RelativeLayout>
 
         <View

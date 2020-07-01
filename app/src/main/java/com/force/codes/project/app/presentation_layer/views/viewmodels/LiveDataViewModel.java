@@ -19,7 +19,7 @@ import androidx.lifecycle.LiveDataReactiveStreams;
 import androidx.lifecycle.MutableLiveData;
 
 import com.force.codes.project.app.data_layer.model.WorldData;
-import com.force.codes.project.app.data_layer.repositories.LiveOverviewRepository;
+import com.force.codes.project.app.data_layer.repositories.interfaces.LiveOverviewRepository;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;

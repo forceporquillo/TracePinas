@@ -49,11 +49,11 @@
                 android:theme="@style/search_style" />
 
             <org.angmarch.views.NiceSpinner
-                android:layout_centerVertical="true"
                 android:id="@+id/nice_spinner"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
                 android:background="@drawable/corners_bg"
                 android:textColor="@color/blue"
                 app:arrowTint="@color/blue"

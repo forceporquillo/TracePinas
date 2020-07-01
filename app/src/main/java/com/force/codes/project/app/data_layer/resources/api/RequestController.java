@@ -23,6 +23,7 @@ public class RequestController{
                     .writeTimeout(TIMEOUT_MILLIS, TimeUnit.MILLISECONDS)
                     .addInterceptor(providesInterceptor())
                     .build();
+
     private static RequestController INSTANCE;
     private static Retrofit retrofit;
 

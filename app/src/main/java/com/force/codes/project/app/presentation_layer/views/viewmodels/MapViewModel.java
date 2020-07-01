@@ -19,7 +19,7 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.force.codes.project.app.data_layer.model.GlobalData;
 import com.force.codes.project.app.data_layer.model.PHData;
-import com.force.codes.project.app.data_layer.repositories.MapRepository;
+import com.force.codes.project.app.data_layer.repositories.interfaces.MapRepository;
 
 import java.util.List;
 

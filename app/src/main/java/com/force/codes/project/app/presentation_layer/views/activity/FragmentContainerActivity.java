@@ -5,7 +5,7 @@
  * Last modified 6/27/20 5:07 AM
  */
 
-package com.force.codes.project.app.presentation_layer.views.container;
+package com.force.codes.project.app.presentation_layer.views.activity;
 
 /*
  * Created by Force Porquillo on 6/2/20 12:50 PM
@@ -29,12 +29,11 @@ import com.force.codes.project.app.R;
 import com.force.codes.project.app.presentation_layer.controller.custom.interfaces.BottomItemListener;
 import com.force.codes.project.app.presentation_layer.controller.custom.model.BottomItem;
 import com.force.codes.project.app.presentation_layer.controller.support.CustomBottomBar;
-import com.force.codes.project.app.presentation_layer.views.BaseActivity;
-import com.force.codes.project.app.presentation_layer.views.fragments.favorites.HelpCenterFragment;
-import com.force.codes.project.app.presentation_layer.views.fragments.home.HomeFragment;
-import com.force.codes.project.app.presentation_layer.views.fragments.mapview.MapFragment;
-import com.force.codes.project.app.presentation_layer.views.fragments.newsfeed.NewsFragment;
-import com.force.codes.project.app.presentation_layer.views.fragments.worldwide.WorldwideFragment;
+import com.force.codes.project.app.presentation_layer.views.fragments.HelpCenterFragment;
+import com.force.codes.project.app.presentation_layer.views.fragments.HomeFragment;
+import com.force.codes.project.app.presentation_layer.views.fragments.MapFragment;
+import com.force.codes.project.app.presentation_layer.views.fragments.NewsFragment;
+import com.force.codes.project.app.presentation_layer.views.fragments.WorldwideFragment;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -78,7 +77,7 @@ public class FragmentContainerActivity extends BaseActivity implements BottomIte
                 this, this);
 
         int versionCode = Build.VERSION.SDK_INT;
-        if(versionCode >= Build.VERSION_CODES.LOLLIPOP_MR1){
+        if(versionCode >= Build.VERSION_CODES.LOLLIPOP){
             getWindow().getDecorView()
                     .setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
         }

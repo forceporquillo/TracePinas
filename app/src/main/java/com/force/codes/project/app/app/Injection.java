@@ -9,12 +9,12 @@ package com.force.codes.project.app.app;
 
 import android.content.Context;
 
-import com.force.codes.project.app.data_layer.repositories.live.LiveOverviewRepository;
-import com.force.codes.project.app.data_layer.repositories.live.LiveOverviewRepositoryImpl;
-import com.force.codes.project.app.data_layer.repositories.map.MapRepository;
-import com.force.codes.project.app.data_layer.repositories.map.MapRepositoryImpl;
-import com.force.codes.project.app.data_layer.repositories.worldwide.WorldwideRepository;
-import com.force.codes.project.app.data_layer.repositories.worldwide.WorldwideRepositoryImpl;
+import com.force.codes.project.app.data_layer.repositories.interfaces.LiveOverviewRepository;
+import com.force.codes.project.app.data_layer.repositories.implementation.LiveOverviewRepositoryImpl;
+import com.force.codes.project.app.data_layer.repositories.interfaces.MapRepository;
+import com.force.codes.project.app.data_layer.repositories.implementation.MapRepositoryImpl;
+import com.force.codes.project.app.data_layer.repositories.interfaces.WorldwideRepository;
+import com.force.codes.project.app.data_layer.repositories.implementation.WorldwideRepositoryImpl;
 import com.force.codes.project.app.data_layer.resources.api.RequestController;
 import com.force.codes.project.app.data_layer.resources.database.LocalDatabase;
 import com.force.codes.project.app.factory.LiveDataViewModelFactory;

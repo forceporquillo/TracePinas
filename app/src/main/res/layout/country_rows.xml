@@ -10,6 +10,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+
         <variable
             name="details"
             type="com.force.codes.project.app.data_layer.model.CountryDetails" />
@@ -25,31 +26,31 @@
         app:cardBackgroundColor="@color/foregroundColor2">
 
         <RelativeLayout
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="5dp"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
             android:padding="4dp">
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/worldwide_flag"
-                android:layout_width="@dimen/xhdpi_layout"
-                android:layout_marginTop="5dp"
-                android:layout_marginBottom="5dp"
                 imageUrl="@{details.countryInfo.flag}"
+                android:layout_width="@dimen/xhdpi_layout"
                 android:layout_height="@dimen/xhdpi_layout"
                 android:layout_alignParentStart="true"
                 android:layout_centerVertical="true"
-                android:layout_marginStart="@dimen/margin_5dp" />
+                android:layout_marginStart="@dimen/margin_5dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp" />
 
             <RelativeLayout
-                android:gravity="center_vertical"
-                android:layout_marginEnd="20dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/margin_10dp"
                 android:layout_marginTop="5dp"
-                android:layout_toEndOf="@id/worldwide_flag">
+                android:layout_marginEnd="20dp"
+                android:layout_toEndOf="@id/worldwide_flag"
+                android:gravity="center_vertical">
 
                 <LinearLayout
                     android:id="@+id/country_container"
@@ -59,21 +60,21 @@
 
                     <TextView
                         android:id="@+id/countryName"
-                        android:text="@{details.country}"
                         style="@style/countryDetails"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
-                        android:gravity="center_vertical" />
+                        android:gravity="center_vertical"
+                        android:text="@{details.country}" />
 
                     <TextView
                         android:id="@+id/continent"
                         style="@style/continent"
-                        android:text="@{details.continent}"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:layout_marginStart="@dimen/margin_10dp" />
+                        android:layout_marginStart="@dimen/margin_10dp"
+                        android:text="@{details.continent}" />
                 </LinearLayout>
 
                 <RelativeLayout
@@ -88,8 +89,8 @@
 
                     <TextView
                         android:id="@+id/cases_text"
-                        textUpdate="@{details.todayCases}"
                         style="@style/countrySubDetails"
+                        textUpdate="@{details.todayCases}"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
                 </RelativeLayout>

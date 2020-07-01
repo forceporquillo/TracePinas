@@ -10,20 +10,13 @@ package com.force.codes.project.app.app;
 import android.app.Application;
 
 import com.force.codes.project.app.BuildConfig;
+import com.force.codes.project.app.app.di.AppModule;
 import com.force.codes.project.app.data_layer.resources.database.LocalDatabase;
 
 import timber.log.Timber;
 
 public class MyApplication extends Application{
-
-    @Override
-    public void onCreate(){
-        super.onCreate();
-
-        LocalDatabase.setInstance(this);
-
-        setDebugInstance(new DebugTreeApplication(this));
-    }
+    private AppComponent appComponent;
 
     private static void setDebugInstance(DebugTreeApplication debugInstance){
         if(BuildConfig.DEBUG){
@@ -31,5 +24,25 @@ public class MyApplication extends Application{
         }else{
             Timber.plant(new DebugTreeApplication.CrashReportingTree());
         }
+    }
+
+    @Override
+    public void onCreate(){
+        super.onCreate();
+
+        LocalDatabase.setInstance(this);
+
+        appComponent = DaggerAppComponent.builder()
+                .application(this)
+                .appModule(new AppModule(this))
+                .build();
+
+        appComponent.inject(this);
+
+        setDebugInstance(new DebugTreeApplication(this));
+    }
+
+    public AppComponent getAppComponent(){
+        return appComponent;
     }
 }

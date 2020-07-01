@@ -13,7 +13,7 @@ import androidx.room.RoomDatabase;
 import androidx.room.TypeConverters;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
-import com.force.codes.project.app.app.GlobalApplication;
+import com.force.codes.project.app.app.MyApplication;
 import com.force.codes.project.app.data_layer.model.CountryDetails;
 import com.force.codes.project.app.data_layer.model.GlobalData;
 import com.force.codes.project.app.data_layer.model.PHData;
@@ -32,6 +32,7 @@ import com.force.codes.project.app.data_layer.resources.database.data.MapDao;
 @TypeConverters({
         RoomTypeConverter.class
 })
+
 public abstract class LocalDatabase extends RoomDatabase{
     static RoomDatabase.Callback roomCallback = new RoomDatabase.Callback(){
         @Override
@@ -46,7 +47,7 @@ public abstract class LocalDatabase extends RoomDatabase{
         return INSTANCE;
     }
 
-    public static void setInstance(GlobalApplication application){
+    public static void setInstance(MyApplication application){
         if(INSTANCE == null){
             synchronized(LocalDatabase.class){
                 if(INSTANCE == null){

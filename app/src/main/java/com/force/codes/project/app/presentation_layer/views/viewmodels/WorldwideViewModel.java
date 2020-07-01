@@ -18,7 +18,7 @@ import androidx.paging.PagedList;
 
 import com.force.codes.project.app.app.PageListConstants;
 import com.force.codes.project.app.data_layer.model.CountryDetails;
-import com.force.codes.project.app.data_layer.repositories.WorldwideRepository;
+import com.force.codes.project.app.data_layer.repositories.interfaces.WorldwideRepository;
 import com.force.codes.project.app.presentation_layer.controller.custom.interfaces.OnRequestResponse;
 
 import io.reactivex.Flowable;

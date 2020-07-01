@@ -10,11 +10,9 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.force.codes.project.app.data_layer.repositories.worldwide.WorldwideRepository;
+import com.force.codes.project.app.data_layer.repositories.interfaces.WorldwideRepository;
 import com.force.codes.project.app.presentation_layer.controller.custom.interfaces.OnRequestResponse;
 import com.force.codes.project.app.presentation_layer.views.viewmodels.WorldwideViewModel;
-
-import io.reactivex.disposables.CompositeDisposable;
 
 public class WorldwideViewModelFactory implements ViewModelProvider.Factory{
     private WorldwideRepository worldwideRepository;
