@@ -12,9 +12,9 @@ import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 
+import com.force.codes.project.app.app.constants.DatabaseConstants;
 import com.force.codes.project.app.data_layer.model.GlobalData;
-import com.force.codes.project.app.data_layer.model.PHData;
-import com.force.codes.project.app.data_layer.resources.database.DBModule;
+import com.force.codes.project.app.data_layer.model.LocalListData;
 
 import java.util.List;
 
@@ -23,12 +23,12 @@ import io.reactivex.Flowable;
 @Dao
 public interface MapDao{
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void savePhData(PHData PHData);
+    void savePhData(LocalListData LocalListData);
 
-    @Query(DBModule.QUERY_ALL_PH_DATA)
-    Flowable <PHData> getPHDataFromDB();
+    @Query(DatabaseConstants.QUERY_ALL_PH_DATA)
+    Flowable <LocalListData> getPHDataFromDB();
 
-    @Query(DBModule.QUERY_ALL_GLOBAL_DATA)
+    @Query(DatabaseConstants.QUERY_ALL_GLOBAL_DATA)
     Flowable <List <GlobalData>> getGlobalDataFromDB();
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)

@@ -22,15 +22,15 @@ import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 import androidx.room.Transaction;
 
+import com.force.codes.project.app.app.constants.DatabaseConstants;
 import com.force.codes.project.app.data_layer.model.CountryDetails;
-import com.force.codes.project.app.data_layer.resources.database.DBModule;
 
 import java.util.List;
 
 @Dao
 public interface CountryDao{
     @Transaction
-    @Query(DBModule.QUERY_ALL_DATA)
+    @Query(DatabaseConstants.QUERY_ALL_DATA)
     DataSource.Factory <Integer, CountryDetails> getDataFromDatabase();
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
