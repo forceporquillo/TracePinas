@@ -35,8 +35,8 @@ public class AppModule{
 
     @Provides
     @Named("LiveDataVM")
-    static MutableLiveData <WorldData> provideMutableLiveData(){
-        return new MutableLiveData <>();
+    static MutableLiveData<WorldData> provideMutableLiveData(){
+        return new MutableLiveData<>();
     }
 
     @Provides
@@ -47,8 +47,8 @@ public class AppModule{
 
     @Provides
     @Named("MapListDataSet")
-    static List <String> providesDataSet(){
-        return new LinkedList <>(Arrays.asList("Philippines", "Global Cases"));
+    static List<String> providesDataSet(){
+        return new LinkedList<>(Arrays.asList("Philippines", "Global Cases"));
     }
 
     @Provides

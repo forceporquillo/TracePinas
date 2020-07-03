@@ -5,7 +5,7 @@
  * Last modified 6/16/20 10:30 PM
  */
 
-package com.force.codes.project.app.data_layer.resources.database.data;
+package com.force.codes.project.app.data_layer.resources.database;
 
 import androidx.room.Dao;
 

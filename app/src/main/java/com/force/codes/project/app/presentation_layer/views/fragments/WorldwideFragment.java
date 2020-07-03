@@ -23,25 +23,27 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.facebook.shimmer.ShimmerFrameLayout;
 import com.force.codes.project.app.R;
-import com.force.codes.project.app.app.Injection;
 import com.force.codes.project.app.databinding.FragmentWorldwideBinding;
-import com.force.codes.project.app.factory.WorldwideViewModelFactory;
 import com.force.codes.project.app.presentation_layer.controller.custom.interfaces.FragmentCallback;
 import com.force.codes.project.app.presentation_layer.controller.custom.interfaces.OnRequestResponse;
 import com.force.codes.project.app.presentation_layer.views.adapters.CountryAdapter;
 import com.force.codes.project.app.presentation_layer.views.viewmodels.WorldwideViewModel;
+import com.force.codes.project.app.presentation_layer.views.viewmodels.factory.ViewModelProviderFactory;
 import com.force.codes.project.app.service.executors.AppExecutors;
 import com.force.codes.project.app.service.network.ConnectionCallback;
 import com.force.codes.project.app.service.network.NetworkConnectivity;
 
 import org.jetbrains.annotations.NotNull;
 
+import javax.inject.Inject;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import dagger.android.support.DaggerFragment;
 import timber.log.Timber;
 
-public class WorldwideFragment extends BaseFragment implements FragmentCallback, View.OnClickListener, ConnectionCallback, OnRequestResponse{
+public class WorldwideFragment extends DaggerFragment implements FragmentCallback, View.OnClickListener, ConnectionCallback, OnRequestResponse{
 
     @BindView(R.id.swipe_fresh)
     SwipeRefreshLayout refreshLayout;
@@ -53,11 +55,17 @@ public class WorldwideFragment extends BaseFragment implements FragmentCallback,
     ShimmerFrameLayout shimmer;
 
     private FragmentWorldwideBinding binding;
-    private WorldwideViewModel worldwideViewModel;
+    private WorldwideViewModel viewModel;
     private NetworkConnectivity connectivity;
     private CountryAdapter countryAdapter;
-    private AppExecutors executors;
+
     private Unbinder unbinder;
+
+    @Inject
+    ViewModelProviderFactory factory;
+
+    @Inject
+    AppExecutors appExecutors;
 
     WorldwideFragment(){
 
@@ -69,20 +77,18 @@ public class WorldwideFragment extends BaseFragment implements FragmentCallback,
 
     @Override
     public void onInternetConnectionChanged(Boolean isConnected){
-        if(!isConnected){
+        if(!isConnected)
             swipeRefreshLayout().setEnabled(false);
-        }else{
+        else
             swipeRefreshLayout().setEnabled(true);
-        }
     }
 
     @Override
     public void onStart(){
         super.onStart();
-//        connectivity.startConnection();
-        worldwideViewModel.getDataFromDatabase().observe(this, countryDetails -> {
+        viewModel.getDataFromDatabase().observe(this, countryDetails -> {
             if(countryDetails.isEmpty()){
-                worldwideViewModel.forceUpdate();
+                viewModel.getDataFromNetwork();
             }else{
                 countryAdapter.submitList(countryDetails);
                 refreshLayout.setEnabled(true);
@@ -97,15 +103,11 @@ public class WorldwideFragment extends BaseFragment implements FragmentCallback,
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
 
-        executors = new AppExecutors();
         connectivity = new NetworkConnectivity(this);
         countryAdapter = new CountryAdapter(this);
 
-        WorldwideViewModelFactory modelFactory = Injection
-                .providesViewModelFactory(this, getContext(), executors);
-        worldwideViewModel = new ViewModelProvider(this, modelFactory)
-                .get(WorldwideViewModel.class);
-        worldwideViewModel.getDataFromDatabase();
+        viewModel = new ViewModelProvider(this, factory).get(WorldwideViewModel.class);
+        viewModel.getDataFromDatabase();
     }
 
     @Override
@@ -114,7 +116,7 @@ public class WorldwideFragment extends BaseFragment implements FragmentCallback,
         binding = DataBindingUtil.inflate(inflater,
                 R.layout.fragment_worldwide, container, false);
         binding.invalidateAll();
-        binding.setViewModel(worldwideViewModel);
+        binding.setViewModel(viewModel);
         binding.setLifecycleOwner(this);
 
         final View root = binding.getRoot();
@@ -144,7 +146,7 @@ public class WorldwideFragment extends BaseFragment implements FragmentCallback,
                 R.color.blue, R.color.green, R.color.red);
 
         refreshLayout.setOnRefreshListener(() ->
-                worldwideViewModel.getDataFromNetwork());
+                viewModel.getDataFromNetwork());
 
         return refreshLayout;
     }
@@ -189,13 +191,13 @@ public class WorldwideFragment extends BaseFragment implements FragmentCallback,
     @Override
     public void onClick(View v){
         Fragment fragment = HelpCenterFragment.newInstance();
-        super.setDelegateFragment(fragment).commit();
+        //super.setDelegateFragment(fragment).commit();
     }
 
     @Override
     public void CustomCardViewListener(int position){
         Fragment fragment = StatisticsFragment.newInstance();
-        super.setDelegateFragment(fragment).commit();
+        //super.setDelegateFragment(fragment).commit();
     }
 
     final void setRecyclerView(){

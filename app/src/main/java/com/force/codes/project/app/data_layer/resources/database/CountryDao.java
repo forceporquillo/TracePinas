@@ -5,7 +5,7 @@
  * Last modified 6/15/20 6:06 PM
  */
 
-package com.force.codes.project.app.data_layer.resources.database.data;
+package com.force.codes.project.app.data_layer.resources.database;
 
 /*
  * Created by Force Porquillo on 6/2/20 6:24 AM

@@ -19,9 +19,22 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
+import androidx.viewpager.widget.ViewPager;
 
 import com.force.codes.project.app.R;
+import com.force.codes.project.app.presentation_layer.views.fragments.tablayout.Fragment1;
+import com.force.codes.project.app.presentation_layer.views.fragments.tablayout.Fragment2;
+import com.force.codes.project.app.presentation_layer.views.fragments.tablayout.Fragment3;
+import com.ogaclejapan.smarttablayout.SmartTabLayout;
+import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItemAdapter;
+import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItems;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -38,6 +51,14 @@ public class StatisticsFragment extends BaseFragment{
     private String mParam1;
     private String mParam2;
 
+    @BindView(R.id.viewpager)
+    ViewPager viewPager;
+
+    @BindView(R.id.tablayout)
+    SmartTabLayout smartTabLayout;
+
+    private FragmentPagerItemAdapter adapter;
+
     public StatisticsFragment(){
         // Required empty public constructor
     }
@@ -53,6 +74,15 @@ public class StatisticsFragment extends BaseFragment{
     @Override
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
+
+        adapter = new FragmentPagerItemAdapter(getChildFragmentManager(),
+                FragmentPagerItems.with(getContext())
+                        .add("Global", Fragment1.class)
+                        .add("My Country", Fragment2.class)
+                        .add("List", Fragment3.class)
+                        .create()
+        );
+
         if(getArguments() != null){
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
@@ -60,9 +90,17 @@ public class StatisticsFragment extends BaseFragment{
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState){
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_country_statistics, container, false);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
+        final View view = inflater.inflate(R.layout.fragment_country_statistics, container, false);
+        ButterKnife.bind(this, view);
+
+        return view;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState){
+        super.onViewCreated(view, savedInstanceState);
+        viewPager.setAdapter(adapter);
+        smartTabLayout.setViewPager(viewPager);
     }
 }

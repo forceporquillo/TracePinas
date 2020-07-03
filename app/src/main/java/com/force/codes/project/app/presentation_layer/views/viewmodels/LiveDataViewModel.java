@@ -21,15 +21,21 @@ import androidx.lifecycle.MutableLiveData;
 import com.force.codes.project.app.data_layer.model.WorldData;
 import com.force.codes.project.app.data_layer.repositories.interfaces.LiveOverviewRepository;
 
+import javax.inject.Inject;
+import javax.inject.Named;
+
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import timber.log.Timber;
 
 public class LiveDataViewModel extends BaseViewModel{
-    public MutableLiveData <WorldData> liveData = new MutableLiveData <>();
+    @Inject
+    @Named("LiveDataVM")
+    public MutableLiveData <WorldData> liveData;
 
     private LiveOverviewRepository repository;
 
+    @Inject
     public LiveDataViewModel(LiveOverviewRepository repository){
         this.repository = repository;
     }
@@ -41,6 +47,5 @@ public class LiveDataViewModel extends BaseViewModel{
                         .observeOn(AndroidSchedulers.mainThread())
                         .doOnNext(list -> liveData.setValue(list))
                         .doOnError(Timber::e));
-
     }
 }

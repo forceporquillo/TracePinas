@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 37,
-    "identityHash": "f39744a8c03a08afdf332573b77e63c1",
+    "identityHash": "06e0deb33e57e3eb155cd88f66646923",
     "entities": [
       {
         "tableName": "CountryDetails",
@@ -127,7 +127,7 @@
         "foreignKeys": []
       },
       {
-        "tableName": "PHData",
+        "tableName": "LocalListData",
         "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`data` TEXT, `success` INTEGER NOT NULL, PRIMARY KEY(`success`))",
         "fields": [
           {
@@ -230,7 +230,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'f39744a8c03a08afdf332573b77e63c1')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '06e0deb33e57e3eb155cd88f66646923')"
     ]
   }
 }

@@ -5,32 +5,37 @@
  * Last modified 6/20/20 4:10 PM
  */
 
-package com.force.codes.project.app.app;
+package com.force.codes.project.app;
 
 import android.app.Application;
 
-import com.force.codes.project.app.BuildConfig;
-import com.force.codes.project.app.app.di.AppModule;
-import com.force.codes.project.app.data_layer.resources.database.LocalDatabase;
+import com.force.codes.project.app.app.debug.DebugTreeApplication;
+import com.force.codes.project.app.app.di.AppComponent;
+import com.force.codes.project.app.app.di.DaggerAppComponent;
+import com.force.codes.project.app.app.di.module.AppModule;
 
+import javax.inject.Inject;
+
+import dagger.android.AndroidInjector;
+import dagger.android.DispatchingAndroidInjector;
+import dagger.android.HasAndroidInjector;
 import timber.log.Timber;
 
-public class MyApplication extends Application{
+public class BaseApplication extends Application implements HasAndroidInjector{
+    @Inject
+    DispatchingAndroidInjector <Object> dispatchingAndroidInjector;
     private AppComponent appComponent;
 
     private static void setDebugInstance(DebugTreeApplication debugInstance){
-        if(BuildConfig.DEBUG){
+        if(BuildConfig.DEBUG)
             debugInstance.DebugTree();
-        }else{
+        else
             Timber.plant(new DebugTreeApplication.CrashReportingTree());
-        }
     }
 
     @Override
     public void onCreate(){
         super.onCreate();
-
-        LocalDatabase.setInstance(this);
 
         appComponent = DaggerAppComponent.builder()
                 .application(this)
@@ -38,11 +43,15 @@ public class MyApplication extends Application{
                 .build();
 
         appComponent.inject(this);
-
         setDebugInstance(new DebugTreeApplication(this));
     }
 
     public AppComponent getAppComponent(){
         return appComponent;
+    }
+
+    @Override
+    public AndroidInjector <Object> androidInjector(){
+        return dispatchingAndroidInjector;
     }
 }

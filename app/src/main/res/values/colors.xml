@@ -13,7 +13,7 @@
     <color name="blue">#3279D2</color>
     <color name="green">#3EA169</color>
     <color name="white">#FFFFFF</color>
-
+    <color name="transparent">#00000000</color>
     <color name="placeholder_bg">#dddddd</color>
     <color name="search_color">#D5D8DE</color>
 </resources>

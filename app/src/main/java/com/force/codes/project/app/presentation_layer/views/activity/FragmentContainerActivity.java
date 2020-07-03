@@ -30,9 +30,9 @@ import com.force.codes.project.app.presentation_layer.controller.custom.interfac
 import com.force.codes.project.app.presentation_layer.controller.custom.model.BottomItem;
 import com.force.codes.project.app.presentation_layer.controller.support.CustomBottomBar;
 import com.force.codes.project.app.presentation_layer.views.fragments.HelpCenterFragment;
-import com.force.codes.project.app.presentation_layer.views.fragments.HomeFragment;
+import com.force.codes.project.app.presentation_layer.views.fragments.LiveDataFragment;
 import com.force.codes.project.app.presentation_layer.views.fragments.MapFragment;
-import com.force.codes.project.app.presentation_layer.views.fragments.NewsFragment;
+import com.force.codes.project.app.presentation_layer.views.fragments.StatisticsFragment;
 import com.force.codes.project.app.presentation_layer.views.fragments.WorldwideFragment;
 
 import org.jetbrains.annotations.NotNull;
@@ -47,7 +47,6 @@ public class FragmentContainerActivity extends BaseActivity implements BottomIte
 
     private FragmentManager fragmentManager;
     private Fragment fragment = null;
-    private Fragment delegateFrag = null;
 
     public FragmentContainerActivity(){
 
@@ -95,8 +94,8 @@ public class FragmentContainerActivity extends BaseActivity implements BottomIte
         if(savedInstanceState == null){
             fragmentManager = getSupportFragmentManager();
             fragmentManager.beginTransaction()
-                    .replace(R.id.fragment_container, HomeFragment.newInstance())
-                    .addToBackStack(HomeFragment.class.getSimpleName())
+                    .replace(R.id.fragment_container, StatisticsFragment.newInstance())
+                    .addToBackStack(StatisticsFragment.class.getSimpleName())
                     .commit();
         }
     }
@@ -119,10 +118,10 @@ public class FragmentContainerActivity extends BaseActivity implements BottomIte
     public void itemSelect(int itemId){
         switch(itemId){
             case STATISTICS:
-                fragment = HomeFragment.newInstance();
+                fragment = StatisticsFragment.newInstance();
                 break;
             case NEWS:
-                fragment = NewsFragment.newInstance();
+                fragment = LiveDataFragment.newInstance();
                 break;
             case WORLDWIDE:
                 fragment = WorldwideFragment.newInstance();
@@ -135,7 +134,6 @@ public class FragmentContainerActivity extends BaseActivity implements BottomIte
                 break;
         }
 
-        delegateFrag = fragment;
         setDelegateFragment(fragment).commit();
     }
 

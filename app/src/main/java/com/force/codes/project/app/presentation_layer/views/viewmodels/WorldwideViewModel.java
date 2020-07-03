@@ -16,10 +16,12 @@ package com.force.codes.project.app.presentation_layer.views.viewmodels;
 import androidx.lifecycle.LiveData;
 import androidx.paging.PagedList;
 
-import com.force.codes.project.app.app.PageListConstants;
+import com.force.codes.project.app.app.constants.PageListConstants;
 import com.force.codes.project.app.data_layer.model.CountryDetails;
 import com.force.codes.project.app.data_layer.repositories.interfaces.WorldwideRepository;
 import com.force.codes.project.app.presentation_layer.controller.custom.interfaces.OnRequestResponse;
+
+import javax.inject.Inject;
 
 import io.reactivex.Flowable;
 import io.reactivex.disposables.Disposable;
@@ -32,15 +34,12 @@ public class WorldwideViewModel extends BaseViewModel{
             .setEnablePlaceholders(false)
             .build();
 
+    private LiveData<PagedList<CountryDetails>> listLiveData;
     private final WorldwideRepository repository;
-    private LiveData <PagedList <CountryDetails>> listLiveData;
-    private OnRequestResponse requestResponse;
 
-    public WorldwideViewModel(
-            final WorldwideRepository repository,
-            final OnRequestResponse response){
+    @Inject
+    public WorldwideViewModel(WorldwideRepository repository){
         this.repository = repository;
-        this.requestResponse = response;
     }
 
     public LiveData <PagedList <CountryDetails>> getDataFromDatabase(){
@@ -56,14 +55,9 @@ public class WorldwideViewModel extends BaseViewModel{
                 .flatMap(list -> repository.getDataFromRemoteService())
                 .subscribeOn(Schedulers.io())
                 .observeOn(Schedulers.computation())
-                .doOnError(error -> requestResponse.onErrorResponse(true))
                 .subscribe(repository::saveDatabase, Throwable::printStackTrace);
 
         addToUnsubscribed(disposable);
-    }
-
-    public void forceUpdate(){
-        getDataFromNetwork();
     }
 }
 

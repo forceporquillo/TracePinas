@@ -37,7 +37,7 @@ This project requires a newer version of Android Studio such as
 
 - **Multithreading** - These separates both network and local repository to reactively synchronize each task independently.
 
-- **Asynchronous Programming** - Work runs separately from the main myApplication thread and notifies the calling thread of its completion, failure or progress.
+- **Asynchronous Programming** - Work runs separately from the main baseApplication thread and notifies the calling thread of its completion, failure or progress.
 
 ## Core Dependencies
 **Android Architecture Components**:  [Google Github repository](https://github.com/android/architecture-components-samples)
@@ -56,7 +56,7 @@ This project requires a newer version of Android Studio such as
 - Listening **network connection state** and **Internet connectivity** with approach to **RxJava Observables.**
 
 **Retrofit2**  
-- The myApplication get the content by http request using OkHttp3.  
+- The baseApplication get the content by http request using OkHttp3.  
  - Parse the response via JsonDeserializer.  
  - Create data objects via Gson.  
  - Allow to debug the response via Logging-interceptor (okhttp).  

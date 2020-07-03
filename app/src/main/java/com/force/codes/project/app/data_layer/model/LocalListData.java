@@ -18,7 +18,7 @@ import com.google.gson.annotations.SerializedName;
 import java.util.List;
 
 @Entity
-public class PHData{
+public class LocalListData{
     @TypeConverters(RoomTypeConverter.class)
     @SerializedName("data")
     private List <PHDataSet> data;
@@ -27,7 +27,7 @@ public class PHData{
     @SerializedName("success")
     private boolean success;
 
-    public PHData(List <PHDataSet> data, boolean success){
+    public LocalListData(List <PHDataSet> data, boolean success){
         this.data = data;
         this.success = success;
     }

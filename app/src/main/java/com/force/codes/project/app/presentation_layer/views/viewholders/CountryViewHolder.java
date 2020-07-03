@@ -11,7 +11,6 @@ import android.view.View;
 import android.widget.TextView;
 
 import androidx.databinding.BindingAdapter;
-import androidx.databinding.library.baseAdapters.BR;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -66,7 +65,7 @@ public class CountryViewHolder extends RecyclerView.ViewHolder implements View.O
 
     public void bindTo(CountryDetails details){
         rowsBinding.setDetails(details);
-        rowsBinding.setVariable(BR.details, details);
+        //Binding.setVariable(BR.details, details);
         rowsBinding.executePendingBindings();
     }
 

@@ -5,7 +5,7 @@
  * Last modified 6/30/20 3:02 AM
  */
 
-package com.force.codes.project.app.app;
+package com.force.codes.project.app.app.debug;
 
 import android.app.Application;
 import android.util.Log;
@@ -20,7 +20,7 @@ import timber.log.Timber;
 public class DebugTreeApplication{
     Application application;
 
-    DebugTreeApplication(Application application){
+    public DebugTreeApplication(Application application){
         this.application = application;
     }
 
@@ -43,34 +43,17 @@ public class DebugTreeApplication{
                 return;
             }
 
-            CustomCrashLibrary.log(priority, tag, message);
+            CrashLibrary.log(priority, tag, message);
 
             if(t != null){
                 if(priority == Log.ERROR){
-                    CustomCrashLibrary.logError(t);
+                    CrashLibrary.logError(t);
                 }else if(priority == Log.WARN){
-                    CustomCrashLibrary.logWarning(t);
+                    CrashLibrary.logWarning(t);
                 }
             }
         }
     }
 
-    public static class CustomCrashLibrary{
 
-        private CustomCrashLibrary(){
-            throw new AssertionError("No instances.");
-        }
-
-        public static void log(int priority, String tag, String message){
-            Timber.log(priority, message, tag);
-        }
-
-        public static void logWarning(Throwable t){
-            Timber.e(t);
-        }
-
-        public static void logError(Throwable t){
-            Timber.e(t);
-        }
-    }
 }

@@ -1,4 +1,4 @@
-package com.force.codes.smarttablayout_java;
+package com.force.codes.project.app.presentation_layer.views.fragments.tablayout;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -7,6 +7,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.fragment.app.Fragment;
+
+import com.force.codes.project.app.R;
 
 /**
  * A simple {@link Fragment} subclass.

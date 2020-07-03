@@ -14,10 +14,10 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
-import com.force.codes.project.app.data_layer.resources.database.LiveDatabase;
-import com.force.codes.project.app.data_layer.resources.database.data.CountryDao;
-import com.force.codes.project.app.data_layer.resources.database.data.LiveDataDao;
-import com.force.codes.project.app.data_layer.resources.database.data.MapDao;
+import com.force.codes.project.app.data_layer.resources.database.AppDatabase;
+import com.force.codes.project.app.data_layer.resources.database.CountryDao;
+import com.force.codes.project.app.data_layer.resources.database.LiveDataDao;
+import com.force.codes.project.app.data_layer.resources.database.MapDao;
 
 import javax.inject.Singleton;
 
@@ -35,8 +35,8 @@ public class DatabaseModule{
 
     @Singleton
     @Provides
-    static LiveDatabase providesLocalDatabase(Application application){
-        return Room.databaseBuilder(application, LiveDatabase.class, "Covid19_Data.db")
+    static AppDatabase providesLocalDatabase(Application application){
+        return Room.databaseBuilder(application, AppDatabase.class, "Covid19_Data.db")
                 .fallbackToDestructiveMigration()
                 .addCallback(roomCallback)
                 .build();
@@ -44,19 +44,19 @@ public class DatabaseModule{
 
     @Singleton
     @Provides
-    static MapDao provideMapAccess(LiveDatabase database){
+    static MapDao provideMapAccess(AppDatabase database){
         return database.mapDao();
     }
 
     @Singleton
     @Provides
-    static CountryDao provideCountryAccess(LiveDatabase database){
+    static CountryDao provideCountryAccess(AppDatabase database){
         return database.countryDao();
     }
 
     @Singleton
     @Provides
-    static LiveDataDao provideLiveDataAccess(LiveDatabase database){
+    static LiveDataDao provideLiveDataAccess(AppDatabase database){
         return database.liveDataDao();
     }
 }

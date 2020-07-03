@@ -22,25 +22,25 @@ import android.view.ViewGroup;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.force.codes.project.app.app.Injection;
 import com.force.codes.project.app.databinding.FragmentLiveDataBinding;
-import com.force.codes.project.app.factory.LiveDataViewModelFactory;
 import com.force.codes.project.app.presentation_layer.views.viewmodels.LiveDataViewModel;
-import com.force.codes.project.app.service.executors.AppExecutors;
+import com.force.codes.project.app.presentation_layer.views.viewmodels.factory.ViewModelProviderFactory;
 
 import org.jetbrains.annotations.NotNull;
 
+import javax.inject.Inject;
+
+import dagger.android.support.DaggerFragment;
 import timber.log.Timber;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link LiveDataFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
-public class LiveDataFragment extends Fragment{
+public class LiveDataFragment extends DaggerFragment{
 
     protected FragmentLiveDataBinding binding;
-    private LiveDataViewModel dataViewModel;
+
+    @Inject
+    ViewModelProviderFactory factory;
+
+    private LiveDataViewModel viewModel;
 
     public LiveDataFragment(){
         // Required empty public constructor
@@ -49,8 +49,6 @@ public class LiveDataFragment extends Fragment{
     public static LiveDataFragment newInstance(){
         LiveDataFragment fragment = new LiveDataFragment();
         Bundle args = new Bundle();
-        //args.putString(ARG_PARAM1, param1);
-        //args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
     }
@@ -58,18 +56,14 @@ public class LiveDataFragment extends Fragment{
     @Override
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
-
-        LiveDataViewModelFactory modelFactory = Injection.providesViewModelFactory(new AppExecutors());
-
-        dataViewModel = new ViewModelProvider(this, modelFactory)
-                .get(LiveDataViewModel.class);
+        viewModel = new ViewModelProvider(this, factory).get(LiveDataViewModel.class);
     }
 
     @Override
     public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
         binding = FragmentLiveDataBinding.inflate(inflater, container, false);
         binding.setLifecycleOwner(this);
-        binding.setViewModel(dataViewModel);
+        binding.setViewModel(viewModel);
         return binding.getRoot();
     }
 
@@ -83,7 +77,7 @@ public class LiveDataFragment extends Fragment{
     @Override
     public void onStart(){
         super.onStart();
-        dataViewModel.getDataFromNetwork().observe(this, worldData ->
+        viewModel.getDataFromNetwork().observe(this, worldData ->
                 Timber.d(String.valueOf(worldData.getCases())));
     }
 

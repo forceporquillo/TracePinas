@@ -32,10 +32,9 @@ import androidx.core.content.ContextCompat;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.force.codes.project.app.R;
-import com.force.codes.project.app.app.Injection;
-import com.force.codes.project.app.factory.MapViewModelFactory;
 import com.force.codes.project.app.presentation_layer.views.adapters.CustomInfoWindowAdapter;
 import com.force.codes.project.app.presentation_layer.views.viewmodels.MapViewModel;
+import com.force.codes.project.app.presentation_layer.views.viewmodels.factory.ViewModelProviderFactory;
 import com.force.codes.project.app.service.executors.AppExecutors;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -55,29 +54,33 @@ import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import javax.inject.Inject;
+import javax.inject.Named;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import dagger.android.support.DaggerFragment;
 import timber.log.Timber;
 
-public class MapFragment extends BaseFragment implements
+public class MapFragment extends DaggerFragment implements
         GoogleMap.OnMyLocationButtonClickListener,
         OnMapReadyCallback,
-        ActivityCompat.OnRequestPermissionsResultCallback,
-        GoogleMap.OnMapClickListener{
+        ActivityCompat.OnRequestPermissionsResultCallback{
 
     private static final int BUILD_VERSION = Build.VERSION.SDK_INT;
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1;
     private static final String GLOBAL_CASES = "Global Cases";
     private static final String PHILIPPINES = "Philippines";
     private static final int DELAY = 1200;
+    private boolean permissionDenied = false;
+    private boolean isHardwareEnabled = false;
+    private boolean isMapReady;
 
     @BindView(R.id.map_view)
     MapView mapView;
@@ -89,16 +92,25 @@ public class MapFragment extends BaseFragment implements
     private Unbinder unbinder;
     private View view;
     private MapViewModel mapViewModel;
-    private boolean permissionDenied = false;
-    private boolean isHardwareEnabled = false;
-    private boolean isMapReady;
-    private AppExecutors executors;
-    private List <String> dataSet;
-    private Runnable[] runnable;
-    private Marker[] marker = new Marker[1];
+
+    @Inject
+    Runnable[] runnable;
+
+    @Inject
+    Marker[] marker;
+
+    @Inject
+    ViewModelProviderFactory factory;
+
+    @Inject
+    AppExecutors executors;
+
+    @Inject
+    @Named("MapListDataSet")
+    List <String> dataSet;
 
     public MapFragment(){
-        // Required empty public constructor
+
     }
 
     public static MapFragment newInstance(){
@@ -125,7 +137,6 @@ public class MapFragment extends BaseFragment implements
     }
 
     @NotNull
-    @Contract("_, _ -> new")
     private static LatLng coordinate(String lat, String lng){
         return new LatLng(Double.parseDouble(lat), Double.parseDouble(lng));
     }
@@ -228,11 +239,6 @@ public class MapFragment extends BaseFragment implements
         return false;
     }
 
-    @Override
-    public void onMapClick(LatLng latLng){
-        Toast.makeText(view.getContext(), "Henlo", Toast.LENGTH_SHORT).show();
-    }
-
     @RequiresApi(api = Build.VERSION_CODES.N)
     private void setSpinner(){
         niceSpinner.attachDataSource(dataSet);
@@ -328,19 +334,15 @@ public class MapFragment extends BaseFragment implements
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         assert getActivity() != null;
+
         if(savedInstanceState == null){
             if(BUILD_VERSION <= Build.VERSION_CODES.N){
                 getActivity().getWindow().setFlags(WindowManager.LayoutParams.FLAG_HARDWARE_ACCELERATED,
                         WindowManager.LayoutParams.FLAG_HARDWARE_ACCELERATED);
                 isHardwareEnabled = true;
             }
-            // region ...
-            runnable = new Runnable[1];
-            dataSet = new LinkedList <>(Arrays.asList(PHILIPPINES, GLOBAL_CASES));
-            executors = new AppExecutors();
-            // endregion
-            MapViewModelFactory modelFactory = Injection.providesMapViewModelFactory();
-            mapViewModel = new ViewModelProvider(this, modelFactory).get(MapViewModel.class);
+
+            mapViewModel = new ViewModelProvider(this, factory).get(MapViewModel.class);
             mapViewModel.getListGlobalData();
             mapViewModel.getAllPhData();
         }

@@ -13,8 +13,8 @@ package com.force.codes.project.app.presentation_layer.views.activity;
  *
  */
 
-import androidx.appcompat.app.AppCompatActivity;
+import dagger.android.support.DaggerAppCompatActivity;
 
-public abstract class BaseActivity extends AppCompatActivity{
+public abstract class BaseActivity extends DaggerAppCompatActivity{
 
 }

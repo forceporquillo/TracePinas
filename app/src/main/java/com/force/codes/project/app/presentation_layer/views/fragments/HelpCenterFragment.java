@@ -20,13 +20,18 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.lifecycle.ViewModelProviders;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.force.codes.project.app.R;
 import com.force.codes.project.app.presentation_layer.views.viewmodels.HelpCenterViewModel;
+import com.force.codes.project.app.presentation_layer.views.viewmodels.factory.ViewModelProviderFactory;
+
+import javax.inject.Inject;
 
 public class HelpCenterFragment extends BaseFragment{
 
+    @Inject
+    ViewModelProviderFactory factory;
     private HelpCenterViewModel mViewModel;
 
     public static HelpCenterFragment newInstance(){
@@ -42,7 +47,8 @@ public class HelpCenterFragment extends BaseFragment{
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState){
         super.onActivityCreated(savedInstanceState);
-        mViewModel = ViewModelProviders.of(this).get(HelpCenterViewModel.class);
+
+        mViewModel = new ViewModelProvider(this, factory).get(HelpCenterViewModel.class);
         // TODO: Use the ViewModel
     }
 

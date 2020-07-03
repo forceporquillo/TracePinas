@@ -1,23 +1,44 @@
-<?xml version="1.0" encoding="utf-8"?><!--
-  ~ Created by Force Porquillo on 5/22/20 1:50 AM
-  ~ Copyright (c) 2020.  All rights reserved.
-  ~ Last modified 5/22/20 1:50 AM
-  ~
-  -->
-
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/foregroundColor2"
-    android:clickable="true"
-    android:focusable="true"
-    tools:context=".presentation_layer.views.fragments.StatisticsFragment">
+    android:layout_height="match_parent">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
 
-</FrameLayout>
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:elevation="8dp">
+
+            <TextView
+                android:id="@+id/worldwide"
+                style="@style/fragment_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Statistics" />
+        </androidx.appcompat.widget.Toolbar>
+
+        <com.ogaclejapan.smarttablayout.SmartTabLayout
+            android:layout_below="@id/toolbar"
+            android:id="@+id/tablayout"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/tab_height"
+            android:layout_centerHorizontal="true"
+            app:stl_customTabTextLayoutId="@layout/custom_tab"
+            app:stl_customTabTextViewId="@id/custom_text"
+            app:stl_indicatorColor="@color/blue"
+            app:stl_indicatorInterpolation="linear"
+            app:stl_indicatorThickness="3dp"
+            app:stl_underlineThickness="1dp" />
+
+        <androidx.viewpager.widget.ViewPager
+            android:layout_below="@id/tablayout"
+            android:id="@+id/viewpager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </RelativeLayout>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
