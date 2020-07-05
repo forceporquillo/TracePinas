@@ -10,7 +10,7 @@ package com.force.codes.project.app.data_layer.repositories.implementations;
 import com.force.codes.project.app.app.constants.ApiConstants;
 import com.force.codes.project.app.data_layer.model.WorldData;
 import com.force.codes.project.app.data_layer.repositories.interfaces.LiveOverviewRepository;
-import com.force.codes.project.app.data_layer.resources.api.RemoteApiAdapter;
+import com.force.codes.project.app.data_layer.resources.api.ApiService;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -21,10 +21,10 @@ import io.reactivex.schedulers.Schedulers;
 @Singleton
 public class LiveOverviewRepositoryImpl implements LiveOverviewRepository{
 
-    private final RemoteApiAdapter apiAdapter;
+    private final ApiService apiAdapter;
 
     @Inject
-    public LiveOverviewRepositoryImpl(RemoteApiAdapter apiAdapter){
+    public LiveOverviewRepositoryImpl(ApiService apiAdapter){
         this.apiAdapter = apiAdapter;
     }
 

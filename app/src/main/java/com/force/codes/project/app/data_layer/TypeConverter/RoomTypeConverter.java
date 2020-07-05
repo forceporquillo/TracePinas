@@ -5,7 +5,7 @@
  * Last modified 6/20/20 8:37 PM
  */
 
-package com.force.codes.project.app.data_layer.model.TypeConverter;
+package com.force.codes.project.app.data_layer.TypeConverter;
 
 import androidx.room.TypeConverter;
 

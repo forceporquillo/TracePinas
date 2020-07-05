@@ -8,7 +8,7 @@
 package com.force.codes.project.app.app.di.module;
 
 import com.force.codes.project.app.app.constants.ApiConstants;
-import com.force.codes.project.app.data_layer.resources.api.RemoteApiAdapter;
+import com.force.codes.project.app.data_layer.resources.api.ApiService;
 
 import java.util.concurrent.TimeUnit;
 
@@ -52,7 +52,7 @@ public class NetworkModule{
     }
 
     @Provides
-    static RemoteApiAdapter providesRemoteApi(Retrofit retrofit){
-        return retrofit.create(RemoteApiAdapter.class);
+    static ApiService providesRemoteApi(Retrofit retrofit){
+        return retrofit.create(ApiService.class);
     }
 }

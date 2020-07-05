@@ -12,7 +12,7 @@ import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 import androidx.room.TypeConverters;
 
-import com.force.codes.project.app.data_layer.model.TypeConverter.RoomTypeConverter;
+import com.force.codes.project.app.data_layer.TypeConverter.RoomTypeConverter;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;

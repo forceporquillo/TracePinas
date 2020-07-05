@@ -12,8 +12,8 @@ import android.view.View;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class NewsHeaderViewHolder extends RecyclerView.ViewHolder{
-    public NewsHeaderViewHolder(@NonNull View itemView){
+public class HeaderNewsViewHolder extends RecyclerView.ViewHolder{
+    public HeaderNewsViewHolder(@NonNull View itemView){
         super(itemView);
     }
 }

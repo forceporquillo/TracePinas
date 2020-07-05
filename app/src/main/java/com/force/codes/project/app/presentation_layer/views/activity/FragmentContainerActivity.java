@@ -32,6 +32,7 @@ import com.force.codes.project.app.presentation_layer.controller.support.CustomB
 import com.force.codes.project.app.presentation_layer.views.fragments.HelpCenterFragment;
 import com.force.codes.project.app.presentation_layer.views.fragments.LiveDataFragment;
 import com.force.codes.project.app.presentation_layer.views.fragments.MapFragment;
+import com.force.codes.project.app.presentation_layer.views.fragments.NewsFragment;
 import com.force.codes.project.app.presentation_layer.views.fragments.StatisticsFragment;
 import com.force.codes.project.app.presentation_layer.views.fragments.WorldwideFragment;
 
@@ -121,7 +122,7 @@ public class FragmentContainerActivity extends BaseActivity implements BottomIte
                 fragment = StatisticsFragment.newInstance();
                 break;
             case NEWS:
-                fragment = LiveDataFragment.newInstance();
+                fragment = NewsFragment.newInstance();
                 break;
             case WORLDWIDE:
                 fragment = WorldwideFragment.newInstance();
@@ -130,7 +131,7 @@ public class FragmentContainerActivity extends BaseActivity implements BottomIte
                 fragment = MapFragment.newInstance();
                 break;
             case HELP:
-                fragment = HelpCenterFragment.newInstance();
+                fragment = LiveDataFragment.newInstance();
                 break;
         }
 

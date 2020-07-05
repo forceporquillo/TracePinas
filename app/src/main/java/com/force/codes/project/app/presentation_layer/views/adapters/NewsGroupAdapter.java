@@ -12,9 +12,9 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
+public class NewsGroupAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
 
-    NewsAdapter(){
+    NewsGroupAdapter(){
 
     }
 
@@ -34,5 +34,17 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
     @Override
     public int getItemCount(){
         return 0;
+    }
+
+    private void setListOrder(){
+
+    }
+
+    private void setHeaderNewsList(){
+
+    }
+
+    private void setHotNewsList(){
+
     }
 }

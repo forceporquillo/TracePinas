@@ -18,7 +18,7 @@ import io.reactivex.Flowable;
 import retrofit2.http.GET;
 import retrofit2.http.Url;
 
-public interface RemoteApiAdapter{
+public interface ApiService{
     @GET
     Flowable <List <CountryDetails>>
     getSortedCases(@Url String url);

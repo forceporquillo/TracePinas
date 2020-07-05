@@ -21,23 +21,14 @@
         <RelativeLayout
             android:id="@+id/worldwide_container"
             android:layout_width="wrap_content"
-            android:layout_height="?attr/actionBarSize"
-            android:gravity="center_vertical">
+            android:layout_height="?attr/actionBarSize">
 
             <TextView
-                android:id="@+id/update"
-                style="@style/time_update"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/worldwide"
-                android:layout_marginStart="15dp"
-                android:text="Tue, June 17, 2020 4:32:27" />
-
-            <TextView
+                android:layout_centerVertical="true"
                 android:id="@+id/worldwide"
                 style="@style/fragment_title"
                 android:layout_width="wrap_content"
-                android:layout_height="30dp"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="15dp"
                 android:text="@string/worldwide_cases" />
 
@@ -51,7 +42,7 @@
                 android:backgroundTint="#D3D3D3"
                 android:clickable="true"
                 android:focusable="true"
-                android:padding="6dp"
+                android:padding="8dp"
                 android:src="@drawable/icon_heart"
                 app:borderWidth="0dp"
                 app:elevation="0dp"

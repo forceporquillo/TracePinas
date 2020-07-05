@@ -18,6 +18,8 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -51,11 +53,14 @@ public class StatisticsFragment extends BaseFragment{
     private String mParam1;
     private String mParam2;
 
-    @BindView(R.id.viewpager)
-    ViewPager viewPager;
+    //@BindView(R.id.viewpager)
+    //ViewPager viewPager;
 
-    @BindView(R.id.tablayout)
-    SmartTabLayout smartTabLayout;
+    //@BindView(R.id.tablayout)
+    //SmartTabLayout smartTabLayout;
+
+    @BindView(R.id.share_button)
+    ImageButton shareButton;
 
     private FragmentPagerItemAdapter adapter;
 
@@ -75,13 +80,13 @@ public class StatisticsFragment extends BaseFragment{
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
 
-        adapter = new FragmentPagerItemAdapter(getChildFragmentManager(),
-                FragmentPagerItems.with(getContext())
-                        .add("Global", Fragment1.class)
-                        .add("My Country", Fragment2.class)
-                        .add("List", Fragment3.class)
-                        .create()
-        );
+//        adapter = new FragmentPagerItemAdapter(getChildFragmentManager(),
+//                FragmentPagerItems.with(getContext())
+//                        .add("GLOBAL", Fragment1.class)
+//                        .add("MY COUNTRY", Fragment2.class)
+//                        .add("LIST", Fragment3.class)
+//                        .create()
+//        );
 
         if(getArguments() != null){
             mParam1 = getArguments().getString(ARG_PARAM1);
@@ -94,13 +99,19 @@ public class StatisticsFragment extends BaseFragment{
         final View view = inflater.inflate(R.layout.fragment_country_statistics, container, false);
         ButterKnife.bind(this, view);
 
+        shareButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                Toast.makeText(getContext(), "Henlo", Toast.LENGTH_SHORT).show();
+            }
+        });
         return view;
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState){
         super.onViewCreated(view, savedInstanceState);
-        viewPager.setAdapter(adapter);
-        smartTabLayout.setViewPager(viewPager);
+//        viewPager.setAdapter(adapter);
+//        smartTabLayout.setViewPager(viewPager);
     }
 }

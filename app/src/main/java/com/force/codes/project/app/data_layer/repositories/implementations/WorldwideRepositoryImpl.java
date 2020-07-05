@@ -16,7 +16,7 @@ import androidx.paging.PagedList;
 import com.force.codes.project.app.app.constants.ApiConstants;
 import com.force.codes.project.app.data_layer.model.CountryDetails;
 import com.force.codes.project.app.data_layer.repositories.interfaces.WorldwideRepository;
-import com.force.codes.project.app.data_layer.resources.api.RemoteApiAdapter;
+import com.force.codes.project.app.data_layer.resources.api.ApiService;
 import com.force.codes.project.app.data_layer.resources.database.CountryDao;
 import com.force.codes.project.app.service.executors.AppExecutors;
 
@@ -31,11 +31,11 @@ import io.reactivex.schedulers.Schedulers;
 @Singleton
 public class WorldwideRepositoryImpl implements WorldwideRepository{
     private CountryDao countryDao;
-    private RemoteApiAdapter serviceAdapter;
+    private ApiService serviceAdapter;
     private AppExecutors executors;
 
     @Inject
-    public WorldwideRepositoryImpl(CountryDao countryDao, RemoteApiAdapter adapter, AppExecutors executors){
+    public WorldwideRepositoryImpl(CountryDao countryDao, ApiService adapter, AppExecutors executors){
         this.countryDao = countryDao;
         this.serviceAdapter = adapter;
         this.executors = executors;
