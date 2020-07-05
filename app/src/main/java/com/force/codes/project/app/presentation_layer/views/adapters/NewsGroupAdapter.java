@@ -7,44 +7,86 @@
 
 package com.force.codes.project.app.presentation_layer.views.adapters;
 
+import android.content.Context;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class NewsGroupAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
+import com.force.codes.project.app.R;
+import com.force.codes.project.app.data_layer.testmodel.Group;
+import com.force.codes.project.app.data_layer.testmodel.Models;
+import com.force.codes.project.app.presentation_layer.controller.custom.utils.CustomDividerItemDecoration;
+import com.force.codes.project.app.presentation_layer.views.viewholders.NewsGroupViewHolder;
 
-    NewsGroupAdapter(){
+import java.util.ArrayList;
 
+public class NewsGroupAdapter extends RecyclerView.Adapter<NewsGroupViewHolder>{
+    private ArrayList<Group> groups;
+    private ArrayList<Models> latestList;
+    private ArrayList<Models> hotList;
+    private Context context;
+
+    private static final int LATEST_NEWS = 0;
+
+    public NewsGroupAdapter(ArrayList<Group> groups, ArrayList<Models> latest, ArrayList<Models> hot){
+        this.groups = groups;
+        this.latestList = latest;
+        this.hotList = hot;
     }
 
     @NonNull
     @Override
-    public RecyclerView.ViewHolder
-    onCreateViewHolder(@NonNull ViewGroup parent, int viewType){
-        return null;
+    public NewsGroupViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType){
+        final View view = LayoutInflater.from(this.context = parent.getContext())
+                .inflate(R.layout.news_group_layout, parent, false);
+        return new NewsGroupViewHolder(view);
     }
 
     @Override
-    public void
-    onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position){
+    public void onBindViewHolder(@NonNull NewsGroupViewHolder holder, int position){
+        Group group = groups.get(position);
 
+        holder.setGroupTitle(group);
+        setListOrder(holder.recyclerView, position);
     }
 
     @Override
     public int getItemCount(){
-        return 0;
+        return !groups.isEmpty() ? groups.size() : 0;
     }
 
-    private void setListOrder(){
+    private void setListOrder(RecyclerView recyclerView, int position){
+        if(position == LATEST_NEWS){
+            setLatestNewsList(recyclerView);
+            return;
+        }
 
+        setHotNewsList(recyclerView);
     }
 
-    private void setHeaderNewsList(){
-
+    final void setLatestNewsList(RecyclerView recyclerView){
+        HeaderNewsAdapter headerNewsAdapter = new HeaderNewsAdapter(latestList);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(context,
+                LinearLayoutManager.HORIZONTAL, false));
+        recyclerView.setAdapter(headerNewsAdapter);
+        recyclerView.setNestedScrollingEnabled(true);
     }
 
-    private void setHotNewsList(){
+    final void setHotNewsList(RecyclerView recyclerView){
+        HotNewsAdapter hotNewsAdapter = new HotNewsAdapter(hotList);
+        recyclerView.setLayoutManager(new LinearLayoutManager(context));
+        recyclerView.setAdapter(hotNewsAdapter);
+        recyclerView.addItemDecoration(decoration(recyclerView.getContext()));
+        recyclerView.setNestedScrollingEnabled(true);
+    }
 
+    static CustomDividerItemDecoration decoration(Context context){
+        return new CustomDividerItemDecoration(context,
+                CustomDividerItemDecoration.VERTICAL_LIST, 16);
     }
 }

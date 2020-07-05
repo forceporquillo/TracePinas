@@ -8,12 +8,30 @@
 package com.force.codes.project.app.presentation_layer.views.viewholders;
 
 import android.view.View;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.force.codes.project.app.R;
+import com.force.codes.project.app.data_layer.testmodel.Group;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class NewsGroupViewHolder extends RecyclerView.ViewHolder{
+    @BindView(R.id.news_group_recycler_view)
+    public RecyclerView recyclerView;
+
+    @BindView(R.id.group_title)
+    TextView title;
+
     public NewsGroupViewHolder(@NonNull View itemView){
         super(itemView);
+        ButterKnife.bind(this, itemView);
+    }
+
+    public void setGroupTitle(Group group){
+        title.setText(group.getGroupTitle());
     }
 }
