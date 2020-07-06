@@ -7,46 +7,81 @@
 
 package com.force.codes.project.app.presentation_layer.views.viewholders;
 
-import android.view.View;
+import android.content.Context;
+import android.content.res.Resources;
+import android.util.TypedValue;
+import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.TextView;
+import android.widget.RelativeLayout;
 
-import androidx.annotation.NonNull;
+import androidx.databinding.BindingAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.force.codes.project.app.BR;
 import com.force.codes.project.app.R;
 import com.force.codes.project.app.data_layer.testmodel.Models;
+import com.force.codes.project.app.databinding.HeaderNewsLayoutBinding;
+
+import org.jetbrains.annotations.NotNull;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class HeaderNewsViewHolder extends RecyclerView.ViewHolder{
-    @BindView(R.id.item_cover_picture)
-    ImageView imageView;
+    @BindView(R.id.layout_parent)
+    RelativeLayout parent;
 
-    @BindView(R.id.group_header_text)
-    TextView headerText;
+    private final int itemCount;
+    protected final HeaderNewsLayoutBinding binding;
 
-    @BindView(R.id.date_timestamp)
-    TextView timestamp;
-
-    public HeaderNewsViewHolder(@NonNull View itemView){
-        super(itemView);
-        ButterKnife.bind(this, itemView);
+    public HeaderNewsViewHolder(HeaderNewsLayoutBinding binding, int itemCount){
+        super(binding.getRoot());
+        ButterKnife.bind(this, binding.getRoot());
+        this.itemCount = itemCount;
+        this.binding = binding;
     }
 
-    public void setHeaderView(Models models){
-        headerText.setText(models.getTitle());
-        timestamp.setText(models.getDate());
+    public void bindHeaderView(Models models){
+        binding.setDummyModel(models);
+        binding.setVariable(BR.dummyModel, models);
+    }
+
+    @BindingAdapter({"headerImgUrl"})
+    public static void
+    setFlag(@NotNull ImageView imageView, final String imageUrl){
         Glide.with(imageView.getContext())
-                .load(models.getThumbnail())
-                .apply(new RequestOptions()
-                        .fitCenter()
-                        .override(imageView.getWidth(),
-                                imageView.getHeight()))
+                .load(imageUrl)
                 .centerCrop()
                 .into(imageView);
+    }
+
+    public void setMarginAtRuntime(int index){
+        ViewGroup.MarginLayoutParams params =
+                (ViewGroup.MarginLayoutParams) parent.getLayoutParams();
+        Context context = parent.getContext();
+
+        if(index == 0){
+            params.setMarginStart(getPixelValue(context, 15));
+            params.setMarginEnd(getPixelValue(context, 10));
+            return;
+        }
+
+        params.setMarginEnd(getPixelValue(context, 10));
+
+        // adds 15dp margin at the end of last index item.
+        if(index == (itemCount - 1))
+            params.setMarginEnd(getPixelValue(context, 15));
+    }
+
+    // converts dp to px
+    static int getPixelValue(Context context, int densityPixel){
+        Resources resources = context.getResources();
+        return (int) TypedValue.applyDimension(
+                TypedValue.COMPLEX_UNIT_DIP,
+                densityPixel,
+                resources.getDisplayMetrics()
+        );
     }
 }
