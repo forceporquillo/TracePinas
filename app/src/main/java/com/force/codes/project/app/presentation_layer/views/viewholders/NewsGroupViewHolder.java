@@ -26,6 +26,9 @@ public class NewsGroupViewHolder extends RecyclerView.ViewHolder{
     @BindView(R.id.group_title)
     TextView title;
 
+    @BindView(R.id.bottom_divider)
+    View view;
+
     public NewsGroupViewHolder(@NonNull View itemView){
         super(itemView);
         ButterKnife.bind(this, itemView);
@@ -33,5 +36,9 @@ public class NewsGroupViewHolder extends RecyclerView.ViewHolder{
 
     public void setGroupTitle(Group group){
         title.setText(group.getGroupTitle());
+    }
+
+    public void setDecorVisibility(boolean unHide){
+        if(unHide) view.setVisibility(View.VISIBLE);
     }
 }
