@@ -20,18 +20,18 @@ import retrofit2.http.Url;
 
 public interface ApiService{
     @GET
-    Flowable <List <CountryDetails>>
+    Flowable<List<CountryDetails>>
     getSortedCases(@Url String url);
 
     @GET
-    Flowable <List <GlobalData>>
+    Flowable<List<GlobalData>>
     getGlobalData(@Url String url);
 
     @GET
-    Flowable <LocalListData>
+    Flowable<LocalListData>
     getPhData(@Url String url);
 
     @GET
-    Flowable <WorldData>
+    Flowable<WorldData>
     getWorldData(@Url String url);
 }
