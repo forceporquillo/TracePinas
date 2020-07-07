@@ -19,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.force.codes.project.app.R;
 import com.force.codes.project.app.data_layer.testmodel.Group;
 import com.force.codes.project.app.data_layer.testmodel.Models;
+import com.force.codes.project.app.presentation_layer.controller.custom.interfaces.NewsItemCallback;
 import com.force.codes.project.app.presentation_layer.controller.custom.utils.CustomDividerItemDecoration;
 import com.force.codes.project.app.presentation_layer.views.viewholders.NewsGroupViewHolder;
 
@@ -29,13 +30,18 @@ public class NewsGroupAdapter extends RecyclerView.Adapter<NewsGroupViewHolder>{
     private ArrayList<Models> latestList;
     private ArrayList<Models> hotList;
     private Context context;
+    private NewsItemCallback callback;
 
-    private static final int LATEST_NEWS = 0;
-
-    public NewsGroupAdapter(ArrayList<Group> groups, ArrayList<Models> latest, ArrayList<Models> hot){
+    public NewsGroupAdapter(
+            ArrayList<Group> groups,
+            ArrayList<Models> latest,
+            ArrayList<Models> hot,
+            NewsItemCallback callback
+    ){
         this.groups = groups;
         this.latestList = latest;
         this.hotList = hot;
+        this.callback = callback;
     }
 
     @NonNull
@@ -49,8 +55,10 @@ public class NewsGroupAdapter extends RecyclerView.Adapter<NewsGroupViewHolder>{
     @Override
     public void onBindViewHolder(@NonNull NewsGroupViewHolder holder, int position){
         Group group = groups.get(position);
-
         holder.setGroupTitle(group);
+
+        if(position == 1)
+            holder.setDecorVisibility(true);
         setListOrder(holder.recyclerView, position);
     }
 
@@ -60,33 +68,33 @@ public class NewsGroupAdapter extends RecyclerView.Adapter<NewsGroupViewHolder>{
     }
 
     private void setListOrder(RecyclerView recyclerView, int position){
-        if(position == LATEST_NEWS){
-            setLatestNewsList(recyclerView);
+        if(position != 0){
+            setHotNewsList(recyclerView);
             return;
         }
 
-        setHotNewsList(recyclerView);
+        setLatestNewsList(recyclerView);
+    }
+
+    static CustomDividerItemDecoration decoration(Context context){
+        return new CustomDividerItemDecoration(context,
+                CustomDividerItemDecoration.VERTICAL_LIST, 0);
     }
 
     final void setLatestNewsList(RecyclerView recyclerView){
-        HeaderNewsAdapter headerNewsAdapter = new HeaderNewsAdapter(latestList);
+        HeaderNewsAdapter headerNewsAdapter = new HeaderNewsAdapter(latestList, callback);
         recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(context,
+        recyclerView.setLayoutManager(new LinearLayoutManager(recyclerView.getContext(),
                 LinearLayoutManager.HORIZONTAL, false));
         recyclerView.setAdapter(headerNewsAdapter);
         recyclerView.setNestedScrollingEnabled(true);
     }
 
     final void setHotNewsList(RecyclerView recyclerView){
-        HotNewsAdapter hotNewsAdapter = new HotNewsAdapter(hotList);
+        HotNewsAdapter hotNewsAdapter = new HotNewsAdapter(hotList, callback);
         recyclerView.setLayoutManager(new LinearLayoutManager(context));
         recyclerView.setAdapter(hotNewsAdapter);
         recyclerView.addItemDecoration(decoration(recyclerView.getContext()));
         recyclerView.setNestedScrollingEnabled(true);
-    }
-
-    static CustomDividerItemDecoration decoration(Context context){
-        return new CustomDividerItemDecoration(context,
-                CustomDividerItemDecoration.VERTICAL_LIST, 16);
     }
 }

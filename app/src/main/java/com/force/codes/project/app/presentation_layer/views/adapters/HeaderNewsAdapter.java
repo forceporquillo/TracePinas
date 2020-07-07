@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.force.codes.project.app.R;
 import com.force.codes.project.app.data_layer.testmodel.Models;
 import com.force.codes.project.app.databinding.HeaderNewsLayoutBinding;
+import com.force.codes.project.app.presentation_layer.controller.custom.interfaces.NewsItemCallback;
 import com.force.codes.project.app.presentation_layer.views.viewholders.HeaderNewsViewHolder;
 
 import java.util.ArrayList;
@@ -25,8 +26,11 @@ import java.util.ArrayList;
 public class HeaderNewsAdapter extends RecyclerView.Adapter<HeaderNewsViewHolder>{
     private ArrayList<Models> list;
     private Context context;
-    public HeaderNewsAdapter(ArrayList<Models> latestList){
+
+    private NewsItemCallback callback;
+    public HeaderNewsAdapter(ArrayList<Models> latestList, NewsItemCallback callback){
         this.list = latestList;
+        this.callback = callback;
     }
 
     @NonNull
@@ -36,7 +40,7 @@ public class HeaderNewsAdapter extends RecyclerView.Adapter<HeaderNewsViewHolder
 
         HeaderNewsLayoutBinding binding = DataBindingUtil
                 .inflate(inflater, R.layout.header_news_layout, parent, false);
-        return new HeaderNewsViewHolder(binding, getItemCount());
+        return new HeaderNewsViewHolder(binding, getItemCount(), callback);
     }
 
     @Override
@@ -45,10 +49,11 @@ public class HeaderNewsAdapter extends RecyclerView.Adapter<HeaderNewsViewHolder
 
         holder.setMarginAtRuntime(position);
         holder.bindHeaderView(models);
+        System.out.println(getItemCount());
     }
 
     @Override
     public int getItemCount(){
-        return list.size();
+        return !list.isEmpty() ? list.size() : 0;
     }
 }

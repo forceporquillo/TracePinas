@@ -10,6 +10,7 @@ package com.force.codes.project.app.presentation_layer.views.viewholders;
 import android.content.Context;
 import android.content.res.Resources;
 import android.util.TypedValue;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -23,24 +24,30 @@ import com.force.codes.project.app.BR;
 import com.force.codes.project.app.R;
 import com.force.codes.project.app.data_layer.testmodel.Models;
 import com.force.codes.project.app.databinding.HeaderNewsLayoutBinding;
+import com.force.codes.project.app.presentation_layer.controller.custom.interfaces.NewsItemCallback;
 
 import org.jetbrains.annotations.NotNull;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class HeaderNewsViewHolder extends RecyclerView.ViewHolder{
+public class HeaderNewsViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
     @BindView(R.id.layout_parent)
     RelativeLayout parent;
 
     private final int itemCount;
     protected final HeaderNewsLayoutBinding binding;
+    private NewsItemCallback callback;
 
-    public HeaderNewsViewHolder(HeaderNewsLayoutBinding binding, int itemCount){
+    public HeaderNewsViewHolder(HeaderNewsLayoutBinding binding, int itemCount, NewsItemCallback callback){
         super(binding.getRoot());
         ButterKnife.bind(this, binding.getRoot());
         this.itemCount = itemCount;
         this.binding = binding;
+        this.callback = callback;
+        View view = binding.getRoot();
+
+        view.setOnClickListener(this);
     }
 
     public void bindHeaderView(Models models){
@@ -67,7 +74,6 @@ public class HeaderNewsViewHolder extends RecyclerView.ViewHolder{
             params.setMarginEnd(getPixelValue(context, 10));
             return;
         }
-
         params.setMarginEnd(getPixelValue(context, 10));
 
         // adds 15dp margin at the end of last index item.
@@ -83,5 +89,10 @@ public class HeaderNewsViewHolder extends RecyclerView.ViewHolder{
                 densityPixel,
                 resources.getDisplayMetrics()
         );
+    }
+
+    @Override
+    public void onClick(View v){
+        callback.headerNewsItemListener(getAdapterPosition());
     }
 }

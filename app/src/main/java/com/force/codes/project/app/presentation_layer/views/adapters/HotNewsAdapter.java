@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.force.codes.project.app.R;
 import com.force.codes.project.app.data_layer.testmodel.Models;
+import com.force.codes.project.app.presentation_layer.controller.custom.interfaces.NewsItemCallback;
 import com.force.codes.project.app.presentation_layer.views.viewholders.HotNewsViewHolder;
 
 import java.util.ArrayList;
@@ -24,9 +25,11 @@ import java.util.ArrayList;
 public class HotNewsAdapter extends RecyclerView.Adapter<HotNewsViewHolder>{
     private ArrayList<Models> hotList;
     Context context;
+    private NewsItemCallback callback;
 
-    public HotNewsAdapter(ArrayList<Models> hotList){
+    public HotNewsAdapter(ArrayList<Models> hotList, NewsItemCallback callback){
         this.hotList = hotList;
+        this.callback = callback;
     }
 
     @NonNull
@@ -34,7 +37,7 @@ public class HotNewsAdapter extends RecyclerView.Adapter<HotNewsViewHolder>{
     public HotNewsViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType){
         final View view = LayoutInflater.from(this.context = parent.getContext())
                 .inflate(R.layout.hot_news_layout, parent, false);
-        return new HotNewsViewHolder(view);
+        return new HotNewsViewHolder(view, callback);
     }
 
     @Override
@@ -46,6 +49,6 @@ public class HotNewsAdapter extends RecyclerView.Adapter<HotNewsViewHolder>{
 
     @Override
     public int getItemCount(){
-        return hotList.size();
+        return !hotList.isEmpty() ? hotList.size() : 0;
     }
 }

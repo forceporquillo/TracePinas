@@ -20,4 +20,5 @@
     <dimen name="_elevation_5dp">5dp</dimen>
     <dimen name="tab_height">48dp</dimen>
     <dimen name="tab_height_large">72dp</dimen>
+    <dimen name="header_start">15dp</dimen>
 </resources>

@@ -18,11 +18,12 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.force.codes.project.app.R;
 import com.force.codes.project.app.data_layer.testmodel.Models;
+import com.force.codes.project.app.presentation_layer.controller.custom.interfaces.NewsItemCallback;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class HotNewsViewHolder extends RecyclerView.ViewHolder{
+public class HotNewsViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
     @BindView(R.id.image_placeholder)
     ImageView imageView;
 
@@ -32,9 +33,13 @@ public class HotNewsViewHolder extends RecyclerView.ViewHolder{
     @BindView(R.id.item_subtitle)
     TextView timestamp;
 
-    public HotNewsViewHolder(@NonNull View itemView){
+    NewsItemCallback callback;
+
+    public HotNewsViewHolder(@NonNull View itemView, NewsItemCallback callback){
         super(itemView);
         ButterKnife.bind(this, itemView);
+        this.callback = callback;
+        itemView.setOnClickListener(this);
     }
 
     public void setHotView(Models models){
@@ -48,5 +53,10 @@ public class HotNewsViewHolder extends RecyclerView.ViewHolder{
                                 imageView.getHeight()))
                 .centerCrop()
                 .into(imageView);
+    }
+
+    @Override
+    public void onClick(View v){
+        callback.hotNewsItemListener(getAdapterPosition());
     }
 }
