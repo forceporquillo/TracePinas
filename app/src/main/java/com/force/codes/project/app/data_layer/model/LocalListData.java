@@ -12,14 +12,14 @@ import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 import androidx.room.TypeConverters;
 
-import com.force.codes.project.app.data_layer.TypeConverter.RoomTypeConverter;
+import com.force.codes.project.app.data_layer.TypeConverter.StringToObjectList;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
 @Entity
 public class LocalListData{
-    @TypeConverters(RoomTypeConverter.class)
+    @TypeConverters(StringToObjectList.class)
     @SerializedName("data")
     private List <PHDataSet> data;
     @NonNull
