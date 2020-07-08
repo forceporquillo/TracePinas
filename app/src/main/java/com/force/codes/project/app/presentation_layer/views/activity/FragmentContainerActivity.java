@@ -29,7 +29,6 @@ import com.force.codes.project.app.R;
 import com.force.codes.project.app.presentation_layer.controller.custom.interfaces.BottomItemListener;
 import com.force.codes.project.app.presentation_layer.controller.custom.model.BottomItem;
 import com.force.codes.project.app.presentation_layer.controller.support.CustomBottomBar;
-import com.force.codes.project.app.presentation_layer.views.fragments.HelpCenterFragment;
 import com.force.codes.project.app.presentation_layer.views.fragments.LiveDataFragment;
 import com.force.codes.project.app.presentation_layer.views.fragments.MapFragment;
 import com.force.codes.project.app.presentation_layer.views.fragments.NewsFragment;
@@ -38,13 +37,21 @@ import com.force.codes.project.app.presentation_layer.views.fragments.WorldwideF
 
 import org.jetbrains.annotations.NotNull;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import timber.log.Timber;
+
 public class FragmentContainerActivity extends BaseActivity implements BottomItemListener{
-    private static final String SAVE_FRAGMENT_STATE = "save_fragment_state";
+    private static final String FRAGMENT_STATE = "save_fragment_state";
+    private static final String LAST_NAV_INDEX = "KEY_INDEX";
     private static final int STATISTICS = 0;
     private static final int NEWS = 1;
     private static final int WORLDWIDE = 2;
     private static final int MAP = 3;
     private static final int HELP = 4;
+    private static final int VERSION_CODE = Build.VERSION.SDK_INT;
+
+    private int lastNavIndex = STATISTICS;
 
     private FragmentManager fragmentManager;
     private Fragment fragment = null;
@@ -61,34 +68,36 @@ public class FragmentContainerActivity extends BaseActivity implements BottomIte
     @Override
     protected void onSaveInstanceState(@NonNull Bundle outState){
         super.onSaveInstanceState(outState);
-        if(fragment != null)
+        if(fragment != null){
             getSupportFragmentManager()
-                    .putFragment(outState, SAVE_FRAGMENT_STATE, fragment);
+                    .putFragment(outState, FRAGMENT_STATE, fragment);
+            outState.putInt(LAST_NAV_INDEX, lastNavIndex);
+        }
     }
+
+    @BindView(R.id.bottom_bar)
+    View view;
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fragment_manager);
+        ButterKnife.bind(this);
 
-        CustomBottomBar bottomBar = new CustomBottomBar(
-                findViewById(R.id.bottom_bar),
-                this, this);
+        CustomBottomBar bottomBar = new CustomBottomBar(view, this, this);
 
-        int versionCode = Build.VERSION.SDK_INT;
-        if(versionCode >= Build.VERSION_CODES.LOLLIPOP){
-            getWindow().getDecorView()
-                    .setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
-        }
-
-        if(savedInstanceState != null){
-            fragment = getSupportFragmentManager()
-                    .getFragment(savedInstanceState, SAVE_FRAGMENT_STATE);
-        }
+        if(VERSION_CODE >= Build.VERSION_CODES.LOLLIPOP)
+            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
 
         setPrimaryFragment(savedInstanceState);
-        setBottomBarItems(bottomBar);
+
+        if(savedInstanceState != null){
+            fragment = getSupportFragmentManager().getFragment(savedInstanceState, FRAGMENT_STATE);
+            setBottomBarItems(bottomBar, true, savedInstanceState.getInt(LAST_NAV_INDEX));
+            return;
+        }
+        setBottomBarItems(bottomBar, false, STATISTICS);
     }
 
     final void setPrimaryFragment(Bundle savedInstanceState){
@@ -101,20 +110,20 @@ public class FragmentContainerActivity extends BaseActivity implements BottomIte
         }
     }
 
-    final void setBottomBarItems(CustomBottomBar bottomBar){
+    final void setBottomBarItems(CustomBottomBar bottomBar, boolean isStateChanged, int saveSelected){
         final BottomItem[] bottomItems = new BottomItem[5];
-
+        // region custom bottom navigation bar item instance
         bottomItems[0] = new BottomItem(STATISTICS, "Statistics", R.drawable.ic_outline_stats, R.drawable.ic_outline_colored_stats);
         bottomItems[1] = new BottomItem(NEWS, "News", R.drawable.ic_outline_news, R.drawable.ic_outline_colored_news);
         bottomItems[2] = new BottomItem(WORLDWIDE, "Worldwide", R.drawable.ic_outline_worldwide, R.drawable.ic_outline_colored_worldwide);
         bottomItems[3] = new BottomItem(MAP, "Map", R.drawable.ic_outline_map, R.drawable.ic_outline_colored_map);
         bottomItems[4] = new BottomItem(HELP, "Help", R.drawable.ic_outline_phone, R.drawable.ic_outline_colored_phone);
-
+        // endregion
         bottomBar.addBottomItem(bottomItems);
-        bottomBar.setPrimary(STATISTICS);
+        if(isStateChanged) bottomBar.setPrimary(saveSelected);
+        else bottomBar.setPrimary(STATISTICS);
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     public void itemSelect(int itemId){
         switch(itemId){
@@ -135,9 +144,9 @@ public class FragmentContainerActivity extends BaseActivity implements BottomIte
                 break;
         }
 
+        lastNavIndex = itemId;
         setDelegateFragment(fragment).commit();
     }
-
 
     @NotNull
     private FragmentTransaction setDelegateFragment(Fragment fragment){
@@ -148,19 +157,15 @@ public class FragmentContainerActivity extends BaseActivity implements BottomIte
 
     @Override
     public void onBackPressed(){
-        if(getSupportFragmentManager().getBackStackEntryCount() > 1)
+        // count fragment available in backStack.
+        int count = getSupportFragmentManager()
+                .getBackStackEntryCount();
+
+        if(count > 1){
             super.onBackPressed();
-        else
-            finish();
-    }
+            return;
+        }
 
-    @Override
-    protected void onDestroy(){
-        super.onDestroy();
-    }
-
-    @Override
-    protected void onResume(){
-        super.onResume();
+        finish();
     }
 }
