@@ -18,11 +18,14 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -37,6 +40,7 @@ import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import timber.log.Timber;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -65,6 +69,7 @@ public class NewsFragment extends BaseFragment implements NewsItemCallback{
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
 
+        Timber.d("onCreate");
     }
 
     @Override
@@ -79,6 +84,12 @@ public class NewsFragment extends BaseFragment implements NewsItemCallback{
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState){
         super.onViewCreated(view, savedInstanceState);
+        if(savedInstanceState != null){
+            // do something
+        }
+
+        assert getActivity() != null;
+        getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
     }
 
     @Override
@@ -114,17 +125,12 @@ public class NewsFragment extends BaseFragment implements NewsItemCallback{
     private static ArrayList<Models> hotModels(){
         ArrayList<Models> latest = new ArrayList<>();
 
-        latest.add(new Models("SpaceX is about to make history by relaunching a used Falcon 9 rocket", "Cape Canaveral, FL. July 6, 2020", "https://cbsnews2.cbsistatic.com/hub/i/r/2018/02/04/29e49d64-a291-47b2-ad22-652ae6716ef9/thumbnail/620x398g2/ca4631d41fc14c8475f7ff3f1037ee1e/010918-heavy.jpg"));
-        latest.add(new Models("SpaceX is about to make history by relaunching a used Falcon 9 rocket", "Cape Canaveral, FL. July 6, 2020", "https://cbsnews2.cbsistatic.com/hub/i/r/2018/02/04/29e49d64-a291-47b2-ad22-652ae6716ef9/thumbnail/620x398g2/ca4631d41fc14c8475f7ff3f1037ee1e/010918-heavy.jpg"));
-        latest.add(new Models("SpaceX is about to make history by relaunching a used Falcon 9 rocket", "Cape Canaveral, FL. July 6, 2020", "https://cbsnews2.cbsistatic.com/hub/i/r/2018/02/04/29e49d64-a291-47b2-ad22-652ae6716ef9/thumbnail/620x398g2/ca4631d41fc14c8475f7ff3f1037ee1e/010918-heavy.jpg"));
-        latest.add(new Models("SpaceX is about to make history by relaunching a used Falcon 9 rocket", "Cape Canaveral, FL. July 6, 2020", "https://cbsnews2.cbsistatic.com/hub/i/r/2018/02/04/29e49d64-a291-47b2-ad22-652ae6716ef9/thumbnail/620x398g2/ca4631d41fc14c8475f7ff3f1037ee1e/010918-heavy.jpg"));
-        latest.add(new Models("SpaceX is about to make history by relaunching a used Falcon 9 rocket", "Cape Canaveral, FL. July 6, 2020", "https://cbsnews2.cbsistatic.com/hub/i/r/2018/02/04/29e49d64-a291-47b2-ad22-652ae6716ef9/thumbnail/620x398g2/ca4631d41fc14c8475f7ff3f1037ee1e/010918-heavy.jpg"));
-        latest.add(new Models("SpaceX is about to make history by relaunching a used Falcon 9 rocket", "Cape Canaveral, FL. July 6, 2020", "https://cbsnews2.cbsistatic.com/hub/i/r/2018/02/04/29e49d64-a291-47b2-ad22-652ae6716ef9/thumbnail/620x398g2/ca4631d41fc14c8475f7ff3f1037ee1e/010918-heavy.jpg"));
-        latest.add(new Models("SpaceX is about to make history by relaunching a used Falcon 9 rocket", "Cape Canaveral, FL. July 6, 2020", "https://cbsnews2.cbsistatic.com/hub/i/r/2018/02/04/29e49d64-a291-47b2-ad22-652ae6716ef9/thumbnail/620x398g2/ca4631d41fc14c8475f7ff3f1037ee1e/010918-heavy.jpg"));
-        latest.add(new Models("SpaceX is about to make history by relaunching a used Falcon 9 rocket", "Cape Canaveral, FL. July 6, 2020", "https://cbsnews2.cbsistatic.com/hub/i/r/2018/02/04/29e49d64-a291-47b2-ad22-652ae6716ef9/thumbnail/620x398g2/ca4631d41fc14c8475f7ff3f1037ee1e/010918-heavy.jpg"));
-        latest.add(new Models("SpaceX is about to make history by relaunching a used Falcon 9 rocket", "Cape Canaveral, FL. July 6, 2020", "https://cbsnews2.cbsistatic.com/hub/i/r/2018/02/04/29e49d64-a291-47b2-ad22-652ae6716ef9/thumbnail/620x398g2/ca4631d41fc14c8475f7ff3f1037ee1e/010918-heavy.jpg"));
-        latest.add(new Models("SpaceX is about to make history by relaunching a used Falcon 9 rocket", "Cape Canaveral, FL. July 6, 2020", "https://cbsnews2.cbsistatic.com/hub/i/r/2018/02/04/29e49d64-a291-47b2-ad22-652ae6716ef9/thumbnail/620x398g2/ca4631d41fc14c8475f7ff3f1037ee1e/010918-heavy.jpg"));
-        latest.add(new Models("SpaceX is about to make history by relaunching a used Falcon 9 rocket", "Cape Canaveral, FL. July 6, 2020", "https://cbsnews2.cbsistatic.com/hub/i/r/2018/02/04/29e49d64-a291-47b2-ad22-652ae6716ef9/thumbnail/620x398g2/ca4631d41fc14c8475f7ff3f1037ee1e/010918-heavy.jpg"));
+        for(int i = 0; i < 10; ++i){
+            latest.add(new Models(
+                    "SpaceX is about to make history by relaunching a used Falcon 9 rocket",
+                    "Cape Canaveral, FL. July 6, 2020",
+                    "https://cbsnews2.cbsistatic.com/hub/i/r/2018/02/04/29e49d64-a291-47b2-ad22-652ae6716ef9/thumbnail/620x398g2/ca4631d41fc14c8475f7ff3f1037ee1e/010918-heavy.jpg"));
+        }
 
         return latest;
     }
@@ -132,10 +138,33 @@ public class NewsFragment extends BaseFragment implements NewsItemCallback{
     @Override
     public void headerNewsItemListener(int position){
         Toast.makeText(getContext(), "header news item position: " + position, Toast.LENGTH_LONG).show();
+
+        String title = latestModels().get(position).getTitle();
+        String imgUrl = latestModels().get(position).getThumbnail();
+
+        System.out.println(title + "\n" + imgUrl);
+        setFragment(ReadNewsFragment.newInstance(title, imgUrl));
     }
 
     @Override
     public void hotNewsItemListener(int position){
         Toast.makeText(getContext(), "hot news item position: " + position, Toast.LENGTH_LONG).show();
+
+        String title = hotModels().get(position).getTitle();
+        String imgUrl = hotModels().get(position).getThumbnail();
+
+        System.out.println(title + "\n" + imgUrl);
+        setFragment(ReadNewsFragment.newInstance(title, imgUrl));
+    }
+
+    public void setFragment(Fragment fragment){
+        FragmentManager fragmentManager = getParentFragmentManager();
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+
+//        transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,
+//                R.anim.enter_from_left, R.anim.exit_to_right);
+        transaction.replace(R.id.fragment_container, fragment)
+                .addToBackStack(fragment.getTag())
+                .commit();
     }
 }

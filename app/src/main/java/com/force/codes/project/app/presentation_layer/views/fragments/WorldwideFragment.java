@@ -195,7 +195,7 @@ public class WorldwideFragment extends DaggerFragment implements FragmentCallbac
     }
 
     @Override
-    public void CustomCardViewListener(int position){
+    public void cardItemListener(int position){
         Fragment fragment = StatisticsFragment.newInstance();
         //super.setDelegateFragment(fragment).commit();
     }

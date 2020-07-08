@@ -43,7 +43,6 @@ public class HotNewsAdapter extends RecyclerView.Adapter<HotNewsViewHolder>{
     @Override
     public void onBindViewHolder(@NonNull HotNewsViewHolder holder, int position){
         Models models = hotList.get(position);
-
         holder.setHotView(models);
     }
 

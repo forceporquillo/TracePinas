@@ -9,5 +9,5 @@ package com.force.codes.project.app.presentation_layer.controller.custom.interfa
  */
 
 public interface FragmentCallback{
-    void CustomCardViewListener(int position);
+    void cardItemListener(int position);
 }

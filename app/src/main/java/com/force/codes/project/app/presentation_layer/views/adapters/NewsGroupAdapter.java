@@ -68,12 +68,11 @@ public class NewsGroupAdapter extends RecyclerView.Adapter<NewsGroupViewHolder>{
     }
 
     private void setListOrder(RecyclerView recyclerView, int position){
-        if(position != 0){
-            setHotNewsList(recyclerView);
+        if(position == 0){
+            setLatestNewsList(recyclerView);
             return;
         }
-
-        setLatestNewsList(recyclerView);
+        setHotNewsList(recyclerView);
     }
 
     static CustomDividerItemDecoration decoration(Context context){
@@ -89,6 +88,7 @@ public class NewsGroupAdapter extends RecyclerView.Adapter<NewsGroupViewHolder>{
         recyclerView.setAdapter(headerNewsAdapter);
         recyclerView.setNestedScrollingEnabled(true);
     }
+
 
     final void setHotNewsList(RecyclerView recyclerView){
         HotNewsAdapter hotNewsAdapter = new HotNewsAdapter(hotList, callback);

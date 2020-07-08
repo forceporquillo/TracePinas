@@ -46,10 +46,8 @@ public class HeaderNewsAdapter extends RecyclerView.Adapter<HeaderNewsViewHolder
     @Override
     public void onBindViewHolder(@NonNull HeaderNewsViewHolder holder, int position){
         Models models = list.get(position);
-
         holder.setMarginAtRuntime(position);
         holder.bindHeaderView(models);
-        System.out.println(getItemCount());
     }
 
     @Override

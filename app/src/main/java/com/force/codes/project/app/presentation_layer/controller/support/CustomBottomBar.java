@@ -28,7 +28,10 @@ public class CustomBottomBar{
     private ArrayList <BottomItem> bottomItems;
     private BottomItemListener bottomItemListener;
 
-    public CustomBottomBar(View view, Context context, BottomItemListener bottomItemListener){
+    public CustomBottomBar(
+            View view, Context context,
+            BottomItemListener bottomItemListener
+    ){
         setType(view);
         this.context = context;
         this.bottomItemListener = bottomItemListener;
