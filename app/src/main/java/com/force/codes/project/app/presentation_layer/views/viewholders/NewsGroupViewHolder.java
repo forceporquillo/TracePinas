@@ -40,5 +40,6 @@ public class NewsGroupViewHolder extends RecyclerView.ViewHolder{
 
     public void setDecorVisibility(boolean unHide){
         if(unHide) view.setVisibility(View.VISIBLE);
+        else view.setVisibility(View.GONE);
     }
 }
