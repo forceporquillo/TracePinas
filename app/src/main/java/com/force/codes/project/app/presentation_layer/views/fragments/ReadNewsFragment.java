@@ -8,11 +8,9 @@
 package com.force.codes.project.app.presentation_layer.views.fragments;
 
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -20,14 +18,12 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.Glide;
 import com.force.codes.project.app.R;
-import com.force.codes.project.app.presentation_layer.controller.support.GlideApp;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
-import timber.log.Timber;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -83,9 +79,6 @@ public class ReadNewsFragment extends Fragment{
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-
-        assert getActivity() != null;
-        getActivity().getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
     }
 
     @Override
@@ -104,7 +97,7 @@ public class ReadNewsFragment extends Fragment{
     @Override
     public void onResume(){
         super.onResume();
-        GlideApp.with(imageView.getContext())
+        Glide.with(imageView.getContext())
                 .asBitmap()
                 .load(mParam2)
                 .centerCrop()
@@ -118,10 +111,6 @@ public class ReadNewsFragment extends Fragment{
         super.onDestroyView();
         textView = null;
         imageView = null;
-
-        Timber.d("onDestroyView called");
-        assert getActivity() != null;
-        getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
     }
 
     @Override

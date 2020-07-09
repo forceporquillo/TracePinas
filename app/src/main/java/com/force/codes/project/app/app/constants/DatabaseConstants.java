@@ -18,5 +18,6 @@ public class DatabaseConstants{
     public static final String QUERY_ALL_DATA = "SELECT * FROM CountryDetails";
     public static final String QUERY_ALL_PH_DATA = "SELECT * FROM LocalListData";
     public static final String QUERY_ALL_GLOBAL_DATA = "SELECT * FROM GlobalData";
-    public static final int DATABASE_VERSION = 1;
+    public static final String QUERY_NEWS_DATA = "SELECT * FROM NewsResponse";
+    public static final int DATABASE_VERSION = 2;
 }

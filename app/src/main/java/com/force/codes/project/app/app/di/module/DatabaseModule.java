@@ -18,6 +18,7 @@ import com.force.codes.project.app.data_layer.resources.database.AppDatabase;
 import com.force.codes.project.app.data_layer.resources.database.CountryDao;
 import com.force.codes.project.app.data_layer.resources.database.LiveDataDao;
 import com.force.codes.project.app.data_layer.resources.database.MapDao;
+import com.force.codes.project.app.data_layer.resources.database.NewsDao;
 
 import javax.inject.Singleton;
 
@@ -58,5 +59,11 @@ public class DatabaseModule{
     @Provides
     static LiveDataDao provideLiveDataAccess(AppDatabase database){
         return database.liveDataDao();
+    }
+
+    @Singleton
+    @Provides
+    static NewsDao provideNewsAccess(AppDatabase database){
+        return database.newsDao();
     }
 }

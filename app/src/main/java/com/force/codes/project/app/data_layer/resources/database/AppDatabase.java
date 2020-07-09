@@ -13,13 +13,15 @@ import androidx.room.RoomDatabase;
 import com.force.codes.project.app.app.constants.DatabaseConstants;
 import com.force.codes.project.app.data_layer.model.CountryDetails;
 import com.force.codes.project.app.data_layer.model.GlobalData;
-import com.force.codes.project.app.data_layer.model.LocalListData;
+import com.force.codes.project.app.data_layer.model.LocalData;
+import com.force.codes.project.app.data_layer.model.NewsData;
 
 @Database(
         entities = {
                 CountryDetails.class,
-                LocalListData.class,
-                GlobalData.class
+                LocalData.class,
+                GlobalData.class,
+                NewsData.class
         }, version = DatabaseConstants.DATABASE_VERSION,
         exportSchema = false
 )
@@ -29,4 +31,6 @@ public abstract class AppDatabase extends RoomDatabase{
     public abstract CountryDao countryDao();
 
     public abstract LiveDataDao liveDataDao();
+
+    public abstract NewsDao newsDao();
 }

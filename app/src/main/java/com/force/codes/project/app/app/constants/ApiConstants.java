@@ -20,4 +20,5 @@ public class ApiConstants{
     public static final String CORONA_GLOBAL_CASES = "https://corona.lmao.ninja/v2/all";
     public static final String LOCAL_URL = "https://coronavirus-ph-api.herokuapp.com/doh-data-drop";
     public static final String GLOBAL_CASE = "https://covid19.mathdro.id/api/confirmed";
+    public static final String NEWS_DATA = "https://newsapi.org/v2/everything?q=COVID, Philippines&from=2020&sortBy=publishedAt&apiKey=0bf6fe738d0f4279a5c1169f11fe4c3f&pageSize=100&page=1";
 }

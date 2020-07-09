@@ -11,6 +11,7 @@ import android.app.Application;
 
 import androidx.lifecycle.MutableLiveData;
 
+import com.force.codes.project.app.data_layer.model.NewsData;
 import com.force.codes.project.app.data_layer.model.WorldData;
 import com.force.codes.project.app.service.executors.AppExecutors;
 import com.google.android.gms.maps.model.Marker;
@@ -65,5 +66,11 @@ public class AppModule{
     @Singleton
     Application providesApplication(){
         return application;
+    }
+
+    @Provides
+    @Named("NewsVM")
+    static MutableLiveData<NewsData> providesMutableLiveData(){
+        return new MutableLiveData<>();
     }
 }

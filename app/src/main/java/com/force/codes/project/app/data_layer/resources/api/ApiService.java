@@ -9,7 +9,8 @@ package com.force.codes.project.app.data_layer.resources.api;
 
 import com.force.codes.project.app.data_layer.model.CountryDetails;
 import com.force.codes.project.app.data_layer.model.GlobalData;
-import com.force.codes.project.app.data_layer.model.LocalListData;
+import com.force.codes.project.app.data_layer.model.LocalData;
+import com.force.codes.project.app.data_layer.model.NewsData;
 import com.force.codes.project.app.data_layer.model.WorldData;
 
 import java.util.List;
@@ -28,10 +29,14 @@ public interface ApiService{
     getGlobalData(@Url String url);
 
     @GET
-    Flowable<LocalListData>
+    Flowable<LocalData>
     getPhData(@Url String url);
 
     @GET
     Flowable<WorldData>
     getWorldData(@Url String url);
+
+    @GET
+    Flowable<NewsData>
+    getNewsResponse(@Url String url);
 }

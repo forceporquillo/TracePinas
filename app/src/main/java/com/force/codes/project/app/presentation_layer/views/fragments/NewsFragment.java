@@ -40,6 +40,7 @@ import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import dagger.android.support.DaggerFragment;
 import timber.log.Timber;
 
 /**
@@ -47,7 +48,7 @@ import timber.log.Timber;
  * Use the {@link NewsFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class NewsFragment extends BaseFragment implements NewsItemCallback{
+public class NewsFragment extends DaggerFragment implements NewsItemCallback{
     public NewsFragment(){
         // Required empty public constructor
     }
@@ -161,8 +162,8 @@ public class NewsFragment extends BaseFragment implements NewsItemCallback{
         FragmentManager fragmentManager = getParentFragmentManager();
         FragmentTransaction transaction = fragmentManager.beginTransaction();
 
-//        transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,
-//                R.anim.enter_from_left, R.anim.exit_to_right);
+        transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,
+                R.anim.enter_from_left, R.anim.exit_to_right);
         transaction.replace(R.id.fragment_container, fragment)
                 .addToBackStack(fragment.getTag())
                 .commit();

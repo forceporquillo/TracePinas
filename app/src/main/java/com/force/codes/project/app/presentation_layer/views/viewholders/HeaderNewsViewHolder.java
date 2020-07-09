@@ -20,7 +20,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
-import com.force.codes.project.app.BR;
 import com.force.codes.project.app.R;
 import com.force.codes.project.app.data_layer.testmodel.Models;
 import com.force.codes.project.app.databinding.HeaderNewsLayoutBinding;
@@ -52,7 +51,7 @@ public class HeaderNewsViewHolder extends RecyclerView.ViewHolder implements Vie
 
     public void bindHeaderView(Models models){
         binding.setDummyModel(models);
-        binding.setVariable(BR.dummyModel, models);
+        //binding.setVariable(BR.dummyModel, models);
     }
 
     @BindingAdapter({"headerImgUrl"})

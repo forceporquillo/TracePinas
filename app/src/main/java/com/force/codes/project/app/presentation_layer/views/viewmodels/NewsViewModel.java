@@ -14,5 +14,23 @@ package com.force.codes.project.app.presentation_layer.views.viewmodels;
  *
  */
 
-class NewsViewModel extends BaseViewModel{
+import androidx.lifecycle.MutableLiveData;
+
+import com.force.codes.project.app.data_layer.model.NewsData;
+import com.force.codes.project.app.data_layer.repositories.interfaces.NewsRepository;
+
+import javax.inject.Inject;
+import javax.inject.Named;
+
+public class NewsViewModel extends BaseViewModel{
+    private NewsRepository newsRepository;
+
+    @Inject
+    @Named("NewsVM")
+    MutableLiveData<NewsData> liveData;
+
+    @Inject
+    public NewsViewModel(NewsRepository newsRepository){
+        this.newsRepository = newsRepository;
+    }
 }
