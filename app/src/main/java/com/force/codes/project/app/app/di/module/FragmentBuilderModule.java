@@ -9,6 +9,7 @@ package com.force.codes.project.app.app.di.module;
 
 import com.force.codes.project.app.presentation_layer.views.fragments.LiveDataFragment;
 import com.force.codes.project.app.presentation_layer.views.fragments.MapFragment;
+import com.force.codes.project.app.presentation_layer.views.fragments.NewsFragment;
 import com.force.codes.project.app.presentation_layer.views.fragments.WorldwideFragment;
 
 import dagger.Module;
@@ -24,4 +25,7 @@ public abstract class FragmentBuilderModule{
 
     @ContributesAndroidInjector
     abstract WorldwideFragment contributeWorldwideFragment();
+
+    @ContributesAndroidInjector
+    abstract NewsFragment contributeNewsFragment();
 }
