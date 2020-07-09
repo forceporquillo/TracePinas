@@ -17,7 +17,7 @@ import java.lang.reflect.Type;
 import java.util.Collections;
 import java.util.List;
 
-public class StringToObjectList{
+public class LocalDataConverter{
     @TypeConverter
     public static List<PHDataSet> stringToObjectList(String value){
         if(value == null){
