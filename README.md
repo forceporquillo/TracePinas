@@ -1,3 +1,4 @@
+
 [![Foo](https://camo.githubusercontent.com/4ba50f927b0ea667976efa9f43ae166caa2c4cf7/68747470733a2f2f63646e2e6275796d6561636f666665652e636f6d2f627574746f6e732f6c61746f2d6f72616e67652e706e67)](https://www.buymeacoffee.com/forcecodes)
 ## Getting Started
 
@@ -6,8 +7,8 @@ These instructions will get you a copy of the project up and running on your loc
 ## Summary
 -   Use  [MVVM](https://en.wikipedia.org/wiki/Model_View_ViewModel)  using  [architecture components](https://developer.android.com/topic/libraries/architecture/index.html)  with to separate Android Framework with a  [clean architecture](http://blog.8thlight.com/uncle-bob/2012/08/13/the-clean-architecture.html)  to my domain logic.
 -   Use  [Android Databinding](https://developer.android.com/topic/libraries/data-binding/index.html)  wih  [LiveData](https://developer.android.com/topic/libraries/architecture/livedata.html)  to glue  [ViewModel](https://developer.android.com/topic/libraries/architecture/viewmodel.html)  and Android.
--   Asynchronous communications implemented with  [Rx](http://reactivex.io/).
--   Rest API from  [Novel COVID API](https://corona.lmao.ninja/).
+-   Asynchronous communications implemented with  [ReactiveX](http://reactivex.io/).
+- Converts Rx flowable observable to LiveData using  [LiveDataReactiveStreams](https://developer.android.com/reference/android/arch/lifecycle/LiveDataReactiveStreams).
 -   Store data using  [Room](https://developer.android.com/topic/libraries/architecture/room.html).
 -  Uses Pie Charts from [https://github.com/PhilJay/MPAndroidChart](https://github.com/PhilJay/MPAndroidChart) to graph data statistically.
 ## Installation
@@ -42,42 +43,30 @@ This project requires a newer version of Android Studio such as
 ## Core Dependencies
 **Android Architecture Components**:  [Google Github repository](https://github.com/android/architecture-components-samples)
 - **ViewModel** - Save the activity/fragment state across configuration changes.  
-- **LiveData** - A data holder class that observes the data changes in our database and automatically emmits data in our UI whenever new data is inserted in DB.
- - **PageList** - Loads data in gradual chunks (pages) from a **DataSource**.
-- **Room** - stores country data in local database.
+- **LiveData** - observes the data changes in database and automatically emmits data in our UI whenever new data is inserted in DB.
+ - **PageList** -  loads data in gradual chunks (pages) from a **DataSource**.
+- **Room** - stores ***Global Country*** data in local database.
 - **Data Binding** - bind the UI components in the layout to **data** resources using a declarative format rather than programmatically.
+- **Google Maps API** - draw circle markers in affected areas.
+- **Dagger 2** - injects relying object dependencies; reduces boilerplate code when instantiating object instances.
 
 **ReactiveX 2.x**
+- **RxJava/Android** - Composing asynchronous and event-based programs by using observable sequences.
 
--- RxJava/Android
-- Composing asynchronous and event-based programs by using observable sequences.
-
--- RxNetwork
-- Listening **network connection state** and **Internet connectivity** with approach to **RxJava Observables.**
-
-**Retrofit2**  
-- The baseApplication get the content by http request using OkHttp3.  
- - Parse the response via JsonDeserializer.  
- - Create data objects via Gson.  
- - Allow to debug the response via Logging-interceptor (okhttp).  
-  
-**Glide** 
-- For loading and caching images.  
-  
-**RecyclerView**  
-- Display the country data as list in effectively.  
-
-**Leak Canary** - memory leaks detection.
-
-**Google Maps**
-**PieView**
-**SwipeRefreshLayout**
-**HTTP Interceptor**
-**Animated Bottombar**
+- **RxNetwork** - observes **network connection state** and **internet connectivity** with approach to **RxJava Observables.**
 
 
-## Network Repository API
-
+## Data Sources - REST API
+**COVID API NOVEL** - [https://corona.lmao.ninja/ ](https://corona.lmao.ninja/)
+**Twitter-API** - [https://developer.twitter.com/en/docs](https://developer.twitter.com/en/docs) 
+**DiseaseSh**- [https://corona.lmao.ninja/](https://corona.lmao.ninja/)
+**Johns Hopkins CSSE**-  [(https://github.com/CSSEGISandData/COVID-19](https://github.com/CSSEGISandData/COVID-19)
+**PH DATASETS/DOH** 
+- Katerinahronik
+-- [https://apify.com/katerinahronik/covid-philippines](https://apify.com/katerinahronik/covid-philippines) from [https://ncovtracker.doh.gov.ph/](https://ncovtracker.doh.gov.ph/).
+--[https://github.com/sorxrob/coronavirus-ph-api](https://github.com/sorxrob/coronavirus-ph-api)
+**COVID19 API**-  [https://covid19api.com/](https://covid19api.com/)
+**European Centre for Disease Prevention and Control (ECDC)** - [(https://www.ecdc.europa.eu/en](https://www.ecdc.europa.eu/en) - Twitter and YouTube API feeds for ECDC, and their RSS feeds for pulling information. 
 
 ## Author
 
