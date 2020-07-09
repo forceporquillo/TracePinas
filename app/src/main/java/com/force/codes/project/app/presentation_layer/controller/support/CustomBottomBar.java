@@ -18,6 +18,8 @@ import com.force.codes.project.app.presentation_layer.controller.custom.interfac
 import com.force.codes.project.app.presentation_layer.controller.custom.model.BottomItem;
 import com.force.codes.project.app.presentation_layer.views.adapters.BottomBarAdapter;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -25,7 +27,7 @@ public class CustomBottomBar{
     private final static int ITEM_LIMIT = 5;
     private Context context;
     private RecyclerView recyclerView;
-    private ArrayList <BottomItem> bottomItems;
+    private ArrayList<BottomItem> bottomItems;
     private BottomItemListener bottomItemListener;
 
     public CustomBottomBar(
@@ -37,18 +39,17 @@ public class CustomBottomBar{
         this.bottomItemListener = bottomItemListener;
     }
 
-    private void setType(View view){
+    private void setType(@NotNull View view){
         recyclerView = view.findViewById(R.id.bottom_bar_recyclerview);
-        bottomItems = new ArrayList <>();
+        bottomItems = new ArrayList<>();
     }
 
     public void addBottomItem(final BottomItem[] item){
-        if(bottomItems.size() != ITEM_LIMIT){
+        if(bottomItems.size() != ITEM_LIMIT)
             bottomItems.addAll(Arrays.asList(item));
-        }
     }
 
-    private void setBottomAdapter(int selected){
+    final void setBottomAdapter(int selected){
         BottomBarAdapter bottomBarAdapter = new BottomBarAdapter(
                 selected, bottomItems, calculateWidth(), bottomItemListener);
         recyclerView.setLayoutManager(new LinearLayoutManager(
@@ -62,8 +63,8 @@ public class CustomBottomBar{
     }
 
     final int calculateWidth(){
-        int count = bottomItems.size() + 1;
-        int width = context.getResources().getDisplayMetrics().widthPixels;
-        return width / count;
+        return context.getResources()
+                .getDisplayMetrics()
+                .widthPixels / (bottomItems.size() + 1);
     }
 }

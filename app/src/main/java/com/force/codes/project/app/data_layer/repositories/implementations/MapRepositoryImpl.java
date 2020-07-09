@@ -9,7 +9,7 @@ package com.force.codes.project.app.data_layer.repositories.implementations;
 
 import com.force.codes.project.app.app.constants.ApiConstants;
 import com.force.codes.project.app.data_layer.model.GlobalData;
-import com.force.codes.project.app.data_layer.model.LocalListData;
+import com.force.codes.project.app.data_layer.model.LocalData;
 import com.force.codes.project.app.data_layer.repositories.interfaces.MapRepository;
 import com.force.codes.project.app.data_layer.resources.api.ApiService;
 import com.force.codes.project.app.data_layer.resources.database.MapDao;
@@ -34,7 +34,7 @@ public class MapRepositoryImpl implements MapRepository{
     }
 
     @Override
-    public Flowable <LocalListData> getAllPHData(){
+    public Flowable<LocalData> getAllPHData(){
         return Flowable.mergeDelayError(serviceAdapter
                 .getPhData(ApiConstants.LOCAL_URL)
                 .doOnNext(mapDao::savePhData)
@@ -43,7 +43,7 @@ public class MapRepositoryImpl implements MapRepository{
     }
 
     @Override
-    public Flowable <List <GlobalData>> getAllGlobalData(){
+    public Flowable<List<GlobalData>> getAllGlobalData(){
         return Flowable.mergeDelayError(serviceAdapter
                 .getGlobalData(ApiConstants.GLOBAL_CASE)
                 .doOnNext(mapDao::saveGlobalData)

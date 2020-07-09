@@ -56,6 +56,10 @@ public class FragmentContainerActivity extends BaseActivity implements BottomIte
     private FragmentManager fragmentManager;
     private Fragment fragment = null;
 
+
+    @BindView(R.id.bottom_bar)
+    View view;
+
     public FragmentContainerActivity(){
 
     }
@@ -74,9 +78,6 @@ public class FragmentContainerActivity extends BaseActivity implements BottomIte
             outState.putInt(LAST_NAV_INDEX, lastNavIndex);
         }
     }
-
-    @BindView(R.id.bottom_bar)
-    View view;
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override

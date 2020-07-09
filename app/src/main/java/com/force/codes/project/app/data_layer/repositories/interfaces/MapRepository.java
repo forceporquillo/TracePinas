@@ -8,14 +8,14 @@
 package com.force.codes.project.app.data_layer.repositories.interfaces;
 
 import com.force.codes.project.app.data_layer.model.GlobalData;
-import com.force.codes.project.app.data_layer.model.LocalListData;
+import com.force.codes.project.app.data_layer.model.LocalData;
 
 import java.util.List;
 
 import io.reactivex.Flowable;
 
 public interface MapRepository{
-    Flowable <LocalListData> getAllPHData();
+    Flowable <LocalData> getAllPHData();
 
     Flowable <List <GlobalData>> getAllGlobalData();
 }

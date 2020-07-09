@@ -27,7 +27,12 @@ public class BottomBarAdapter extends RecyclerView.Adapter <BottomBarViewHolder>
     private int selected;
     private BottomItemListener bottomItemListener;
 
-    public BottomBarAdapter(int selected, ArrayList <BottomItem> bottomItems, int itemWidth, BottomItemListener bottomItemListener){
+    public BottomBarAdapter(
+            int selected,
+            ArrayList <BottomItem> bottomItems,
+            int itemWidth,
+            BottomItemListener bottomItemListener)
+    {
         this.selected = selected;
         this.bottomItems = bottomItems;
         this.itemWidth = itemWidth;
@@ -48,17 +53,13 @@ public class BottomBarAdapter extends RecyclerView.Adapter <BottomBarViewHolder>
 
         if(bottomItem != null){
             holder.resizeItemWidth(itemWidth);
-
             holder.setIcon(bottomItem.getItemIconId());
-
             holder.selectedStyle(selected,
                     bottomItem.getItemId(),
                     bottomItem.getItemIconId(),
                     bottomItem.getItemFillIconId()
             );
-
             holder.setItemTitle(bottomItem.getItemTitle());
-
             setOnClickItem(holder,
                     bottomItem.getItemId(),
                     bottomItem.getItemIconId(),
@@ -69,7 +70,7 @@ public class BottomBarAdapter extends RecyclerView.Adapter <BottomBarViewHolder>
 
     @Override
     public int getItemCount(){
-        return bottomItems.size();
+        return !bottomItems.isEmpty() ? bottomItems.size() : 0;
     }
 
     private void setOnClickItem(BottomBarViewHolder holder, final int itemId, final int itemDefIcon, final int itemFillIcon){

@@ -12,31 +12,31 @@ import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 import androidx.room.TypeConverters;
 
-import com.force.codes.project.app.data_layer.TypeConverter.StringToObjectList;
+import com.force.codes.project.app.data_layer.TypeConverter.LocalDataConverter;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
 @Entity
-public class LocalListData{
-    @TypeConverters(StringToObjectList.class)
+public class LocalData{
+    @TypeConverters(LocalDataConverter.class)
     @SerializedName("data")
-    private List <PHDataSet> data;
+    private List<PHDataSet> data;
     @NonNull
     @PrimaryKey
     @SerializedName("success")
     private boolean success;
 
-    public LocalListData(List <PHDataSet> data, boolean success){
+    public LocalData(List<PHDataSet> data, boolean success){
         this.data = data;
         this.success = success;
     }
 
-    public List <PHDataSet> getData(){
+    public List<PHDataSet> getData(){
         return data;
     }
 
-    public void setData(List <PHDataSet> data){
+    public void setData(List<PHDataSet> data){
         this.data = data;
     }
 

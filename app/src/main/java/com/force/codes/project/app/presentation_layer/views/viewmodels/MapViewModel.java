@@ -18,7 +18,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.force.codes.project.app.data_layer.model.GlobalData;
-import com.force.codes.project.app.data_layer.model.LocalListData;
+import com.force.codes.project.app.data_layer.model.LocalData;
 import com.force.codes.project.app.data_layer.repositories.interfaces.MapRepository;
 
 import java.util.List;
@@ -31,7 +31,7 @@ import timber.log.Timber;
 
 public class MapViewModel extends BaseViewModel{
     private MapRepository mapRepository;
-    private MutableLiveData <LocalListData> mutablePhData = new MutableLiveData <>();
+    private MutableLiveData <LocalData> mutablePhData = new MutableLiveData <>();
     private MutableLiveData <List <GlobalData>> mutableGlobalData = new MutableLiveData <>();
 
     @Inject
@@ -48,7 +48,7 @@ public class MapViewModel extends BaseViewModel{
         addToUnsubscribed(disposable);
     }
 
-    public LiveData <LocalListData> getMutablePhData(){
+    public LiveData <LocalData> getMutablePhData(){
         return mutablePhData;
     }
 

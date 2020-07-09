@@ -23,17 +23,10 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
-import androidx.viewpager.widget.ViewPager;
 
 import com.force.codes.project.app.R;
-import com.force.codes.project.app.presentation_layer.views.fragments.tablayout.Fragment1;
-import com.force.codes.project.app.presentation_layer.views.fragments.tablayout.Fragment2;
-import com.force.codes.project.app.presentation_layer.views.fragments.tablayout.Fragment3;
-import com.ogaclejapan.smarttablayout.SmartTabLayout;
 import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItemAdapter;
-import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItems;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -113,5 +106,11 @@ public class StatisticsFragment extends BaseFragment{
         super.onViewCreated(view, savedInstanceState);
 //        viewPager.setAdapter(adapter);
 //        smartTabLayout.setViewPager(viewPager);
+    }
+
+    @Override
+    public void onDestroyView(){
+        super.onDestroyView();
+        shareButton = null;
     }
 }
