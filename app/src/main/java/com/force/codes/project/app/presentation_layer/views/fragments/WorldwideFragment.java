@@ -43,7 +43,7 @@ import butterknife.Unbinder;
 import dagger.android.support.DaggerFragment;
 import timber.log.Timber;
 
-public class WorldwideFragment extends DaggerFragment implements FragmentCallback, View.OnClickListener, ConnectionCallback, OnRequestResponse{
+public class WorldwideFragment extends BaseFragment implements FragmentCallback, View.OnClickListener, ConnectionCallback, OnRequestResponse{
 
     @BindView(R.id.swipe_fresh)
     SwipeRefreshLayout refreshLayout;
@@ -105,9 +105,8 @@ public class WorldwideFragment extends DaggerFragment implements FragmentCallbac
 
         connectivity = new NetworkConnectivity(this);
         countryAdapter = new CountryAdapter(this);
-
         viewModel = new ViewModelProvider(this, factory).get(WorldwideViewModel.class);
-        viewModel.getDataFromDatabase();
+        viewModel.getDataFromNetwork();
     }
 
     @Override
@@ -190,7 +189,7 @@ public class WorldwideFragment extends DaggerFragment implements FragmentCallbac
 
     @Override
     public void onClick(View v){
-        Fragment fragment = HelpCenterFragment.newInstance();
+        //Fragment fragment = HelpCenterFragment.newInstance();
         //super.setDelegateFragment(fragment).commit();
     }
 
