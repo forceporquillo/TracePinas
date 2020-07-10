@@ -68,5 +68,4 @@ public class AppExecutors{
             mainThreadHandler.postDelayed(runnable, i);
         }
     }
-
 }
