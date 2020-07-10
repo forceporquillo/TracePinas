@@ -13,10 +13,12 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.paging.PagedList;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.force.codes.project.app.R;
+import com.force.codes.project.app.data_layer.model.NewsData;
 import com.force.codes.project.app.data_layer.testmodel.Group;
 import com.force.codes.project.app.data_layer.testmodel.Models;
 import com.force.codes.project.app.presentation_layer.controller.custom.interfaces.NewsItemCallback;
@@ -28,20 +30,19 @@ import java.util.ArrayList;
 public class NewsGroupAdapter extends RecyclerView.Adapter<NewsGroupViewHolder>{
     private ArrayList<Group> groups;
     private ArrayList<Models> latestList;
-    private ArrayList<Models> hotList;
     private Context context;
     private NewsItemCallback callback;
+    private HotNewsAdapter adapter;
 
     public NewsGroupAdapter(
             ArrayList<Group> groups,
             ArrayList<Models> latest,
-            ArrayList<Models> hot,
-            NewsItemCallback callback
-    ){
+            NewsItemCallback callback,
+            HotNewsAdapter adapter){
         this.groups = groups;
         this.latestList = latest;
-        this.hotList = hot;
         this.callback = callback;
+        this.adapter = adapter;
     }
 
     @NonNull
@@ -91,9 +92,8 @@ public class NewsGroupAdapter extends RecyclerView.Adapter<NewsGroupViewHolder>{
 
 
     final void setHotNewsList(RecyclerView recyclerView){
-        HotNewsAdapter hotNewsAdapter = new HotNewsAdapter(hotList, callback);
         recyclerView.setLayoutManager(new LinearLayoutManager(context));
-        recyclerView.setAdapter(hotNewsAdapter);
+        recyclerView.setAdapter(adapter);
         recyclerView.addItemDecoration(decoration(recyclerView.getContext()));
         recyclerView.setNestedScrollingEnabled(true);
     }
