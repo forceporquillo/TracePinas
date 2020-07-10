@@ -33,7 +33,7 @@ import javax.inject.Inject;
 import dagger.android.support.DaggerFragment;
 import timber.log.Timber;
 
-public class LiveDataFragment extends DaggerFragment{
+public class LiveDataFragment extends BaseFragment{
 
     protected FragmentLiveDataBinding binding;
 

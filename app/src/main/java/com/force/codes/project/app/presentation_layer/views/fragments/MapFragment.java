@@ -67,7 +67,7 @@ import butterknife.Unbinder;
 import dagger.android.support.DaggerFragment;
 import timber.log.Timber;
 
-public class MapFragment extends DaggerFragment implements
+public class MapFragment extends BaseFragment implements
         GoogleMap.OnMyLocationButtonClickListener,
         OnMapReadyCallback,
         ActivityCompat.OnRequestPermissionsResultCallback{
