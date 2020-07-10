@@ -62,6 +62,7 @@ public class HotNewsViewHolder extends RecyclerView.ViewHolder implements View.O
                 .load(url)
                 .placeholder(R.drawable.progress_loading)
                 .centerCrop()
+                .error(R.drawable.ic_warning)
                 .into(imageView);
     }
 
