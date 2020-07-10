@@ -26,10 +26,10 @@ public interface MapDao{
     void savePhData(LocalData LocalData);
 
     @Query(DatabaseConstants.QUERY_ALL_PH_DATA)
-    Flowable <LocalData> getPHDataFromDB();
+    Flowable<LocalData>getPHDataFromDB();
 
     @Query(DatabaseConstants.QUERY_ALL_GLOBAL_DATA)
-    Flowable <List <GlobalData>> getGlobalDataFromDB();
+    Flowable<List<GlobalData>> getGlobalDataFromDB();
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void saveGlobalData(List <GlobalData> globalData);

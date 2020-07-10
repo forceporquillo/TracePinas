@@ -20,12 +20,9 @@ import java.util.List;
 public class LocalDataConverter{
     @TypeConverter
     public static List<PHDataSet> stringToObjectList(String value){
-        if(value == null){
+        if(value == null)
             return Collections.emptyList();
-        }
-
         Type listType = new TypeToken<List<PHDataSet>>(){}.getType();
-
         return new Gson().fromJson(value, listType);
     }
 

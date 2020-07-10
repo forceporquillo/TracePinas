@@ -10,7 +10,6 @@ package com.force.codes.project.app.data_layer.TypeConverter;
 import androidx.room.TypeConverter;
 
 import com.force.codes.project.app.data_layer.model.ArticlesItem;
-import com.force.codes.project.app.data_layer.model.NewsData;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -19,18 +18,15 @@ import java.util.Collections;
 import java.util.List;
 
 public class ArticleItemsConverter{
-    // converts string objects to list objects
     @TypeConverter
     public static List<ArticlesItem> stringToObjectList(String value){
-        if(value == null){
+        if(value == null)
             return Collections.emptyList();
-        }
-
-        Type listType = new TypeToken<List<NewsData>>(){}.getType();
-
+        Type listType = new TypeToken<List<ArticlesItem>>(){
+        }.getType();
         return new Gson().fromJson(value, listType);
     }
-    // reverse
+
     @TypeConverter
     public static String objectListToString(List<ArticlesItem> objects){
         return new Gson().toJson(objects);

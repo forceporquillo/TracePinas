@@ -8,9 +8,6 @@
 package com.force.codes.project.app.data_layer.testmodel;
 
 import androidx.databinding.BaseObservable;
-import androidx.databinding.library.baseAdapters.BR;
-
-import java.util.Observable;
 
 public class Models extends BaseObservable{
     private String title;

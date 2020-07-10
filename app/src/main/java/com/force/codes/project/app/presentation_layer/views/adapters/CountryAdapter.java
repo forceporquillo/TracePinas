@@ -23,10 +23,11 @@ import com.force.codes.project.app.presentation_layer.views.viewholders.CountryV
 
 import org.jetbrains.annotations.NotNull;
 
-public class CountryAdapter extends PagedListAdapter <CountryDetails, CountryViewHolder>{
+public class CountryAdapter extends PagedListAdapter<CountryDetails, CountryViewHolder>{
     private static final int HEADER_TOP = 0;
-    private static DiffUtil.ItemCallback <CountryDetails> DIFF_CALLBACK = new DiffUtil
-            .ItemCallback <CountryDetails>(){
+
+    private static DiffUtil.ItemCallback<CountryDetails> DIFF_CALLBACK = new DiffUtil
+            .ItemCallback<CountryDetails>(){
         @Override
         public boolean areItemsTheSame(
                 @NonNull CountryDetails oldItem, @NonNull CountryDetails newItem){
