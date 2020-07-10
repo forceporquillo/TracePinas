@@ -20,6 +20,7 @@ import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
 import com.force.codes.project.app.R;
+import com.force.codes.project.app.data_layer.model.ArticlesItem;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -63,11 +64,11 @@ public class ReadNewsFragment extends Fragment{
 
     private Unbinder unbinder;
 
-    public static ReadNewsFragment newInstance(String param1, String param2){
+    public static ReadNewsFragment newInstance(ArticlesItem item){
         ReadNewsFragment fragment = new ReadNewsFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
+        //args.putString(ARG_PARAM1, param1);
+       // args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
     }
