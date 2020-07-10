@@ -12,6 +12,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.force.codes.project.app.presentation_layer.views.viewmodels.LiveDataViewModel;
 import com.force.codes.project.app.presentation_layer.views.viewmodels.MapViewModel;
+import com.force.codes.project.app.presentation_layer.views.viewmodels.NewsViewModel;
 import com.force.codes.project.app.presentation_layer.views.viewmodels.WorldwideViewModel;
 import com.force.codes.project.app.presentation_layer.views.viewmodels.factory.ViewModelProviderFactory;
 
@@ -38,4 +39,9 @@ public abstract class ViewModelModule{
     @IntoMap
     @ViewModelKey(MapViewModel.class)
     abstract ViewModel providesMapViewModel(MapViewModel mapViewModel);
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(NewsViewModel.class)
+    abstract ViewModel providesNewsViewModel(NewsViewModel newsViewModel);
 }

@@ -15,7 +15,7 @@ import androidx.room.RoomDatabase;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
 import com.force.codes.project.app.data_layer.resources.database.AppDatabase;
-import com.force.codes.project.app.data_layer.resources.database.CountryDao;
+import com.force.codes.project.app.data_layer.resources.database.WorldwideDao;
 import com.force.codes.project.app.data_layer.resources.database.LiveDataDao;
 import com.force.codes.project.app.data_layer.resources.database.MapDao;
 import com.force.codes.project.app.data_layer.resources.database.NewsDao;
@@ -29,41 +29,40 @@ import dagger.Provides;
 public class DatabaseModule{
     static RoomDatabase.Callback roomCallback = new RoomDatabase.Callback(){
         @Override
-        public void onCreate(@NonNull SupportSQLiteDatabase sqLiteDatabase){
-            super.onCreate(sqLiteDatabase);
+        public void onCreate(@NonNull SupportSQLiteDatabase db){
+            super.onCreate(db);
         }
     };
 
     @Singleton
     @Provides
     static AppDatabase providesLocalDatabase(Application application){
-        return Room.databaseBuilder(application, AppDatabase.class, "Covid19_Data.db")
-                .fallbackToDestructiveMigration()
-                .addCallback(roomCallback)
-                .build();
+        return Room.databaseBuilder(application, AppDatabase.class,
+                "Covid19_Data.db").fallbackToDestructiveMigration()
+                .addCallback(roomCallback).build();
     }
 
     @Singleton
     @Provides
-    static MapDao provideMapAccess(AppDatabase database){
+    static MapDao provideMapDao(AppDatabase database){
         return database.mapDao();
     }
 
     @Singleton
     @Provides
-    static CountryDao provideCountryAccess(AppDatabase database){
-        return database.countryDao();
+    static WorldwideDao provideWorldwideDao(AppDatabase database){
+        return database.worldwideDao();
     }
 
     @Singleton
     @Provides
-    static LiveDataDao provideLiveDataAccess(AppDatabase database){
+    static LiveDataDao provideLiveDataDao(AppDatabase database){
         return database.liveDataDao();
     }
 
     @Singleton
     @Provides
-    static NewsDao provideNewsAccess(AppDatabase database){
+    static NewsDao provideNewsDao(AppDatabase database){
         return database.newsDao();
     }
 }
