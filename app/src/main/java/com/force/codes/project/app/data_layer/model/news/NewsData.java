@@ -1,4 +1,11 @@
-package com.force.codes.project.app.data_layer.model;
+/*
+ * Created by Force Porquillo on 7/11/20 1:56 AM
+ * FEU Institute of Technology
+ * Copyright (c) 2020.  All rights reserved.
+ * Last modified 7/10/20 8:08 PM
+ */
+
+package com.force.codes.project.app.data_layer.model.news;
 
 import androidx.room.PrimaryKey;
 

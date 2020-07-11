@@ -5,7 +5,7 @@
  * Last modified 6/25/20 3:37 PM
  */
 
-package com.force.codes.project.app.data_layer.model;
+package com.force.codes.project.app.data_layer.model.map_data;
 
 import androidx.annotation.Nullable;
 import androidx.room.Entity;
