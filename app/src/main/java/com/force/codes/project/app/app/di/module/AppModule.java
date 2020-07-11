@@ -11,8 +11,9 @@ import android.app.Application;
 
 import androidx.lifecycle.MutableLiveData;
 
-import com.force.codes.project.app.data_layer.model.NewsData;
-import com.force.codes.project.app.data_layer.model.WorldData;
+import com.force.codes.project.app.data_layer.model.news.NewsData;
+import com.force.codes.project.app.data_layer.model.map_data.WorldData;
+import com.force.codes.project.app.data_layer.model.twitter.TwitterResponse;
 import com.force.codes.project.app.service.executors.AppExecutors;
 import com.google.android.gms.maps.model.Marker;
 
@@ -69,8 +70,8 @@ public class AppModule{
     }
 
     @Provides
-    @Named("NewsVM")
-    static MutableLiveData<NewsData> providesMutableLiveData(){
+    @Named("TwitterVM")
+    static MutableLiveData<List<TwitterResponse>> providesMutableLiveData(){
         return new MutableLiveData<>();
     }
 }

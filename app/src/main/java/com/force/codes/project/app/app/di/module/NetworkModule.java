@@ -17,25 +17,35 @@ import javax.inject.Singleton;
 import dagger.Module;
 import dagger.Provides;
 import okhttp3.OkHttpClient;
+import okhttp3.Request;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+import static com.force.codes.project.app.app.constants.ApiConstants.TWITTER_BEARER_TOKEN;
+import static com.force.codes.project.app.app.constants.NetworkConstants.TIMEOUT_MILLIS;
+
 @Module
 public class NetworkModule{
-    private static final int TIMEOUT_MILLIS = 1000;
 
     @Singleton
     static OkHttpClient providesOkHttpClient = new OkHttpClient.Builder()
             .connectTimeout(TIMEOUT_MILLIS, TimeUnit.MILLISECONDS)
             .readTimeout(TIMEOUT_MILLIS, TimeUnit.MILLISECONDS)
             .writeTimeout(TIMEOUT_MILLIS, TimeUnit.MILLISECONDS)
-            .addInterceptor(providesInterceptor())
-            .build();
+            .addInterceptor(providesLoggingInterceptor())
+            .addInterceptor(chain -> {
+                // authenticates to twitter API with read/write access using Oauth2.
+                Request makeRequest = chain.request().newBuilder()
+                        .addHeader("Authorization",
+                                "Bearer " + TWITTER_BEARER_TOKEN)
+                        .build();
+                return chain.proceed(makeRequest);
+            }).build();
 
     @Provides
-    static HttpLoggingInterceptor providesInterceptor(){
+    static HttpLoggingInterceptor providesLoggingInterceptor(){
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
         interceptor.level(HttpLoggingInterceptor.Level.HEADERS);
         return interceptor;
