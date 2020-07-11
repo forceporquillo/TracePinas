@@ -14,7 +14,7 @@ package com.force.codes.project.app.data_layer.repositories.interfaces;
  *
  */
 
-import com.force.codes.project.app.data_layer.model.WorldData;
+import com.force.codes.project.app.data_layer.model.map_data.WorldData;
 
 import io.reactivex.Flowable;
 

@@ -19,7 +19,6 @@ import androidx.paging.PagedList;
 import com.force.codes.project.app.app.constants.PageListConstants;
 import com.force.codes.project.app.data_layer.model.CountryDetails;
 import com.force.codes.project.app.data_layer.repositories.interfaces.WorldwideRepository;
-import com.force.codes.project.app.presentation_layer.controller.custom.interfaces.OnRequestResponse;
 
 import javax.inject.Inject;
 
@@ -42,7 +41,7 @@ public class WorldwideViewModel extends BaseViewModel{
         this.repository = repository;
     }
 
-    public LiveData <PagedList <CountryDetails>> getDataFromDatabase(){
+    public LiveData<PagedList<CountryDetails>> getDataFromDatabase(){
         if(listLiveData == null){
             return listLiveData = repository.getDataFromDatabase(config);
         }

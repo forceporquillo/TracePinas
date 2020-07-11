@@ -9,30 +9,18 @@ package com.force.codes.project.app.presentation_layer.views.viewholders;
 
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.databinding.BindingAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestOptions;
-import com.force.codes.project.app.BR;
 import com.force.codes.project.app.R;
-import com.force.codes.project.app.data_layer.model.ArticlesItem;
-import com.force.codes.project.app.data_layer.model.NewsData;
-import com.force.codes.project.app.data_layer.testmodel.Models;
-import com.force.codes.project.app.databinding.HeaderNewsLayoutBinding;
+import com.force.codes.project.app.data_layer.model.news.ArticlesItem;
 import com.force.codes.project.app.databinding.HotNewsLayoutBinding;
 import com.force.codes.project.app.presentation_layer.controller.custom.interfaces.NewsItemCallback;
 
 import org.jetbrains.annotations.NotNull;
-
-import java.util.List;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import timber.log.Timber;
 
 public class HotNewsViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
@@ -51,7 +39,7 @@ public class HotNewsViewHolder extends RecyclerView.ViewHolder implements View.O
 
     public void bindTo(ArticlesItem articlesItem){
        binding.setArticleItem(articlesItem);
-       binding.setVariable(BR.articleItem, articlesItem);
+       //binding.setVariable(BR.articleItem, articlesItem);
        binding.executePendingBindings();
     }
 

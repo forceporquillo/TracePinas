@@ -14,7 +14,7 @@ import androidx.room.Query;
 
 import com.force.codes.project.app.app.constants.DatabaseConstants;
 import com.force.codes.project.app.data_layer.model.GlobalData;
-import com.force.codes.project.app.data_layer.model.LocalData;
+import com.force.codes.project.app.data_layer.model.map_data.LocalData;
 
 import java.util.List;
 

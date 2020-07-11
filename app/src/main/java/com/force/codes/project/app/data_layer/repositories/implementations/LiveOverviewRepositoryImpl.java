@@ -8,7 +8,7 @@
 package com.force.codes.project.app.data_layer.repositories.implementations;
 
 import com.force.codes.project.app.app.constants.ApiConstants;
-import com.force.codes.project.app.data_layer.model.WorldData;
+import com.force.codes.project.app.data_layer.model.map_data.WorldData;
 import com.force.codes.project.app.data_layer.repositories.interfaces.LiveOverviewRepository;
 import com.force.codes.project.app.data_layer.resources.api.ApiService;
 

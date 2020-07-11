@@ -9,7 +9,7 @@ package com.force.codes.project.app.data_layer.TypeConverter;
 
 import androidx.room.TypeConverter;
 
-import com.force.codes.project.app.data_layer.model.PHDataSet;
+import com.force.codes.project.app.data_layer.model.map_data.PHDataSet;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 

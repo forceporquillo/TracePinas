@@ -20,7 +20,7 @@ import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
 import com.force.codes.project.app.R;
-import com.force.codes.project.app.data_layer.model.ArticlesItem;
+import com.force.codes.project.app.data_layer.model.news.ArticlesItem;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
