@@ -7,6 +7,7 @@
 
 package com.force.codes.project.app.data_layer.model.twitter;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.room.Embedded;
 import androidx.room.Entity;
@@ -16,10 +17,11 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 @Entity
-public class TwitterResponse {
+public class TwitterData{
     @PrimaryKey
     @SerializedName("id_str")
     @Expose
+    @NonNull
     private String id;
 
     @SerializedName("created_at")
@@ -36,6 +38,11 @@ public class TwitterResponse {
     @Nullable
     private Entities entities;
 
+    @Embedded
+    @Expose
+    @SerializedName("user")
+    private User user;
+
     @SerializedName("retweet_count")
     @Expose
     private int retweetCount;
@@ -50,6 +57,14 @@ public class TwitterResponse {
 
     public void setCreatedAt(String createdAt) {
         this.createdAt = createdAt;
+    }
+
+    public void setUser(User user){
+        this.user = user;
+    }
+
+    public User getUser(){
+        return user;
     }
 
     public String getId() {

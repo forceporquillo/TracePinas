@@ -16,8 +16,9 @@ package com.force.codes.project.app.app.constants;
 
 public class DatabaseConstants{
     public static final String QUERY_ALL_DATA = "SELECT * FROM CountryDetails";
-    public static final String QUERY_ALL_PH_DATA = "SELECT * FROM LocalListData";
+    public static final String QUERY_ALL_PH_DATA = "SELECT * FROM LocalData";
     public static final String QUERY_ALL_GLOBAL_DATA = "SELECT * FROM GlobalData";
-    public static final String QUERY_NEWS_DATA = "SELECT * FROM NewsResponse";
-    public static final int DATABASE_VERSION = 2;
+    public static final String QUERY_NEWS_DATA = "SELECT * FROM ArticlesItem LIMIT 100";
+    public static final int DATABASE_VERSION = 23;
+    public static final String QUERY_TWITTER_DATA = "SELECT * FROM TwitterData";
 }

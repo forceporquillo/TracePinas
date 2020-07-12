@@ -13,24 +13,26 @@ import androidx.room.TypeConverters;
 
 import com.force.codes.project.app.app.constants.DatabaseConstants;
 import com.force.codes.project.app.data_layer.TypeConverter.LocalDataConverter;
-import com.force.codes.project.app.data_layer.TypeConverter.SourceConverter;
-import com.force.codes.project.app.data_layer.model.ArticlesItem;
+import com.force.codes.project.app.data_layer.TypeConverter.TwitterMediaConverter;
+import com.force.codes.project.app.data_layer.model.news.ArticlesItem;
 import com.force.codes.project.app.data_layer.model.CountryDetails;
 import com.force.codes.project.app.data_layer.model.GlobalData;
-import com.force.codes.project.app.data_layer.model.LocalData;
+import com.force.codes.project.app.data_layer.model.map_data.LocalData;
+import com.force.codes.project.app.data_layer.model.twitter.TwitterData;
 
 @Database(
         entities = {
                 CountryDetails.class,
                 LocalData.class,
                 GlobalData.class,
-                ArticlesItem.class
+                ArticlesItem.class,
+                TwitterData.class
         }, version = DatabaseConstants.DATABASE_VERSION,
         exportSchema = false
 )
 @TypeConverters({
         LocalDataConverter.class,
-        SourceConverter.class
+        TwitterMediaConverter.class
 })
 public abstract class AppDatabase extends RoomDatabase{
     public abstract MapDao mapDao();
