@@ -13,8 +13,9 @@ import androidx.paging.LivePagedListBuilder;
 import androidx.paging.PagedList;
 
 import com.force.codes.project.app.app.constants.ApiConstants;
-import com.force.codes.project.app.data_layer.model.ArticlesItem;
-import com.force.codes.project.app.data_layer.model.NewsData;
+import com.force.codes.project.app.data_layer.model.news.ArticlesItem;
+import com.force.codes.project.app.data_layer.model.news.NewsData;
+import com.force.codes.project.app.data_layer.model.twitter.TwitterData;
 import com.force.codes.project.app.data_layer.repositories.interfaces.NewsRepository;
 import com.force.codes.project.app.data_layer.resources.api.ApiService;
 import com.force.codes.project.app.data_layer.resources.database.NewsDao;
@@ -43,21 +44,42 @@ public class NewsRepositoryImpl implements NewsRepository{
     }
 
     @Override
-    public Flowable<NewsData> getNewsResponse(){
+    public Flowable<NewsData> getNewsResponseFromServer(){
         return apiService.getNewsResponse(ApiConstants.NEWS_DATA);
     }
 
     @Override
     public LiveData<PagedList<ArticlesItem>>
-    getPageListFromDB(PagedList.Config config){
+    getPagedListArticle(PagedList.Config config){
         DataSource.Factory<Integer, ArticlesItem>
                 dataFactory = newsDao.getNewsDataFromDatabase();
-        return new LivePagedListBuilder<>(dataFactory, config).build();
+        return new LivePagedListBuilder<>(dataFactory, config)
+                .build();
     }
 
     @Override
     public void insertArticleData(List<ArticlesItem> items){
         executors.diskIO().execute(() ->
                 newsDao.insertOrUpdateArticleItems(items));
+    }
+
+    @Override
+    public Flowable<List<TwitterData>> getTwitterUser(String userTimeline){
+        return apiService.getTwitterResponse(new ApiConstants(userTimeline)
+                .getTwitterEndpoint());
+    }
+
+    @Override
+    public LiveData<PagedList<TwitterData>> getPagedListTwitter(PagedList.Config config){
+        DataSource.Factory<Integer, TwitterData>
+                dataFactory = newsDao.getTwitterDataFromDatabase();
+        return new LivePagedListBuilder<>(dataFactory, config)
+                .build();
+    }
+
+    @Override
+    public void insertTwitterData(List<TwitterData> twitterRespons){
+        executors.diskIO().execute(() ->
+                newsDao.insertOrUpdateTwitterItems(twitterRespons));
     }
 }
