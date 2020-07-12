@@ -18,10 +18,11 @@ import java.util.List;
 
 @Entity
 public class Entities{
-    @TypeConverters(TwitterMediaConverter.class)
+
     @SerializedName("media")
     @Expose
-    private List<TwitterMediaUrl> media = null;
+    @TypeConverters(TwitterMediaConverter.class)
+    private List<TwitterMediaUrl> media;
 
     public List<TwitterMediaUrl> getMedia(){
         return media;

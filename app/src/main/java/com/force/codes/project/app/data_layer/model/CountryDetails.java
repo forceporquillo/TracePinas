@@ -17,7 +17,6 @@ package com.force.codes.project.app.data_layer.model;
 import androidx.annotation.NonNull;
 import androidx.databinding.BaseObservable;
 import androidx.databinding.Bindable;
-import androidx.databinding.library.baseAdapters.BR;
 import androidx.room.ColumnInfo;
 import androidx.room.Embedded;
 import androidx.room.Entity;
@@ -92,6 +91,7 @@ public class CountryDetails extends BaseObservable{
     @Embedded
     private CountryInfo countryInfo;
 
+    @Bindable
     public CountryInfo getCountryInfo(){
         return countryInfo;
     }
@@ -107,8 +107,8 @@ public class CountryDetails extends BaseObservable{
     }
 
     public void setCountry(@NonNull String country){
-        notifyPropertyChanged(BR.country);
         this.country = country;
+       // notifyPropertyChanged(BR.country);
     }
 
     public int getTodayRecovered(){

@@ -5,7 +5,7 @@
  * Last modified 6/19/20 2:13 PM
  */
 
-package com.force.codes.project.app.data_layer.model;
+package com.force.codes.project.app.data_layer.model.map_data;
 
 /*
  * Created by Force Porquillo on 6/5/20 3:28 PM
