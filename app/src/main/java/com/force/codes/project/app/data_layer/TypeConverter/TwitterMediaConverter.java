@@ -14,20 +14,20 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
+import java.util.Collections;
 import java.util.List;
 
 public class TwitterMediaConverter{
     @TypeConverter
-    public static TwitterMediaUrl stringToObjectList(String value){
-        if(value == null)
-            return null;
-        Type listType = new TypeToken<List<TwitterMediaUrl>>(){
-        }.getType();
-        return new Gson().fromJson(value, listType);
+    public static List<TwitterMediaUrl> tweetStringToObjectList(String tweets){
+        if(tweets == null)
+            return Collections.emptyList();
+        Type tweetsListType = new TypeToken<List<TwitterMediaUrl>>(){}.getType();
+        return new Gson().fromJson(tweets, tweetsListType);
     }
 
     @TypeConverter
-    public static String objectListToString(TwitterMediaUrl objects){
+    public static String objToListStringTweets(List<TwitterMediaUrl> objects){
         return new Gson().toJson(objects);
     }
 }
