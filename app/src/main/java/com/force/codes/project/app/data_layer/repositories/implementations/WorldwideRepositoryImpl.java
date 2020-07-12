@@ -17,7 +17,7 @@ import com.force.codes.project.app.app.constants.ApiConstants;
 import com.force.codes.project.app.data_layer.model.CountryDetails;
 import com.force.codes.project.app.data_layer.repositories.interfaces.WorldwideRepository;
 import com.force.codes.project.app.data_layer.resources.api.ApiService;
-import com.force.codes.project.app.data_layer.resources.database.CountryDao;
+import com.force.codes.project.app.data_layer.resources.database.WorldwideDao;
 import com.force.codes.project.app.service.executors.AppExecutors;
 
 import java.util.List;
@@ -30,13 +30,17 @@ import io.reactivex.schedulers.Schedulers;
 
 @Singleton
 public class WorldwideRepositoryImpl implements WorldwideRepository{
-    private CountryDao countryDao;
+    private WorldwideDao worldwideDao;
     private ApiService serviceAdapter;
     private AppExecutors executors;
 
     @Inject
-    public WorldwideRepositoryImpl(CountryDao countryDao, ApiService adapter, AppExecutors executors){
-        this.countryDao = countryDao;
+    public WorldwideRepositoryImpl(
+            WorldwideDao worldwideDao,
+            ApiService adapter,
+            AppExecutors executors
+    ){
+        this.worldwideDao = worldwideDao;
         this.serviceAdapter = adapter;
         this.executors = executors;
     }
@@ -50,12 +54,12 @@ public class WorldwideRepositoryImpl implements WorldwideRepository{
     @Override
     public LiveData<PagedList<CountryDetails>> getDataFromDatabase(PagedList.Config config){
         DataSource.Factory<Integer, CountryDetails>
-                detailsFactory = countryDao.getDataFromDatabase();
+                detailsFactory = worldwideDao.getDataFromDatabase();
         return new LivePagedListBuilder<>(detailsFactory, config).build();
     }
 
     @Override
     public void saveDatabase(List<CountryDetails> detailsList){
-        executors.diskIO().execute(() -> countryDao.insertOrUpdate(detailsList));
+        executors.diskIO().execute(() -> worldwideDao.insertOrUpdate(detailsList));
     }
 }
