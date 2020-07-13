@@ -20,7 +20,6 @@ import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -28,7 +27,7 @@ import androidx.fragment.app.FragmentTransaction;
 import com.force.codes.project.app.R;
 import com.force.codes.project.app.presentation_layer.controller.custom.interfaces.BottomItemListener;
 import com.force.codes.project.app.presentation_layer.controller.custom.model.BottomItem;
-import com.force.codes.project.app.presentation_layer.controller.support.CustomBottomBar;
+import com.force.codes.project.app.presentation_layer.controller.support.BottomBar;
 import com.force.codes.project.app.presentation_layer.views.fragments.LiveDataFragment;
 import com.force.codes.project.app.presentation_layer.views.fragments.MapFragment;
 import com.force.codes.project.app.presentation_layer.views.fragments.NewsFragment;
@@ -39,7 +38,6 @@ import org.jetbrains.annotations.NotNull;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import timber.log.Timber;
 
 public class FragmentContainerActivity extends BaseActivity implements BottomItemListener{
     private static final String FRAGMENT_STATE = "save_fragment_state";
@@ -79,17 +77,16 @@ public class FragmentContainerActivity extends BaseActivity implements BottomIte
         }
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fragment_manager);
         ButterKnife.bind(this);
 
-        CustomBottomBar bottomBar = new CustomBottomBar(view, this, this);
+        BottomBar bottomBar = new BottomBar(view, this, this);
 
-        if(VERSION_CODE >= Build.VERSION_CODES.LOLLIPOP)
-            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+//        if(VERSION_CODE >= Build.VERSION_CODES.LOLLIPOP)
+//            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
 
         setPrimaryFragment(savedInstanceState);
 
@@ -111,7 +108,7 @@ public class FragmentContainerActivity extends BaseActivity implements BottomIte
         }
     }
 
-    final void setBottomBarItems(CustomBottomBar bottomBar, boolean isStateChanged, int saveSelected){
+    final void setBottomBarItems(BottomBar bottomBar, boolean isStateChanged, int saveSelected){
         final BottomItem[] bottomItems = new BottomItem[5];
         // region custom bottom navigation bar item instance
         bottomItems[0] = new BottomItem(STATISTICS, "Statistics", R.drawable.ic_outline_stats, R.drawable.ic_outline_colored_stats);
