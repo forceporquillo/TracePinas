@@ -14,33 +14,43 @@ package com.force.codes.project.app.presentation_layer.views.fragments;
  *
  */
 
+import android.app.ActivityOptions;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.LifecycleOwner;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.force.codes.project.app.R;
-import com.force.codes.project.app.data_layer.testmodel.Group;
-import com.force.codes.project.app.data_layer.testmodel.Models;
+import com.force.codes.project.app.data_layer.model.news.ArticlesItem;
+import com.force.codes.project.app.data_layer.model.twitter.TwitterData;
+import com.force.codes.project.app.presentation_layer.controller.custom.model.Group;
 import com.force.codes.project.app.presentation_layer.controller.custom.interfaces.NewsItemCallback;
+import com.force.codes.project.app.presentation_layer.views.adapters.HeaderNewsAdapter;
+import com.force.codes.project.app.presentation_layer.views.adapters.HotNewsAdapter;
 import com.force.codes.project.app.presentation_layer.views.adapters.NewsGroupAdapter;
+import com.force.codes.project.app.presentation_layer.views.viewmodels.NewsViewModel;
+import com.force.codes.project.app.presentation_layer.views.viewmodels.factory.ViewModelProviderFactory;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
-import dagger.android.support.DaggerFragment;
 import timber.log.Timber;
 
 /**
@@ -48,7 +58,7 @@ import timber.log.Timber;
  * Use the {@link NewsFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class NewsFragment extends DaggerFragment implements NewsItemCallback{
+public class NewsFragment extends BaseFragment implements NewsItemCallback{
     public NewsFragment(){
         // Required empty public constructor
     }
@@ -56,7 +66,14 @@ public class NewsFragment extends DaggerFragment implements NewsItemCallback{
     @BindView(R.id.news_recycler_view)
     RecyclerView recyclerView;
 
+    @Inject
+    ViewModelProviderFactory factory;
+    private List<ArticlesItem> articlesItemList;
+    private NewsViewModel newsViewModel;
+    private HotNewsAdapter hotNewsAdapter;
     private Unbinder unbinder;
+    private List<TwitterData> twitterDataList;
+    private HeaderNewsAdapter headerNewsAdapter;
 
     public static NewsFragment newInstance(){
         NewsFragment fragment = new NewsFragment();
@@ -69,8 +86,66 @@ public class NewsFragment extends DaggerFragment implements NewsItemCallback{
     @Override
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
+        hotNewsAdapter = new HotNewsAdapter(this);
+        headerNewsAdapter = new HeaderNewsAdapter(this);
+        newsViewModel = new ViewModelProvider(this, factory).get(NewsViewModel.class);
+        newsViewModel.forceUpdate();
+    }
 
-        Timber.d("onCreate");
+    @Override
+    public void onStart(){
+        super.onStart();
+        newsViewModel.pagedListLiveData().observe(this, newsList -> {
+            if(newsList != null && newsList.size() != 0){
+                hotNewsAdapter.setItemList(newsList);
+                articlesItemList = newsList;
+                hotNewsAdapter.notifyDataSetChanged();
+                return;
+            }
+            newsViewModel.getNewsData();
+        });
+
+        newsViewModel.pageListTwitterData().observe(this, twitterResponses -> {
+            if(twitterResponses != null){
+                headerNewsAdapter.submitList(twitterResponses);
+                headerNewsAdapter.notifyDataSetChanged();
+                twitterDataList = twitterResponses;
+                return;
+            }
+            newsViewModel.getTwitterUserTimeline();
+        });
+    }
+
+    // get callback item index position in hotNews adapter.
+    @Override
+    public void hotNewsItemListener(int position){
+        ArticlesItem articlesItem = articlesItemList.get(position);
+        super.setFragment(ReadNewsFragment.newInstance(articlesItem));
+    }
+
+    @Override
+    public void headerNewsItemListener(int position){
+        String url;
+
+        if(twitterDataList.get(position).getEntities().getMedia() != null)
+            url = twitterDataList.get(position).getEntities().getMedia().get(0).getExpandedUrl();
+        else url = "https://twitter.com/tito_4s";
+
+        assert getActivity() != null;
+        Intent intent;
+        try{
+            // get the Twitter app if possible
+            getActivity().getPackageManager().getPackageInfo("com.twitter.android", 0);
+            intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        }catch(Exception e){
+            // no Twitter app, revert to browser
+            intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+            Timber.e(e);
+        }
+
+        ActivityOptions activityOptions = ActivityOptions.makeCustomAnimation(getContext(),R.anim.push_in, R.anim.push_out);
+        getActivity().startActivity(intent, activityOptions.toBundle());
     }
 
     @Override
@@ -100,72 +175,22 @@ public class NewsFragment extends DaggerFragment implements NewsItemCallback{
     }
 
     private void setRecyclerView(){
-        NewsGroupAdapter groupAdapter = new NewsGroupAdapter(groups(), latestModels(), hotModels(), this);
+        NewsGroupAdapter groupAdapter = new NewsGroupAdapter(headerNewsAdapter, hotNewsAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(groupAdapter);
     }
 
     private static ArrayList<Group> groups(){
         ArrayList<Group> groups = new ArrayList<>();
-        groups.add(new Group("Latest News"));
+        groups.add(new Group("Recent Tweets"));
         groups.add(new Group("Hot News"));
         return groups;
     }
 
-    private static ArrayList<Models> latestModels(){
-        ArrayList<Models> latest = new ArrayList<>();
-
-        latest.add(new Models("SpaceX is about to make history by relaunching a used Falcon 9 rocket", "Tito 4S, July 6, 2020", "https://cdn.vox-cdn.com/thumbor/Oi8KWigEsEg5h5n7dgEDJ7QiRic=/0x0:3000x2000/920x613/filters:focal(1260x760:1740x1240):format(webp)/cdn.vox-cdn.com/uploads/chorus_image/image/53935213/25787998624_3ca213be1e_o.0.jpg"));
-        latest.add(new Models("SpaceX Crew Dragon spacecraft docking at the ISS", "Tito 4S, July 6, 2020", "https://timesofsandiego.com/wp-content/uploads/2019/03/Crew-Dragon.jpg"));
-        latest.add(new Models("Barring a surprise, SpaceX's Falcon Heavy", "Tito 4S, July 6, 2020", "https://cbsnews2.cbsistatic.com/hub/i/r/2018/02/04/29e49d64-a291-47b2-ad22-652ae6716ef9/thumbnail/620x398g2/ca4631d41fc14c8475f7ff3f1037ee1e/010918-heavy.jpg"));
-        latest.add(new Models("Bob and Doug: best friends on historic SpaceX-NASA mission", "Tito 4S, July 6, 2020", "https://media.gq.com/photos/5ecfe04091d7f9d7fa10db02/16:9/w_2560%2Cc_limit/SpaceX-Space-Suits-gq-may-2020--.jpg"));
-        latest.add(new Models("A Faulty Booster Might Have Sabotaged a Soyuz Rocket Launch", "Tito 4S, July 6, 2020", "https://media.wired.com/photos/5bbf72c46278de2d2123485b/master/w_2560%2Cc_limit/soyuz-1051882240.jpg"));
-        return latest;
-    }
-
-    private static ArrayList<Models> hotModels(){
-        ArrayList<Models> latest = new ArrayList<>();
-
-        for(int i = 0; i < 10; ++i){
-            latest.add(new Models(
-                    "SpaceX is about to make history by relaunching a used Falcon 9 rocket",
-                    "Cape Canaveral, FL. July 6, 2020",
-                    "https://cbsnews2.cbsistatic.com/hub/i/r/2018/02/04/29e49d64-a291-47b2-ad22-652ae6716ef9/thumbnail/620x398g2/ca4631d41fc14c8475f7ff3f1037ee1e/010918-heavy.jpg"));
-        }
-
-        return latest;
-    }
-
     @Override
-    public void headerNewsItemListener(int position){
-        Toast.makeText(getContext(), "header news item position: " + position, Toast.LENGTH_LONG).show();
-
-        String title = latestModels().get(position).getTitle();
-        String imgUrl = latestModels().get(position).getThumbnail();
-
-        System.out.println(title + "\n" + imgUrl);
-        setFragment(ReadNewsFragment.newInstance(title, imgUrl));
-    }
-
-    @Override
-    public void hotNewsItemListener(int position){
-        Toast.makeText(getContext(), "hot news item position: " + position, Toast.LENGTH_LONG).show();
-
-        String title = hotModels().get(position).getTitle();
-        String imgUrl = hotModels().get(position).getThumbnail();
-
-        System.out.println(title + "\n" + imgUrl);
-        setFragment(ReadNewsFragment.newInstance(title, imgUrl));
-    }
-
-    public void setFragment(Fragment fragment){
-        FragmentManager fragmentManager = getParentFragmentManager();
-        FragmentTransaction transaction = fragmentManager.beginTransaction();
-
-        transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,
-                R.anim.enter_from_left, R.anim.exit_to_right);
-        transaction.replace(R.id.fragment_container, fragment)
-                .addToBackStack(fragment.getTag())
-                .commit();
+    public void onDestroy(){
+        super.onDestroy();
+        articlesItemList.clear();
+        //twitterResponseList.clear();
     }
 }
