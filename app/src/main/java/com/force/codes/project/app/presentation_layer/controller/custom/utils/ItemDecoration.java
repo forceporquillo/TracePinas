@@ -20,7 +20,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import org.jetbrains.annotations.NotNull;
 
-public class CustomDividerItemDecoration extends RecyclerView.ItemDecoration{
+public class ItemDecoration extends RecyclerView.ItemDecoration{
 
     public static final int HORIZONTAL_LIST = LinearLayoutManager.HORIZONTAL;
     public static final int VERTICAL_LIST = LinearLayoutManager.VERTICAL;
@@ -32,7 +32,7 @@ public class CustomDividerItemDecoration extends RecyclerView.ItemDecoration{
     private Context context;
     private int margin;
 
-    public CustomDividerItemDecoration(Context context, int orientation, int margin){
+    public ItemDecoration(Context context, int orientation, int margin){
         this.context = context;
         this.margin = margin;
         final TypedArray typedArray = context.obtainStyledAttributes(ATTRS);

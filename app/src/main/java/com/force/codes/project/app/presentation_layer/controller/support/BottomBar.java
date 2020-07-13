@@ -23,14 +23,14 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class CustomBottomBar{
+public class BottomBar{
     private final static int ITEM_LIMIT = 5;
     private Context context;
     private RecyclerView recyclerView;
     private ArrayList<BottomItem> bottomItems;
     private BottomItemListener bottomItemListener;
 
-    public CustomBottomBar(
+    public BottomBar(
             View view, Context context,
             BottomItemListener bottomItemListener
     ){
