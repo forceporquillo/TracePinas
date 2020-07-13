@@ -19,7 +19,6 @@ import dagger.MapKey;
 @Target({
         ElementType.METHOD
 })
-
 @Retention(RetentionPolicy.RUNTIME)
 @MapKey
 @interface ViewModelKey{

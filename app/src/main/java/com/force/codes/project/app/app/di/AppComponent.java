@@ -40,9 +40,7 @@ public interface AppComponent{
     interface Builder{
         @BindsInstance
         Builder application(BaseApplication baseApplication);
-
         Builder appModule(AppModule appModule);
-
         AppComponent build();
     }
 }

@@ -70,16 +70,17 @@ public class NewsRepositoryImpl implements NewsRepository{
     }
 
     @Override
-    public LiveData<PagedList<TwitterData>> getPagedListTwitter(PagedList.Config config){
+    public LiveData<PagedList<TwitterData>>
+    getPagedListTwitter(PagedList.Config config){
         DataSource.Factory<Integer, TwitterData>
-                dataFactory = newsDao.getTwitterDataFromDatabase();
+                dataFactory = newsDao.getRecentTweetsFromDatabase();
         return new LivePagedListBuilder<>(dataFactory, config)
                 .build();
     }
 
     @Override
-    public void insertTwitterData(List<TwitterData> twitterRespons){
+    public void insertTwitterData(List<TwitterData> twitterResponse){
         executors.diskIO().execute(() ->
-                newsDao.insertOrUpdateTwitterItems(twitterRespons));
+                newsDao.insertOrUpdateTwitterItems(twitterResponse));
     }
 }

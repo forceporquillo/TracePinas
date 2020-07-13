@@ -12,8 +12,8 @@ import androidx.room.RoomDatabase;
 import androidx.room.TypeConverters;
 
 import com.force.codes.project.app.app.constants.DatabaseConstants;
-import com.force.codes.project.app.data_layer.TypeConverter.LocalDataConverter;
-import com.force.codes.project.app.data_layer.TypeConverter.TwitterMediaConverter;
+import com.force.codes.project.app.data_layer.converters.LocalDataConverter;
+import com.force.codes.project.app.data_layer.converters.TwitterMediaConverter;
 import com.force.codes.project.app.data_layer.model.news.ArticlesItem;
 import com.force.codes.project.app.data_layer.model.CountryDetails;
 import com.force.codes.project.app.data_layer.model.GlobalData;
@@ -36,10 +36,7 @@ import com.force.codes.project.app.data_layer.model.twitter.TwitterData;
 })
 public abstract class AppDatabase extends RoomDatabase{
     public abstract MapDao mapDao();
-
     public abstract WorldwideDao worldwideDao();
-
     public abstract LiveDataDao liveDataDao();
-
     public abstract NewsDao newsDao();
 }
