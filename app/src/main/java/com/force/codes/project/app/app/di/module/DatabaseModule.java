@@ -38,7 +38,7 @@ public class DatabaseModule{
     @Provides
     static AppDatabase providesLocalDatabase(Application application){
         return Room.databaseBuilder(application, AppDatabase.class,
-                "Covid19_Data.db").fallbackToDestructiveMigration()
+                "AppDatabase.db").fallbackToDestructiveMigration()
                 .addCallback(roomCallback).build();
     }
 
