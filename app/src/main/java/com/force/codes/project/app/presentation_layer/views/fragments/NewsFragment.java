@@ -26,7 +26,6 @@ import android.view.WindowManager;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -34,8 +33,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.force.codes.project.app.R;
 import com.force.codes.project.app.data_layer.model.news.ArticlesItem;
 import com.force.codes.project.app.data_layer.model.twitter.TwitterData;
-import com.force.codes.project.app.presentation_layer.controller.custom.model.Group;
 import com.force.codes.project.app.presentation_layer.controller.custom.interfaces.NewsItemCallback;
+import com.force.codes.project.app.presentation_layer.controller.custom.model.Group;
 import com.force.codes.project.app.presentation_layer.views.adapters.HeaderNewsAdapter;
 import com.force.codes.project.app.presentation_layer.views.adapters.HotNewsAdapter;
 import com.force.codes.project.app.presentation_layer.views.adapters.NewsGroupAdapter;
@@ -44,7 +43,6 @@ import com.force.codes.project.app.presentation_layer.views.viewmodels.factory.V
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
 
 import javax.inject.Inject;
 
@@ -95,24 +93,18 @@ public class NewsFragment extends BaseFragment implements NewsItemCallback{
     @Override
     public void onStart(){
         super.onStart();
-        newsViewModel.pagedListLiveData().observe(this, newsList -> {
-            if(newsList != null && newsList.size() != 0){
-                hotNewsAdapter.setItemList(newsList);
-                articlesItemList = newsList;
-                hotNewsAdapter.notifyDataSetChanged();
-                return;
+        newsViewModel.pageListTwitterData().observe(this, twitterResponse -> {
+            if(twitterResponse != null){
+                headerNewsAdapter.submitList(twitterResponse);
+                twitterDataList = twitterResponse;
             }
-            newsViewModel.getNewsData();
         });
 
-        newsViewModel.pageListTwitterData().observe(this, twitterResponses -> {
-            if(twitterResponses != null){
-                headerNewsAdapter.submitList(twitterResponses);
-                headerNewsAdapter.notifyDataSetChanged();
-                twitterDataList = twitterResponses;
-                return;
+        newsViewModel.pagedListLiveData().observe(this, newsList -> {
+            if(newsList != null && newsList.size() != 0){
+                hotNewsAdapter.submitList(newsList);
+                articlesItemList = newsList;
             }
-            newsViewModel.getTwitterUserTimeline();
         });
     }
 
@@ -120,7 +112,7 @@ public class NewsFragment extends BaseFragment implements NewsItemCallback{
     @Override
     public void hotNewsItemListener(int position){
         ArticlesItem articlesItem = articlesItemList.get(position);
-        super.setFragment(ReadNewsFragment.newInstance(articlesItem));
+        super.setFragment(ReadNewsFragment.newInstance(articlesItem)).commit();
     }
 
     @Override
@@ -144,7 +136,7 @@ public class NewsFragment extends BaseFragment implements NewsItemCallback{
             Timber.e(e);
         }
 
-        ActivityOptions activityOptions = ActivityOptions.makeCustomAnimation(getContext(),R.anim.push_in, R.anim.push_out);
+        ActivityOptions activityOptions = ActivityOptions.makeCustomAnimation(getContext(), R.anim.push_in, R.anim.push_out);
         getActivity().startActivity(intent, activityOptions.toBundle());
     }
 
@@ -180,17 +172,12 @@ public class NewsFragment extends BaseFragment implements NewsItemCallback{
         recyclerView.setAdapter(groupAdapter);
     }
 
-    private static ArrayList<Group> groups(){
-        ArrayList<Group> groups = new ArrayList<>();
-        groups.add(new Group("Recent Tweets"));
-        groups.add(new Group("Hot News"));
-        return groups;
-    }
-
     @Override
     public void onDestroy(){
         super.onDestroy();
         articlesItemList.clear();
-        //twitterResponseList.clear();
+        hotNewsAdapter = null;
+        headerNewsAdapter = null;
+        twitterDataList.clear();
     }
 }
