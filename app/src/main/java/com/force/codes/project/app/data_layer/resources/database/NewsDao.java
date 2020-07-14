@@ -7,25 +7,34 @@
 
 package com.force.codes.project.app.data_layer.resources.database;
 
+import androidx.paging.DataSource;
 import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 import androidx.room.Transaction;
+import androidx.room.TypeConverters;
 
-import com.force.codes.project.app.app.constants.DatabaseConstants;
-import com.force.codes.project.app.data_layer.model.NewsData;
+import com.force.codes.project.app.data_layer.converters.TwitterMediaConverter;
+import com.force.codes.project.app.data_layer.model.news.ArticlesItem;
+import com.force.codes.project.app.data_layer.model.twitter.TwitterData;
 
 import java.util.List;
 
-import io.reactivex.Flowable;
-
 @Dao
 public interface NewsDao{
-//    @Transaction
-//    @Query(DatabaseConstants.QUERY_NEWS_DATA)
-//    Flowable<List<NewsData>> getResponseFromDB();
+    @Transaction
+    @Query("SELECT * FROM ArticlesItem ORDER BY publishedAt DESC LIMIT 100")
+    DataSource.Factory<Integer, ArticlesItem> getNewsDataFromDatabase();
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insertOrUpdateNews(List<NewsData> responses);
+    void insertOrUpdateArticleItems(List<ArticlesItem> items);
+
+    @Transaction
+    @TypeConverters(TwitterMediaConverter.class)
+    @Query("SELECT * FROM TwitterData")
+    DataSource.Factory<Integer, TwitterData> getRecentTweetsFromDatabase();
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    void insertOrUpdateTwitterItems(List<TwitterData> items);
 }
