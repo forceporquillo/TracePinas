@@ -13,36 +13,39 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
-import androidx.paging.PagedList;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.force.codes.project.app.R;
-import com.force.codes.project.app.data_layer.model.NewsData;
-import com.force.codes.project.app.data_layer.testmodel.Group;
-import com.force.codes.project.app.data_layer.testmodel.Models;
-import com.force.codes.project.app.presentation_layer.controller.custom.interfaces.NewsItemCallback;
-import com.force.codes.project.app.presentation_layer.controller.custom.utils.CustomDividerItemDecoration;
+import com.force.codes.project.app.presentation_layer.controller.custom.model.Group;
+import com.force.codes.project.app.presentation_layer.controller.custom.utils.ItemDecoration;
 import com.force.codes.project.app.presentation_layer.views.viewholders.NewsGroupViewHolder;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+
+import kotlin.jvm.JvmStatic;
 
 public class NewsGroupAdapter extends RecyclerView.Adapter<NewsGroupViewHolder>{
-    private ArrayList<Group> groups;
-    private ArrayList<Models> latestList;
     private Context context;
-    private NewsItemCallback callback;
-    private HotNewsAdapter adapter;
+    private HotNewsAdapter hotNewsAdapter;
+    private HeaderNewsAdapter headerNewsAdapter;
 
-    public NewsGroupAdapter(
-            ArrayList<Group> groups,
-            ArrayList<Models> latest,
-            NewsItemCallback callback,
-            HotNewsAdapter adapter){
-        this.groups = groups;
-        this.latestList = latest;
-        this.callback = callback;
-        this.adapter = adapter;
+    @JvmStatic
+    private static ArrayList<Group> groups(){
+        return new ArrayList<>(Arrays.asList(
+                new Group("Recent Tweets", false),
+                new Group("Hot Topics", false))
+        );
+    }
+
+    private static ItemDecoration decoration(Context context){
+        return new ItemDecoration(context, ItemDecoration.VERTICAL_LIST, 0);
+    }
+
+    public NewsGroupAdapter(HeaderNewsAdapter headerNewsAdapter, HotNewsAdapter hotNewsAdapter){
+        this.headerNewsAdapter = headerNewsAdapter;
+        this.hotNewsAdapter = hotNewsAdapter;
     }
 
     @NonNull
@@ -55,17 +58,10 @@ public class NewsGroupAdapter extends RecyclerView.Adapter<NewsGroupViewHolder>{
 
     @Override
     public void onBindViewHolder(@NonNull NewsGroupViewHolder holder, int position){
-        Group group = groups.get(position);
+        Group group = groups().get(position);
         holder.setGroupTitle(group);
-
-        if(position == 1)
-            holder.setDecorVisibility(true);
+        if(position == 1) holder.setDecorVisibility(true);
         setListOrder(holder.recyclerView, position);
-    }
-
-    @Override
-    public int getItemCount(){
-        return !groups.isEmpty() ? groups.size() : 0;
     }
 
     private void setListOrder(RecyclerView recyclerView, int position){
@@ -76,13 +72,12 @@ public class NewsGroupAdapter extends RecyclerView.Adapter<NewsGroupViewHolder>{
         setHotNewsList(recyclerView);
     }
 
-    static CustomDividerItemDecoration decoration(Context context){
-        return new CustomDividerItemDecoration(context,
-                CustomDividerItemDecoration.VERTICAL_LIST, 0);
+    @Override
+    public int getItemCount(){
+        return !groups().isEmpty() ? groups().size() : 0;
     }
 
     final void setLatestNewsList(RecyclerView recyclerView){
-        HeaderNewsAdapter headerNewsAdapter = new HeaderNewsAdapter(latestList, callback);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(recyclerView.getContext(),
                 LinearLayoutManager.HORIZONTAL, false));
@@ -93,7 +88,7 @@ public class NewsGroupAdapter extends RecyclerView.Adapter<NewsGroupViewHolder>{
 
     final void setHotNewsList(RecyclerView recyclerView){
         recyclerView.setLayoutManager(new LinearLayoutManager(context));
-        recyclerView.setAdapter(adapter);
+        recyclerView.setAdapter(hotNewsAdapter);
         recyclerView.addItemDecoration(decoration(recyclerView.getContext()));
         recyclerView.setNestedScrollingEnabled(true);
     }
