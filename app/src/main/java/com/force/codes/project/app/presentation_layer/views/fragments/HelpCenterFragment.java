@@ -13,6 +13,7 @@ package com.force.codes.project.app.presentation_layer.views.fragments;
  * FEU Institute of Technology
  */
 
+import android.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,7 +29,7 @@ import com.force.codes.project.app.presentation_layer.views.viewmodels.factory.V
 
 import javax.inject.Inject;
 
-public class HelpCenterFragment extends BaseFragment{
+public class HelpCenterFragment extends Fragment{
 
     @Inject
     ViewModelProviderFactory factory;
@@ -48,7 +49,7 @@ public class HelpCenterFragment extends BaseFragment{
     public void onActivityCreated(@Nullable Bundle savedInstanceState){
         super.onActivityCreated(savedInstanceState);
 
-        mViewModel = new ViewModelProvider(this, factory).get(HelpCenterViewModel.class);
+        //mViewModel = new ViewModelProvider(this, factory).get(HelpCenterViewModel.class);
         // TODO: Use the ViewModel
     }
 
