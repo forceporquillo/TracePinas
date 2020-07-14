@@ -67,4 +67,5 @@
     <string name="currently_displayed">Currently Displayed</string>
     <string name="TOTAL">Total Infected: %1s</string>
     <string name="DEFAULT">Philippines</string>
+    <string name="TWITTER_BEARER_TOKEN">AAAAAAAAAAAAAAAAAAAAAA5SDwEAAAAAnF1q</string>
 </resources>

@@ -64,9 +64,8 @@ public class NewsRepositoryImpl implements NewsRepository{
     }
 
     @Override
-    public Flowable<List<TwitterData>> getTwitterUser(String userTimeline){
-        return apiService.getTwitterResponse(new ApiConstants(userTimeline)
-                .getTwitterEndpoint());
+    public Flowable<List<TwitterData>> getTwitterUser(String screenName){
+        return apiService.getTwitterResponse(ApiConstants.getTwitterEndpoint(screenName));
     }
 
     @Override

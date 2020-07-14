@@ -14,7 +14,7 @@ import androidx.paging.LivePagedListBuilder;
 import androidx.paging.PagedList;
 
 import com.force.codes.project.app.app.constants.ApiConstants;
-import com.force.codes.project.app.data_layer.model.CountryDetails;
+import com.force.codes.project.app.data_layer.model.country.CountryDetails;
 import com.force.codes.project.app.data_layer.repositories.interfaces.WorldwideRepository;
 import com.force.codes.project.app.data_layer.resources.api.ApiService;
 import com.force.codes.project.app.data_layer.resources.database.WorldwideDao;
@@ -47,7 +47,7 @@ public class WorldwideRepositoryImpl implements WorldwideRepository{
 
     @Override
     public Flowable<List<CountryDetails>> getDataFromRemoteService(){
-        return serviceAdapter.getSortedCases(ApiConstants.CORONA_SORTED)
+        return serviceAdapter.getSortedCases(ApiConstants.getBaseUrlPath("countries?sort=cases"))
                 .subscribeOn(Schedulers.computation());
     }
 

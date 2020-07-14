@@ -4,76 +4,90 @@
   ~ Copyright (c) 2020.  All rights reserved.
   ~ Last modified 7/6/20 1:06 AM
   -->
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<!-- <layout >
 
     <data>
 
         <variable
-            name="dummyModel"
-            type="com.force.codes.project.app.data_layer.testmodel.Models" />
-    </data>
+            name="twitter"
+            type="com.force.codes.project.app.data_layer.model.twitter.TwitterData " />
+    </data> -->
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/layout_parent"
+    android:layout_width="355dp"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:clickable="true"
+    android:focusable="true">
 
     <RelativeLayout
+        android:id="@+id/cover_parent"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_marginBottom="5dp"
         android:clickable="true"
-        android:focusable="true"
-        android:id="@+id/layout_parent"
-        android:layout_width="355dp"
-        android:layout_height="wrap_content"
-        android:background="@color/white">
+        android:focusable="true">
 
-        <RelativeLayout
-            android:id="@+id/cover_parent"
+        <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:layout_marginBottom="5dp"
-            android:clickable="true"
-            android:focusable="true">
+            android:layout_height="match_parent"
+            android:elevation="0dp"
+            app:cardBackgroundColor="#ffffff"
+            app:cardCornerRadius="10dp">
 
-            <androidx.cardview.widget.CardView
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:elevation="0dp"
-                app:cardBackgroundColor="#ffffff"
-                app:cardCornerRadius="10dp">
+                android:layout_height="match_parent">
 
-                <RelativeLayout
+                <ImageView
+                    android:id="@+id/item_cover_picture"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="match_parent" />
 
-                    <ImageView
-                        headerImgUrl="@{dummyModel.thumbnail}"
-                        android:id="@+id/item_cover_picture"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent" />
+            </RelativeLayout>
+        </androidx.cardview.widget.CardView>
+    </RelativeLayout>
 
-                </RelativeLayout>
-            </androidx.cardview.widget.CardView>
-        </RelativeLayout>
+    <RelativeLayout
+        android:layout_below="@id/cover_parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
 
         <TextView
             android:id="@+id/group_header_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/cover_parent"
             android:layout_marginStart="5dp"
             android:layout_marginEnd="50dp"
             android:fontFamily="@font/poppin_bold"
             android:lines="2"
-            android:text="@{dummyModel.title}"
+            android:text="Why my pagedList is not updated via LiveData method .observe?"
             android:textColor="#000000"
             android:textSize="16sp"
             android:textStyle="bold" />
 
         <TextView
+            android:layout_alignParentEnd="true"
             android:id="@+id/date_timestamp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/group_header_text"
             android:layout_marginStart="5dp"
             android:layout_marginBottom="@dimen/margin_15dp"
+            android:text="jan123,202020"
             android:fontFamily="@font/poppin_medium"
-            android:text="@{dummyModel.date}"
             android:textSize="11sp" />
+
+        <TextView
+            android:layout_marginStart="5dp"
+            android:id="@+id/screen_name"
+            android:layout_below="@id/group_header_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/poppin_medium"
+            android:textSize="13sp"
+            android:text="\@DOHgovph"/>
     </RelativeLayout>
-</layout>
+</RelativeLayout><!-- </layout> -->

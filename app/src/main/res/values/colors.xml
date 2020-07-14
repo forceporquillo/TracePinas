@@ -16,4 +16,6 @@
     <color name="transparent">#00000000</color>
     <color name="placeholder_bg">#dddddd</color>
     <color name="search_color">#D5D8DE</color>
+
+    <color name="status_bar">#000000</color>
 </resources>

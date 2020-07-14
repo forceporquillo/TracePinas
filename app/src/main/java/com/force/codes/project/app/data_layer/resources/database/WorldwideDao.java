@@ -23,7 +23,7 @@ import androidx.room.Query;
 import androidx.room.Transaction;
 
 import com.force.codes.project.app.app.constants.DatabaseConstants;
-import com.force.codes.project.app.data_layer.model.CountryDetails;
+import com.force.codes.project.app.data_layer.model.country.CountryDetails;
 
 import java.util.List;
 

@@ -30,7 +30,7 @@ public class LiveOverviewRepositoryImpl implements LiveOverviewRepository{
 
     @Override
     public Flowable <WorldData> getWorldDataFromNetwork(){
-        return apiAdapter.getWorldData(ApiConstants.CORONA_GLOBAL_CASES)
+        return apiAdapter.getWorldData(ApiConstants.getBaseUrlPath("all"))
                 .subscribeOn(Schedulers.io());
     }
 }
