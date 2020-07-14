@@ -21,7 +21,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import org.jetbrains.annotations.NotNull;
 
 public class ItemDecoration extends RecyclerView.ItemDecoration{
-
     public static final int HORIZONTAL_LIST = LinearLayoutManager.HORIZONTAL;
     public static final int VERTICAL_LIST = LinearLayoutManager.VERTICAL;
     private static final int[] ATTRS = new int[]{
@@ -50,11 +49,8 @@ public class ItemDecoration extends RecyclerView.ItemDecoration{
 
     @Override
     public void onDrawOver(@NotNull Canvas canvas, @NotNull RecyclerView parent, @NotNull RecyclerView.State state){
-        if(orientation == VERTICAL_LIST){
-            drawVertical(canvas, parent);
-        }else{
-            drawHorizontal(canvas, parent);
-        }
+        if(orientation == VERTICAL_LIST) drawVertical(canvas, parent);
+        else drawHorizontal(canvas, parent);
     }
 
     public void drawVertical(Canvas canvas, RecyclerView parent){
