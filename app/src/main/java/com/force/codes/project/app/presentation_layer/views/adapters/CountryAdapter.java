@@ -16,7 +16,7 @@ import androidx.paging.PagedListAdapter;
 import androidx.recyclerview.widget.DiffUtil;
 
 import com.force.codes.project.app.R;
-import com.force.codes.project.app.data_layer.model.CountryDetails;
+import com.force.codes.project.app.data_layer.model.country.CountryDetails;
 import com.force.codes.project.app.databinding.CountryRowsBinding;
 import com.force.codes.project.app.presentation_layer.controller.custom.interfaces.FragmentCallback;
 import com.force.codes.project.app.presentation_layer.views.viewholders.CountryViewHolder;

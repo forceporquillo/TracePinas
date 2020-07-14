@@ -17,7 +17,7 @@ import androidx.lifecycle.LiveData;
 import androidx.paging.PagedList;
 
 import com.force.codes.project.app.app.constants.PageListConstants;
-import com.force.codes.project.app.data_layer.model.CountryDetails;
+import com.force.codes.project.app.data_layer.model.country.CountryDetails;
 import com.force.codes.project.app.data_layer.repositories.interfaces.WorldwideRepository;
 
 import javax.inject.Inject;

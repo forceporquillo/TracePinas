@@ -7,8 +7,8 @@ package com.force.codes.project.app.data_layer.resources.api;
  *
  */
 
-import com.force.codes.project.app.data_layer.model.CountryDetails;
-import com.force.codes.project.app.data_layer.model.GlobalData;
+import com.force.codes.project.app.data_layer.model.country.CountryDetails;
+import com.force.codes.project.app.data_layer.model.world.GlobalData;
 import com.force.codes.project.app.data_layer.model.map_data.LocalData;
 import com.force.codes.project.app.data_layer.model.news.NewsData;
 import com.force.codes.project.app.data_layer.model.map_data.WorldData;

@@ -15,8 +15,8 @@ import com.force.codes.project.app.app.constants.DatabaseConstants;
 import com.force.codes.project.app.data_layer.converters.LocalDataConverter;
 import com.force.codes.project.app.data_layer.converters.TwitterMediaConverter;
 import com.force.codes.project.app.data_layer.model.news.ArticlesItem;
-import com.force.codes.project.app.data_layer.model.CountryDetails;
-import com.force.codes.project.app.data_layer.model.GlobalData;
+import com.force.codes.project.app.data_layer.model.country.CountryDetails;
+import com.force.codes.project.app.data_layer.model.world.GlobalData;
 import com.force.codes.project.app.data_layer.model.map_data.LocalData;
 import com.force.codes.project.app.data_layer.model.twitter.TwitterData;
 

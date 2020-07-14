@@ -14,7 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.force.codes.project.app.R;
-import com.force.codes.project.app.data_layer.testmodel.Group;
+import com.force.codes.project.app.presentation_layer.controller.custom.model.Group;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
