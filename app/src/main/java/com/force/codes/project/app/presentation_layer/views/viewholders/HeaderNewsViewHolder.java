@@ -7,6 +7,7 @@
 
 package com.force.codes.project.app.presentation_layer.views.viewholders;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.Resources;
 import android.util.TypedValue;
@@ -14,44 +15,74 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import androidx.databinding.BindingAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestOptions;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.force.codes.project.app.R;
-import com.force.codes.project.app.data_layer.testmodel.Models;
-import com.force.codes.project.app.databinding.HeaderNewsLayoutBinding;
+import com.force.codes.project.app.data_layer.model.twitter.TwitterData;
 import com.force.codes.project.app.presentation_layer.controller.custom.interfaces.NewsItemCallback;
 
 import org.jetbrains.annotations.NotNull;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import timber.log.Timber;
 
 public class HeaderNewsViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
     @BindView(R.id.layout_parent)
     RelativeLayout parent;
 
+    @BindView(R.id.group_header_text)
+    TextView textView;
+
+    @BindView(R.id.item_cover_picture)
+    ImageView imageView;
+
+    @BindView(R.id.date_timestamp)
+    TextView timestamp;
+
+    @BindView(R.id.screen_name)
+    TextView screenName;
+
     private final int itemCount;
-    protected final HeaderNewsLayoutBinding binding;
+    //protected final HeaderNewsLayoutBinding binding;
     private NewsItemCallback callback;
 
-    public HeaderNewsViewHolder(HeaderNewsLayoutBinding binding, int itemCount, NewsItemCallback callback){
-        super(binding.getRoot());
-        ButterKnife.bind(this, binding.getRoot());
+    public HeaderNewsViewHolder(View view, int itemCount, NewsItemCallback callback){
+        super(view);
+        ButterKnife.bind(this, view);
         this.itemCount = itemCount;
-        this.binding = binding;
         this.callback = callback;
-        View view = binding.getRoot();
+//        View view = binding.getRoot();
 
         view.setOnClickListener(this);
     }
 
-    public void bindHeaderView(Models models){
-        binding.setDummyModel(models);
+    @SuppressLint("SetTextI18n")
+    public void bindHeaderView(TwitterData twitterData, int position){
+        // binding.setDummyModel(models);
         //binding.setVariable(BR.dummyModel, models);
+
+        textView.setText(twitterData.getFullText());
+
+        assert twitterData.getEntities() != null;
+        if(twitterData.getEntities().getMedia() != null){
+            String imageUrl = twitterData.getEntities()
+                    .getMedia().get(0).getMediaUrlHttps();
+
+            Glide.with(imageView.getContext())
+                    .load(imageUrl)
+                    .centerCrop()
+                    .error(R.drawable.ic_warning)
+                    .into(imageView);
+        }
+
+        timestamp.setText(twitterData.getCreatedAt().replace(" +0000", ""));
+        screenName.setText("@" + twitterData.getUser().getScreenName());
     }
 
     @BindingAdapter({"headerImgUrl"})
@@ -59,7 +90,8 @@ public class HeaderNewsViewHolder extends RecyclerView.ViewHolder implements Vie
     setFlag(@NotNull ImageView imageView, final String imageUrl){
         Glide.with(imageView.getContext())
                 .load(imageUrl)
-                .centerCrop()
+                .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
+                .centerInside()
                 .into(imageView);
     }
 

@@ -7,51 +7,65 @@
 
 package com.force.codes.project.app.presentation_layer.views.adapters;
 
-import android.content.Context;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
-import androidx.databinding.DataBindingUtil;
+import androidx.paging.PagedList;
+import androidx.paging.PagedListAdapter;
+import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.force.codes.project.app.R;
-import com.force.codes.project.app.data_layer.testmodel.Models;
-import com.force.codes.project.app.databinding.HeaderNewsLayoutBinding;
+import com.force.codes.project.app.data_layer.model.news.ArticlesItem;
+import com.force.codes.project.app.data_layer.model.twitter.TwitterData;
 import com.force.codes.project.app.presentation_layer.controller.custom.interfaces.NewsItemCallback;
 import com.force.codes.project.app.presentation_layer.views.viewholders.HeaderNewsViewHolder;
 
-import java.util.ArrayList;
-
-public class HeaderNewsAdapter extends RecyclerView.Adapter<HeaderNewsViewHolder>{
-    private ArrayList<Models> list;
-    private Context context;
-
+public class HeaderNewsAdapter extends PagedListAdapter<TwitterData,HeaderNewsViewHolder>{
     private NewsItemCallback callback;
-    public HeaderNewsAdapter(ArrayList<Models> latestList, NewsItemCallback callback){
-        this.list = latestList;
+
+    public HeaderNewsAdapter(NewsItemCallback callback){
+        super(DIFF_CALLBACK);
         this.callback = callback;
     }
 
     @NonNull
     @Override
     public HeaderNewsViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType){
-        LayoutInflater inflater = LayoutInflater.from(this.context = parent.getContext());
+        LayoutInflater inflater = LayoutInflater.from(parent.getContext());
 
-        HeaderNewsLayoutBinding binding = DataBindingUtil
-                .inflate(inflater, R.layout.header_news_layout, parent, false);
-        return new HeaderNewsViewHolder(binding, getItemCount(), callback);
+        View view = inflater.inflate(R.layout.header_news_layout, parent, false);
+//        HeaderNewsLayoutBinding binding = DataBindingUtil
+//                .inflate(inflater, R.layout.header_news_layout, parent, false);
+        return new HeaderNewsViewHolder(view, getItemCount(), callback);
     }
 
     @Override
     public void onBindViewHolder(@NonNull HeaderNewsViewHolder holder, int position){
-        Models models = list.get(position);
+        TwitterData twitterData = getTwitterDataAt(position);
         holder.setMarginAtRuntime(position);
-        holder.bindHeaderView(models);
+
+        //if(twitterData.getEntities().getMedia() != null){
+            holder.bindHeaderView(twitterData, position);
+        //}
     }
 
-    @Override
-    public int getItemCount(){
-        return !list.isEmpty() ? list.size() : 0;
+    final TwitterData getTwitterDataAt(int position){
+        return getItem(position);
     }
+
+    private static DiffUtil.ItemCallback<TwitterData> DIFF_CALLBACK = new DiffUtil
+            .ItemCallback<TwitterData>(){
+        @Override
+        public boolean areItemsTheSame(@NonNull TwitterData oldItem, @NonNull TwitterData newItem){
+            return oldItem.getId().equals(newItem.getId());
+        }
+
+        @Override
+        public boolean areContentsTheSame(@NonNull TwitterData oldItem, @NonNull TwitterData newItem){
+            return oldItem.getFullText().equals(newItem.getFullText());
+        }
+    };
 }
