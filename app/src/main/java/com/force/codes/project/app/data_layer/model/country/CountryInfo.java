@@ -5,7 +5,7 @@
  * Last modified 6/15/20 4:31 PM
  */
 
-package com.force.codes.project.app.data_layer.model;
+package com.force.codes.project.app.data_layer.model.country;
 
 import androidx.databinding.BaseObservable;
 import androidx.databinding.Bindable;

@@ -5,7 +5,7 @@
  * Last modified 6/26/20 9:59 PM
  */
 
-package com.force.codes.project.app.data_layer.model;
+package com.force.codes.project.app.data_layer.model.world;
 
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
