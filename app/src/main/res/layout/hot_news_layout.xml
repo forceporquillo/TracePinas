@@ -10,7 +10,7 @@
     <data>
         <variable
             name="articleItem"
-            type="com.force.codes.project.app.data_layer.model.ArticlesItem" />
+            type="com.force.codes.project.app.data_layer.model.news.ArticlesItem" />
     </data>
 
     <RelativeLayout
