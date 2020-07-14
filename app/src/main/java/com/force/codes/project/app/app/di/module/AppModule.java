@@ -12,9 +12,11 @@ import android.app.Application;
 import androidx.lifecycle.MutableLiveData;
 
 import com.force.codes.project.app.data_layer.model.map_data.WorldData;
+import com.force.codes.project.app.data_layer.model.twitter.TwitterData;
 import com.force.codes.project.app.service.executors.AppExecutors;
 import com.google.android.gms.maps.model.Marker;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
@@ -24,6 +26,7 @@ import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
+import io.reactivex.Flowable;
 
 @Module
 public class AppModule{
@@ -65,5 +68,11 @@ public class AppModule{
     @Singleton
     Application providesApplication(){
         return application;
+    }
+
+    @Singleton
+    @Provides
+    static List<Flowable<List<TwitterData>>> provideFlowableListData(){
+        return new ArrayList<>();
     }
 }
