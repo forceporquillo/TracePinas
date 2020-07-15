@@ -13,8 +13,8 @@ public class Group {
     public Group() {
     }
 
-    public Group(String groupTitle) {
-        this.groupTitle = groupTitle;
+    public Group(String title, boolean setSpinner) {
+        this.groupTitle = title;
     }
 
     public String getGroupTitle() {
