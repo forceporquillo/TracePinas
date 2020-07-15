@@ -30,6 +30,7 @@ public class ApiConstants{
         // no instance itself
     }
 
+    // custom endpoint
     public static String getTwitterEndpoint(String screenName){
         return TWITTER_USER_ENDPOINT + screenName;
     }
