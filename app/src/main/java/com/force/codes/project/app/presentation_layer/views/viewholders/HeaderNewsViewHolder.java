@@ -7,7 +7,6 @@
 
 package com.force.codes.project.app.presentation_layer.views.viewholders;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.Resources;
 import android.util.TypedValue;
@@ -21,78 +20,57 @@ import androidx.databinding.BindingAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.force.codes.project.app.BR;
 import com.force.codes.project.app.R;
 import com.force.codes.project.app.data_layer.model.twitter.TwitterData;
+import com.force.codes.project.app.databinding.HeaderNewsLayoutBinding;
 import com.force.codes.project.app.presentation_layer.controller.custom.interfaces.NewsItemCallback;
-
-import org.jetbrains.annotations.NotNull;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import timber.log.Timber;
+import butterknife.Unbinder;
 
 public class HeaderNewsViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
     @BindView(R.id.layout_parent)
     RelativeLayout parent;
 
-    @BindView(R.id.group_header_text)
-    TextView textView;
-
-    @BindView(R.id.item_cover_picture)
-    ImageView imageView;
-
-    @BindView(R.id.date_timestamp)
-    TextView timestamp;
-
-    @BindView(R.id.screen_name)
-    TextView screenName;
-
     private final int itemCount;
-    //protected final HeaderNewsLayoutBinding binding;
     private NewsItemCallback callback;
+    private HeaderNewsLayoutBinding binding;
 
-    public HeaderNewsViewHolder(View view, int itemCount, NewsItemCallback callback){
-        super(view);
-        ButterKnife.bind(this, view);
+    public HeaderNewsViewHolder(HeaderNewsLayoutBinding binding, int itemCount, NewsItemCallback callback){
+        super(binding.getRoot());
+        this.binding = binding;
         this.itemCount = itemCount;
         this.callback = callback;
-//        View view = binding.getRoot();
+        setBindView(binding.getRoot());
+    }
 
+    public void bindTo(TwitterData twitterData){
+        binding.setTwitterData(twitterData);
+        binding.setVariable(BR.twitterData, twitterData);
+    }
+
+    public void setBindView(View view){
+        ButterKnife.bind(this, view);
         view.setOnClickListener(this);
     }
 
-    @SuppressLint("SetTextI18n")
-    public void bindHeaderView(TwitterData twitterData, int position){
-        // binding.setDummyModel(models);
-        //binding.setVariable(BR.dummyModel, models);
-
-        textView.setText(twitterData.getFullText());
-
-        assert twitterData.getEntities() != null;
-        if(twitterData.getEntities().getMedia() != null){
-            String imageUrl = twitterData.getEntities()
-                    .getMedia().get(0).getMediaUrlHttps();
-
+    @BindingAdapter({"bindImage"})
+    public static void bindHeaderView(ImageView imageView, String imageUrl){
+        if(imageUrl != null){
             Glide.with(imageView.getContext())
                     .load(imageUrl)
                     .centerCrop()
+                    .dontAnimate()
                     .error(R.drawable.ic_warning)
                     .into(imageView);
         }
-
-        timestamp.setText(twitterData.getCreatedAt().replace(" +0000", ""));
-        screenName.setText("@" + twitterData.getUser().getScreenName());
     }
 
-    @BindingAdapter({"headerImgUrl"})
-    public static void
-    setFlag(@NotNull ImageView imageView, final String imageUrl){
-        Glide.with(imageView.getContext())
-                .load(imageUrl)
-                .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
-                .centerInside()
-                .into(imageView);
+    @BindingAdapter({"dateTextView"})
+    public static void replaceDate(TextView timeStamp, String date){
+        timeStamp.setText(date.replace(" +0000", ""));
     }
 
     public void setMarginAtRuntime(int index){
@@ -124,6 +102,8 @@ public class HeaderNewsViewHolder extends RecyclerView.ViewHolder implements Vie
 
     @Override
     public void onClick(View v){
-        callback.headerNewsItemListener(getAdapterPosition());
+        callback.headerNewsItemListener(
+                getAdapterPosition()
+        );
     }
 }

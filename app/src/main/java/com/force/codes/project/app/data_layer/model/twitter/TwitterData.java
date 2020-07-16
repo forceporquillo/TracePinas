@@ -9,6 +9,7 @@ package com.force.codes.project.app.data_layer.model.twitter;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.databinding.BaseObservable;
 import androidx.room.Embedded;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
@@ -17,7 +18,7 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 @Entity
-public class TwitterData{
+public class TwitterData extends BaseObservable{
     @PrimaryKey
     @SerializedName("id_str")
     @Expose
