@@ -18,18 +18,19 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.force.codes.project.app.R;
+import com.force.codes.project.app.databinding.FragmentCountryStatisticsBinding;
+import com.force.codes.project.app.presentation_layer.views.fragments.viewpager.MyCountryFragment;
+import com.force.codes.project.app.presentation_layer.views.fragments.viewpager.OverAllFragment;
+import com.force.codes.project.app.presentation_layer.views.fragments.viewpager.WorldwideFragment;
 import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItemAdapter;
+import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItems;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -37,25 +38,8 @@ import butterknife.ButterKnife;
  * create an instance of this fragment.
  */
 public class StatisticsFragment extends Fragment{
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
-    //@BindView(R.id.viewpager)
-    //ViewPager viewPager;
-
-    //@BindView(R.id.tablayout)
-    //SmartTabLayout smartTabLayout;
-
-    @BindView(R.id.share_button)
-    ImageButton shareButton;
-
     private FragmentPagerItemAdapter adapter;
+    private FragmentCountryStatisticsBinding statisticsBinding;
 
     public StatisticsFragment(){
         // Required empty public constructor
@@ -72,45 +56,38 @@ public class StatisticsFragment extends Fragment{
     @Override
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
-
-//        adapter = new FragmentPagerItemAdapter(getChildFragmentManager(),
-//                FragmentPagerItems.with(getContext())
-//                        .add("GLOBAL", Fragment1.class)
-//                        .add("MY COUNTRY", Fragment2.class)
-//                        .add("LIST", Fragment3.class)
-//                        .create()
-//        );
-
-        if(getArguments() != null){
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+        if(savedInstanceState == null){
+            adapter = new FragmentPagerItemAdapter(getChildFragmentManager(),
+                    FragmentPagerItems.with(getContext())
+                            .add("Overall Cases", OverAllFragment.class)
+                            .add("My Country", MyCountryFragment.class)
+                            .add("All Countries", WorldwideFragment.class)
+                            .create()
+            );
         }
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
-        final View view = inflater.inflate(R.layout.fragment_country_statistics, container, false);
-        ButterKnife.bind(this, view);
-
-        shareButton.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v){
-                Toast.makeText(getContext(), "Henlo", Toast.LENGTH_SHORT).show();
-            }
-        });
-        return view;
+    public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
+        statisticsBinding = FragmentCountryStatisticsBinding.inflate(inflater, container, false);
+        statisticsBinding.setStatistics(this);
+        statisticsBinding.setLifecycleOwner(this);
+        statisticsBinding.invalidateAll();
+        return statisticsBinding.getRoot();
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState){
         super.onViewCreated(view, savedInstanceState);
-//        viewPager.setAdapter(adapter);
-//        smartTabLayout.setViewPager(viewPager);
+        statisticsBinding.viewpager.setAdapter(adapter);
+        statisticsBinding.tablayout.setViewPager(statisticsBinding.viewpager);
     }
 
     @Override
     public void onDestroyView(){
         super.onDestroyView();
-        shareButton = null;
+        statisticsBinding.unbind();
+        statisticsBinding = null;
+        adapter = null;
     }
 }
