@@ -16,10 +16,10 @@
         android:id="@+id/fragment_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@id/bottom_bar" />
+        android:layout_above="@id/included" />
 
     <include
-        android:id="@+id/bottom_bar"
+        android:id="@+id/included"
         layout="@layout/bottombar_layout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

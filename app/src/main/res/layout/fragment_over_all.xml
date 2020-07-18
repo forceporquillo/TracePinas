@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Created by Force Porquillo on 7/17/20 3:29 AM
+  ~ FEU Institute of Technology
+  ~ Copyright (c) 2020.  All rights reserved.
+  ~ Last modified 7/17/20 3:29 AM
+  -->
+
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".presentation_layer.views.fragments.viewpager.OverAllFragment">
+
+   <androidx.recyclerview.widget.RecyclerView
+       android:id="@+id/over_all_recyclerview"
+       android:layout_width="match_parent"
+       android:layout_height="match_parent"/>
+
+</FrameLayout>

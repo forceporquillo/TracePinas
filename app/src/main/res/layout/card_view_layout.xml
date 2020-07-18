@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ Created by Force Porquillo on 7/17/20 3:32 AM
+  ~ FEU Institute of Technology
+  ~ Copyright (c) 2020.  All rights reserved.
+  ~ Last modified 7/17/20 3:32 AM
+  -->
+
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/globalCardView"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_below="@id/assessmentCardView"
+    android:layout_margin="@dimen/margin_10dp"
+    app:cardBackgroundColor="@color/blue"
+    app:cardCornerRadius="@dimen/_10dp"
+    app:cardElevation="@dimen/_elevation_5dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_marginBottom="@dimen/_10dp">
+
+        <TextView
+            android:id="@+id/text_card"
+            style="@style/global_overview_style"
+            android:text="Card #1"
+            android:textSize="25dp"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+    </RelativeLayout>
+</androidx.cardview.widget.CardView>

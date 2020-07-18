@@ -4,14 +4,16 @@
   ~ Copyright (c) 2020.  All rights reserved.
   ~ Last modified 7/6/20 1:06 AM
   -->
-<!-- <layout >
-
+<layout>
     <data>
+        <variable
+            name="twitterData"
+            type="com.force.codes.project.app.data_layer.model.twitter.TwitterData" />
 
         <variable
-            name="twitter"
-            type="com.force.codes.project.app.data_layer.model.twitter.TwitterData " />
-    </data> -->
+            name="mediaUrl"
+            type="com.force.codes.project.app.data_layer.model.twitter.TwitterMediaUrl" />
+    </data>
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -42,6 +44,7 @@
                 android:layout_height="match_parent">
 
                 <ImageView
+                    bindImage="@{twitterData.entities.media.get(0).mediaUrlHttps}"
                     android:id="@+id/item_cover_picture"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent" />
@@ -51,9 +54,9 @@
     </RelativeLayout>
 
     <RelativeLayout
-        android:layout_below="@id/cover_parent"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_below="@id/cover_parent">
 
         <TextView
             android:id="@+id/group_header_text"
@@ -63,31 +66,33 @@
             android:layout_marginEnd="50dp"
             android:fontFamily="@font/poppin_bold"
             android:lines="2"
-            android:text="Why my pagedList is not updated via LiveData method .observe?"
+            android:text="@{twitterData.fullText}"
             android:textColor="#000000"
             android:textSize="16sp"
             android:textStyle="bold" />
 
         <TextView
-            android:layout_alignParentEnd="true"
             android:id="@+id/date_timestamp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/group_header_text"
+            android:layout_alignParentEnd="true"
             android:layout_marginStart="5dp"
             android:layout_marginBottom="@dimen/margin_15dp"
-            android:text="jan123,202020"
             android:fontFamily="@font/poppin_medium"
-            android:textSize="11sp" />
+            dateTextView="@{twitterData.createdAt}"
+            android:textSize="12sp"/>
 
         <TextView
-            android:layout_marginStart="5dp"
             android:id="@+id/screen_name"
-            android:layout_below="@id/group_header_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:layout_below="@id/group_header_text"
+            android:layout_marginStart="5dp"
             android:fontFamily="@font/poppin_medium"
-            android:textSize="13sp"
-            android:text="\@DOHgovph"/>
+            android:text="@{String.format(@string/twitter_at(twitterData.user.screenName))}"
+            android:textSize="12sp" />
     </RelativeLayout>
-</RelativeLayout><!-- </layout> -->
+</RelativeLayout>
+</layout>
