@@ -76,7 +76,6 @@ public class NewsFragment extends BaseFragment implements NewsItemCallback{
     public static NewsFragment newInstance(){
         NewsFragment fragment = new NewsFragment();
         Bundle args = new Bundle();
-
         fragment.setArguments(args);
         return fragment;
     }
@@ -94,10 +93,8 @@ public class NewsFragment extends BaseFragment implements NewsItemCallback{
     public void onStart(){
         super.onStart();
         newsViewModel.pageListTwitterData().observe(this, twitterResponse -> {
-            if(twitterResponse != null){
                 headerNewsAdapter.submitList(twitterResponse);
                 twitterDataList = twitterResponse;
-            }
         });
 
         newsViewModel.pagedListLiveData().observe(this, newsList -> {
@@ -164,6 +161,8 @@ public class NewsFragment extends BaseFragment implements NewsItemCallback{
     public void onDestroyView(){
         super.onDestroyView();
         unbinder.unbind();
+        hotNewsAdapter = null;
+        headerNewsAdapter = null;
     }
 
     private void setRecyclerView(){
@@ -175,9 +174,5 @@ public class NewsFragment extends BaseFragment implements NewsItemCallback{
     @Override
     public void onDestroy(){
         super.onDestroy();
-        articlesItemList.clear();
-        hotNewsAdapter = null;
-        headerNewsAdapter = null;
-        twitterDataList.clear();
     }
 }
