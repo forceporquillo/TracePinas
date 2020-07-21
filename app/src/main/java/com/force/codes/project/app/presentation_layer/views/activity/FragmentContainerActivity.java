@@ -20,6 +20,7 @@ import android.view.View;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import com.force.codes.project.app.R;
 import com.force.codes.project.app.presentation_layer.controller.custom.interfaces.BottomItemListener;
@@ -29,6 +30,7 @@ import com.force.codes.project.app.presentation_layer.views.fragments.LiveDataFr
 import com.force.codes.project.app.presentation_layer.views.fragments.MapFragment;
 import com.force.codes.project.app.presentation_layer.views.fragments.NewsFragment;
 import com.force.codes.project.app.presentation_layer.views.fragments.StatisticsFragment;
+import com.force.codes.project.app.service.executors.AppExecutors;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -48,9 +50,7 @@ public class FragmentContainerActivity extends BaseActivity implements BottomIte
     @BindView(R.id.included)
     View includedView;
 
-    public FragmentContainerActivity(){
-
-    }
+    public FragmentContainerActivity(){}
 
     private static final int[] arrItemId = new int[2];
     private Fragment fragment = getFragment();
@@ -63,11 +63,15 @@ public class FragmentContainerActivity extends BaseActivity implements BottomIte
 
         BottomBar bottomBar = new BottomBar(includedView, this, this);
 
-        setBottomBarItems(bottomBar, savedInstanceState);
         if(savedInstanceState != null)
             fragment = getSupportFragmentManager()
-                     .getFragment(savedInstanceState, FRAGMENT_STATE);
-        setPrimaryFragment(savedInstanceState, fragment);
+                    .getFragment(savedInstanceState, FRAGMENT_STATE);
+
+        // consumes 3 sec. delay when bundle is null, give way to load splash screen.
+        new AppExecutors(savedInstanceState == null ? 3000 : 0).threadDelay().execute(() -> {
+            setPrimaryFragment(savedInstanceState, fragment);
+            setBottomBarItems(bottomBar, savedInstanceState);
+        });
     }
 
     private void setBottomBarItems(BottomBar bottomBar, @Nullable Bundle savedInstanceState){
@@ -79,7 +83,7 @@ public class FragmentContainerActivity extends BaseActivity implements BottomIte
     }
 
     @NotNull
-    static BottomItem[] BottomItems(){
+    private static BottomItem[] BottomItems(){
         final BottomItem[] bottomItems = new BottomItem[5];
         // region custom bottom navigation bar item instance
         bottomItems[0] = new BottomItem(STATISTICS, "Statistics", R.drawable.ic_outline_stats, R.drawable.ic_outline_colored_stats);
@@ -94,7 +98,7 @@ public class FragmentContainerActivity extends BaseActivity implements BottomIte
     final void setPrimaryFragment(Bundle savedInstanceState, Fragment fragment){
         if(savedInstanceState == null){
             arrItemId[0] = STATISTICS;
-            setFragment(StatisticsFragment.newInstance()).commit();
+            super.setFragment(StatisticsFragment.newInstance()).commit();
             return;
         }
         super.setFragment(fragment).commit();
@@ -117,8 +121,9 @@ public class FragmentContainerActivity extends BaseActivity implements BottomIte
                 fragment = LiveDataFragment.newInstance();
                 break;
         }
+
         if(checkIfActive())
-            super.setFragment(fragment).commit();
+            setFragment(fragment).commit();
     }
 
     private static boolean checkIfActive(){

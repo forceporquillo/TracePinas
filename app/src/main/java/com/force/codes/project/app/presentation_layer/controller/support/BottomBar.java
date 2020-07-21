@@ -22,36 +22,42 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 public class BottomBar{
     private final static int ITEM_LIMIT = 5;
     private Context context;
-    private RecyclerView recyclerView;
+    private BottomItemListener listener;
     private ArrayList<BottomItem> bottomItems;
-    private BottomItemListener bottomItemListener;
+
+    @BindView(R.id.bottom_bar_recyclerview)
+    RecyclerView recyclerView;
 
     public BottomBar(
             View view, Context context,
-            BottomItemListener bottomItemListener
+            BottomItemListener listener
     ){
         setType(view);
         this.context = context;
-        this.bottomItemListener = bottomItemListener;
+        this.listener = listener;
     }
 
     private void setType(@NotNull View view){
-        recyclerView = view.findViewById(R.id.bottom_bar_recyclerview);
+        ButterKnife.bind(this, view);
         bottomItems = new ArrayList<>();
     }
 
-    public void addBottomItem(final BottomItem[] item){
+    public void addBottomItem(final BottomItem item){
         if(bottomItems.size() != ITEM_LIMIT)
-            bottomItems.addAll(Arrays.asList(item));
+            bottomItems.addAll(Collections.singletonList(item));
     }
 
     final void setBottomAdapter(int selected){
         BottomBarAdapter bottomBarAdapter = new BottomBarAdapter(
-                selected, bottomItems, calculateWidth(), bottomItemListener);
+                selected, bottomItems, calculateWidth(), listener);
         recyclerView.setLayoutManager(new LinearLayoutManager(
                 context, LinearLayoutManager.HORIZONTAL, false)
         );
