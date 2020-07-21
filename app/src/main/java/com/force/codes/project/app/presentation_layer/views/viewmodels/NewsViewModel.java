@@ -14,23 +14,99 @@ package com.force.codes.project.app.presentation_layer.views.viewmodels;
  *
  */
 
-import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.LiveData;
+import androidx.paging.PagedList;
 
-import com.force.codes.project.app.data_layer.model.NewsData;
+import com.force.codes.project.app.data_layer.model.news.ArticlesItem;
+import com.force.codes.project.app.data_layer.model.twitter.TwitterData;
 import com.force.codes.project.app.data_layer.repositories.interfaces.NewsRepository;
+import com.force.codes.project.app.service.executors.AppExecutors;
+
+import java.util.List;
 
 import javax.inject.Inject;
-import javax.inject.Named;
+
+import io.reactivex.Flowable;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
+import timber.log.Timber;
+
+import static com.force.codes.project.app.app.constants.ApiConstants.getUrl;
+import static com.force.codes.project.app.app.constants.ApiConstants.getUserTimeline;
 
 public class NewsViewModel extends BaseViewModel{
-    private NewsRepository newsRepository;
+    private final NewsRepository newsRepository;
+    private LiveData<PagedList<ArticlesItem>> articleLiveData;
+    private LiveData<PagedList<TwitterData>> twitterLiveData;
+    private List<Flowable<List<TwitterData>>> listOfTwitterUsers;
+    private AppExecutors executors;
 
     @Inject
-    @Named("NewsVM")
-    MutableLiveData<NewsData> liveData;
-
-    @Inject
-    public NewsViewModel(NewsRepository newsRepository){
+    public NewsViewModel(
+            NewsRepository newsRepository, AppExecutors executors,
+            List<Flowable<List<TwitterData>>> listOfTwitterUsers
+    ){
         this.newsRepository = newsRepository;
+        this.executors = executors;
+        this.listOfTwitterUsers = listOfTwitterUsers;
+    }
+
+    final List<Flowable<List<TwitterData>>> flowableList(){
+        for(int i = 0; i < getUrl().length; ++i)
+            listOfTwitterUsers.add(i, newsRepository
+                    .getTwitterUser(getUserTimeline(i))
+                    .subscribeOn(Schedulers.from(executors.diskIO()))
+            );
+        return listOfTwitterUsers;
+    }
+
+    public void getTwitterUserTimeline(){
+        Disposable disposables = Flowable.fromIterable(flowableList())
+                .flatMap(x -> x)
+                .subscribeOn(Schedulers.from(executors.diskIO()))
+                .observeOn(Schedulers.computation())
+                .subscribe(this::insertTwitterToDB, Timber::e);
+        super.addToUnsubscribed(disposables);
+    }
+
+    private void insertTwitterToDB(List<TwitterData> twitterDataList){
+        newsRepository.insertTwitterData(twitterDataList);
+    }
+
+    public LiveData<PagedList<TwitterData>> pageListTwitterData(){
+        if(twitterLiveData == null)
+            twitterLiveData = newsRepository.getPagedListTwitter(config);
+        return twitterLiveData;
+    }
+
+    static PagedList.Config config = new PagedList.Config.Builder()
+            .setPageSize(10)
+            .setPrefetchDistance(20)
+            .setInitialLoadSizeHint(30)
+            .setEnablePlaceholders(false)
+            .build();
+
+    public void getNewsData(){
+        Disposable disposables = Flowable.fromPublisher(newsRepository
+                .getNewsResponseFromServer())
+                .subscribeOn(Schedulers.from(executors.diskIO()))
+                .observeOn(Schedulers.computation())
+                .subscribe(newsData -> insertArticleToDB(newsData.getArticles()), Timber::e);
+        super.addToUnsubscribed(disposables);
+    }
+
+    private void insertArticleToDB(List<ArticlesItem> articlesItems){
+        newsRepository.insertArticleData(articlesItems);
+    }
+
+    public LiveData<PagedList<ArticlesItem>> pagedListLiveData(){
+        if(articleLiveData == null)
+            return articleLiveData = newsRepository.getPagedListArticle(config);
+        return articleLiveData;
+    }
+
+    public void forceUpdate(){
+        getTwitterUserTimeline();
+        getNewsData();
     }
 }
