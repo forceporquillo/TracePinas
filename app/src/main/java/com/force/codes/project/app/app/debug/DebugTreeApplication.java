@@ -26,12 +26,6 @@ public class DebugTreeApplication{
 
     public void DebugTree(){
         Timber.plant(new Timber.DebugTree());
-        AppWatcher.getConfig().getWatchActivities();
-        AppWatcher.getConfig().getWatchFragments();
-        AppWatcher.getConfig().getWatchFragmentViews();
-        AppWatcher.getConfig().getWatchViewModels();
-        ObjectWatcher watcher = AppWatcher.INSTANCE.getObjectWatcher();
-        watcher.getRetainedObjectCount();
     }
 
     public static class CrashReportingTree extends Timber.Tree{
