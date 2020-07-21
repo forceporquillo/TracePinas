@@ -13,6 +13,7 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.force.codes.project.app.data_layer.model.map_data.WorldData;
 import com.force.codes.project.app.data_layer.model.twitter.TwitterData;
+import com.force.codes.project.app.presentation_layer.controller.custom.model.BottomItem;
 import com.force.codes.project.app.service.executors.AppExecutors;
 import com.google.android.gms.maps.model.Marker;
 
@@ -45,7 +46,7 @@ public class AppModule{
     @Provides
     @Singleton
     static AppExecutors providesAppExecutor(){
-        return new AppExecutors();
+        return new AppExecutors(0);
     }
 
     @Provides
@@ -70,6 +71,11 @@ public class AppModule{
         return application;
     }
 
+    @Provides
+    @Singleton
+    static ArrayList<BottomItem> providesBottomItem(){
+        return new ArrayList<>();
+    }
     @Singleton
     @Provides
     static List<Flowable<List<TwitterData>>> provideFlowableListData(){
