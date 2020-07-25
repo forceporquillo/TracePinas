@@ -71,12 +71,8 @@ public class NetworkConnectivity{
         disposable.add(ReactiveNetwork.observeInternetConnectivity(observingSettings())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(connectionState -> {
-                    Timber.d("Successfully establish connection with WalledGardenStrategy.");
-                    setConnectionConnectivity(connectionState);
-                }, Throwable::printStackTrace)
+                .subscribe(this::setConnectionConnectivity, Throwable::printStackTrace)
         );
-
     }
 
     /**
