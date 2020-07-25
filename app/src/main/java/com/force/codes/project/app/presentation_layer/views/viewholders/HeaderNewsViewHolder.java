@@ -20,11 +20,11 @@ import androidx.databinding.BindingAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.force.codes.project.app.BR;
 import com.force.codes.project.app.R;
 import com.force.codes.project.app.data_layer.model.twitter.TwitterData;
 import com.force.codes.project.app.databinding.HeaderNewsLayoutBinding;
 import com.force.codes.project.app.presentation_layer.controller.custom.interfaces.NewsItemCallback;
+import com.force.codes.project.app.presentation_layer.controller.custom.utils.RuntimeMargin;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -48,7 +48,7 @@ public class HeaderNewsViewHolder extends RecyclerView.ViewHolder implements Vie
 
     public void bindTo(TwitterData twitterData){
         binding.setTwitterData(twitterData);
-        binding.setVariable(BR.twitterData, twitterData);
+        //binding.setVariable(BR.twitterData, twitterData);
     }
 
     public void setBindView(View view){
@@ -79,25 +79,15 @@ public class HeaderNewsViewHolder extends RecyclerView.ViewHolder implements Vie
         Context context = parent.getContext();
 
         if(index == 0){
-            params.setMarginStart(getPixelValue(context, 15));
-            params.setMarginEnd(getPixelValue(context, 10));
+            params.setMarginStart(RuntimeMargin.getPixelValue(context, 15));
+            params.setMarginEnd(RuntimeMargin.getPixelValue(context, 10));
             return;
         }
-        params.setMarginEnd(getPixelValue(context, 10));
+        params.setMarginEnd(RuntimeMargin.getPixelValue(context, 10));
 
         // adds 15dp margin at the end of last index item.
         if(index == (itemCount - 1))
-            params.setMarginEnd(getPixelValue(context, 15));
-    }
-
-    // converts dp to px
-    static int getPixelValue(Context context, int densityPixel){
-        Resources resources = context.getResources();
-        return (int) TypedValue.applyDimension(
-                TypedValue.COMPLEX_UNIT_DIP,
-                densityPixel,
-                resources.getDisplayMetrics()
-        );
+            params.setMarginEnd(RuntimeMargin.getPixelValue(context, 15));
     }
 
     @Override
