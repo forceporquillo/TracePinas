@@ -39,9 +39,9 @@ public class NewsGroupViewHolder extends RecyclerView.ViewHolder{
     View view;
     //endregion
 
-    private NewsGroupLayoutBinding binding;
+    private final NewsGroupLayoutBinding binding;
 
-    public NewsGroupViewHolder(NewsGroupLayoutBinding binding){
+    public NewsGroupViewHolder(final NewsGroupLayoutBinding binding){
         super(binding.getRoot());
         this.binding = binding;
         ButterKnife.bind(this, itemView);

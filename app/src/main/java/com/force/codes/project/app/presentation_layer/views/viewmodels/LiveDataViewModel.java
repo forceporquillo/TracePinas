@@ -33,7 +33,7 @@ public class LiveDataViewModel extends BaseViewModel{
     @Named("LiveDataVM")
     public MutableLiveData <WorldData> liveData;
 
-    private LiveOverviewRepository repository;
+    private final LiveOverviewRepository repository;
 
     @Inject
     public LiveDataViewModel(LiveOverviewRepository repository){

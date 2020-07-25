@@ -15,10 +15,13 @@ import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 
 abstract class BaseViewModel extends ViewModel{
-    private CompositeDisposable compositeDisposable;
+    private final CompositeDisposable compositeDisposable;
+
+    protected BaseViewModel(){
+        compositeDisposable = new CompositeDisposable();
+    }
 
     public void addToUnsubscribed(Disposable disposable){
-        compositeDisposable = new CompositeDisposable();
         compositeDisposable.add(disposable);
     }
 
