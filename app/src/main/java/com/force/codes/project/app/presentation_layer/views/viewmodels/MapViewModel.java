@@ -30,7 +30,7 @@ import io.reactivex.disposables.Disposable;
 import timber.log.Timber;
 
 public class MapViewModel extends BaseViewModel{
-    private MapRepository mapRepository;
+    private final MapRepository mapRepository;
     private MutableLiveData <LocalData> mutablePhData = new MutableLiveData <>();
     private MutableLiveData <List <GlobalData>> mutableGlobalData = new MutableLiveData <>();
 
