@@ -32,7 +32,7 @@ public interface NewsDao{
 
     @Transaction
     @TypeConverters(TwitterMediaConverter.class)
-    @Query("SELECT * FROM TwitterData")
+    @Query("SELECT * FROM TwitterData ORDER BY id DESC LIMIT 50")
     DataSource.Factory<Integer, TwitterData> getRecentTweetsFromDatabase();
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
