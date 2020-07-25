@@ -60,12 +60,15 @@ public class NewsRepositoryImpl implements NewsRepository{
     @Override
     public void insertArticleData(List<ArticlesItem> items){
         executors.diskIO().execute(() ->
-                newsDao.insertOrUpdateArticleItems(items));
+                newsDao.insertOrUpdateArticleItems(items)
+        );
     }
 
     @Override
     public Flowable<List<TwitterData>> getTwitterUser(String screenName){
-        return apiService.getTwitterResponse(ApiConstants.getTwitterEndpoint(screenName));
+        return apiService.getTwitterResponse(
+                ApiConstants.getTwitterEndpoint(screenName)
+        );
     }
 
     @Override
@@ -80,6 +83,7 @@ public class NewsRepositoryImpl implements NewsRepository{
     @Override
     public void insertTwitterData(List<TwitterData> twitterResponse){
         executors.diskIO().execute(() ->
-                newsDao.insertOrUpdateTwitterItems(twitterResponse));
+                newsDao.insertOrUpdateTwitterItems(twitterResponse)
+        );
     }
 }
