@@ -8,23 +8,23 @@
 package com.force.codes.project.app.presentation_layer.views.fragments.viewpager;
 
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.databinding.DataBindingUtil;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+
+import com.force.codes.project.app.BR;
 import com.force.codes.project.app.R;
+import com.force.codes.project.app.databinding.FragmentOverAllBinding;
 import com.force.codes.project.app.presentation_layer.views.adapters.OverAllAdapter;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
+import org.jetbrains.annotations.NotNull;
+
 import timber.log.Timber;
 
 /**
@@ -47,11 +47,7 @@ public class OverAllFragment extends Fragment{
         // Required empty public constructor
     }
 
-    @BindView(R.id.over_all_recyclerview)
-    RecyclerView recyclerView;
-
-    private Unbinder unbinder;
-    private OverAllAdapter allAdapter;
+    private FragmentOverAllBinding binding;
 
     public static OverAllFragment newInstance(String param1, String param2){
         OverAllFragment fragment = new OverAllFragment();
@@ -65,7 +61,6 @@ public class OverAllFragment extends Fragment{
     @Override
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
-        Timber.e("ON CREATE");
         if(getArguments() != null){
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
@@ -75,55 +70,32 @@ public class OverAllFragment extends Fragment{
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState){
         super.onViewCreated(view, savedInstanceState);
-        allAdapter = new OverAllAdapter();
-        setRecyclerView();
+        setRecyclerView(view);
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState){
-        Timber.e("ON CREATE VIEW");
-        View view = inflater.inflate(R.layout.fragment_over_all, container, false);
-        unbinder = ButterKnife.bind(this, view);
-        return view;
+    public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_over_all, container, false);
+        binding.setOverall(this);
+        binding.setLifecycleOwner(this);
+        binding.setVariable(BR.overall, this);
+        binding.executePendingBindings();
+        return binding.getRoot();
     }
 
     @Override
     public void onStart(){
         super.onStart();
-        Timber.e("ON START");
-        recyclerView.setAdapter(allAdapter);
-    }
-
-    @Override
-    public void onResume(){
-        super.onResume();
-        Timber.e("ON RESUME");
-    }
-
-    @Override
-    public void onPause(){
-        super.onPause();
-        Timber.e("ON PAUSE");
-    }
-
-    @Override
-    public void onDestroy(){
-        super.onDestroy();
-        Timber.e("ON DESTROY");
+        binding.overAllRecyclerview.setAdapter(new OverAllAdapter());
     }
 
     @Override
     public void onDestroyView(){
         super.onDestroyView();
-        unbinder.unbind();
-        allAdapter = null;
-        Timber.e("ON DESTROY VIEW");
     }
 
-    private void setRecyclerView(){
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        recyclerView.setHasFixedSize(true);
-        Timber.e("INIT RECYCLERVIEW");
+    private void setRecyclerView(View view){
+        binding.overAllRecyclerview.setLayoutManager(new LinearLayoutManager(view.getContext()));
+        binding.overAllRecyclerview.setHasFixedSize(true);
     }
 }

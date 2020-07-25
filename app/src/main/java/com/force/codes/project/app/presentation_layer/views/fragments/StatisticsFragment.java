@@ -39,7 +39,7 @@ import org.jetbrains.annotations.NotNull;
  */
 public class StatisticsFragment extends Fragment{
     private FragmentPagerItemAdapter adapter;
-    private FragmentCountryStatisticsBinding statisticsBinding;
+    private FragmentCountryStatisticsBinding binding;
 
     public StatisticsFragment(){
         // Required empty public constructor
@@ -48,7 +48,6 @@ public class StatisticsFragment extends Fragment{
     public static StatisticsFragment newInstance(){
         StatisticsFragment fragment = new StatisticsFragment();
         Bundle args = new Bundle();
-
         fragment.setArguments(args);
         return fragment;
     }
@@ -69,25 +68,25 @@ public class StatisticsFragment extends Fragment{
 
     @Override
     public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
-        statisticsBinding = FragmentCountryStatisticsBinding.inflate(inflater, container, false);
-        statisticsBinding.setStatistics(this);
-        statisticsBinding.setLifecycleOwner(this);
-        statisticsBinding.invalidateAll();
-        return statisticsBinding.getRoot();
+        binding = FragmentCountryStatisticsBinding.inflate(inflater, container, false);
+        binding.setStatistics(this);
+        binding.setLifecycleOwner(this);
+        binding.invalidateAll();
+        return binding.getRoot();
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState){
         super.onViewCreated(view, savedInstanceState);
-        statisticsBinding.viewpager.setAdapter(adapter);
-        statisticsBinding.tablayout.setViewPager(statisticsBinding.viewpager);
+        binding.viewpager.setAdapter(adapter);
+        binding.tablayout.setViewPager(binding.viewpager);
     }
 
     @Override
     public void onDestroyView(){
         super.onDestroyView();
-        statisticsBinding.unbind();
-        statisticsBinding = null;
+        binding.unbind();
+        binding = null;
         adapter = null;
     }
 }
