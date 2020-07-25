@@ -36,27 +36,31 @@ import static com.force.codes.project.app.app.constants.ApiConstants.getUserTime
 
 public class NewsViewModel extends BaseViewModel{
     private final NewsRepository newsRepository;
+    private final List<Flowable<List<TwitterData>>> listOfTwitterUsers;
+    private final AppExecutors executors;
     private LiveData<PagedList<ArticlesItem>> articleLiveData;
     private LiveData<PagedList<TwitterData>> twitterLiveData;
-    private List<Flowable<List<TwitterData>>> listOfTwitterUsers;
-    private AppExecutors executors;
 
     @Inject
     public NewsViewModel(
-            NewsRepository newsRepository, AppExecutors executors,
-            List<Flowable<List<TwitterData>>> listOfTwitterUsers
+            final NewsRepository newsRepository, final AppExecutors executors,
+            final List<Flowable<List<TwitterData>>> listOfTwitterUsers
     ){
         this.newsRepository = newsRepository;
         this.executors = executors;
         this.listOfTwitterUsers = listOfTwitterUsers;
     }
 
+    /**
+     * iterates all available user timeline listed in {@link
+     * com.force.codes.project.app.app.constants.ApiConstants constant array}.
+     * @return list of flowable list observables {@link TwitterData}
+     */
     final List<Flowable<List<TwitterData>>> flowableList(){
         for(int i = 0; i < getUrl().length; ++i)
             listOfTwitterUsers.add(i, newsRepository
                     .getTwitterUser(getUserTimeline(i))
-                    .subscribeOn(Schedulers.from(executors.diskIO()))
-            );
+                    .subscribeOn(Schedulers.from(executors.diskIO())));
         return listOfTwitterUsers;
     }
 
