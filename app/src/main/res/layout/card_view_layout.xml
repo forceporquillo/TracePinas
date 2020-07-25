@@ -4,32 +4,40 @@
   ~ Copyright (c) 2020.  All rights reserved.
   ~ Last modified 7/17/20 3:32 AM
   -->
+<layout>
 
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/globalCardView"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_below="@id/assessmentCardView"
-    android:layout_margin="@dimen/margin_10dp"
-    app:cardBackgroundColor="@color/blue"
-    app:cardCornerRadius="@dimen/_10dp"
-    app:cardElevation="@dimen/_elevation_5dp">
+    <data>
+        <variable
+            name="overallViewHolder"
+            type="com.force.codes.project.app.presentation_layer.views.viewholders.OverAllViewHolder" />
+    </data>
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:layout_marginBottom="@dimen/_10dp">
+    <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/globalCardView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/assessmentCardView"
+        android:layout_margin="@dimen/margin_10dp"
+        app:cardBackgroundColor="@color/white"
+        app:cardCornerRadius="@dimen/_10dp"
+        app:cardElevation="8dp">
 
-        <TextView
-            android:id="@+id/text_card"
-            style="@style/global_overview_style"
-            android:text="Card #1"
-            android:textSize="25dp"
-            android:textStyle="bold"
-            android:gravity="center"
-            android:textColor="@color/white"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
-    </RelativeLayout>
-</androidx.cardview.widget.CardView>
+            android:layout_height="400dp"
+            android:layout_marginBottom="@dimen/_10dp">
+
+            <TextView
+                android:id="@+id/text_card"
+                style="@style/global_overview_style"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="Card #1"
+                android:textColor="@color/white"
+                android:textSize="25dp"
+                android:textStyle="bold" />
+        </RelativeLayout>
+    </androidx.cardview.widget.CardView>
+</layout>
