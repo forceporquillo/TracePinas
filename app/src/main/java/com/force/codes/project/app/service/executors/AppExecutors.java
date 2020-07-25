@@ -16,11 +16,9 @@ import org.jetbrains.annotations.NotNull;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
-public class AppExecutors{
-    // get device processor count
-    private static final int THREAD_COUNT = Runtime
-            .getRuntime().availableProcessors() * 2;
+import static com.force.codes.project.app.BaseApplication.THREAD_COUNT;
 
+public class AppExecutors{
     private final Executor diskIO;
     private final Executor threadDelay;
     private final Executor mainThread;
