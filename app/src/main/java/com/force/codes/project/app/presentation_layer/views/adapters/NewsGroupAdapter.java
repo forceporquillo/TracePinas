@@ -9,14 +9,15 @@ package com.force.codes.project.app.presentation_layer.views.adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.force.codes.project.app.R;
+import com.force.codes.project.app.databinding.NewsGroupLayoutBinding;
 import com.force.codes.project.app.presentation_layer.controller.custom.model.Group;
 import com.force.codes.project.app.presentation_layer.controller.custom.utils.ItemDecoration;
 import com.force.codes.project.app.presentation_layer.views.viewholders.NewsGroupViewHolder;
@@ -28,8 +29,8 @@ import kotlin.jvm.JvmStatic;
 
 public class NewsGroupAdapter extends RecyclerView.Adapter<NewsGroupViewHolder>{
     private Context context;
-    private HotNewsAdapter hotNewsAdapter;
-    private HeaderNewsAdapter headerNewsAdapter;
+    private final HotNewsAdapter hotNewsAdapter;
+    private final HeaderNewsAdapter headerNewsAdapter;
 
     @JvmStatic
     private static ArrayList<Group> groups(){
@@ -43,7 +44,7 @@ public class NewsGroupAdapter extends RecyclerView.Adapter<NewsGroupViewHolder>{
         return new ItemDecoration(context, ItemDecoration.VERTICAL_LIST, 0);
     }
 
-    public NewsGroupAdapter(HeaderNewsAdapter headerNewsAdapter, HotNewsAdapter hotNewsAdapter){
+    public NewsGroupAdapter(final HeaderNewsAdapter headerNewsAdapter, final HotNewsAdapter hotNewsAdapter){
         this.headerNewsAdapter = headerNewsAdapter;
         this.hotNewsAdapter = hotNewsAdapter;
     }
@@ -51,16 +52,18 @@ public class NewsGroupAdapter extends RecyclerView.Adapter<NewsGroupViewHolder>{
     @NonNull
     @Override
     public NewsGroupViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType){
-        final View view = LayoutInflater.from(this.context = parent.getContext())
-                .inflate(R.layout.news_group_layout, parent, false);
-        return new NewsGroupViewHolder(view);
+        LayoutInflater inflater = LayoutInflater.from(this.context = parent.getContext());
+        NewsGroupLayoutBinding binding = DataBindingUtil.inflate(inflater,
+                R.layout.news_group_layout, parent, false);
+        return new NewsGroupViewHolder(binding);
     }
 
     @Override
     public void onBindViewHolder(@NonNull NewsGroupViewHolder holder, int position){
         Group group = groups().get(position);
-        holder.setGroupTitle(group);
-        if(position == 1) holder.setDecorVisibility(true);
+        holder.bind(group);
+        if(position == 1)
+            holder.setMarginAtRuntime();
         setListOrder(holder.recyclerView, position);
     }
 
@@ -84,7 +87,6 @@ public class NewsGroupAdapter extends RecyclerView.Adapter<NewsGroupViewHolder>{
         recyclerView.setAdapter(headerNewsAdapter);
         recyclerView.setNestedScrollingEnabled(true);
     }
-
 
     final void setHotNewsList(RecyclerView recyclerView){
         recyclerView.setLayoutManager(new LinearLayoutManager(context));
