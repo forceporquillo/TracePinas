@@ -1,4 +1,4 @@
-package com.force.codes.project.app.presentation_layer.controller.custom.utils;
+package com.force.codes.project.app.presentation_layer.controller.utils;
 
 /*
  * Created by Force Porquillo on 6/5/20 3:13 PM
@@ -8,11 +8,14 @@ package com.force.codes.project.app.presentation_layer.controller.custom.utils;
  */
 
 import android.annotation.SuppressLint;
+import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.icu.text.DecimalFormat;
 import android.text.SpannableString;
 import android.text.format.DateUtils;
 import android.text.style.ForegroundColorSpan;
+import android.util.TypedValue;
 
 import androidx.annotation.RequiresApi;
 
@@ -25,7 +28,14 @@ import java.util.Locale;
 import static android.os.Build.VERSION_CODES.N;
 import static android.text.Spanned.SPAN_EXCLUSIVE_EXCLUSIVE;
 
-public class StringUtils extends DateUtils{
+/**
+ * Utilities class that has some helper methods.
+ * This class doesn't need an instance of a class itself.
+ *
+ * @author Force Porquillo
+ */
+
+public abstract class Utils{
     public static String getDate(long milliseconds){
         SimpleDateFormat formatter = new SimpleDateFormat("EEE, dd MMM yyyy hh:mm:ss aaa", Locale.getDefault());
         Calendar calendar = Calendar.getInstance();
@@ -41,11 +51,46 @@ public class StringUtils extends DateUtils{
         return "0";
     }
 
+    public static int getSDKInt(){
+        return android.os.Build.VERSION.SDK_INT;
+    }
+
+    /**
+     * @return thread count by multiplying device processors count to 2
+     */
+
+    public static int getThreadCount(){
+        return Runtime.getRuntime().availableProcessors() * 2;
+    }
+
     public static String getDate(){
         Date calendar = Calendar.getInstance().getTime();
         @SuppressLint("SimpleDateFormat")
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd, MMMM yyyy");
+        SimpleDateFormat dateFormat = simpleDateFormat("yyyy-mm-dd");
         return dateFormat.format(calendar);
+    }
+
+    /**
+     * A helper method to manually align view margin at runtime.
+     * This converts dp to px.
+     * @return pixel based on device dpi and resolution.
+     */
+    public static int getPixelValue(Context context, int densityPixel){
+        Resources resources = context.getResources();
+        return (int) TypedValue.applyDimension(
+                TypedValue.COMPLEX_UNIT_DIP,
+                densityPixel,
+                resources.getDisplayMetrics()
+        );
+    }
+
+    @SuppressLint("SimpleDateFormat")
+    public static SimpleDateFormat simpleDateFormat(String format){
+        return new SimpleDateFormat(format);
+    }
+
+    public static Date getTodayDate(){
+        return new Date();
     }
 
     @RequiresApi(api = N)
