@@ -10,10 +10,12 @@ package com.force.codes.project.app.app.di.module;
 import com.force.codes.project.app.data_layer.repositories.implementations.LiveOverviewRepositoryImpl;
 import com.force.codes.project.app.data_layer.repositories.implementations.MapRepositoryImpl;
 import com.force.codes.project.app.data_layer.repositories.implementations.NewsRepositoryImpl;
+import com.force.codes.project.app.data_layer.repositories.implementations.OverAllRepositoryImpl;
 import com.force.codes.project.app.data_layer.repositories.implementations.WorldwideRepositoryImpl;
 import com.force.codes.project.app.data_layer.repositories.interfaces.LiveOverviewRepository;
 import com.force.codes.project.app.data_layer.repositories.interfaces.MapRepository;
 import com.force.codes.project.app.data_layer.repositories.interfaces.NewsRepository;
+import com.force.codes.project.app.data_layer.repositories.interfaces.OverAllRepository;
 import com.force.codes.project.app.data_layer.repositories.interfaces.WorldwideRepository;
 
 import dagger.Binds;
@@ -36,4 +38,8 @@ public abstract class RepositoryModule{
     @Binds
     abstract NewsRepository
     NewsRepository(NewsRepositoryImpl repository);
+
+    @Binds
+    abstract OverAllRepository
+    OverAllRepository(OverAllRepositoryImpl repository);
 }

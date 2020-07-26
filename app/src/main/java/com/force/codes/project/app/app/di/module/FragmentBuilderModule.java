@@ -10,7 +10,8 @@ package com.force.codes.project.app.app.di.module;
 import com.force.codes.project.app.presentation_layer.views.fragments.LiveDataFragment;
 import com.force.codes.project.app.presentation_layer.views.fragments.MapFragment;
 import com.force.codes.project.app.presentation_layer.views.fragments.NewsFragment;
-import com.force.codes.project.app.presentation_layer.views.fragments.WorldwideFragment;
+import com.force.codes.project.app.presentation_layer.views.fragments.viewpager.OverAllFragment;
+import com.force.codes.project.app.presentation_layer.views.fragments.viewpager.WorldwideFragment;
 
 import dagger.Module;
 import dagger.android.ContributesAndroidInjector;
@@ -28,4 +29,7 @@ public abstract class FragmentBuilderModule{
 
     @ContributesAndroidInjector
     abstract NewsFragment contributeNewsFragment();
+
+    @ContributesAndroidInjector
+    abstract OverAllFragment contributeOverAllFragment();
 }

@@ -13,8 +13,9 @@ import androidx.lifecycle.ViewModelProvider;
 import com.force.codes.project.app.presentation_layer.views.viewmodels.LiveDataViewModel;
 import com.force.codes.project.app.presentation_layer.views.viewmodels.MapViewModel;
 import com.force.codes.project.app.presentation_layer.views.viewmodels.NewsViewModel;
+import com.force.codes.project.app.presentation_layer.views.viewmodels.OverAllViewModel;
 import com.force.codes.project.app.presentation_layer.views.viewmodels.WorldwideViewModel;
-import com.force.codes.project.app.presentation_layer.views.viewmodels.factory.ViewModelProviderFactory;
+import com.force.codes.project.app.presentation_layer.views.factory.ViewModelProviderFactory;
 
 import dagger.Binds;
 import dagger.Module;
@@ -44,4 +45,9 @@ public abstract class ViewModelModule{
     @IntoMap
     @ViewModelKey(NewsViewModel.class)
     abstract ViewModel providesNewsViewModel(NewsViewModel newsViewModel);
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(OverAllViewModel.class)
+    abstract ViewModel providesOverAllViewModel(OverAllViewModel overAllViewModel);
 }
