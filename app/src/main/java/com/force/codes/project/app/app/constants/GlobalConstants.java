@@ -7,6 +7,8 @@
 
 package com.force.codes.project.app.app.constants;
 
-public class NetworkConstants{
+public class GlobalConstants{
     public static final int TIMEOUT_MILLIS = 1000;
+    public static final String startDate = "2020-01-22";
+    public static final String TIME_FORMAT = "yyyy-MM-dd";
 }
