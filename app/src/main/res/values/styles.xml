@@ -51,7 +51,7 @@
 
     <style name="countrySubDetails">
         <item name="fontFamily">@font/poppin_regular</item>
-        <item name="android:textSize">13sp</item>
+        <item name="android:textSize">12sp</item>
     </style>
 
     <style name="continent">
