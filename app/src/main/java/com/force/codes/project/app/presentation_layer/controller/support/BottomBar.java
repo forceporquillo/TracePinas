@@ -7,30 +7,29 @@
 
 package com.force.codes.project.app.presentation_layer.controller.support;
 
-import android.content.Context;
-import android.view.View;
+        import android.content.Context;
+        import android.view.View;
 
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+        import androidx.recyclerview.widget.LinearLayoutManager;
+        import androidx.recyclerview.widget.RecyclerView;
 
-import com.force.codes.project.app.R;
-import com.force.codes.project.app.presentation_layer.controller.custom.interfaces.BottomItemListener;
-import com.force.codes.project.app.presentation_layer.controller.custom.model.BottomItem;
-import com.force.codes.project.app.presentation_layer.views.adapters.BottomBarAdapter;
+        import com.force.codes.project.app.R;
+        import com.force.codes.project.app.presentation_layer.controller.interfaces.BottomItemListener;
+        import com.force.codes.project.app.presentation_layer.controller.model.BottomItem;
+        import com.force.codes.project.app.presentation_layer.views.adapters.BottomBarAdapter;
 
-import org.jetbrains.annotations.NotNull;
+        import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
+        import java.util.ArrayList;
+        import java.util.Collections;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
+        import butterknife.BindView;
+        import butterknife.ButterKnife;
 
 public class BottomBar{
     private final static int ITEM_LIMIT = 5;
-    private Context context;
-    private BottomItemListener listener;
+    private final Context context;
+    private final BottomItemListener listener;
     private ArrayList<BottomItem> bottomItems;
 
     @BindView(R.id.bottom_bar_recyclerview)
@@ -57,7 +56,7 @@ public class BottomBar{
 
     final void setBottomAdapter(int selected){
         BottomBarAdapter bottomBarAdapter = new BottomBarAdapter(
-                selected, bottomItems, calculateWidth(), listener);
+                selected, calculateWidth(), bottomItems, listener);
         recyclerView.setLayoutManager(new LinearLayoutManager(
                 context, LinearLayoutManager.HORIZONTAL, false)
         );
