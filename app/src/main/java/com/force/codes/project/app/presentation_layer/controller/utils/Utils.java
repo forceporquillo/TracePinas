@@ -37,7 +37,7 @@ import static android.text.Spanned.SPAN_EXCLUSIVE_EXCLUSIVE;
 
 public abstract class Utils{
     public static String getDate(long milliseconds){
-        SimpleDateFormat formatter = new SimpleDateFormat("EEE, dd MMM yyyy hh:mm:ss aaa", Locale.getDefault());
+        SimpleDateFormat formatter = simpleDateFormat("EEE, dd MMM yyyy hh:mm:ss aaa");
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(milliseconds);
         return formatter.format(calendar.getTime());
