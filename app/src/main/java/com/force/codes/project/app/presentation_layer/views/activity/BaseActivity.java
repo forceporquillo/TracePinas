@@ -39,12 +39,8 @@ public abstract class BaseActivity extends DaggerAppCompatActivity{
             return transaction.replace(R.id.fragment_container, fragment,
                     fragment.getClass().getSimpleName());
         }
-        
-        Fragment activeFragment = fragment;
 
-        transaction.add(R.id.fragment_container, fragment)
-                .hide(fragment).show(activeFragment);
-
-        return transaction;
+        return transaction.replace(R.id.fragment_container, fragment)
+                .hide(fragment).show(fragment);
     }
 }
