@@ -11,12 +11,12 @@ package com.force.codes.project.app.service.executors;
 import android.os.Handler;
 import android.os.Looper;
 
+import com.force.codes.project.app.presentation_layer.controller.utils.Utils;
+
 import org.jetbrains.annotations.NotNull;
 
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
-
-import static com.force.codes.project.app.BaseApplication.THREAD_COUNT;
 
 public class AppExecutors{
     private final Executor diskIO;
@@ -36,7 +36,7 @@ public class AppExecutors{
             Executors.newSingleThreadExecutor(),
             new ThreadExecutor(delay),
             new MainThreadExecutor(),
-            Executors.newFixedThreadPool(THREAD_COUNT));
+            Executors.newFixedThreadPool(Utils.getThreadCount()));
     }
 
     public Executor diskIO(){

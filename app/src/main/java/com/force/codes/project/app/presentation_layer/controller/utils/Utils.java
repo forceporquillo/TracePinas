@@ -56,7 +56,7 @@ public abstract class Utils{
     }
 
     /**
-     * @return thread count by multiplying device processors count to 2
+     * @return thread count by multiplying device processors count by 2
      */
 
     public static int getThreadCount(){

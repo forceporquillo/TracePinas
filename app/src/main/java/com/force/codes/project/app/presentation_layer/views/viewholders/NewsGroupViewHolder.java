@@ -8,21 +8,17 @@
 package com.force.codes.project.app.presentation_layer.views.viewholders;
 
 import android.content.Context;
-import android.content.res.Resources;
-import android.util.TypedValue;
 import android.view.View;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.databinding.BindingAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.force.codes.project.app.BR;
 import com.force.codes.project.app.R;
 import com.force.codes.project.app.databinding.NewsGroupLayoutBinding;
-import com.force.codes.project.app.presentation_layer.controller.custom.model.Group;
-import com.force.codes.project.app.presentation_layer.controller.custom.utils.RuntimeMargin;
+import com.force.codes.project.app.presentation_layer.controller.model.Group;
+import com.force.codes.project.app.presentation_layer.controller.utils.Utils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -59,8 +55,8 @@ public class NewsGroupViewHolder extends RecyclerView.ViewHolder{
         RelativeLayout.LayoutParams params = (RelativeLayout
                 .LayoutParams) relativeLayout.getLayoutParams();
         Context c = relativeLayout.getContext();
-        params.setMargins(0, RuntimeMargin.getPixelValue(c, 15), 0, 0);
-        params.height = RuntimeMargin.getPixelValue(c, 20);
+        params.setMargins(0, Utils.getPixelValue(c, 15), 0, 0);
+        params.height = Utils.getPixelValue(c, 20);
     }
 
     public void setDecorVisibility(boolean unHide){

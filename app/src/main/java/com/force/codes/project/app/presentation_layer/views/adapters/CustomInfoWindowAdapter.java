@@ -22,12 +22,11 @@ import androidx.databinding.library.baseAdapters.BR;
 
 import com.force.codes.project.app.R;
 import com.force.codes.project.app.databinding.CustomInfoWindowBinding;
-import com.force.codes.project.app.presentation_layer.controller.custom.utils.StringUtils;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.Marker;
 
 import static android.text.Spanned.SPAN_EXCLUSIVE_EXCLUSIVE;
-import static com.force.codes.project.app.presentation_layer.controller.custom.utils.StringUtils.formatNumber;
+import static com.force.codes.project.app.presentation_layer.controller.utils.Utils.formatNumber;
 
 public class CustomInfoWindowAdapter implements GoogleMap.InfoWindowAdapter{
     private final CustomInfoWindowBinding binding;

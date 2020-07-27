@@ -22,6 +22,7 @@ import com.force.codes.project.app.data_layer.model.twitter.TwitterData;
 import com.force.codes.project.app.data_layer.repositories.interfaces.NewsRepository;
 import com.force.codes.project.app.service.executors.AppExecutors;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -36,19 +37,14 @@ import static com.force.codes.project.app.app.constants.ApiConstants.getUserTime
 
 public class NewsViewModel extends BaseViewModel{
     private final NewsRepository newsRepository;
-    private final List<Flowable<List<TwitterData>>> listOfTwitterUsers;
     private final AppExecutors executors;
     private LiveData<PagedList<ArticlesItem>> articleLiveData;
     private LiveData<PagedList<TwitterData>> twitterLiveData;
 
     @Inject
-    public NewsViewModel(
-            final NewsRepository newsRepository, final AppExecutors executors,
-            final List<Flowable<List<TwitterData>>> listOfTwitterUsers
-    ){
+    public NewsViewModel(final NewsRepository newsRepository, final AppExecutors executors){
         this.newsRepository = newsRepository;
         this.executors = executors;
-        this.listOfTwitterUsers = listOfTwitterUsers;
     }
 
     /**
@@ -57,6 +53,8 @@ public class NewsViewModel extends BaseViewModel{
      * @return list of flowable list observables {@link TwitterData}
      */
     final List<Flowable<List<TwitterData>>> flowableList(){
+        final List<Flowable<List<TwitterData>>>
+                listOfTwitterUsers = new ArrayList<>();
         for(int i = 0; i < getUrl().length; ++i)
             listOfTwitterUsers.add(i, newsRepository
                     .getTwitterUser(getUserTimeline(i))
