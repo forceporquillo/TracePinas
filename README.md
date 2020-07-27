@@ -65,14 +65,14 @@ This project requires a newer version of Android Studio such as
 <br />**DiseaseSh**- [https://corona.lmao.ninja/](https://corona.lmao.ninja/)
 <br />**Johns Hopkins CSSE**-  [(https://github.com/CSSEGISandData/COVID-19](https://github.com/CSSEGISandData/COVID-19)
 <br />**PH DATASETS/DOH** 
-- Katerinahronik
--- [https://apify.com/katerinahronik/covid-philippines](https://apify.com/katerinahronik/covid-philippines) from [https://ncovtracker.doh.gov.ph/](https://ncovtracker.doh.gov.ph/).
---[https://github.com/sorxrob/coronavirus-ph-api](https://github.com/sorxrob/coronavirus-ph-api)
+- Katerinahronik -- [https://apify.com/katerinahronik/covid-philippines](https://apify.com/katerinahronik/covid-philippines) from [https://ncovtracker.doh.gov.ph/](https://ncovtracker.doh.gov.ph/)
+<br />
+- Sorxrob Github COVID19 PH API -- [https://github.com/sorxrob/coronavirus-ph-api]
 
 <br />**COVID19 API**-  [https://covid19api.com/](https://covid19api.com/)
 <br />**European Centre for Disease Prevention and Control (ECDC)** - [https://www.ecdc.europa.eu/en](https://www.ecdc.europa.eu/en)
 <br />**COVID-19 Data Repository by the Center for Systems Science and Engineering (CSSE) at Johns Hopkins University** -[JHU-CSSE Github](https://github.com/CSSEGISandData/COVID-19)
-<br /> **Sorxrob Github COVID19 PH API** - [https://github.com/sorxrob/coronavirus-ph-api](https://github.com/sorxrob/coronavirus-ph-api)
+<br /> (https://github.com/sorxrob/coronavirus-ph-api)
 ## Author
 
 **Force Porquillo** - fporquillo18@gmail.com
