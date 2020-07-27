@@ -4,6 +4,9 @@
 ## COVID19 Tracker App
 The COVID19 Tracker app a mobile version of virus tracker inspired by different tracking web apps. This app has a bunch of new features such as data breakdown visualization of each country using graph charts, maps to provide seamless hover to different affected countries, news and tweets from local media providers to provide updates anywhere in the world.
 
+![https://github.com/forceporquillo/android-henlo-fren/blob/2f01d81cd4e0f8e682db75f24a6ba48e56f15285/preview_screenshot.jpg](https://github.com/forceporquillo/android-henlo-fren/blob/2f01d81cd4e0f8e682db75f24a6ba48e56f15285/preview_screenshot.jpg)
+
+
 ## Summary
 -   Uses  [MVVM](https://en.wikipedia.org/wiki/Model_View_ViewModel)  architecture pattern to break and organize module dependencies to make development clean, organized, easy to maintain and update.
 -   Uses  [Android Databinding](https://developer.android.com/topic/libraries/data-binding/index.html)  with  [LiveData](https://developer.android.com/topic/libraries/architecture/livedata.html) to manage UI lifecycle changes.
@@ -12,6 +15,7 @@ The COVID19 Tracker app a mobile version of virus tracker inspired by different 
 -   Store data using  [Room](https://developer.android.com/topic/libraries/architecture/room.html) database.
 -  Uses Charts from [https://github.com/PhilJay/MPAndroidChart](https://github.com/PhilJay/MPAndroidChart) to graph data statistically.
 - Uses Dagger2 to inject instance dependencies.
+
 ## Prerequisites
 This project requires a newer version of Android Studio such as 
 - Android Studio 4.0
@@ -68,9 +72,6 @@ resValue "string", "maps_api_key", (secureProps.getProperty("MAPS_API_KEY") ?: "
 - **RxJava/Android** - Composing asynchronous and event-based programs by using observable sequences.
 
 - **RxNetwork** - observes **network connection state** and **internet connectivity** with approach to **RxJava Observables.**
-
-## Preview Screenshots
-![https://github.com/forceporquillo/android-henlo-fren/blob/2f01d81cd4e0f8e682db75f24a6ba48e56f15285/preview_screenshot.jpg](https://github.com/forceporquillo/android-henlo-fren/blob/2f01d81cd4e0f8e682db75f24a6ba48e56f15285/preview_screenshot.jpg)
 
 ## Data Sources - REST API
 **COVID API NOVEL** - [https://corona.lmao.ninja/ ](https://corona.lmao.ninja/)
