@@ -61,16 +61,18 @@ This project requires a newer version of Android Studio such as
 
 ## Data Sources - REST API
 **COVID API NOVEL** - [https://corona.lmao.ninja/ ](https://corona.lmao.ninja/)
-**Twitter-API** - [https://developer.twitter.com/en/docs](https://developer.twitter.com/en/docs) 
-**DiseaseSh**- [https://corona.lmao.ninja/](https://corona.lmao.ninja/)
-**Johns Hopkins CSSE**-  [(https://github.com/CSSEGISandData/COVID-19](https://github.com/CSSEGISandData/COVID-19)
-**PH DATASETS/DOH** 
+<br />**Twitter-API** - [https://developer.twitter.com/en/docs](https://developer.twitter.com/en/docs) 
+<br />**DiseaseSh**- [https://corona.lmao.ninja/](https://corona.lmao.ninja/)
+<br />**Johns Hopkins CSSE**-  [(https://github.com/CSSEGISandData/COVID-19](https://github.com/CSSEGISandData/COVID-19)
+<br />**PH DATASETS/DOH** 
 - Katerinahronik
 -- [https://apify.com/katerinahronik/covid-philippines](https://apify.com/katerinahronik/covid-philippines) from [https://ncovtracker.doh.gov.ph/](https://ncovtracker.doh.gov.ph/).
 --[https://github.com/sorxrob/coronavirus-ph-api](https://github.com/sorxrob/coronavirus-ph-api)
-**COVID19 API**-  [https://covid19api.com/](https://covid19api.com/)
-**European Centre for Disease Prevention and Control (ECDC)** - [(https://www.ecdc.europa.eu/en](https://www.ecdc.europa.eu/en) - Twitter and YouTube API feeds for ECDC, and their RSS feeds for pulling information. 
 
+<br />**COVID19 API**-  [https://covid19api.com/](https://covid19api.com/)
+<br />**European Centre for Disease Prevention and Control (ECDC)** - [https://www.ecdc.europa.eu/en](https://www.ecdc.europa.eu/en)
+<br />**COVID-19 Data Repository by the Center for Systems Science and Engineering (CSSE) at Johns Hopkins University** -[JHU-CSSE Github](https://github.com/CSSEGISandData/COVID-19)
+<br /> **Sorxrob Github COVID19 PH API** - [https://github.com/sorxrob/coronavirus-ph-api](https://github.com/sorxrob/coronavirus-ph-api)
 ## Author
 
 **Force Porquillo** - fporquillo18@gmail.com
