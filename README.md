@@ -8,13 +8,17 @@ The COVID19 Tracker app a mobile version of virus tracker inspired by different 
 
 
 ## Summary
--   Uses  [MVVM](https://en.wikipedia.org/wiki/Model_View_ViewModel)  architecture pattern to break and organize module dependencies to make development clean, organized, easy to maintain and update.
--   Uses  [Android Databinding](https://developer.android.com/topic/libraries/data-binding/index.html)  with  [LiveData](https://developer.android.com/topic/libraries/architecture/livedata.html) to manage UI lifecycle changes.
+-   uses  [MVVM](https://en.wikipedia.org/wiki/Model_View_ViewModel)  architecture pattern to separate and organized module dependencies to make development clean, easy to maintain and update.
+-   uses  [Android Databinding](https://developer.android.com/topic/libraries/data-binding/index.html)  with  [LiveData](https://developer.android.com/topic/libraries/architecture/livedata.html) to manage UI lifecycle changes.
 -   Asynchronous communications implemented with  [ReactiveX](http://reactivex.io/).
 - Converts Rx flowable observable to LiveData using  [LiveDataReactiveStreams](https://developer.android.com/reference/android/arch/lifecycle/LiveDataReactiveStreams).
--   Store data using  [Room](https://developer.android.com/topic/libraries/architecture/room.html) database.
--  Uses Charts from [https://github.com/PhilJay/MPAndroidChart](https://github.com/PhilJay/MPAndroidChart) to graph data statistically.
-- Uses Dagger2 to inject instance dependencies.
+-   store data using  [Room](https://developer.android.com/topic/libraries/architecture/room.html) database.
+-  uses charts from [https://github.com/PhilJay/MPAndroidChart](https://github.com/PhilJay/MPAndroidChart) to graph data statistically.
+- uses Dagger2 to inject instance dependencies.
+- implemented with Facebook shimmers, SmartTabLayouts, Pagination.
+- uses OkHttpInterceptor (chain calls) for Oauth2 bearer token authentication in Twitter API.
+- uses Google Maps SDK, Twitter API and various COVID-19 related API's .
+- LeakCanary for detecting memory leaks.
 
 ## Prerequisites
 This project requires a newer version of Android Studio such as 
@@ -24,7 +28,7 @@ This project requires a newer version of Android Studio such as
 
 - Java 8 or later.
 
-- Google Maps SDK API - you can obtain your own api here - [https://developers.google.com/maps/documentation/android-sdk/overview](https://developers.google.com/maps/documentation/android-sdk/overview)
+- Google Maps SDK API - you can obtain your own api here [https://developers.google.com/maps/documentation/android-sdk/overview](https://developers.google.com/maps/documentation/android-sdk/overview)
 
 ```
 // Read the API key from demo/secure.properties into R.string.maps_api_key  
