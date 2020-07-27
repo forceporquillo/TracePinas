@@ -7,6 +7,8 @@ package com.force.codes.project.app.data_layer.resources.api;
  *
  */
 
+import com.force.codes.project.app.data_layer.model.Data;
+import com.force.codes.project.app.data_layer.model.TotalByDate;
 import com.force.codes.project.app.data_layer.model.country.CountryDetails;
 import com.force.codes.project.app.data_layer.model.world.GlobalData;
 import com.force.codes.project.app.data_layer.model.map_data.LocalData;
@@ -44,4 +46,8 @@ public interface ApiService{
     @GET
     Flowable<List<TwitterData>>
     getTwitterResponse(@Url String url);
+
+    @GET
+    Flowable<List<TotalByDate>>
+    getTotalByDate(@Url String url);
 }
