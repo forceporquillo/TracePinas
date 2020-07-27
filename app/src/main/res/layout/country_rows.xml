@@ -90,7 +90,7 @@
                     <TextView
                         android:id="@+id/cases_text"
                         style="@style/countrySubDetails"
-                        textUpdate="@{details.todayCases}"
+                        android:text="1,200 new cases"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
                 </RelativeLayout>

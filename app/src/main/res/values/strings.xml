@@ -51,6 +51,7 @@
     <string name="new_recoveries">+%s \nnew recoveries</string>
     <string name="new_deaths">+%s \nnew deaths</string>
 
+    <string name="twitter_at">\@%s</string>
     <string name="zero_cases">+0 \nnew cases</string>
     <string name="zero_recoveries">+0 \nnew recoveries</string>
     <string name="zero_deaths">+0 \nnew deaths</string>
@@ -68,4 +69,5 @@
     <string name="TOTAL">Total Infected: %1s</string>
     <string name="DEFAULT">Philippines</string>
     <string name="TWITTER_BEARER_TOKEN">AAAAAAAAAAAAAAAAAAAAAA5SDwEAAAAAnF1q</string>
+    <string name="statistics">Statistics</string>
 </resources>

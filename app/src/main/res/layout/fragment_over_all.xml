@@ -7,22 +7,23 @@
 <layout>
 
     <data>
-
         <variable
             name="overall"
             type="com.force.codes.project.app.presentation_layer.views.fragments.viewpager.OverAllFragment" />
     </data>
 
-    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
+        android:background="@color/white"
         android:layout_height="match_parent"
         tools:context=".presentation_layer.views.fragments.viewpager.OverAllFragment">
 
         <androidx.recyclerview.widget.RecyclerView
+            android:layout_below="@id/line_chart"
             android:id="@+id/over_all_recyclerview"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 
-    </FrameLayout>
+    </RelativeLayout>
 </layout>
