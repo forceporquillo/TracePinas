@@ -70,4 +70,9 @@
     <string name="DEFAULT">Philippines</string>
     <string name="TWITTER_BEARER_TOKEN">AAAAAAAAAAAAAAAAAAAAAA5SDwEAAAAAnF1q</string>
     <string name="statistics">Statistics</string>
+
+    <string name="new_cases_total">\u0020new cases with the total of\u0020</string>
+    <string name="no_new_cases">\u0020total confirmed as of today</string>
+    <string name="confirmed_today">\u0020confirmed cases as of today</string>
+
 </resources>
