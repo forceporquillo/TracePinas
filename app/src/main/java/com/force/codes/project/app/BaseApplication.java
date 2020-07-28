@@ -30,11 +30,6 @@ public class BaseApplication extends Application implements HasAndroidInjector{
 
     private AppComponent appComponent;
 
-    public static final int SDK_INT = Build.VERSION.SDK_INT;
-
-    public static final int THREAD_COUNT = Runtime
-            .getRuntime().availableProcessors() * 2;
-
     private static void setDebugInstance(DebugTreeApplication debugInstance){
         if(BuildConfig.DEBUG){
             debugInstance.DebugTree();
