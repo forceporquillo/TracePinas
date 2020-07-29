@@ -84,13 +84,21 @@ resValue "string", "maps_api_key", (secureProps.getProperty("MAPS_API_KEY") ?: "
 
 ## Data Sources - REST API 📊
 **COVID-19 Data Repository by the Center for Systems Science and Engineering (CSSE) at Johns Hopkins University** - [https://github.com/CSSEGISandData/COVID-19](https://github.com/CSSEGISandData/COVID-19)
+
 **COVID API NOVEL** - [https://corona.lmao.ninja/ ](https://corona.lmao.ninja/)
+
 **NEWS ORG** - [https://newsapi.org/](https://newsapi.org/)
+
 **Twitter-API** - [https://developer.twitter.com/en/docs](https://developer.twitter.com/en/docs) 
+
 **DiseaseSh**- [https://corona.lmao.ninja/](https://corona.lmao.ninja/)
+
 **Johns Hopkins CSSE** -  [(https://github.com/CSSEGISandData/COVID-19](https://github.com/CSSEGISandData/COVID-19)
+
 **COVID19 API**-  [https://covid19api.com/](https://covid19api.com/)
+
 **European Centre for Disease Prevention and Control (ECDC)** - [https://www.ecdc.europa.eu/en](https://www.ecdc.europa.eu/en)
+
 **PH DATASETS/DOH**
 - **Katerinahronik** - [https://apify.com/katerinahronik/covid-philippines](https://apify.com/katerinahronik/covid-philippines) from 
 - **DOH** [https://ncovtracker.doh.gov.ph/](https://ncovtracker.doh.gov.ph/)
@@ -105,18 +113,11 @@ If you find some issues about this app you can submit a [issue](https://github.c
 
 **Force Porquillo** - fporquillo18@gmail.com
 [
-![gmail]([https://github.com/forceporquillo/android-covid19-tracker/blob/master/gmail_icon.png|width=50px](https://github.com/forceporquillo/android-covid19-tracker/blob/master/gmail_icon.png)
-)](fporquillo18@gmail.com)
-[
-![github]([https://github.com/forceporquillo/android-covid19-tracker/blob/master/github_icon.png|width=50px](https://github.com/forceporquillo/android-covid19-tracker/blob/master/github_icon.png)
-)](https://github.com/forceporquillo)
-[
-![twitter]([https://github.com/forceporquillo/android-covid19-tracker/blob/master/twitter_icon.png|width=50px](https://github.com/forceporquillo/android-covid19-tracker/blob/master/twitter_icon.png)
-)](https://twitter.com/Tito_4S)
+![https://github.com/forceporquillo/android-covid19-tracker/blob/master/twitter_icon.png](https://github.com/forceporquillo/android-covid19-tracker/blob/master/twitter_icon.png)](https://www.twitter.com/tito_4s)
+
 ## Find this project useful ?  ❤️🔥💯
 -   Support it by clicking the  ⭐ or ☕🙏
-[![buy me coffee]([https://github.com/forceporquillo/android-covid19-tracker/blob/master/buy_me_coffee.png](https://github.com/forceporquillo/android-covid19-tracker/blob/master/buy_me_coffee.png))](https://www.buymeacoffee.com/forcecodes)
-
+[![Foo](https://camo.githubusercontent.com/4ba50f927b0ea667976efa9f43ae166caa2c4cf7/68747470733a2f2f63646e2e6275796d6561636f666665652e636f6d2f627574746f6e732f6c61746f2d6f72616e67652e706e67)](https://www.buymeacoffee.com/forcecodes)
 ## License
 
 Copyright 2020 Force Porquillo
