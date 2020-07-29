@@ -1,26 +1,27 @@
 
-
-[![Foo](https://camo.githubusercontent.com/4ba50f927b0ea667976efa9f43ae166caa2c4cf7/68747470733a2f2f63646e2e6275796d6561636f666665652e636f6d2f627574746f6e732f6c61746f2d6f72616e67652e706e67)](https://www.buymeacoffee.com/forcecodes)
-## COVID19 Tracker App
-The COVID19 Tracker app a mobile version of virus tracker inspired by different tracking web apps. This app has a bunch of new features such as data breakdown visualization of each country using graph charts, maps to provide seamless hover to different affected countries, news and tweets from local media providers to provide updates anywhere in the world.
+## COVID19 Tracker App 📱
+The COVID19 Tracker app is a mobile version of virus tracker inspired by various tracking web apps. This app has a bunch of new features such as data breakdown visualization of each country using graph charts, maps to provide seamless hover to different affected countries, news and tweets from local media providers to provide updates anywhere in the world.
 
 ![https://github.com/forceporquillo/android-henlo-fren/blob/2f01d81cd4e0f8e682db75f24a6ba48e56f15285/preview_screenshot.jpg](https://github.com/forceporquillo/android-henlo-fren/blob/2f01d81cd4e0f8e682db75f24a6ba48e56f15285/preview_screenshot.jpg)
 
 
-## Summary
--   uses  [MVVM](https://en.wikipedia.org/wiki/Model_View_ViewModel)  architecture pattern to separate and organized module dependencies to make development clean, easy to maintain and update.
--   uses  [Android Databinding](https://developer.android.com/topic/libraries/data-binding/index.html)  with  [LiveData](https://developer.android.com/topic/libraries/architecture/livedata.html) to manage UI lifecycle changes.
+## Summary 📋
+This [COVID-19 Tracker App](https://github.com/forceporquillo/android-covid19-tracker) showcase how I  apply what I've learned on learning Mobile Programming in amidst of these pandemic.
+
+This app uses:
+-   [MVVM](https://en.wikipedia.org/wiki/Model_View_ViewModel)  architecture pattern to separate and organized module dependencies to make development clean, easy to maintain and update.
+-   [Android Databinding](https://developer.android.com/topic/libraries/data-binding/index.html)  with  [LiveData](https://developer.android.com/topic/libraries/architecture/livedata.html) to manage UI lifecycle changes.
 -   Asynchronous communications implemented with  [ReactiveX](http://reactivex.io/).
 - Converts Rx flowable observable to LiveData using  [LiveDataReactiveStreams](https://developer.android.com/reference/android/arch/lifecycle/LiveDataReactiveStreams).
 -   store data using  [Room](https://developer.android.com/topic/libraries/architecture/room.html) database.
--  uses charts from [https://github.com/PhilJay/MPAndroidChart](https://github.com/PhilJay/MPAndroidChart) to graph data statistically.
-- uses Dagger2 to inject instance dependencies.
+-  charts from [https://github.com/PhilJay/MPAndroidChart](https://github.com/PhilJay/MPAndroidChart) to graph data statistically.
+- Dagger2 to inject instance dependencies.
 - implemented with Facebook shimmers, SmartTabLayouts, Pagination.
-- uses OkHttpInterceptor (chain calls) for Oauth2 bearer token authentication in Twitter API.
-- uses Google Maps SDK, Twitter API and various COVID-19 related API's .
+- OkHttpInterceptor (chain calls) for Oauth2 bearer token authentication in Twitter API.
+- Google Maps SDK, Twitter API and various COVID-19 related API's .
 - LeakCanary for detecting memory leaks.
 
-## Prerequisites
+## Prerequisites 📍⚠️
 This project requires a newer version of Android Studio such as 
 - Android Studio 4.0
 - AndroidX dependencies 
@@ -43,10 +44,10 @@ resValue "string", "maps_api_key", (secureProps.getProperty("MAPS_API_KEY") ?: "
 // 2. Add this line, where YOUR_API_KEY is your API key: MAPS_API_KEY=YOUR_API_KEY
 ```
 
-## Features
-- **Android Architecture Components** - Lifecycle awareness has been achieved using a combination of LiveData, ViewModels and Room.
+## Features 🚀 🔥
+- **Android Architecture Components** - Lifecycle aware achieved by using a combination of RxJava, LiveData, ViewModels and Room.
 
-- **MVVM Architecture** - Using the lifecycle aware viewmodels, the view observes changes in the model / repository.
+- **MVVM Architecture** - Using the lifecycle aware ViewModels, the view observes changes in the model / repository.
 
 - **Offline First Architecture** - All the data is first tried to be loaded from the local database and then updated from the server. This ensures that the app is usable even in an offline mode.
 
@@ -58,47 +59,65 @@ resValue "string", "maps_api_key", (secureProps.getProperty("MAPS_API_KEY") ?: "
 
 - **Reactive Networking** - This observes network configuration, and systematically adapts to any network condition and network configuration without requiring manual reconfiguration. This notifies the UI Thread.
 
-- **Multithreading** - These separates both network and local repository to reactively synchronize each task independently.
+## Dependencies/Libraries 📚🛠
+- [AndroidX](https://developer.android.com/jetpack/androidx)
+- [Timber](https://github.com/JakeWharton/timber)
+- [Gson Converter](https://github.com/square/retrofit/tree/master/retrofit-converters/gson)
+- [Retrofit 2](https://square.github.io/retrofit/)
+- [Data Binding](https://developer.android.com/topic/libraries/data-binding)
+- [OkHttp 3](https://square.github.io/okhttp/)
+- [RxNetwork](https://github.com/greyfoxit/RxNetwork)
+- [Dagger 2](https://github.com/google/dagger)
+- [LiveData](https://developer.android.com/reference/androidx/lifecycle/LiveData)
+- [Room](https://developer.android.com/topic/libraries/architecture/room)
+- [RxJava 2](https://github.com/ReactiveX/RxJava)
+- [ViewModel](https://developer.android.com/topic/libraries/architecture/viewmodel)
+- [LiveDataReactiveStreams](https://developer.android.com/reference/android/arch/lifecycle/LiveDataReactiveStreams)
+- [MPAndroidChart](https://github.com/PhilJay/MPAndroidChart)
+- [Glide](https://github.com/bumptech/glide)
+- [Facebook Shimmer](https://facebook.github.io/shimmer-android/)
+- [Paging](https://developer.android.com/topic/libraries/architecture/paging)
+- [SwipeRefresh](https://developer.android.com/jetpack/androidx/releases/swiperefreshlayout)
+- [Google Maps SDK](https://developers.google.com/maps/documentation)
+- [SmartTabLayout](https://github.com/ogaclejapan/SmartTabLayout)
+- [LeakCanary](https://square.github.io/leakcanary/)
 
-- **Asynchronous Programming** - Work runs separately from the main baseApplication thread and notifies the calling thread of its completion, failure or progress.
-
-## Core Dependencies
-**Android Architecture Components**:  [Google Github repository](https://github.com/android/architecture-components-samples)
-- **ViewModel** - Save the activity/fragment state across configuration changes.  
-- **LiveData** - observes the data changes in local database and automatically emmits data in our UI whenever new data is inserted in DB.
- - **PageList** -  loads data in gradual chunks (pages) from a **DataSource**.
-- **Room** - stores country information in local database for offline compatibility.
-- **Data Binding** - bind the UI components in the layout to **data** resources using a declarative format rather than programmatically.
-- **Google Maps API SDK** - provides map visualization to draw markers in affected areas.
-- **Dagger 2** - injects relying object dependencies; reduces boilerplate code when instantiating object instances.
-
-**ReactiveX 2.x**
-- **RxJava/Android** - Composing asynchronous and event-based programs by using observable sequences.
-
-- **RxNetwork** - observes **network connection state** and **internet connectivity** with approach to **RxJava Observables.**
-
-## Data Sources - REST API
+## Data Sources - REST API 📊
+**COVID-19 Data Repository by the Center for Systems Science and Engineering (CSSE) at Johns Hopkins University** - [https://github.com/CSSEGISandData/COVID-19](https://github.com/CSSEGISandData/COVID-19)
 **COVID API NOVEL** - [https://corona.lmao.ninja/ ](https://corona.lmao.ninja/)
-<br />**Twitter-API** - [https://developer.twitter.com/en/docs](https://developer.twitter.com/en/docs) 
-<br />**DiseaseSh**- [https://corona.lmao.ninja/](https://corona.lmao.ninja/)
-<br />**Johns Hopkins CSSE**-  [(https://github.com/CSSEGISandData/COVID-19](https://github.com/CSSEGISandData/COVID-19)
-<br />**PH DATASETS/DOH** 
-- Katerinahronik -- [https://apify.com/katerinahronik/covid-philippines](https://apify.com/katerinahronik/covid-philippines) from [https://ncovtracker.doh.gov.ph/](https://ncovtracker.doh.gov.ph/)
-<br />
-- Sorxrob Github COVID19 PH API -- [https://github.com/sorxrob/coronavirus-ph-api]
+**NEWS ORG** - [https://newsapi.org/](https://newsapi.org/)
+**Twitter-API** - [https://developer.twitter.com/en/docs](https://developer.twitter.com/en/docs) 
+**DiseaseSh**- [https://corona.lmao.ninja/](https://corona.lmao.ninja/)
+**Johns Hopkins CSSE** -  [(https://github.com/CSSEGISandData/COVID-19](https://github.com/CSSEGISandData/COVID-19)
+**COVID19 API**-  [https://covid19api.com/](https://covid19api.com/)
+**European Centre for Disease Prevention and Control (ECDC)** - [https://www.ecdc.europa.eu/en](https://www.ecdc.europa.eu/en)
+**PH DATASETS/DOH**
+- **Katerinahronik** - [https://apify.com/katerinahronik/covid-philippines](https://apify.com/katerinahronik/covid-philippines) from 
+- **DOH** [https://ncovtracker.doh.gov.ph/](https://ncovtracker.doh.gov.ph/)
+- **Sorxrob Github** -- [https://github.com/sorxrob/coronavirus-ph-api]
 
-<br />**COVID19 API**-  [https://covid19api.com/](https://covid19api.com/)
-<br />**European Centre for Disease Prevention and Control (ECDC)** - [https://www.ecdc.europa.eu/en](https://www.ecdc.europa.eu/en)
-<br />**COVID-19 Data Repository by the Center for Systems Science and Engineering (CSSE) at Johns Hopkins University** -[JHU-CSSE Github](https://github.com/CSSEGISandData/COVID-19)
+## Contributing 🧑🏻‍🔧📲
+I love contributions! There is a lot to do in this app so why not chat or email me about what you're interested in doing? Or you can directly submit a [pull request](https://github.com/forceporquillo/android-covid19-tracker/pulls) and I'd to love merged it.
 
-## Author
+If you find some issues about this app you can submit a [issue](https://github.com/forceporquillo/android-covid19-tracker/issues) here.
+
+## Author 👨🏻‍💻🇵🇭
 
 **Force Porquillo** - fporquillo18@gmail.com
-* [Github](https://github.com/forceporquillo)
-* [Twitter](https://twitter.com/tito_4s)
+[
+![gmail]([https://github.com/forceporquillo/android-covid19-tracker/blob/master/gmail_icon.png|width=50px](https://github.com/forceporquillo/android-covid19-tracker/blob/master/gmail_icon.png)
+)](fporquillo18@gmail.com)
+[
+![github]([https://github.com/forceporquillo/android-covid19-tracker/blob/master/github_icon.png|width=50px](https://github.com/forceporquillo/android-covid19-tracker/blob/master/github_icon.png)
+)](https://github.com/forceporquillo)
+[
+![twitter]([https://github.com/forceporquillo/android-covid19-tracker/blob/master/twitter_icon.png|width=50px](https://github.com/forceporquillo/android-covid19-tracker/blob/master/twitter_icon.png)
+)](https://twitter.com/Tito_4S)
+## Find this project useful ?  ❤️🔥💯
+-   Support it by clicking the  ⭐ or ☕🙏
+[![buy me coffee]([https://github.com/forceporquillo/android-covid19-tracker/blob/master/buy_me_coffee.png](https://github.com/forceporquillo/android-covid19-tracker/blob/master/buy_me_coffee.png))](https://www.buymeacoffee.com/forcecodes)
 
 ## License
-
 
 Copyright 2020 Force Porquillo
 
