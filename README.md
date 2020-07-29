@@ -111,15 +111,12 @@ If you find some issues about this app you can submit a [issue](https://github.c
 
 ## Author 👨🏻‍💻🇵🇭
 
-**Force Porquillo** <br/>
+***Force Porquillo***
+FEU Institute of Technology <br/>
 [
-![https://github.com/forceporquillo/android-covid19-tracker/blob/master/gmail_icon.png|width=15px](https://github.com/forceporquillo/android-covid19-tracker/blob/master/gmail_icon.png)](fporquillo18@gmail.com)
-
-[
-![https://github.com/forceporquillo/android-covid19-tracker/blob/master/github_icon.png|width=15px](https://github.com/forceporquillo/android-covid19-tracker/blob/master/github_icon.png)](https://github.com/forceporquillo)
-
-[
-![https://github.com/forceporquillo/android-covid19-tracker/blob/master/twitter_icon.png|width=15px](https://github.com/forceporquillo/android-covid19-tracker/blob/master/twitter_icon.png)](https://www.twitter.com/tito_4s)
+![https://github.com/forceporquillo/android-covid19-tracker/blob/master/gmail_icon.png|width=5px](https://github.com/forceporquillo/android-covid19-tracker/blob/master/gmail_icon.png)](fporquillo18@gmail.com)[
+![https://github.com/forceporquillo/android-covid19-tracker/blob/master/github_icon.png|width=5px](https://github.com/forceporquillo/android-covid19-tracker/blob/master/github_icon.png)](https://github.com/forceporquillo)[
+![https://github.com/forceporquillo/android-covid19-tracker/blob/master/twitter_icon.png|width=5px](https://github.com/forceporquillo/android-covid19-tracker/blob/master/twitter_icon.png)](https://www.twitter.com/tito_4s)
 
 ## Find this project useful ?  ❤️🔥💯
 -   Support it by clicking the  ⭐ or ☕🙏
