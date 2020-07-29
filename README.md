@@ -111,12 +111,19 @@ If you find some issues about this app you can submit a [issue](https://github.c
 
 ## Author 👨🏻‍💻🇵🇭
 
-**Force Porquillo** - fporquillo18@gmail.com
+**Force Porquillo**
 [
-![https://github.com/forceporquillo/android-covid19-tracker/blob/master/twitter_icon.png|width=20px](https://github.com/forceporquillo/android-covid19-tracker/blob/master/twitter_icon.png)](https://www.twitter.com/tito_4s)
+![https://github.com/forceporquillo/android-covid19-tracker/blob/master/gmail_icon.jpg|width=15px](https://github.com/forceporquillo/android-covid19-tracker/blob/master/gmail_icon.jpg)](fporquillo18@gmail.com)
+
+[
+![https://github.com/forceporquillo/android-covid19-tracker/blob/master/github_icon.jpg|width=15px](https://github.com/forceporquillo/android-covid19-tracker/blob/master/github_icon.jpg)](https://github.com/forceporquillo)
+
+[
+![https://github.com/forceporquillo/android-covid19-tracker/blob/master/twitter_icon.jpg|width=15px](https://github.com/forceporquillo/android-covid19-tracker/blob/master/twitter_icon.jpg)](https://www.twitter.com/tito_4s)
 
 ## Find this project useful ?  ❤️🔥💯
 -   Support it by clicking the  ⭐ or ☕🙏
+
 [![Foo](https://camo.githubusercontent.com/4ba50f927b0ea667976efa9f43ae166caa2c4cf7/68747470733a2f2f63646e2e6275796d6561636f666665652e636f6d2f627574746f6e732f6c61746f2d6f72616e67652e706e67)](https://www.buymeacoffee.com/forcecodes)
 ## License
 
