@@ -101,7 +101,7 @@ object Utils {
   @JvmStatic val todayDate: Date
     get() = Date()
 
-  @JvmStatic @RequiresApi(api = VERSION_CODES.N) fun toPercent(
+  @RequiresApi(api = VERSION_CODES.N) fun toPercent(
     num: Double,
     total: Double
   ): String {
@@ -110,7 +110,7 @@ object Utils {
     return df.format(percent)
   }
 
-  @JvmStatic fun spannableString(
+  fun spannableString(
     color: String?,
     string: String
   ): SpannableString {
