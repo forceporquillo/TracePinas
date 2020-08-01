@@ -9,45 +9,49 @@ package com.force.codes.project.app.app.di.module;
 
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
-
+import com.force.codes.project.app.presentation_layer.views.factory.ViewModelProviderFactory;
 import com.force.codes.project.app.presentation_layer.views.viewmodels.LiveDataViewModel;
 import com.force.codes.project.app.presentation_layer.views.viewmodels.MapViewModel;
+import com.force.codes.project.app.presentation_layer.views.viewmodels.MyCountryViewModel;
 import com.force.codes.project.app.presentation_layer.views.viewmodels.NewsViewModel;
 import com.force.codes.project.app.presentation_layer.views.viewmodels.OverAllViewModel;
 import com.force.codes.project.app.presentation_layer.views.viewmodels.WorldwideViewModel;
-import com.force.codes.project.app.presentation_layer.views.factory.ViewModelProviderFactory;
-
 import dagger.Binds;
 import dagger.Module;
 import dagger.multibindings.IntoMap;
 
 @Module
-public abstract class ViewModelModule{
-    @Binds
-    abstract ViewModelProvider.Factory bindViewModelFactory(ViewModelProviderFactory factory);
+public abstract class ViewModelModule {
+  @Binds
+  abstract ViewModelProvider.Factory bindViewModelFactory(ViewModelProviderFactory factory);
 
-    @Binds
-    @IntoMap
-    @ViewModelKey(LiveDataViewModel.class)
-    abstract ViewModel providesLiveDataViewModel(LiveDataViewModel liveDataViewModel);
+  @Binds
+  @IntoMap
+  @ViewModelKey(LiveDataViewModel.class)
+  abstract ViewModel providesLiveDataViewModel(LiveDataViewModel liveDataViewModel);
 
-    @Binds
-    @IntoMap
-    @ViewModelKey(WorldwideViewModel.class)
-    abstract ViewModel providesWorldwideViewModel(WorldwideViewModel worldwideViewModel);
+  @Binds
+  @IntoMap
+  @ViewModelKey(WorldwideViewModel.class)
+  abstract ViewModel providesWorldwideViewModel(WorldwideViewModel worldwideViewModel);
 
-    @Binds
-    @IntoMap
-    @ViewModelKey(MapViewModel.class)
-    abstract ViewModel providesMapViewModel(MapViewModel mapViewModel);
+  @Binds
+  @IntoMap
+  @ViewModelKey(MapViewModel.class)
+  abstract ViewModel providesMapViewModel(MapViewModel mapViewModel);
 
-    @Binds
-    @IntoMap
-    @ViewModelKey(NewsViewModel.class)
-    abstract ViewModel providesNewsViewModel(NewsViewModel newsViewModel);
+  @Binds
+  @IntoMap
+  @ViewModelKey(NewsViewModel.class)
+  abstract ViewModel providesNewsViewModel(NewsViewModel newsViewModel);
 
-    @Binds
-    @IntoMap
-    @ViewModelKey(OverAllViewModel.class)
-    abstract ViewModel providesOverAllViewModel(OverAllViewModel overAllViewModel);
+  @Binds
+  @IntoMap
+  @ViewModelKey(OverAllViewModel.class)
+  abstract ViewModel providesOverAllViewModel(OverAllViewModel overAllViewModel);
+
+  @Binds
+  @IntoMap
+  @ViewModelKey(MyCountryViewModel.class)
+  abstract ViewModelKey providesMyCountryViewModel(MyCountryViewModel myCountryViewModel);
 }

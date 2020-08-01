@@ -10,26 +10,29 @@ package com.force.codes.project.app.app.di.module;
 import com.force.codes.project.app.presentation_layer.views.fragments.LiveDataFragment;
 import com.force.codes.project.app.presentation_layer.views.fragments.MapFragment;
 import com.force.codes.project.app.presentation_layer.views.fragments.NewsFragment;
+import com.force.codes.project.app.presentation_layer.views.fragments.viewpager.MyCountryFragment;
 import com.force.codes.project.app.presentation_layer.views.fragments.viewpager.OverAllFragment;
 import com.force.codes.project.app.presentation_layer.views.fragments.viewpager.WorldwideFragment;
-
 import dagger.Module;
 import dagger.android.ContributesAndroidInjector;
 
 @Module
-public abstract class FragmentBuilderModule{
-    @ContributesAndroidInjector
-    abstract LiveDataFragment contributeLiveDataFragment();
+public abstract class FragmentBuilderModule {
+  @ContributesAndroidInjector
+  abstract LiveDataFragment contributeLiveDataFragment();
 
-    @ContributesAndroidInjector
-    abstract MapFragment contributeMapFragment();
+  @ContributesAndroidInjector
+  abstract MapFragment contributeMapFragment();
 
-    @ContributesAndroidInjector
-    abstract WorldwideFragment contributeWorldwideFragment();
+  @ContributesAndroidInjector
+  abstract WorldwideFragment contributeWorldwideFragment();
 
-    @ContributesAndroidInjector
-    abstract NewsFragment contributeNewsFragment();
+  @ContributesAndroidInjector
+  abstract NewsFragment contributeNewsFragment();
 
-    @ContributesAndroidInjector
-    abstract OverAllFragment contributeOverAllFragment();
+  @ContributesAndroidInjector
+  abstract OverAllFragment contributeOverAllFragment();
+
+  @ContributesAndroidInjector
+  abstract MyCountryFragment contributeMyFragment();
 }
