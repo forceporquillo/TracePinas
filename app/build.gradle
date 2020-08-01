@@ -1,4 +1,6 @@
 apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
 
 android {
     compileSdkVersion 29
@@ -191,4 +193,6 @@ dependencies {
     implementation 'com.ogaclejapan.smarttablayout:utils-v4:2.0.0@aar'
 
     implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
+
+    implementation 'com.github.razerdp:AnimatedPieView:1.2.6'
 }
