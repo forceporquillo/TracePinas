@@ -1,12 +1,12 @@
 
 ## COVID19 Tracker App 📱
-The COVID19 Tracker app is a mobile version of virus tracker inspired by various tracking web apps. This app has a bunch of new features such as data breakdown visualization of each country using graph charts, maps to provide seamless hover to different affected countries, news and tweets from local media providers to provide updates anywhere in the world.
+This COVID19 Tracker app is a mobile version of a virus tracker inspired by various tracking web apps out there. This app has a bunch of features such as data breakdown visualization of each country using charts and graphs from day 1 up to present. Maps to provide seamless hover to different affected countries, news, and tweets from local media providers to give updates anywhere in the world.
 
 ![https://github.com/forceporquillo/android-henlo-fren/blob/2f01d81cd4e0f8e682db75f24a6ba48e56f15285/preview_screenshot.jpg](https://github.com/forceporquillo/android-henlo-fren/blob/2f01d81cd4e0f8e682db75f24a6ba48e56f15285/preview_screenshot.jpg)
 
 
 ## Summary 📋
-This [COVID-19 Tracker App](https://github.com/forceporquillo/android-covid19-tracker) showcase how I  apply what I've learned on learning Mobile Programming in amidst of these pandemic.
+This [app](https://github.com/forceporquillo/android-covid19-tracker) showcase how I apply what I've learned in learning mobile programming in amidst of this pandemic.
 
 This app uses:
 -   [MVVM](https://en.wikipedia.org/wiki/Model_View_ViewModel)  architecture pattern to separate and organized module dependencies to make development clean, easy to maintain and update.
@@ -14,7 +14,7 @@ This app uses:
 -   Asynchronous communications implemented with  [ReactiveX](http://reactivex.io/).
 - Converts Rx flowable observable to LiveData using  [LiveDataReactiveStreams](https://developer.android.com/reference/android/arch/lifecycle/LiveDataReactiveStreams).
 -   store data using  [Room](https://developer.android.com/topic/libraries/architecture/room.html) database.
--  charts from [https://github.com/PhilJay/MPAndroidChart](https://github.com/PhilJay/MPAndroidChart) to graph data statistically.
+-  charts from [https://github.com/PhilJay/MPAndroidChart](https://github.com/PhilJay/MPAndroidChart) and [https://github.com/razerdp/AnimatedPieView](https://github.com/razerdp/AnimatedPieView) to graph data statistically.
 - Dagger2 to inject instance dependencies.
 - implemented with Facebook shimmers, SmartTabLayouts, Pagination.
 - OkHttpInterceptor (chain calls) for Oauth2 bearer token authentication in Twitter API.
@@ -93,8 +93,6 @@ resValue "string", "maps_api_key", (secureProps.getProperty("MAPS_API_KEY") ?: "
 
 **DiseaseSh**- [https://corona.lmao.ninja/](https://corona.lmao.ninja/)
 
-**Johns Hopkins CSSE** -  [(https://github.com/CSSEGISandData/COVID-19](https://github.com/CSSEGISandData/COVID-19)
-
 **COVID19 API**-  [https://covid19api.com/](https://covid19api.com/)
 
 **European Centre for Disease Prevention and Control (ECDC)** - [https://www.ecdc.europa.eu/en](https://www.ecdc.europa.eu/en)
@@ -102,7 +100,7 @@ resValue "string", "maps_api_key", (secureProps.getProperty("MAPS_API_KEY") ?: "
 **PH DATASETS/DOH**
 - **Katerinahronik** - [https://apify.com/katerinahronik/covid-philippines](https://apify.com/katerinahronik/covid-philippines) from 
 - **DOH** [https://ncovtracker.doh.gov.ph/](https://ncovtracker.doh.gov.ph/)
-- **Sorxrob Github** -- [https://github.com/sorxrob/coronavirus-ph-api]
+- **Sorxrob Github** -- (https://github.com/sorxrob/coronavirus-ph-api)
 
 ## Contributing 🧑🏻‍🔧📲
 I love contributions! There is a lot to do in this app so why not chat or email me about what you're interested in doing? Or you can directly submit a [pull request](https://github.com/forceporquillo/android-covid19-tracker/pulls) and I'd to love merged it.
