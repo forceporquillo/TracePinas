@@ -8,26 +8,23 @@
 package com.force.codes.project.app.presentation_layer.views.viewmodels;
 
 import androidx.lifecycle.ViewModel;
-
-import javax.inject.Inject;
-
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 
-abstract class BaseViewModel extends ViewModel{
-    private final CompositeDisposable compositeDisposable;
+abstract class BaseViewModel extends ViewModel {
+  private final CompositeDisposable compositeDisposable;
 
-    protected BaseViewModel(){
-        compositeDisposable = new CompositeDisposable();
-    }
+  protected BaseViewModel() {
+    compositeDisposable = new CompositeDisposable();
+  }
 
-    public void addToUnsubscribed(Disposable disposable){
-        compositeDisposable.add(disposable);
-    }
+  public void addToUnsubscribed(Disposable disposable) {
+    compositeDisposable.add(disposable);
+  }
 
-    @Override
-    protected void onCleared(){
-        compositeDisposable.clear();
-        super.onCleared();
-    }
+  @Override
+  protected void onCleared() {
+    compositeDisposable.clear();
+    super.onCleared();
+  }
 }

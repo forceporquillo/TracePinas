@@ -16,51 +16,47 @@ package com.force.codes.project.app.presentation_layer.views.viewmodels;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-
-import com.force.codes.project.app.data_layer.model.world.GlobalData;
 import com.force.codes.project.app.data_layer.model.map_data.LocalData;
+import com.force.codes.project.app.data_layer.model.world.GlobalData;
 import com.force.codes.project.app.data_layer.repositories.interfaces.MapRepository;
-
-import java.util.List;
-
-import javax.inject.Inject;
-
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
+import java.util.List;
+import javax.inject.Inject;
 import timber.log.Timber;
 
-public class MapViewModel extends BaseViewModel{
-    private final MapRepository mapRepository;
-    private MutableLiveData <LocalData> mutablePhData = new MutableLiveData <>();
-    private MutableLiveData <List <GlobalData>> mutableGlobalData = new MutableLiveData <>();
+public class MapViewModel extends BaseViewModel {
+  private final MapRepository mapRepository;
+  private MutableLiveData<LocalData> mutablePhData = new MutableLiveData<>();
+  private MutableLiveData<List<GlobalData>> mutableGlobalData = new MutableLiveData<>();
 
-    @Inject
-    public MapViewModel(MapRepository mapRepository){
-        this.mapRepository = mapRepository;
-    }
+  @Inject
+  public MapViewModel(MapRepository mapRepository) {
+    this.mapRepository = mapRepository;
+  }
 
-    public void getAllPhData(){
-        Disposable disposable = mapRepository.getAllPHData()
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(phData ->
-                        mutablePhData.setValue(phData), Timber::e);
+  public void getAllPhData() {
+    Disposable disposable = mapRepository.getAllPHData()
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe(phData ->
+            mutablePhData.setValue(phData), Timber::e);
 
-        addToUnsubscribed(disposable);
-    }
+    addToUnsubscribed(disposable);
+  }
 
-    public LiveData <LocalData> getMutablePhData(){
-        return mutablePhData;
-    }
+  public LiveData<LocalData> getMutablePhData() {
+    return mutablePhData;
+  }
 
-    public void getListGlobalData(){
-        Disposable disposable = mapRepository.getAllGlobalData()
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(globalData ->
-                        mutableGlobalData.setValue(globalData), Timber::e);
-        addToUnsubscribed(disposable);
-    }
+  public void getListGlobalData() {
+    Disposable disposable = mapRepository.getAllGlobalData()
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe(globalData ->
+            mutableGlobalData.setValue(globalData), Timber::e);
+    addToUnsubscribed(disposable);
+  }
 
-    public LiveData <List <GlobalData>> getMutableGlobalData(){
-        return mutableGlobalData;
-    }
+  public LiveData<List<GlobalData>> getMutableGlobalData() {
+    return mutableGlobalData;
+  }
 }

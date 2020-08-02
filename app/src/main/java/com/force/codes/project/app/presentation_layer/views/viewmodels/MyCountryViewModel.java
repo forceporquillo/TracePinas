@@ -7,5 +7,12 @@
 
 package com.force.codes.project.app.presentation_layer.views.viewmodels;
 
+import javax.inject.Inject;
+
 public class MyCountryViewModel extends BaseViewModel {
+
+  @Inject
+  public MyCountryViewModel(){
+
+  }
 }

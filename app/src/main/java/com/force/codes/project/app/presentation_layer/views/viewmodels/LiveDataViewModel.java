@@ -17,35 +17,31 @@ package com.force.codes.project.app.presentation_layer.views.viewmodels;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.LiveDataReactiveStreams;
 import androidx.lifecycle.MutableLiveData;
-
 import com.force.codes.project.app.data_layer.model.map_data.WorldData;
 import com.force.codes.project.app.data_layer.repositories.interfaces.LiveOverviewRepository;
-
-import javax.inject.Inject;
-import javax.inject.Named;
-
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
+import javax.inject.Inject;
+import javax.inject.Named;
 import timber.log.Timber;
 
-public class LiveDataViewModel extends BaseViewModel{
-    @Inject
-    @Named("LiveDataVM")
-    public MutableLiveData <WorldData> liveData;
+public class LiveDataViewModel extends BaseViewModel {
+  private final LiveOverviewRepository repository;
+  @Inject
+  @Named("LiveDataVM")
+  public MutableLiveData<WorldData> liveData;
 
-    private final LiveOverviewRepository repository;
+  @Inject
+  public LiveDataViewModel(LiveOverviewRepository repository) {
+    this.repository = repository;
+  }
 
-    @Inject
-    public LiveDataViewModel(LiveOverviewRepository repository){
-        this.repository = repository;
-    }
-
-    public LiveData <WorldData> getDataFromNetwork(){
-        return LiveDataReactiveStreams.fromPublisher(
-                repository.getWorldDataFromNetwork()
-                        .subscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .doOnNext(list -> liveData.setValue(list))
-                        .doOnError(Timber::e));
-    }
+  public LiveData<WorldData> getDataFromNetwork() {
+    return LiveDataReactiveStreams.fromPublisher(
+        repository.getWorldDataFromNetwork()
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .doOnNext(list -> liveData.setValue(list))
+            .doOnError(Timber::e));
+  }
 }
