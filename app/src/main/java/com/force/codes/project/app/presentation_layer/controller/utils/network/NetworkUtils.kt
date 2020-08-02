@@ -25,17 +25,15 @@ import io.reactivex.schedulers.Schedulers
  * @Author Force Porquillo
  */
 class NetworkUtils {
-  private val disposable =
-    CompositeDisposable()
-  private var networkCallback: NetworkCallback? =
-    null
+  private val disposable = CompositeDisposable()
+  private var networkCallback: NetworkCallback? = null
   private var context: Context? = null
 
   /**
-   * Singleton instance approach, if you're working on multiple [Fragment]
-   * or [Activity] that requires both upstream to observe network changes.
+   * Singleton instance approach, if you're working on multiple Fragment
+   * or Activity that requires both upstream to observe network changes.
    *
-   * @param context instance [NetworkUtils] is linked to [BaseFragment]
+   * @param context instance NetworkUtils is linked to BaseFragment
    */
   constructor(context: Context?) {
     this.context = context
@@ -45,7 +43,7 @@ class NetworkUtils {
    * if only need {@method startNetworkConnectivity} to listen to network changes.
    * You can directly instantiate an instance without requiring a context reference.
    * But, you have to manually remove connectivity reference linked from attached
-   * [Fragment] into super class [BaseFragment] to avoid memory leaks.
+   * Fragment into super class BaseFragment to avoid memory leaks.
    */
   constructor() {}
 
@@ -54,7 +52,9 @@ class NetworkUtils {
    *
    * @param networkCallback return callback reference from attached fragment.
    */
-  fun setOnNetworkListener(networkCallback: NetworkCallback?) {
+  fun setOnNetworkListener(
+    networkCallback: NetworkCallback?
+  ) {
     this.networkCallback = networkCallback
   }
 
@@ -62,14 +62,21 @@ class NetworkUtils {
    * Observing network connectivity.
    * Checks only connectivity with the network (not Internet).
    */
-  @RequiresApi(api = VERSION_CODES.M) fun startNetworkConnectivity() {
+  @RequiresApi(api = VERSION_CODES.M)
+  fun startNetworkConnectivity() {
     disposable.add(
         ReactiveNetwork
             .observeNetworkConnectivity(context)
             .subscribeOn(Schedulers.io())
-            .filter(ConnectivityPredicate.hasType(getActiveNetwork(context)))
+            .filter(
+                ConnectivityPredicate.hasType(
+                    getActiveNetwork(context)
+                )
+            )
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe { connectivity: Connectivity? -> setNetworkConnectivity(connectivity) }
+            .subscribe { connectivity: Connectivity? ->
+              setNetworkConnectivity(connectivity)
+            }
     )
   }
 
@@ -83,9 +90,11 @@ class NetworkUtils {
         ReactiveNetwork.observeInternetConnectivity(settings)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(
-                { connectivity: Boolean -> setInternetConnectivity(connectivity) }
-            ) { obj: Throwable -> obj.printStackTrace() }
+            .subscribe({ connectivity: Boolean ->
+              setInternetConnectivity(connectivity)
+            }) { obj: Throwable ->
+              obj.printStackTrace()
+            }
     )
   }
 
@@ -93,20 +102,28 @@ class NetworkUtils {
    * This disposed the attached subscription of observer from [ReactiveNetwork]
    * and [Context] object of parent host to avoid memory leaks.
    *
-   * This must be called in onDestroy/onDestroyView method every time @frag
-   * or [Activity] is destroyed.
+   * This must be called in onDestroy/onDestroyView method every time a Fragment
+   * or Activity is destroyed.
    */
-  fun destroyConnection() {
+  fun stopConnection() {
     disposable.dispose()
     context = null
   }
 
-  private fun setNetworkConnectivity(connectivity: Connectivity?) {
-    networkCallback!!.onNetworkConnectionChange(connectivity)
+  private fun setNetworkConnectivity(
+    connectivity: Connectivity?
+  ) {
+    networkCallback!!.onNetworkConnectionChanged(
+        connectivity
+    )
   }
 
-  private fun setInternetConnectivity(connectivity: Boolean) {
-    networkCallback!!.onInternetConnectionChanged(connectivity)
+  private fun setInternetConnectivity(
+    connectivity: Boolean
+  ) {
+    networkCallback!!.onInternetConnectionChanged(
+        connectivity
+    )
   }
 
   /**
@@ -114,7 +131,8 @@ class NetworkUtils {
    *
    * Requires android version Marshmallow to emmit both upstreams.
    */
-  @RequiresApi(api = VERSION_CODES.M) fun startUpstreamConnections() {
+  @RequiresApi(api = VERSION_CODES.M)
+  fun startConnection() {
     if (sDKInt >= 23) {
       startInternetConnectivity()
       startNetworkConnectivity()
@@ -146,25 +164,29 @@ class NetworkUtils {
 
     /**
      * When device is below Marshmallow, we get all active
-     * network and assumes it to return cellular when one
+     * network and assumes to return connected when one
      * of these 3 network cap. satisfies the condition.
      * Otherwise, get only active network and expect it
      * to return cellular or Wi-Fi transport.
      */
     @RequiresApi(api = VERSION_CODES.M)
-    private fun getActiveNetwork(context: Context?): Int {
-      val service = context!!.getSystemService(
-          Context.CONNECTIVITY_SERVICE
-      ) as ConnectivityManager
-      var capabilities: NetworkCapabilities?
+    private fun getActiveNetwork(
+      context: Context?
+    ): Int {
+      val service = context!!
+          .getSystemService(
+              Context.CONNECTIVITY_SERVICE
+          ) as ConnectivityManager
+      var capabilities: NetworkCapabilities? = null
       if (requiresSdkInt(
               VERSION_CODES.M
           )
       ) {
         val network = service.activeNetwork
-        capabilities = service.getNetworkCapabilities(network)
-        if (capabilities != null) {
-          return if (capabilities.hasTransport(
+        capabilities?.let {
+          service.getNetworkCapabilities(network)
+          return if (
+              capabilities!!.hasTransport(
                   NetworkCapabilities.TRANSPORT_CELLULAR
               )
           ) CELLULAR else WIFI
@@ -172,19 +194,25 @@ class NetworkUtils {
       } else {
         val allNetworks = service.allNetworks
         for (network in allNetworks) {
-          capabilities = service.getNetworkCapabilities(network)
-          if (capabilities != null) {
-            return if (capabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI)
-                || capabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR)
-                || capabilities.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET)
-            ) CELLULAR else NOT_CONNECTED
+          capabilities.let {
+            capabilities = service.getNetworkCapabilities(network)
+            return if (
+                capabilities!!.hasTransport(
+                    NetworkCapabilities.TRANSPORT_WIFI
+                ) || capabilities!!.hasTransport(
+                    NetworkCapabilities.TRANSPORT_CELLULAR
+                ) || capabilities!!.hasTransport(
+                    NetworkCapabilities.TRANSPORT_ETHERNET
+                )
+            ) CONNECTED else NOT_CONNECTED
           }
         }
       }
       return NOT_CONNECTED
     }
 
-    private val settings = InternetObservingSettings.builder()
+    private val settings = InternetObservingSettings
+        .builder()
         .host("https://github.com/forceporquillo")
         .initialInterval(0)
         .interval(2)

@@ -1,3 +1,10 @@
+/*
+ * Created by Force Porquillo on 6/14/20 3:25 PM
+ * FEU Institute of Technology
+ * Copyright (c) 2020.  All rights reserved.
+ * Last modified 8/1/20 10:55 PM
+ */
+
 package com.force.codes.project.app.presentation_layer.controller.utils
 
 import android.R.attr
@@ -5,20 +12,13 @@ import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Rect
 import android.graphics.drawable.Drawable
-import android.util.TypedValue
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ItemDecoration
 import androidx.recyclerview.widget.RecyclerView.LayoutParams
 import androidx.recyclerview.widget.RecyclerView.State
-import kotlin.math.roundToInt
 
-/*
- * Created by Force Porquillo on 6/14/20 3:25 PM
- * Copyright (c) 2020.  All rights reserved.
- * FEU Institute of Technology
- */
 class ItemDecoration(
   private val context: Context,
   orientation: Int,
@@ -58,7 +58,10 @@ class ItemDecoration(
       val params = child.layoutParams as LayoutParams
       val top = child.bottom + params.bottomMargin
       val bottom = top + drawable!!.intrinsicHeight
-      drawable.setBounds(left + dpToPx(margin), top, right - dpToPx(margin), bottom)
+      drawable.setBounds(
+          left + Utils.dpToPx(context, margin), top,
+          right - Utils.dpToPx(context, margin), bottom
+      )
       drawable.draw(canvas!!)
     }
   }
@@ -75,7 +78,10 @@ class ItemDecoration(
       val params = child.layoutParams as LayoutParams
       val left = child.right + params.rightMargin
       val right = left + drawable!!.intrinsicHeight
-      drawable.setBounds(left, top + dpToPx(margin), right, bottom - dpToPx(margin))
+      drawable.setBounds(
+          left, top + Utils.dpToPx(context, margin),
+          right, bottom - Utils.dpToPx(context, margin)
+      )
       drawable.draw(canvas!!)
     }
   }
@@ -91,16 +97,6 @@ class ItemDecoration(
       return
     }
     outRect[0, 0, drawable!!.intrinsicWidth] = 0
-  }
-
-  private fun dpToPx(dp: Int): Int {
-    val resource = context.resources
-    return TypedValue.applyDimension(
-        TypedValue.COMPLEX_UNIT_DIP,
-        dp.toFloat(),
-        resource.displayMetrics
-    )
-        .roundToInt()
   }
 
   companion object {

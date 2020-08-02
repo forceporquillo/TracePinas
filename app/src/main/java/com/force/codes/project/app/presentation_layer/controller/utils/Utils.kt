@@ -1,3 +1,10 @@
+/*
+ * Created by Force Porquillo on 6/5/20 3:13 PM
+ * Copyright (c) 2020.  All rights reserved.
+ * Last modified 6/5/20 4:02 AM
+ *
+ */
+
 package com.force.codes.project.app.presentation_layer.controller.utils
 
 import android.annotation.SuppressLint
@@ -10,19 +17,17 @@ import android.text.SpannableString
 import android.text.Spanned
 import android.text.style.ForegroundColorSpan
 import android.util.TypedValue
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
 import androidx.annotation.RequiresApi
+import com.force.codes.project.app.R
 import java.text.NumberFormat
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date
 import java.util.Locale
 
-/*
- * Created by Force Porquillo on 6/5/20 3:13 PM
- * Copyright (c) 2020.  All rights reserved.
- * Last modified 6/5/20 4:02 AM
- *
- */ /**
+/**
  * Utilities class that has some helper methods.
  * This class doesn't need an instance of a class itself.
  *
@@ -30,7 +35,9 @@ import java.util.Locale
  */
 object Utils {
   @JvmStatic
-  fun getLongDate(milliseconds: Long): String {
+  fun getLongDate(
+    milliseconds: Long
+  ): String {
     val formatter =
       simpleDateFormat(
           "EEE, dd MMM yyyy hh:mm:ss aaa"
@@ -40,7 +47,9 @@ object Utils {
     return formatter.format(calendar.time)
   }
 
-  @JvmStatic fun formatNumber(number: String): String {
+  @JvmStatic fun formatNumber(
+    number: String
+  ): String {
     if (number.isNotEmpty()) {
       val value = number.toDouble()
       return NumberFormat.getNumberInstance(Locale.US)
@@ -52,7 +61,9 @@ object Utils {
   @JvmStatic val sDKInt: Int
     get() = VERSION.SDK_INT
 
-  @JvmStatic fun requiresSdkInt(version: Int): Boolean {
+  @JvmStatic fun requiresSdkInt(
+    version: Int
+  ): Boolean {
     return sDKInt > version
   }
 
@@ -65,9 +76,10 @@ object Utils {
 
   @JvmStatic val date: String
     get() {
-      val calendar = Calendar.getInstance()
-          .time
-      @SuppressLint("SimpleDateFormat") val dateFormat =
+      val calendar = Calendar
+          .getInstance().time
+      @SuppressLint("SimpleDateFormat")
+      val dateFormat =
         simpleDateFormat(
             "yyyy-mm-dd"
         )
@@ -80,7 +92,7 @@ object Utils {
    *
    * @return pixel based on device dpi and resolution.
    */
-  @JvmStatic fun getPixelValue(
+  @JvmStatic fun dpToPx(
     context: Context,
     densityPixel: Int
   ): Int {
@@ -93,15 +105,33 @@ object Utils {
         .toInt()
   }
 
-  @JvmStatic @SuppressLint("SimpleDateFormat")
-  fun simpleDateFormat(format: String?): SimpleDateFormat {
+  @SuppressLint("SimpleDateFormat")
+  @JvmStatic fun simpleDateFormat(
+    format: String?
+  ): SimpleDateFormat {
     return SimpleDateFormat(format)
   }
 
   @JvmStatic val todayDate: Date
     get() = Date()
 
-  @RequiresApi(api = VERSION_CODES.N) fun toPercent(
+  @JvmStatic fun animate(
+    flag: Boolean,
+    context: Context?
+  ): Animation {
+    return if (flag) {
+      AnimationUtils
+          .loadAnimation(
+              context, R.anim.pop_up_slide_down
+          )
+    } else AnimationUtils
+        .loadAnimation(
+            context, R.anim.pop_up_slide_up
+        )
+  }
+
+  @RequiresApi(api = VERSION_CODES.N)
+  fun toPercent(
     num: Double,
     total: Double
   ): String {
@@ -118,12 +148,22 @@ object Utils {
     val colorSpan: ForegroundColorSpan
     when (color) {
       "BLUE" -> {
-        colorSpan = ForegroundColorSpan(Color.rgb(50, 120, 210))
-        spannableString.setSpan(colorSpan, 1, string.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+        colorSpan = ForegroundColorSpan(
+            Color.rgb(50, 120, 210)
+        )
+        spannableString.setSpan(
+            colorSpan, 1,
+            string.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+        )
       }
       "RED" -> {
-        colorSpan = ForegroundColorSpan(Color.rgb(255, 93, 93))
-        spannableString.setSpan(colorSpan, 1, string.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+        colorSpan = ForegroundColorSpan(
+            Color.rgb(255, 93, 93)
+        )
+        spannableString.setSpan(
+            colorSpan, 1,
+            string.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+        )
       }
     }
     return spannableString

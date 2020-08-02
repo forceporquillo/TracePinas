@@ -8,6 +8,6 @@ package com.force.codes.project.app.presentation_layer.controller.utils.network
 import com.github.pwittchen.reactivenetwork.library.rx2.Connectivity
 
 interface NetworkCallback {
-  fun onNetworkConnectionChange(connectivity: Connectivity?)
+  fun onNetworkConnectionChanged(connectivity: Connectivity?)
   fun onInternetConnectionChanged(connected: Boolean?)
 }
