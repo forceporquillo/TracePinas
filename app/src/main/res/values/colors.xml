@@ -9,7 +9,7 @@
     <color name="darkColorAccent">#3279D2</color>
     <color name="grayScale">#434547</color>
     <color name="red_live">#E42E2E</color>
-    <color name="red">#FF5E5E</color>
+    <color name="red_1">#FF5E5E</color>
     <color name="blue">#3279D2</color>
     <color name="green">#3EA169</color>
     <color name="white">#FFFFFF</color>
@@ -19,4 +19,5 @@
     <color name="text_disabled">#000000</color>
     <color name="text_enabled">#FFFFFF</color>
     <color name="status_bar">#000000</color>
+    <color name="red">#FF3838</color>
 </resources>
