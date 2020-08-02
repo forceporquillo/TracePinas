@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ Created by Force Porquillo on 8/1/20 7:57 PM
+  ~ FEU Institute of Technology
+  ~ Copyright (c) 2020.  All rights reserved.
+  ~ Last modified 8/1/20 7:57 PM
+  -->
+<layout>
+
+  <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto"
+      xmlns:tools="http://schemas.android.com/tools"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      >
+
+    <RelativeLayout
+        android:id="@+id/confirmed_container"
+        android:layout_width="115dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        tools:ignore="UselessParent"
+        >
+
+      <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_toEndOf="@id/card_blue"
+          android:text="Confirmed"
+          android:textSize="15sp"
+          />
+
+      <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_below="@id/card_blue"
+          android:layout_centerInParent="true"
+          android:text="52%"
+          android:textColor="#00123C"
+          android:textSize="16sp"
+          />
+
+      <androidx.cardview.widget.CardView
+          android:id="@+id/card_blue"
+          android:layout_width="@dimen/_30dp"
+          android:layout_height="@dimen/_10dp"
+          android:layout_margin="5dp"
+          app:cardBackgroundColor="@color/blue"
+          app:cardCornerRadius="5dp"
+          >
+
+      </androidx.cardview.widget.CardView>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/recovered_container"
+        android:layout_width="115dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/confirmed_container"
+        android:layout_margin="10dp"
+        tools:ignore="UselessParent"
+        >
+
+      <TextView
+          android:id="@+id/recovered"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_toEndOf="@id/card_green"
+          android:text="Recovered"
+          android:textSize="15sp"
+          />
+
+      <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_below="@id/card_green"
+          android:layout_centerInParent="true"
+          android:text="52%"
+          android:textColor="#00123C"
+          android:textSize="16sp"
+          />
+
+      <androidx.cardview.widget.CardView
+          android:id="@+id/card_green"
+          android:layout_width="@dimen/_30dp"
+          android:layout_height="@dimen/_10dp"
+          android:layout_margin="5dp"
+          app:cardBackgroundColor="@color/green"
+          app:cardCornerRadius="5dp"
+          >
+
+      </androidx.cardview.widget.CardView>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/death_container"
+        android:layout_width="115dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/recovered_container"
+        android:layout_margin="10dp"
+        tools:ignore="UselessParent"
+        >
+
+      <TextView
+          android:id="@+id/confirmed"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_toEndOf="@id/card_red"
+          android:text="Deaths"
+          android:textSize="15sp"
+          />
+
+      <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_below="@id/confirmed"
+          android:layout_centerInParent="true"
+          android:text="15%"
+          android:textColor="#00123C"
+          android:textSize="16sp"
+          />
+
+      <androidx.cardview.widget.CardView
+          android:id="@+id/card_red"
+          android:layout_width="@dimen/_30dp"
+          android:layout_height="@dimen/_10dp"
+          android:layout_margin="5dp"
+          app:cardBackgroundColor="@color/red"
+          app:cardCornerRadius="5dp"
+          >
+
+      </androidx.cardview.widget.CardView>
+    </RelativeLayout>
+
+
+  </RelativeLayout>
+</layout>
