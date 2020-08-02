@@ -9,26 +9,24 @@ package com.force.codes.project.app.data_layer.model.twitter;
 
 import androidx.room.Entity;
 import androidx.room.TypeConverters;
-
 import com.force.codes.project.app.data_layer.converters.TwitterMediaConverter;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-
 import java.util.List;
 
 @Entity
-public class Entities{
+public class Entities {
 
-    @SerializedName("media")
-    @Expose
-    @TypeConverters(TwitterMediaConverter.class)
-    private List<TwitterMediaUrl> media;
+  @SerializedName("media")
+  @Expose
+  @TypeConverters(TwitterMediaConverter.class)
+  private List<TwitterMediaUrl> media;
 
-    public List<TwitterMediaUrl> getMedia(){
-        return media;
-    }
+  public List<TwitterMediaUrl> getMedia() {
+    return media;
+  }
 
-    public void setMedia(List<TwitterMediaUrl> media){
-        this.media = media;
-    }
+  public void setMedia(List<TwitterMediaUrl> media) {
+    this.media = media;
+  }
 }

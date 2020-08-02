@@ -13,99 +13,98 @@ import androidx.databinding.BaseObservable;
 import androidx.room.Embedded;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
-
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 @Entity
-public class TwitterData extends BaseObservable{
-    @PrimaryKey
-    @SerializedName("id_str")
-    @Expose
-    @NonNull
-    private String id;
+public class TwitterData extends BaseObservable {
+  @PrimaryKey
+  @SerializedName("id_str")
+  @Expose
+  @NonNull
+  private String id;
 
-    @SerializedName("created_at")
-    @Expose
-    private String createdAt;
+  @SerializedName("created_at")
+  @Expose
+  private String createdAt;
 
-    @SerializedName("full_text")
-    @Expose
-    private String fullText;
+  @SerializedName("full_text")
+  @Expose
+  private String fullText;
 
-    @Embedded
-    @SerializedName("entities")
-    @Expose
-    @Nullable
-    private Entities entities;
+  @Embedded
+  @SerializedName("entities")
+  @Expose
+  @Nullable
+  private Entities entities;
 
-    @Embedded
-    @Expose
-    @SerializedName("user")
-    private User user;
+  @Embedded
+  @Expose
+  @SerializedName("user")
+  private User user;
 
-    @SerializedName("retweet_count")
-    @Expose
-    private int retweetCount;
+  @SerializedName("retweet_count")
+  @Expose
+  private int retweetCount;
 
-    @SerializedName("favorite_count")
-    @Expose
-    private int favoriteCount;
+  @SerializedName("favorite_count")
+  @Expose
+  private int favoriteCount;
 
-    public String getCreatedAt() {
-        return createdAt;
-    }
+  public String getCreatedAt() {
+    return createdAt;
+  }
 
-    public void setCreatedAt(String createdAt) {
-        this.createdAt = createdAt;
-    }
+  public void setCreatedAt(String createdAt) {
+    this.createdAt = createdAt;
+  }
 
-    public void setUser(User user){
-        this.user = user;
-    }
+  public User getUser() {
+    return user;
+  }
 
-    public User getUser(){
-        return user;
-    }
+  public void setUser(User user) {
+    this.user = user;
+  }
 
-    public String getId() {
-        return id;
-    }
+  public String getId() {
+    return id;
+  }
 
-    public void setId(String id) {
-        this.id = id;
-    }
+  public void setId(String id) {
+    this.id = id;
+  }
 
-    public String getFullText() {
-        return fullText;
-    }
+  public String getFullText() {
+    return fullText;
+  }
 
-    public void setFullText(String fullText) {
-        this.fullText = fullText;
-    }
+  public void setFullText(String fullText) {
+    this.fullText = fullText;
+  }
 
-    @org.jetbrains.annotations.Nullable
-    public Entities getEntities() {
-        return entities;
-    }
+  @org.jetbrains.annotations.Nullable
+  public Entities getEntities() {
+    return entities;
+  }
 
-    public void setEntities(@org.jetbrains.annotations.Nullable Entities entities) {
-        this.entities = entities;
-    }
+  public void setEntities(@org.jetbrains.annotations.Nullable Entities entities) {
+    this.entities = entities;
+  }
 
-    public int getRetweetCount() {
-        return retweetCount;
-    }
+  public int getRetweetCount() {
+    return retweetCount;
+  }
 
-    public void setRetweetCount(int retweetCount) {
-        this.retweetCount = retweetCount;
-    }
+  public void setRetweetCount(int retweetCount) {
+    this.retweetCount = retweetCount;
+  }
 
-    public int getFavoriteCount() {
-        return favoriteCount;
-    }
+  public int getFavoriteCount() {
+    return favoriteCount;
+  }
 
-    public void setFavoriteCount(int favoriteCount) {
-        this.favoriteCount = favoriteCount;
-    }
+  public void setFavoriteCount(int favoriteCount) {
+    this.favoriteCount = favoriteCount;
+  }
 }

@@ -14,118 +14,121 @@ package com.force.codes.project.app.data_layer.model.map_data;
  *
  */
 
-import com.force.codes.project.app.presentation_layer.controller.custom.utils.StringUtils;
+import com.force.codes.project.app.presentation_layer.controller.utils.Utils;
 import com.google.gson.annotations.SerializedName;
 
-public class WorldData extends StringUtils{
+import static com.force.codes.project.app.presentation_layer.controller.utils.Utils.formatNumber;
+import static com.force.codes.project.app.presentation_layer.controller.utils.Utils.getDate;
 
-    @SerializedName("recovered")
-    private int recovered;
+public class WorldData{
 
-    @SerializedName("cases")
-    private int cases;
+  @SerializedName("recovered")
+  private int recovered;
 
-    @SerializedName("tests")
-    private int tests;
+  @SerializedName("cases")
+  private int cases;
 
-    @SerializedName("critical")
-    private int critical;
+  @SerializedName("tests")
+  private int tests;
 
-    @SerializedName("todayRecovered")
-    private int todayRecovered;
+  @SerializedName("critical")
+  private int critical;
 
-    @SerializedName("active")
-    private int active;
+  @SerializedName("todayRecovered")
+  private int todayRecovered;
 
-    @SerializedName("updated")
-    private long updated;
+  @SerializedName("active")
+  private int active;
 
-    @SerializedName("deaths")
-    private int deaths;
+  @SerializedName("updated")
+  private long updated;
 
-    @SerializedName("todayCases")
-    private int todayCases;
+  @SerializedName("deaths")
+  private int deaths;
 
-    @SerializedName("todayDeaths")
-    private int todayDeaths;
+  @SerializedName("todayCases")
+  private int todayCases;
 
-    public String getRecovered(){
-        return formatNumber(String.valueOf(recovered));
-    }
+  @SerializedName("todayDeaths")
+  private int todayDeaths;
 
-    public void setRecovered(int recovered){
-        this.recovered = recovered;
-    }
+  public String getRecovered() {
+    return formatNumber(String.valueOf(recovered));
+  }
 
-    public String getCases(){
-        return formatNumber(String.valueOf(cases));
-    }
+  public void setRecovered(int recovered) {
+    this.recovered = recovered;
+  }
 
-    public void setCases(int cases){
-        this.cases = cases;
-    }
+  public String getCases() {
+    return formatNumber(String.valueOf(cases));
+  }
 
-    public int getTests(){
-        return tests;
-    }
+  public void setCases(int cases) {
+    this.cases = cases;
+  }
 
-    public void setTests(int tests){
-        this.tests = tests;
-    }
+  public int getTests() {
+    return tests;
+  }
 
-    public int getCritical(){
-        return critical;
-    }
+  public void setTests(int tests) {
+    this.tests = tests;
+  }
 
-    public void setCritical(int critical){
-        this.critical = critical;
-    }
+  public int getCritical() {
+    return critical;
+  }
 
-    public String getTodayRecovered(){
-        return formatNumber(String.valueOf(todayRecovered));
-    }
+  public void setCritical(int critical) {
+    this.critical = critical;
+  }
 
-    public void setTodayRecovered(int todayRecovered){
-        this.todayRecovered = todayRecovered;
-    }
+  public String getTodayRecovered() {
+    return formatNumber(String.valueOf(todayRecovered));
+  }
 
-    public int getActive(){
-        return active;
-    }
+  public void setTodayRecovered(int todayRecovered) {
+    this.todayRecovered = todayRecovered;
+  }
 
-    public void setActive(int active){
-        this.active = active;
-    }
+  public int getActive() {
+    return active;
+  }
 
-    public String getUpdated(){
-        return getDate(updated);
-    }
+  public void setActive(int active) {
+    this.active = active;
+  }
 
-    public void setUpdated(long updated){
-        this.updated = updated;
-    }
+  public String getUpdated() {
+    return Utils.getLongDate(updated);
+  }
 
-    public String getDeaths(){
-        return formatNumber(String.valueOf(deaths));
-    }
+  public void setUpdated(long updated) {
+    this.updated = updated;
+  }
 
-    public void setDeaths(int deaths){
-        this.deaths = deaths;
-    }
+  public String getDeaths() {
+    return formatNumber(String.valueOf(deaths));
+  }
 
-    public String getTodayCases(){
-        return formatNumber(String.valueOf(todayCases));
-    }
+  public void setDeaths(int deaths) {
+    this.deaths = deaths;
+  }
 
-    public void setTodayCases(int todayCases){
-        this.todayCases = todayCases;
-    }
+  public String getTodayCases() {
+    return formatNumber(String.valueOf(todayCases));
+  }
 
-    public String getTodayDeaths(){
-        return formatNumber(String.valueOf(todayDeaths));
-    }
+  public void setTodayCases(int todayCases) {
+    this.todayCases = todayCases;
+  }
 
-    public void setTodayDeaths(int todayDeaths){
-        this.todayDeaths = todayDeaths;
-    }
+  public String getTodayDeaths() {
+    return formatNumber(String.valueOf(todayDeaths));
+  }
+
+  public void setTodayDeaths(int todayDeaths) {
+    this.todayDeaths = todayDeaths;
+  }
 }

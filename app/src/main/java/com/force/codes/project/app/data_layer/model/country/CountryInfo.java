@@ -10,44 +10,43 @@ package com.force.codes.project.app.data_layer.model.country;
 import androidx.databinding.BaseObservable;
 import androidx.databinding.Bindable;
 import androidx.room.ColumnInfo;
-
 import com.google.gson.annotations.SerializedName;
 
-public class CountryInfo extends BaseObservable{
-    @ColumnInfo(name = "Flag Url")
-    @SerializedName("flag")
-    private String flag;
+public class CountryInfo extends BaseObservable {
+  @ColumnInfo(name = "Flag Url")
+  @SerializedName("flag")
+  private String flag;
 
-    @ColumnInfo(name = "Latitude")
-    @SerializedName("lat")
-    private String latitude;
+  @ColumnInfo(name = "Latitude")
+  @SerializedName("lat")
+  private String latitude;
 
-    @ColumnInfo(name = "Longitude")
-    @SerializedName("long")
-    private String longitude;
+  @ColumnInfo(name = "Longitude")
+  @SerializedName("long")
+  private String longitude;
 
-    @Bindable
-    public String getFlag(){
-        return flag;
-    }
+  @Bindable
+  public String getFlag() {
+    return flag;
+  }
 
-    public void setFlag(String flag){
-        this.flag = flag;
-    }
+  public void setFlag(String flag) {
+    this.flag = flag;
+  }
 
-    public String getLatitude(){
-        return latitude;
-    }
+  public String getLatitude() {
+    return latitude;
+  }
 
-    public void setLatitude(String latitude){
-        this.latitude = latitude;
-    }
+  public void setLatitude(String latitude) {
+    this.latitude = latitude;
+  }
 
-    public String getLongitude(){
-        return longitude;
-    }
+  public String getLongitude() {
+    return longitude;
+  }
 
-    public void setLongitude(String longitude){
-        this.longitude = longitude;
-    }
+  public void setLongitude(String longitude) {
+    this.longitude = longitude;
+  }
 }

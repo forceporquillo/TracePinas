@@ -8,31 +8,30 @@
 package com.force.codes.project.app.data_layer.model.news;
 
 import androidx.room.Entity;
-
 import com.google.gson.annotations.SerializedName;
 
 @Entity
-public class Source{
+public class Source {
 
-	@SerializedName("name")
-	private String name;
+  @SerializedName("name")
+  private String name;
 
-	@SerializedName("id")
-	private String id;
+  @SerializedName("id")
+  private String id;
 
-	public String getName(){
-		return name;
-	}
+  public String getName() {
+    return name;
+  }
 
-	public String getId(){
-		return id;
-	}
+  public void setName(String name) {
+    this.name = name;
+  }
 
-	public void setId(String id){
-		this.id = id;
-	}
+  public String getId() {
+    return id;
+  }
 
-	public void setName(String name){
-		this.name = name;
-	}
+  public void setId(String id) {
+    this.id = id;
+  }
 }
