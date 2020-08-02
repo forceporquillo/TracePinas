@@ -19,6 +19,13 @@ import androidx.recyclerview.widget.RecyclerView.ItemDecoration
 import androidx.recyclerview.widget.RecyclerView.LayoutParams
 import androidx.recyclerview.widget.RecyclerView.State
 
+/**
+ * A custom item decoration in [RecyclerView]
+ * for adding margin line in each
+ * itemView type at runtime.
+ *
+ * @author Force Porquillo
+ */
 class ItemDecoration(
   private val context: Context,
   orientation: Int,
@@ -27,7 +34,9 @@ class ItemDecoration(
   private val drawable: Drawable?
   private var orientation = 0
 
-  private fun setOrientation(orientation: Int) {
+  private fun setOrientation(
+    orientation: Int
+  ) {
     require(
         !(orientation != HORIZONTAL_LIST &&
             orientation != VERTICAL_LIST)
@@ -40,7 +49,7 @@ class ItemDecoration(
     parent: RecyclerView,
     state: State
   ) {
-    if (orientation == VERTICAL_LIST) {
+    return if (orientation == VERTICAL_LIST) {
       drawVertical(canvas, parent)
     } else {
       drawHorizontal(canvas, parent)

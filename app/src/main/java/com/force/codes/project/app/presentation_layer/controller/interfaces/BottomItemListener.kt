@@ -4,9 +4,8 @@
  * Copyright (c) 2020.  All rights reserved.
  * Last modified 6/19/20 12:35 AM
  */
+package com.force.codes.project.app.presentation_layer.controller.interfaces
 
-package com.force.codes.project.app.presentation_layer.controller.interfaces;
-
-public interface BottomItemListener{
-    void itemSelect(int itemId);
+interface BottomItemListener {
+  fun itemSelect(itemId: Int)
 }
