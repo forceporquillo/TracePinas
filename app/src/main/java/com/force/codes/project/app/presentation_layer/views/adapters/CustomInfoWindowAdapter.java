@@ -14,12 +14,10 @@ import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
 import android.view.LayoutInflater;
 import android.view.View;
-
 import androidx.annotation.RequiresApi;
 import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.databinding.library.baseAdapters.BR;
-
 import com.force.codes.project.app.R;
 import com.force.codes.project.app.databinding.CustomInfoWindowBinding;
 import com.google.android.gms.maps.GoogleMap;
@@ -28,47 +26,47 @@ import com.google.android.gms.maps.model.Marker;
 import static android.text.Spanned.SPAN_EXCLUSIVE_EXCLUSIVE;
 import static com.force.codes.project.app.presentation_layer.controller.utils.Utils.formatNumber;
 
-public class CustomInfoWindowAdapter implements GoogleMap.InfoWindowAdapter{
-    private final CustomInfoWindowBinding binding;
+public class CustomInfoWindowAdapter implements GoogleMap.InfoWindowAdapter {
+  private final CustomInfoWindowBinding binding;
 
-    @SuppressLint("InflateParams")
-    public CustomInfoWindowAdapter(final Context context){
-        binding = DataBindingUtil.inflate(LayoutInflater.from(context),
-                R.layout.custom_info_window, null, false);
-        binding.setWindowAdapter(this);
-        binding.setVariable(BR.windowAdapter, this);
-        binding.executePendingBindings();
-    }
+  @SuppressLint("InflateParams")
+  public CustomInfoWindowAdapter(final Context context) {
+    binding = DataBindingUtil.inflate(LayoutInflater.from(context),
+        R.layout.custom_info_window, null, false);
+    binding.setWindowAdapter(this);
+    binding.setVariable(BR.windowAdapter, this);
+    binding.executePendingBindings();
+  }
 
-    private static ForegroundColorSpan colorSpan(final View view){
-        return new ForegroundColorSpan(ContextCompat.getColor(
-                view.getContext(), R.color.blue));
-    }
+  private static ForegroundColorSpan colorSpan(final View view) {
+    return new ForegroundColorSpan(ContextCompat.getColor(
+        view.getContext(), R.color.blue));
+  }
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
-    @Override
-    public View getInfoWindow(Marker marker){
-        binding.province.setText(marker.getTitle());
-        binding.totalInfected.setText(spannableString(
-                formatNumber(marker.getSnippet())));
-        return binding.getRoot();
-    }
+  @RequiresApi(api = Build.VERSION_CODES.N)
+  @Override
+  public View getInfoWindow(Marker marker) {
+    binding.province.setText(marker.getTitle());
+    binding.totalInfected.setText(spannableString(
+        formatNumber(marker.getSnippet())));
+    return binding.getRoot();
+  }
 
-    @Override
-    public View getInfoContents(Marker marker){
-        return binding.getRoot();
-    }
+  @Override
+  public View getInfoContents(Marker marker) {
+    return binding.getRoot();
+  }
 
-    final SpannableString spannableString(String numCases){
-        String infected = binding
-                .getRoot()
-                .getResources()
-                .getString(R.string.TOTAL, numCases);
-        SpannableString spannableString = new SpannableString(infected);
-        spannableString.setSpan(colorSpan(binding.getRoot()),
-                infected.length() - numCases.length(),
-                infected.length(), SPAN_EXCLUSIVE_EXCLUSIVE);
+  final SpannableString spannableString(String numCases) {
+    String infected = binding
+        .getRoot()
+        .getResources()
+        .getString(R.string.TOTAL, numCases);
+    SpannableString spannableString = new SpannableString(infected);
+    spannableString.setSpan(colorSpan(binding.getRoot()),
+        infected.length() - numCases.length(),
+        infected.length(), SPAN_EXCLUSIVE_EXCLUSIVE);
 
-        return spannableString;
-    }
+    return spannableString;
+  }
 }

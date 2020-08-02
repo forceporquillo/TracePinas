@@ -10,5 +10,5 @@ package com.force.codes.project.app.data_layer.resources.database;
 import androidx.room.Dao;
 
 @Dao
-public interface LiveDataDao{
+public interface LiveDataDao {
 }

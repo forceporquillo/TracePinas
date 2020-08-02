@@ -14,27 +14,25 @@ import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 import androidx.room.Transaction;
 import androidx.room.TypeConverters;
-
 import com.force.codes.project.app.data_layer.converters.TwitterMediaConverter;
 import com.force.codes.project.app.data_layer.model.news.ArticlesItem;
 import com.force.codes.project.app.data_layer.model.twitter.TwitterData;
-
 import java.util.List;
 
 @Dao
-public interface NewsDao{
-    @Transaction
-    @Query("SELECT * FROM ArticlesItem ORDER BY publishedAt DESC LIMIT 100")
-    DataSource.Factory<Integer, ArticlesItem> getNewsDataFromDatabase();
+public interface NewsDao {
+  @Transaction
+  @Query("SELECT * FROM ArticlesItem ORDER BY publishedAt DESC LIMIT 100")
+  DataSource.Factory<Integer, ArticlesItem> getNewsDataFromDatabase();
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insertOrUpdateArticleItems(List<ArticlesItem> items);
+  @Insert(onConflict = OnConflictStrategy.REPLACE)
+  void insertOrUpdateArticleItems(List<ArticlesItem> items);
 
-    @Transaction
-    @TypeConverters(TwitterMediaConverter.class)
-    @Query("SELECT * FROM TwitterData ORDER BY id DESC LIMIT 50")
-    DataSource.Factory<Integer, TwitterData> getRecentTweetsFromDatabase();
+  @Transaction
+  @TypeConverters(TwitterMediaConverter.class)
+  @Query("SELECT * FROM TwitterData ORDER BY id DESC LIMIT 50")
+  DataSource.Factory<Integer, TwitterData> getRecentTweetsFromDatabase();
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insertOrUpdateTwitterItems(List<TwitterData> items);
+  @Insert(onConflict = OnConflictStrategy.REPLACE)
+  void insertOrUpdateTwitterItems(List<TwitterData> items);
 }

@@ -7,95 +7,118 @@
 
 package com.force.codes.project.app.presentation_layer.views.fragments.viewpager;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
-
+import androidx.recyclerview.widget.RecyclerView;
 import com.force.codes.project.app.BR;
 import com.force.codes.project.app.R;
 import com.force.codes.project.app.databinding.FragmentOverAllBinding;
 import com.force.codes.project.app.presentation_layer.views.adapters.OverAllAdapter;
-
+import com.force.codes.project.app.presentation_layer.views.factory.ViewModelProviderFactory;
+import com.force.codes.project.app.presentation_layer.views.fragments.BaseFragment;
+import com.force.codes.project.app.presentation_layer.views.viewmodels.OverAllViewModel;
+import com.github.pwittchen.reactivenetwork.library.rx2.Connectivity;
+import javax.inject.Inject;
 import org.jetbrains.annotations.NotNull;
-
-import timber.log.Timber;
 
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link OverAllFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class OverAllFragment extends Fragment{
+public class OverAllFragment extends BaseFragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+  @Inject
+  ViewModelProviderFactory factory;
+  // TODO: Rename and change types of parameters
+  private String mParam1;
+  private String mParam2;
+  private OverAllViewModel viewModel;
+  private RecyclerView recyclerView;
 
-    public OverAllFragment(){
-        // Required empty public constructor
-    }
+  public OverAllFragment() {
+    // Required empty public constructor
+  }
 
-    private FragmentOverAllBinding binding;
+  public static OverAllFragment newInstance(String param1, String param2) {
+    OverAllFragment fragment = new OverAllFragment();
+    Bundle args = new Bundle();
 
-    public static OverAllFragment newInstance(String param1, String param2){
-        OverAllFragment fragment = new OverAllFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
+    fragment.setArguments(args);
+    return fragment;
+  }
 
-    @Override
-    public void onCreate(Bundle savedInstanceState){
-        super.onCreate(savedInstanceState);
-        if(getArguments() != null){
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-    }
+  @RequiresApi(api = Build.VERSION_CODES.O)
+  @Override
+  public void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    viewModel = new ViewModelProvider(this, factory).get(OverAllViewModel.class);
+    //viewModel.streamIterate();
+    //viewModel.getTotalByDate();
+  }
 
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState){
-        super.onViewCreated(view, savedInstanceState);
-        setRecyclerView(view);
-    }
+  @Override
+  public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+    super.onViewCreated(view, savedInstanceState);
+    setRecyclerView(view);
+  }
 
-    @Override
-    public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_over_all, container, false);
-        binding.setOverall(this);
-        binding.setLifecycleOwner(this);
-        binding.setVariable(BR.overall, this);
-        binding.executePendingBindings();
-        return binding.getRoot();
-    }
+  @Override
+  public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container,
+      Bundle savedInstanceState) {
+    final FragmentOverAllBinding binding = DataBindingUtil.inflate(inflater,
+        R.layout.fragment_over_all, container, false);
+    binding.setOverall(this);
+    binding.setLifecycleOwner(this);
+    binding.setVariable(BR.overall, this);
+    binding.executePendingBindings();
+    attachViewBindings(binding);
+    return binding.getRoot();
+  }
 
-    @Override
-    public void onStart(){
-        super.onStart();
-        binding.overAllRecyclerview.setAdapter(new OverAllAdapter());
-    }
+  @Override
+  public void onStart() {
+    super.onStart();
+    recyclerView.setAdapter(new OverAllAdapter());
+  }
 
-    @Override
-    public void onDestroyView(){
-        super.onDestroyView();
-    }
+  private void setRecyclerView(View view) {
+    recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
+    recyclerView.setHasFixedSize(true);
+    recyclerView.setItemViewCacheSize(20);
+  }
 
-    private void setRecyclerView(View view){
-        binding.overAllRecyclerview.setLayoutManager(new LinearLayoutManager(view.getContext()));
-        binding.overAllRecyclerview.setHasFixedSize(true);
-    }
+  /**
+   * we bind to new separate object view to avoid writing long boilerplate code.
+   */
+
+  private void attachViewBindings(final FragmentOverAllBinding binding) {
+    recyclerView = binding.overAllRecyclerview;
+  }
+
+  @Override
+  public void onDestroyView() {
+    super.onDestroyView();
+    recyclerView = null;
+  }
+
+  @Override
+  public void onNetworkConnectionChanged(Connectivity connectivity) {
+
+  }
+
+  @Override public void onInternetConnectionChanged(Boolean isConnected) {
+
+  }
 }

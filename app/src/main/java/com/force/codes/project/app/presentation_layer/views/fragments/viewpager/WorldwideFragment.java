@@ -2,7 +2,7 @@
  * Created by Force Porquillo on 5/9/20 8:49 PM
  * FEU Institute of Technology
  * Copyright (c) 2020.  All rights reserved.
- * Last modified 7/17/20 8:49 PM
+ * Last modified 7/29/20 6:37 AM
  */
 
 package com.force.codes.project.app.presentation_layer.views.fragments.viewpager;
@@ -11,206 +11,141 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import androidx.annotation.Nullable;
-import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-
-import com.facebook.shimmer.ShimmerFrameLayout;
 import com.force.codes.project.app.R;
 import com.force.codes.project.app.databinding.FragmentWorldwideBinding;
-import com.force.codes.project.app.presentation_layer.controller.custom.interfaces.FragmentCallback;
-import com.force.codes.project.app.presentation_layer.controller.custom.interfaces.OnRequestResponse;
+import com.force.codes.project.app.presentation_layer.controller.interfaces.FragmentCallback;
+import com.force.codes.project.app.presentation_layer.controller.interfaces.OnRequestResponse;
+import com.force.codes.project.app.presentation_layer.controller.utils.threads.AppExecutors;
 import com.force.codes.project.app.presentation_layer.views.adapters.CountryAdapter;
+import com.force.codes.project.app.presentation_layer.views.factory.ViewModelProviderFactory;
 import com.force.codes.project.app.presentation_layer.views.fragments.BaseFragment;
+import com.force.codes.project.app.presentation_layer.views.fragments.HelpCenterFragment;
 import com.force.codes.project.app.presentation_layer.views.fragments.StatisticsFragment;
 import com.force.codes.project.app.presentation_layer.views.viewmodels.WorldwideViewModel;
-import com.force.codes.project.app.presentation_layer.views.viewmodels.factory.ViewModelProviderFactory;
-import com.force.codes.project.app.service.executors.AppExecutors;
-import com.force.codes.project.app.service.network.ConnectionCallback;
-import com.force.codes.project.app.service.network.NetworkConnectivity;
-
+import com.github.pwittchen.reactivenetwork.library.rx2.Connectivity;
+import javax.inject.Inject;
 import org.jetbrains.annotations.NotNull;
 
-import javax.inject.Inject;
+public class WorldwideFragment extends BaseFragment implements
+    FragmentCallback, View.OnClickListener, OnRequestResponse {
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
-import timber.log.Timber;
+  @Inject
+  ViewModelProviderFactory factory;
+  @Inject
+  AppExecutors appExecutors;
+  private FragmentWorldwideBinding binding;
+  private WorldwideViewModel viewModel;
+  private CountryAdapter countryAdapter;
 
-public class WorldwideFragment extends BaseFragment implements FragmentCallback, View.OnClickListener, ConnectionCallback, OnRequestResponse{
+  public WorldwideFragment() {
 
-    @BindView(R.id.swipe_fresh)
-    SwipeRefreshLayout refreshLayout;
+  }
 
-    @BindView(R.id.recycler_view)
-    RecyclerView recyclerView;
+  public static Fragment newInstance() {
+    return new WorldwideFragment();
+  }
 
-    @BindView(R.id.shimmer_layout)
-    ShimmerFrameLayout shimmer;
-
-    private FragmentWorldwideBinding binding;
-    private WorldwideViewModel viewModel;
-    private NetworkConnectivity connectivity;
-    private CountryAdapter countryAdapter;
-
-    private Unbinder unbinder;
-
-    @Inject
-    ViewModelProviderFactory factory;
-
-    @Inject
-    AppExecutors appExecutors;
-
-    public WorldwideFragment(){
-
+  @Override
+  public void onInternetConnectionChanged(Boolean isConnected) {
+    if (!isConnected) {
+      swipeRefreshLayout().setEnabled(false);
+    } else {
+      swipeRefreshLayout().setEnabled(true);
     }
+  }
 
-    public static Fragment newInstance(){
-        return new WorldwideFragment();
-    }
-
-    @Override
-    public void onInternetConnectionChanged(Boolean isConnected){
-        if(!isConnected)
-            swipeRefreshLayout().setEnabled(false);
-        else
-            swipeRefreshLayout().setEnabled(true);
-    }
-
-    @Override
-    public void onStart(){
-        super.onStart();
-        viewModel.getDataFromDatabase().observe(this, countryDetails -> {
-            if(countryDetails.isEmpty()){
-                viewModel.getDataFromNetwork();
-            }else{
-                countryAdapter.submitList(countryDetails);
-                refreshLayout.setEnabled(true);
-                refreshLayout.setRefreshing(false);
-                shimmer.stopShimmer();
-                recyclerView.setAdapter(countryAdapter);
-            }
-        });
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState){
-        super.onCreate(savedInstanceState);
-
-        connectivity = new NetworkConnectivity(this);
-        countryAdapter = new CountryAdapter(this);
-        viewModel = new ViewModelProvider(this, factory).get(WorldwideViewModel.class);
+  @Override
+  public void onStart() {
+    super.onStart();
+    viewModel.getDataFromDatabase().observe(this, countryDetails -> {
+      if (countryDetails.isEmpty()) {
         viewModel.getDataFromNetwork();
-    }
+      } else {
+        countryAdapter.submitList(countryDetails);
+        binding.recyclerView.setEnabled(true);
+        binding.swipeFresh.setRefreshing(false);
+        binding.shimmerLayout.stopShimmer();
+        binding.recyclerView.setAdapter(countryAdapter);
+      }
+    });
+  }
 
-    @Override
-    public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup
-            container, Bundle savedInstanceState){
-        binding = DataBindingUtil.inflate(inflater,
-                R.layout.fragment_worldwide, container, false);
-        binding.invalidateAll();
-        binding.setViewModel(viewModel);
-        binding.setLifecycleOwner(this);
+  @Override
+  public void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
 
-        final View root = binding.getRoot();
-        unbinder = ButterKnife.bind(this, root);
-        setRetainInstance(true);
+    //connectivity = new NetworkConnectivity(this);
+    countryAdapter = new CountryAdapter(this);
+    viewModel = new ViewModelProvider(this, factory).get(WorldwideViewModel.class);
+    viewModel.getDataFromNetwork();
+  }
 
-        return root;
-    }
+  @Override
+  public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup
+      container, Bundle savedInstanceState) {
+    binding = FragmentWorldwideBinding.inflate(inflater, container, false);
+    binding.invalidateAll();
+    binding.setViewModel(viewModel);
+    binding.setLifecycleOwner(this);
+    setRetainInstance(true);
+    return binding.getRoot();
+  }
 
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState){
-        super.onActivityCreated(savedInstanceState);
-        swipeRefreshLayout().setEnabled(false);
-        setRecyclerView();
-        shimmer.startShimmer();
-    }
+  @Override
+  public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+    super.onActivityCreated(savedInstanceState);
+    swipeRefreshLayout().setEnabled(false);
+    setRecyclerView();
+    binding.shimmerLayout.startShimmer();
+  }
 
-    @Override
-    public void onErrorResponse(Boolean onErrorRequest){
-        if(onErrorRequest){
-            swipeRefreshLayout().setRefreshing(false);
-        }
-    }
+  @Override
+  public void onErrorResponse(Boolean onErrorRequest) {
+    if (onErrorRequest) swipeRefreshLayout().setRefreshing(false);
+  }
 
-    private SwipeRefreshLayout swipeRefreshLayout(){
-        refreshLayout.setColorSchemeResources(
-                R.color.blue, R.color.blue, R.color.blue);
+  private SwipeRefreshLayout swipeRefreshLayout() {
+    binding.swipeFresh.setColorSchemeResources(R.color.blue, R.color.blue, R.color.blue);
+    binding.swipeFresh.setOnRefreshListener(() -> viewModel.getDataFromNetwork());
+    return binding.swipeFresh;
+  }
 
-        refreshLayout.setOnRefreshListener(() ->
-                viewModel.getDataFromNetwork());
+  @Override
+  public void onDestroyView() {
+    super.onDestroyView();
+    binding.unbind();
+    binding = null;
+  }
 
-        return refreshLayout;
-    }
+  @Override
+  public void onClick(View v) {
+    Fragment fragment = HelpCenterFragment.newInstance();
+    super.setFragment(fragment).commit();
+  }
 
-    @Override
-    public void onResume(){
-        super.onResume();
-    }
+  @Override
+  public void cardItemListener(int position) {
+    Fragment fragment = StatisticsFragment.newInstance();
+    //super.setDelegateFragment(fragment).commit();
+  }
 
-    @Override
-    public void onPause(){
-        Timber.d("onPause called");
-        super.onPause();
-    }
+  final void setRecyclerView() {
+    binding.recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+    binding.recyclerView.addItemDecoration(new DividerItemDecoration(
+        binding.recyclerView.getContext(), DividerItemDecoration.VERTICAL));
+    binding.recyclerView.setHasFixedSize(true);
+    binding.recyclerView.setItemViewCacheSize(20);
+    binding.recyclerView.setAdapter(countryAdapter);
+  }
 
-    @Override
-    public void onStop(){
-        super.onStop();
-    }
+  @Override
+  public void onNetworkConnectionChanged(Connectivity connectivity) {
 
-    @Override
-    public void onDestroy(){
-        super.onDestroy();
-        Timber.d("onDestroy called");
-    }
-
-    @Override
-    public void onDestroyView(){
-        super.onDestroyView();
-
-        if(recyclerView.getAdapter() != null){
-            recyclerView.setAdapter(null);
-        }
-
-        Timber.d("onDestroyView called");
-        connectivity.destroyConnection();
-        binding.unbind();
-        binding = null;
-        unbinder.unbind();
-    }
-
-    @Override
-    public void onClick(View v){
-        //Fragment fragment = HelpCenterFragment.newInstance();
-        //super.setDelegateFragment(fragment).commit();
-    }
-
-    @Override
-    public void cardItemListener(int position){
-        Fragment fragment = StatisticsFragment.newInstance();
-        //super.setDelegateFragment(fragment).commit();
-    }
-
-    final void setRecyclerView(){
-        recyclerView.setLayoutManager(
-                new LinearLayoutManager(getContext()));
-
-        recyclerView.addItemDecoration(
-                new DividerItemDecoration(
-                        recyclerView.getContext(),
-                        DividerItemDecoration.VERTICAL));
-
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setItemViewCacheSize(20);
-        recyclerView.setAdapter(countryAdapter);
-    }
+  }
 }

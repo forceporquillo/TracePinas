@@ -18,76 +18,79 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
-import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
-
 import com.force.codes.project.app.databinding.FragmentLiveDataBinding;
+import com.force.codes.project.app.presentation_layer.views.factory.ViewModelProviderFactory;
 import com.force.codes.project.app.presentation_layer.views.viewmodels.LiveDataViewModel;
-import com.force.codes.project.app.presentation_layer.views.viewmodels.factory.ViewModelProviderFactory;
-
+import com.github.pwittchen.reactivenetwork.library.rx2.Connectivity;
+import javax.inject.Inject;
 import org.jetbrains.annotations.NotNull;
 
-import javax.inject.Inject;
+public class LiveDataFragment extends BaseFragment {
 
-import dagger.android.support.DaggerFragment;
-import timber.log.Timber;
+  protected FragmentLiveDataBinding binding;
 
-public class LiveDataFragment extends BaseFragment{
+  @Inject
+  ViewModelProviderFactory factory;
 
-    protected FragmentLiveDataBinding binding;
+  private LiveDataViewModel viewModel;
 
-    @Inject
-    ViewModelProviderFactory factory;
+  public LiveDataFragment() {
+    // Required empty public constructor
+  }
 
-    private LiveDataViewModel viewModel;
+  public static LiveDataFragment newInstance() {
+    LiveDataFragment fragment = new LiveDataFragment();
+    Bundle args = new Bundle();
+    fragment.setArguments(args);
+    return fragment;
+  }
 
-    public LiveDataFragment(){
-        // Required empty public constructor
-    }
+  @Override
+  public void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    viewModel = new ViewModelProvider(this, factory).get(LiveDataViewModel.class);
+  }
 
-    public static LiveDataFragment newInstance(){
-        LiveDataFragment fragment = new LiveDataFragment();
-        Bundle args = new Bundle();
-        fragment.setArguments(args);
-        return fragment;
-    }
+  @Override
+  public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container,
+      Bundle savedInstanceState) {
+    binding = FragmentLiveDataBinding.inflate(inflater, container, false);
+    binding.setLifecycleOwner(this);
+    binding.setViewModel(viewModel);
+    return binding.getRoot();
+  }
 
-    @Override
-    public void onCreate(Bundle savedInstanceState){
-        super.onCreate(savedInstanceState);
-        viewModel = new ViewModelProvider(this, factory).get(LiveDataViewModel.class);
-    }
+  @Override
+  public void onDestroyView() {
+    super.onDestroyView();
+    binding.unbind();
+    binding = null;
+  }
 
-    @Override
-    public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
-        binding = FragmentLiveDataBinding.inflate(inflater, container, false);
-        binding.setLifecycleOwner(this);
-        binding.setViewModel(viewModel);
-        return binding.getRoot();
-    }
+  @Override
+  public void onStart() {
+    super.onStart();
+    //        viewModel.getDataFromNetwork().observe(this, worldData ->
+    //                Timber.d(String.valueOf(worldData.getCases())));
+  }
 
-    @Override
-    public void onDestroyView(){
-        super.onDestroyView();
-        binding.unbind();
-        binding = null;
-    }
+  @Override
+  public void onPause() {
+    super.onPause();
+  }
 
-    @Override
-    public void onStart(){
-        super.onStart();
-        viewModel.getDataFromNetwork().observe(this, worldData ->
-                Timber.d(String.valueOf(worldData.getCases())));
-    }
+  @Override
+  public void onResume() {
+    super.onResume();
+  }
 
-    @Override
-    public void onPause(){
-        super.onPause();
-    }
+  @Override
+  public void onNetworkConnectionChanged(Connectivity connectivity) {
 
-    @Override
-    public void onResume(){
-        super.onResume();
-    }
+  }
+
+  @Override public void onInternetConnectionChanged(Boolean isConnected) {
+
+  }
 }

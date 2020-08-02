@@ -14,25 +14,22 @@ package com.force.codes.project.app.data_layer.resources.database;
  *
  */
 
-
 import androidx.paging.DataSource;
 import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 import androidx.room.Transaction;
-
 import com.force.codes.project.app.app.constants.DatabaseConstants;
 import com.force.codes.project.app.data_layer.model.country.CountryDetails;
-
 import java.util.List;
 
 @Dao
-public interface WorldwideDao{
-    @Transaction
-    @Query(DatabaseConstants.QUERY_ALL_DATA)
-    DataSource.Factory <Integer, CountryDetails> getDataFromDatabase();
+public interface WorldwideDao {
+  @Transaction
+  @Query(DatabaseConstants.QUERY_ALL_DATA)
+  DataSource.Factory<Integer, CountryDetails> getDataFromDatabase();
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insertOrUpdate(List <CountryDetails> details);
+  @Insert(onConflict = OnConflictStrategy.REPLACE)
+  void insertOrUpdate(List<CountryDetails> details);
 }

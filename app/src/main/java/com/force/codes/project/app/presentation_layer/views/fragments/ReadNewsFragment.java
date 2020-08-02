@@ -11,111 +11,84 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-
 import com.bumptech.glide.Glide;
-import com.force.codes.project.app.R;
+import com.force.codes.project.app.BR;
 import com.force.codes.project.app.data_layer.model.news.ArticlesItem;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
+import com.force.codes.project.app.databinding.FragmentReadNewsBinding;
+import org.jetbrains.annotations.NotNull;
+import timber.log.Timber;
 
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link ReadNewsFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class ReadNewsFragment extends Fragment{
+public class ReadNewsFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+  private static final String TITLE_ARGS = "title_args";
+  private static final String IMAGE_ARGS = "image_args";
+  private FragmentReadNewsBinding binding;
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+  public ReadNewsFragment() {
+    // Required empty public constructor
+  }
 
-    public ReadNewsFragment(){
-        // Required empty public constructor
+  public static ReadNewsFragment newInstance(final ArticlesItem articlesItem) {
+    ReadNewsFragment fragment = new ReadNewsFragment();
+    Bundle args = new Bundle();
+    args.putString(TITLE_ARGS, articlesItem.getTitle());
+    args.putString(IMAGE_ARGS, articlesItem.getUrlToImage());
+    fragment.setArguments(args);
+    return fragment;
+  }
+
+  @Override
+  public void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    if (getArguments() != null) {
+      Timber.i("not null");
     }
+  }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment ReadNewsFragment.
-     */
-    // TODO: Rename and change types and number of parameters
+  @Override
+  public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+    super.onViewCreated(view, savedInstanceState);
+  }
 
-    @BindView(R.id.title)
-    TextView textView;
+  @Override
+  public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container,
+      Bundle savedInstanceState) {
+    binding = FragmentReadNewsBinding.inflate(inflater, container, false);
+    binding.setReadNews(this);
+    binding.setLifecycleOwner(this);
+    binding.setVariable(BR.readNews, this);
+    binding.invalidateAll();
+    return binding.getRoot();
+  }
 
-    @BindView(R.id.image)
-    ImageView imageView;
+  @Override
+  public void onResume() {
+    super.onResume();
+    Glide.with(binding.image.getContext())
+        .asBitmap()
+        .load(IMAGE_ARGS)
+        .centerCrop()
+        .into(binding.image);
+    binding.title.setText(TITLE_ARGS);
+  }
 
-    private Unbinder unbinder;
+  @Override
+  public void onDestroyView() {
+    super.onDestroyView();
+    binding.unbind();
+    binding = null;
+  }
 
-    public static ReadNewsFragment newInstance(ArticlesItem item){
-        ReadNewsFragment fragment = new ReadNewsFragment();
-        Bundle args = new Bundle();
-        //args.putString(ARG_PARAM1, param1);
-       // args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState){
-        super.onCreate(savedInstanceState);
-        if(getArguments() != null){
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-    }
-
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState){
-        super.onViewCreated(view, savedInstanceState);
-
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
-        View view = inflater.inflate(R.layout.fragment_read_news, container, false);
-        ButterKnife.bind(this, view);
-        return view;
-    }
-
-    @Override
-    public void onResume(){
-        super.onResume();
-        Glide.with(imageView.getContext())
-                .asBitmap()
-                .load(mParam2)
-                .centerCrop()
-                .into(imageView);
-
-        textView.setText(mParam1);
-    }
-
-    @Override
-    public void onDestroyView(){
-        super.onDestroyView();
-        textView = null;
-        imageView = null;
-    }
-
-    @Override
-    public void onDestroy(){
-        super.onDestroy();
-    }
+  @Override
+  public void onDestroy() {
+    super.onDestroy();
+  }
 }
