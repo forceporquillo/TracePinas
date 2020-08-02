@@ -15,9 +15,8 @@ package com.force.codes.project.app.data_layer.repositories.interfaces;
  */
 
 import com.force.codes.project.app.data_layer.model.map_data.WorldData;
-
 import io.reactivex.Flowable;
 
-public interface LiveOverviewRepository{
-    Flowable <WorldData> getWorldDataFromNetwork();
+public interface LiveOverviewRepository {
+  Flowable<WorldData> getWorldDataFromNetwork();
 }

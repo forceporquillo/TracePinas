@@ -11,26 +11,24 @@ import com.force.codes.project.app.app.constants.ApiConstants;
 import com.force.codes.project.app.data_layer.model.map_data.WorldData;
 import com.force.codes.project.app.data_layer.repositories.interfaces.LiveOverviewRepository;
 import com.force.codes.project.app.data_layer.resources.api.ApiService;
-
+import io.reactivex.Flowable;
+import io.reactivex.schedulers.Schedulers;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
-import io.reactivex.Flowable;
-import io.reactivex.schedulers.Schedulers;
-
 @Singleton
-public class LiveOverviewRepositoryImpl implements LiveOverviewRepository{
+public class LiveOverviewRepositoryImpl implements LiveOverviewRepository {
 
-    private final ApiService apiAdapter;
+  private final ApiService apiAdapter;
 
-    @Inject
-    public LiveOverviewRepositoryImpl(ApiService apiAdapter){
-        this.apiAdapter = apiAdapter;
-    }
+  @Inject
+  public LiveOverviewRepositoryImpl(ApiService apiAdapter) {
+    this.apiAdapter = apiAdapter;
+  }
 
-    @Override
-    public Flowable <WorldData> getWorldDataFromNetwork(){
-        return apiAdapter.getWorldData(ApiConstants.getBaseUrlPath("all"))
-                .subscribeOn(Schedulers.io());
-    }
+  @Override
+  public Flowable<WorldData> getWorldDataFromNetwork() {
+    return apiAdapter.getWorldData(ApiConstants.getBaseUrlPath("all"))
+        .subscribeOn(Schedulers.io());
+  }
 }

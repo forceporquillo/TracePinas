@@ -7,59 +7,54 @@
 
 package com.force.codes.project.app.data_layer.repositories.implementations;
 
-
 import androidx.lifecycle.LiveData;
 import androidx.paging.DataSource;
 import androidx.paging.LivePagedListBuilder;
 import androidx.paging.PagedList;
-
 import com.force.codes.project.app.app.constants.ApiConstants;
 import com.force.codes.project.app.data_layer.model.country.CountryDetails;
 import com.force.codes.project.app.data_layer.repositories.interfaces.WorldwideRepository;
 import com.force.codes.project.app.data_layer.resources.api.ApiService;
 import com.force.codes.project.app.data_layer.resources.database.WorldwideDao;
-import com.force.codes.project.app.service.executors.AppExecutors;
-
+import com.force.codes.project.app.presentation_layer.controller.utils.threads.AppExecutors;
+import io.reactivex.Flowable;
+import io.reactivex.schedulers.Schedulers;
 import java.util.List;
-
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
-import io.reactivex.Flowable;
-import io.reactivex.schedulers.Schedulers;
-
 @Singleton
-public class WorldwideRepositoryImpl implements WorldwideRepository{
-    private WorldwideDao worldwideDao;
-    private ApiService serviceAdapter;
-    private AppExecutors executors;
+public class WorldwideRepositoryImpl implements WorldwideRepository {
+  private WorldwideDao worldwideDao;
+  private ApiService serviceAdapter;
+  private AppExecutors executors;
 
-    @Inject
-    public WorldwideRepositoryImpl(
-            WorldwideDao worldwideDao,
-            ApiService adapter,
-            AppExecutors executors
-    ){
-        this.worldwideDao = worldwideDao;
-        this.serviceAdapter = adapter;
-        this.executors = executors;
-    }
+  @Inject
+  public WorldwideRepositoryImpl(
+      WorldwideDao worldwideDao,
+      ApiService adapter,
+      AppExecutors executors
+  ) {
+    this.worldwideDao = worldwideDao;
+    this.serviceAdapter = adapter;
+    this.executors = executors;
+  }
 
-    @Override
-    public Flowable<List<CountryDetails>> getDataFromRemoteService(){
-        return serviceAdapter.getSortedCases(ApiConstants.getBaseUrlPath("countries?sort=cases"))
-                .subscribeOn(Schedulers.computation());
-    }
+  @Override
+  public Flowable<List<CountryDetails>> getDataFromRemoteService() {
+    return serviceAdapter.getSortedCases(ApiConstants.getBaseUrlPath("countries?sort=cases"))
+        .subscribeOn(Schedulers.computation());
+  }
 
-    @Override
-    public LiveData<PagedList<CountryDetails>> getDataFromDatabase(PagedList.Config config){
-        DataSource.Factory<Integer, CountryDetails>
-                detailsFactory = worldwideDao.getDataFromDatabase();
-        return new LivePagedListBuilder<>(detailsFactory, config).build();
-    }
+  @Override
+  public LiveData<PagedList<CountryDetails>> getDataFromDatabase(PagedList.Config config) {
+    DataSource.Factory<Integer, CountryDetails>
+        detailsFactory = worldwideDao.getDataFromDatabase();
+    return new LivePagedListBuilder<>(detailsFactory, config).build();
+  }
 
-    @Override
-    public void saveDatabase(List<CountryDetails> detailsList){
-        executors.diskIO().execute(() -> worldwideDao.insertOrUpdate(detailsList));
-    }
+  @Override
+  public void saveDatabase(List<CountryDetails> detailsList) {
+    executors.diskIO().execute(() -> worldwideDao.insertOrUpdate(detailsList));
+  }
 }
