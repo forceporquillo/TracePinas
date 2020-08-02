@@ -7,47 +7,44 @@ package com.force.codes.project.app.data_layer.resources.api;
  *
  */
 
-import com.force.codes.project.app.data_layer.model.Data;
-import com.force.codes.project.app.data_layer.model.TotalByDate;
+import com.force.codes.project.app.data_layer.model.overall.TotalByDate;
 import com.force.codes.project.app.data_layer.model.country.CountryDetails;
-import com.force.codes.project.app.data_layer.model.world.GlobalData;
 import com.force.codes.project.app.data_layer.model.map_data.LocalData;
-import com.force.codes.project.app.data_layer.model.news.NewsData;
 import com.force.codes.project.app.data_layer.model.map_data.WorldData;
+import com.force.codes.project.app.data_layer.model.news.NewsData;
 import com.force.codes.project.app.data_layer.model.twitter.TwitterData;
-
-import java.util.List;
-
+import com.force.codes.project.app.data_layer.model.world.GlobalData;
 import io.reactivex.Flowable;
+import java.util.List;
 import retrofit2.http.GET;
 import retrofit2.http.Url;
 
-public interface ApiService{
-    @GET
-    Flowable<List<CountryDetails>>
-    getSortedCases(@Url String url);
+public interface ApiService {
+  @GET
+  Flowable<List<CountryDetails>>
+  getSortedCases(@Url String url);
 
-    @GET
-    Flowable<List<GlobalData>>
-    getGlobalData(@Url String url);
+  @GET
+  Flowable<List<GlobalData>>
+  getGlobalData(@Url String url);
 
-    @GET
-    Flowable<LocalData>
-    getPhData(@Url String url);
+  @GET
+  Flowable<LocalData>
+  getPhData(@Url String url);
 
-    @GET
-    Flowable<WorldData>
-    getWorldData(@Url String url);
+  @GET
+  Flowable<WorldData>
+  getWorldData(@Url String url);
 
-    @GET
-    Flowable<NewsData>
-    getNewsResponse(@Url String url);
+  @GET
+  Flowable<NewsData>
+  getNewsResponse(@Url String url);
 
-    @GET
-    Flowable<List<TwitterData>>
-    getTwitterResponse(@Url String url);
+  @GET
+  Flowable<List<TwitterData>>
+  getTwitterResponse(@Url String url);
 
-    @GET
-    Flowable<List<TotalByDate>>
-    getTotalByDate(@Url String url);
+  @GET
+  Flowable<List<TotalByDate>>
+  getTotalByDate(@Url String url);
 }
