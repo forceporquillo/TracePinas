@@ -53,5 +53,5 @@ public abstract class ViewModelModule {
   @Binds
   @IntoMap
   @ViewModelKey(MyCountryViewModel.class)
-  abstract ViewModelKey providesMyCountryViewModel(MyCountryViewModel myCountryViewModel);
+  abstract ViewModel providesMyCountryViewModel(MyCountryViewModel myCountryViewModel);
 }

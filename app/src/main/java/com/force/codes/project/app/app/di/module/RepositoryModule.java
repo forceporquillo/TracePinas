@@ -17,29 +17,28 @@ import com.force.codes.project.app.data_layer.repositories.interfaces.MapReposit
 import com.force.codes.project.app.data_layer.repositories.interfaces.NewsRepository;
 import com.force.codes.project.app.data_layer.repositories.interfaces.OverAllRepository;
 import com.force.codes.project.app.data_layer.repositories.interfaces.WorldwideRepository;
-
 import dagger.Binds;
 import dagger.Module;
 
 @Module
-public abstract class RepositoryModule{
-    @Binds
-    abstract LiveOverviewRepository
-    LiveOverviewRepository(LiveOverviewRepositoryImpl repository);
+public abstract class RepositoryModule {
+  @Binds
+  abstract LiveOverviewRepository
+  LiveOverviewRepository(LiveOverviewRepositoryImpl repository);
 
-    @Binds
-    abstract WorldwideRepository
-    WorldwideRepository(WorldwideRepositoryImpl repository);
+  @Binds
+  abstract WorldwideRepository
+  WorldwideRepository(WorldwideRepositoryImpl repository);
 
-    @Binds
-    abstract MapRepository
-    MapRepository(MapRepositoryImpl repository);
+  @Binds
+  abstract MapRepository
+  MapRepository(MapRepositoryImpl repository);
 
-    @Binds
-    abstract NewsRepository
-    NewsRepository(NewsRepositoryImpl repository);
+  @Binds
+  abstract NewsRepository
+  NewsRepository(NewsRepositoryImpl repository);
 
-    @Binds
-    abstract OverAllRepository
-    OverAllRepository(OverAllRepositoryImpl repository);
+  @Binds
+  abstract OverAllRepository
+  OverAllRepository(OverAllRepositoryImpl repository);
 }

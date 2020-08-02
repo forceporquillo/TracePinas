@@ -8,12 +8,11 @@
 package com.force.codes.project.app.app.di.module;
 
 import com.force.codes.project.app.presentation_layer.views.activity.FragmentContainerActivity;
-
 import dagger.Module;
 import dagger.android.ContributesAndroidInjector;
 
 @Module
-public abstract class ActivityBuilderModule{
-    @ContributesAndroidInjector(modules = FragmentBuilderModule.class)
-    abstract FragmentContainerActivity bindFragmentContainerActivity();
+public abstract class ActivityBuilderModule {
+  @ContributesAndroidInjector(modules = FragmentBuilderModule.class)
+  abstract FragmentContainerActivity bindFragmentContainerActivity();
 }

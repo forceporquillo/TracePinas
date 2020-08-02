@@ -7,15 +7,11 @@
 
 package com.force.codes.project.app.app.di.module;
 
-import com.force.codes.project.app.app.constants.ApiConstants;
 import com.force.codes.project.app.data_layer.resources.api.ApiService;
-
-import java.util.concurrent.TimeUnit;
-
-import javax.inject.Singleton;
-
 import dagger.Module;
 import dagger.Provides;
+import java.util.concurrent.TimeUnit;
+import javax.inject.Singleton;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -25,45 +21,44 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 import static com.force.codes.project.app.app.constants.ApiConstants.TWITTER_BEARER_TOKEN;
 import static com.force.codes.project.app.app.constants.ApiConstants.URL_PATH;
-import static com.force.codes.project.app.app.constants.NetworkConstants.TIMEOUT_MILLIS;
+import static com.force.codes.project.app.app.constants.GlobalConstants.TIMEOUT_MILLIS;
 
 @Module
-public class NetworkModule{
+public class NetworkModule {
+  @Singleton
+  static OkHttpClient providesOkHttpClient = new OkHttpClient.Builder()
+      .connectTimeout(TIMEOUT_MILLIS, TimeUnit.MILLISECONDS)
+      .readTimeout(TIMEOUT_MILLIS, TimeUnit.MILLISECONDS)
+      .writeTimeout(TIMEOUT_MILLIS, TimeUnit.MILLISECONDS)
+      .addInterceptor(providesLoggingInterceptor())
+      .addInterceptor(chain -> {
+        // authenticates to twitter API with read/write access using Oauth2.
+        Request makeRequest = chain.request().newBuilder()
+            .addHeader("Authorization",
+                "Bearer " + TWITTER_BEARER_TOKEN)
+            .build();
+        return chain.proceed(makeRequest);
+      }).build();
 
-    @Singleton
-    static OkHttpClient providesOkHttpClient = new OkHttpClient.Builder()
-            .connectTimeout(TIMEOUT_MILLIS, TimeUnit.MILLISECONDS)
-            .readTimeout(TIMEOUT_MILLIS, TimeUnit.MILLISECONDS)
-            .writeTimeout(TIMEOUT_MILLIS, TimeUnit.MILLISECONDS)
-            .addInterceptor(providesLoggingInterceptor())
-            .addInterceptor(chain -> {
-                // authenticates to twitter API with read/write access using Oauth2.
-                Request makeRequest = chain.request().newBuilder()
-                        .addHeader("Authorization",
-                                "Bearer " + TWITTER_BEARER_TOKEN)
-                        .build();
-                return chain.proceed(makeRequest);
-            }).build();
+  @Provides
+  static HttpLoggingInterceptor providesLoggingInterceptor() {
+    HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
+    interceptor.level(HttpLoggingInterceptor.Level.HEADERS);
+    return interceptor;
+  }
 
-    @Provides
-    static HttpLoggingInterceptor providesLoggingInterceptor(){
-        HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
-        interceptor.level(HttpLoggingInterceptor.Level.HEADERS);
-        return interceptor;
-    }
+  @Provides
+  static Retrofit providesRetrofitInstance() {
+    return new Retrofit.Builder()
+        .baseUrl(URL_PATH)
+        .addConverterFactory(GsonConverterFactory.create())
+        .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+        .client(providesOkHttpClient)
+        .build();
+  }
 
-    @Provides
-    static Retrofit providesRetrofitInstance(){
-        return new Retrofit.Builder()
-                .baseUrl(URL_PATH)
-                .addConverterFactory(GsonConverterFactory.create())
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .client(providesOkHttpClient)
-                .build();
-    }
-
-    @Provides
-    static ApiService providesRemoteApi(Retrofit retrofit){
-        return retrofit.create(ApiService.class);
-    }
+  @Provides
+  static ApiService providesRemoteApi(Retrofit retrofit) {
+    return retrofit.create(ApiService.class);
+  }
 }

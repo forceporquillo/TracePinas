@@ -14,33 +14,29 @@ import com.force.codes.project.app.app.di.module.DatabaseModule;
 import com.force.codes.project.app.app.di.module.NetworkModule;
 import com.force.codes.project.app.app.di.module.RepositoryModule;
 import com.force.codes.project.app.app.di.module.ViewModelModule;
-
-import javax.inject.Singleton;
-
 import dagger.BindsInstance;
 import dagger.Component;
 import dagger.android.support.AndroidSupportInjectionModule;
+import javax.inject.Singleton;
 
 @Singleton
 @Component(
-        modules = {
-                AndroidSupportInjectionModule.class,
-                ViewModelModule.class,
-                AppModule.class,
-                ActivityBuilderModule.class,
-                DatabaseModule.class,
-                NetworkModule.class,
-                RepositoryModule.class
-        }
-)
-public interface AppComponent{
-    void inject(BaseApplication baseApplication);
-
-    @Component.Builder
-    interface Builder{
-        @BindsInstance
-        Builder application(BaseApplication baseApplication);
-        Builder appModule(AppModule appModule);
-        AppComponent build();
+    modules = {
+        AndroidSupportInjectionModule.class,
+        ViewModelModule.class,
+        AppModule.class,
+        ActivityBuilderModule.class,
+        DatabaseModule.class,
+        NetworkModule.class,
+        RepositoryModule.class
     }
+)
+public interface AppComponent {
+  void inject(BaseApplication baseApplication);
+
+  @Component.Builder interface Builder {
+    @BindsInstance Builder application(BaseApplication baseApplication);
+    Builder appModule(AppModule appModule);
+    AppComponent build();
+  }
 }
