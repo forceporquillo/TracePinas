@@ -40,8 +40,7 @@ class StatisticsFragment : Fragment(), NetworkCallback {
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     savedInstanceState.let {
-      Timber.e("bundle is not null")
-      networkUtils = NetworkUtils(context!!)
+      networkUtils = NetworkUtils(context?.applicationContext)
       adapter = FragmentPagerItemAdapter(
           childFragmentManager,
           FragmentPagerItems.with(context!!)
@@ -93,25 +92,19 @@ class StatisticsFragment : Fragment(), NetworkCallback {
     binding!!.unbind()
     binding = null
     adapter = null
+    networkUtils!!.stopConnection()
     networkUtils = null
   }
 
   @RequiresApi(api = VERSION_CODES.M)
   override fun onStart() {
     super.onStart()
-    if (requiresSdkInt(
+
+    return if (requiresSdkInt(
             VERSION_CODES.M
         )
-    ) {
-      networkUtils!!.startConnection()
-      return
-    }
-    networkUtils!!.startInternetConnectivity()
-  }
-
-  override fun onDestroy() {
-    super.onDestroy()
-    networkUtils!!.stopConnection()
+    ) networkUtils!!.startConnection()
+    else networkUtils!!.startInternetConnectivity()
   }
 
   override fun onNetworkConnectionChanged(
