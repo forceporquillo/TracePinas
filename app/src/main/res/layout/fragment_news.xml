@@ -4,7 +4,7 @@
   ~ Copyright (c) 2020.  All rights reserved.
   ~ Last modified 7/4/20 8:58 AM
   -->
-<layout>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data>
 
@@ -13,7 +13,7 @@
             type="com.force.codes.project.app.presentation_layer.views.fragments.NewsFragment" />
     </data>
 
-    <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/white">
@@ -58,9 +58,17 @@
                 android:layout_below="@id/toolbar"
                 android:background="@android:color/darker_gray" />
 
+
+            <include
+                android:layout_below="@id/bottom_divider"
+                android:id="@+id/network"
+                layout="@layout/internet_layout"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_30dp"/>
+
             <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
                 android:id="@+id/swipe_fresh"
-                android:layout_below="@id/bottom_divider"
+                android:layout_below="@id/network"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
 
@@ -70,6 +78,5 @@
                     android:layout_height="match_parent" />
             </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
         </RelativeLayout>
-
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

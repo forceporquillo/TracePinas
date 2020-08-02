@@ -1,25 +1,100 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ Created by Force Porquillo on 7/17/20 2:16 PM
   ~ FEU Institute of Technology
   ~ Copyright (c) 2020.  All rights reserved.
   ~ Last modified 7/17/20 2:16 PM
   -->
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+  <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:tools="http://schemas.android.com/tools"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:background="@color/white"
+      tools:context=".presentation_layer.views.fragments.viewpager.MyCountryFragment"
+      >
 
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".presentation_layer.views.fragments.viewpager.MyCountryFragment">
-
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:gravity="center"
-        android:textStyle="bold"
-        android:fontFamily="@font/poppin_bold"
-        android:textSize="25sp"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="wrap_content">
 
-</FrameLayout>
+      <androidx.cardview.widget.CardView
+          android:clickable="true"
+          android:focusable="true"
+          android:foreground="?attr/selectableItemBackground"
+          app:cardBackgroundColor="@color/grayScale"
+          app:cardCornerRadius="10dp"
+          android:id="@+id/custom_spinner"
+          android:layout_width="match_parent"
+          android:layout_height="45dp"
+          android:layout_margin="@dimen/margin_10dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+          <TextView
+              android:layout_centerVertical="true"
+              android:layout_marginStart="20dp"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:text="@string/custom_spinner_text"
+              android:fontFamily="@font/poppin_regular"
+              android:textColor="@color/white"
+              android:textSize="16sp"/>
+
+          <TextView
+              android:layout_centerVertical="true"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:text="@string/change"
+              android:fontFamily="@font/poppin_regular"
+              android:layout_alignParentEnd="true"
+              android:layout_marginEnd="20dp"
+              android:textColor="@color/white"
+              android:textSize="12sp"/>
+
+        </RelativeLayout>
+      </androidx.cardview.widget.CardView>
+
+      <androidx.cardview.widget.CardView
+          app:cardCornerRadius="@dimen/margin_15dp"
+          android:layout_margin="@dimen/margin_10dp"
+          android:layout_below="@id/custom_spinner"
+          android:id="@+id/card_container"
+          android:layout_width="wrap_content"
+          android:layout_height="450dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+          <com.razerdp.widget.animatedpieview.AnimatedPieView
+              android:layout_margin="10dp"
+              android:id="@+id/circle_pie"
+              android:layout_width="215dp"
+              android:layout_height="215dp"/>
+
+            <include
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="@dimen/_30dp"
+                android:layout_toEndOf="@id/circle_pie"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                layout="@layout/custom_card_cases"/>
+        </RelativeLayout>
+      </androidx.cardview.widget.CardView>
+
+      <androidx.recyclerview.widget.RecyclerView
+          android:layout_below="@id/card_container"
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:layout_marginEnd="@dimen/margin_10dp"
+          android:layout_marginStart="@dimen/margin_10dp"/>
+    </RelativeLayout>
+  </ScrollView>
+  <data>
+    <variable
+        name="myCountry"
+        type="com.force.codes.project.app.presentation_layer.views.fragments.viewpager.MyCountryFragment"/>
+  </data>
+</layout>
