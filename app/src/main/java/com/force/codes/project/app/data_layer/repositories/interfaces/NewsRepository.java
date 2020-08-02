@@ -9,26 +9,22 @@ package com.force.codes.project.app.data_layer.repositories.interfaces;
 
 import androidx.lifecycle.LiveData;
 import androidx.paging.PagedList;
-
 import com.force.codes.project.app.data_layer.model.news.ArticlesItem;
 import com.force.codes.project.app.data_layer.model.news.NewsData;
 import com.force.codes.project.app.data_layer.model.twitter.TwitterData;
-
+import io.reactivex.Flowable;
 import java.util.List;
 
-import io.reactivex.Flowable;
+public interface NewsRepository {
+  Flowable<NewsData> getNewsResponseFromServer();
 
-public interface NewsRepository{
-    Flowable<NewsData> getNewsResponseFromServer();
+  LiveData<PagedList<ArticlesItem>> getPagedListArticle(PagedList.Config config);
 
-    LiveData<PagedList<ArticlesItem>> getPagedListArticle(PagedList.Config config);
+  void insertArticleData(List<ArticlesItem> items);
 
-    void insertArticleData(List<ArticlesItem> items);
+  Flowable<List<TwitterData>> getTwitterUser(String userTimeline);
 
-    Flowable<List<TwitterData>> getTwitterUser(String userTimeline);
+  LiveData<PagedList<TwitterData>> getPagedListTwitter(PagedList.Config config);
 
-    LiveData<PagedList<TwitterData>> getPagedListTwitter(PagedList.Config config);
-
-    void insertTwitterData(List<TwitterData> twitterResponse);
-
+  void insertTwitterData(List<TwitterData> twitterResponse);
 }
