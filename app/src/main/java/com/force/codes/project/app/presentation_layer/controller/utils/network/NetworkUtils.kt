@@ -17,9 +17,11 @@ import com.github.pwittchen.reactivenetwork.library.rx2.Connectivity
 import com.github.pwittchen.reactivenetwork.library.rx2.ConnectivityPredicate
 import com.github.pwittchen.reactivenetwork.library.rx2.ReactiveNetwork
 import com.github.pwittchen.reactivenetwork.library.rx2.internet.observing.InternetObservingSettings
+import com.github.pwittchen.reactivenetwork.library.rx2.internet.observing.InternetObservingStrategy
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
+import timber.log.Timber
 
 /**
  * @Author Force Porquillo
@@ -45,7 +47,9 @@ class NetworkUtils {
    * But, you have to manually remove connectivity reference linked from attached
    * Fragment into super class BaseFragment to avoid memory leaks.
    */
-  constructor() {}
+  constructor(){
+    Timber.d("no instance constructor...")
+  }
 
   /**
    * Register a callback to be invoked when listening to network changes.

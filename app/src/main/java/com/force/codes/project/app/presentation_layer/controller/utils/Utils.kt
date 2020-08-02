@@ -44,7 +44,9 @@ object Utils {
       )
     val calendar = Calendar.getInstance()
     calendar.timeInMillis = milliseconds
-    return formatter.format(calendar.time)
+    return formatter.format(
+        calendar.time
+    )
   }
 
   @JvmStatic fun formatNumber(
@@ -52,7 +54,9 @@ object Utils {
   ): String {
     if (number.isNotEmpty()) {
       val value = number.toDouble()
-      return NumberFormat.getNumberInstance(Locale.US)
+      return NumberFormat.getNumberInstance(
+          Locale.US
+      )
           .format(value)
     }
     return "0"
@@ -68,7 +72,8 @@ object Utils {
   }
 
   /**
-   * @return thread count by multiplying device processors count by 2
+   * @return thread count by multiplying
+   * device processors count by 2
    */
   @JvmStatic val threadCount: Int
     get() = Runtime.getRuntime()
@@ -78,6 +83,7 @@ object Utils {
     get() {
       val calendar = Calendar
           .getInstance().time
+
       @SuppressLint("SimpleDateFormat")
       val dateFormat =
         simpleDateFormat(
@@ -87,8 +93,8 @@ object Utils {
     }
 
   /**
-   * A helper method to manually align view margin at runtime.
-   * This converts dp to px.
+   * A helper method to manually align view
+   * margin at runtime. This converts dp to px.
    *
    * @return pixel based on device dpi and resolution.
    */
