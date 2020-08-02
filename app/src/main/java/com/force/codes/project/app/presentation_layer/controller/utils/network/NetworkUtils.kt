@@ -47,9 +47,7 @@ class NetworkUtils {
    * But, you have to manually remove connectivity reference linked from attached
    * Fragment into super class BaseFragment to avoid memory leaks.
    */
-  constructor(){
-    Timber.d("no instance constructor...")
-  }
+  constructor()
 
   /**
    * Register a callback to be invoked when listening to network changes.

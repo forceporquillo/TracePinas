@@ -10,7 +10,7 @@ class Group {
   var groupTitle: String? = null
   var isSpinner = false
 
-  constructor() {}
+  constructor()
   constructor(
     title: String?,
     spinner: Boolean

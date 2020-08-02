@@ -16,8 +16,9 @@ import com.force.codes.project.app.presentation_layer.controller.utils.network.N
 import com.force.codes.project.app.presentation_layer.controller.utils.network.NetworkUtils
 import dagger.android.support.DaggerFragment
 
-abstract class BaseFragment : DaggerFragment(),
-    NetworkCallback {
+abstract class BaseFragment :
+    DaggerFragment(), NetworkCallback
+{
   protected val fragment: Fragment? = null
   protected var networkUtils: NetworkUtils? = null
 

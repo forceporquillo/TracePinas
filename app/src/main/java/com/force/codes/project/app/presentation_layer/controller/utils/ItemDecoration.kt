@@ -29,7 +29,8 @@ class ItemDecoration(
 
   private fun setOrientation(orientation: Int) {
     require(
-        !(orientation != HORIZONTAL_LIST && orientation != VERTICAL_LIST)
+        !(orientation != HORIZONTAL_LIST &&
+            orientation != VERTICAL_LIST)
     ) { "invalid orientation" }
     this.orientation = orientation
   }
@@ -57,12 +58,14 @@ class ItemDecoration(
       val child = parent.getChildAt(i)
       val params = child.layoutParams as LayoutParams
       val top = child.bottom + params.bottomMargin
-      val bottom = top + drawable!!.intrinsicHeight
-      drawable.setBounds(
-          left + Utils.dpToPx(context, margin), top,
-          right - Utils.dpToPx(context, margin), bottom
-      )
-      drawable.draw(canvas!!)
+      val bottom = top + (drawable?.intrinsicHeight ?: 0)
+      drawable!!.apply {
+        setBounds(
+            left + Utils.dpToPx(context, margin), top,
+            right - Utils.dpToPx(context, margin), bottom
+        )
+        draw(canvas!!)
+      }
     }
   }
 
@@ -77,12 +80,15 @@ class ItemDecoration(
       val child = parent.getChildAt(i)
       val params = child.layoutParams as LayoutParams
       val left = child.right + params.rightMargin
-      val right = left + drawable!!.intrinsicHeight
-      drawable.setBounds(
-          left, top + Utils.dpToPx(context, margin),
-          right, bottom - Utils.dpToPx(context, margin)
-      )
-      drawable.draw(canvas!!)
+      val right = left + (drawable?.intrinsicHeight ?: 0)
+      drawable!!.apply {
+        setBounds(
+            left, top + Utils.dpToPx(context, margin),
+            right, bottom - Utils.dpToPx(context, margin)
+
+        )
+        draw(canvas!!)
+      }
     }
   }
 
