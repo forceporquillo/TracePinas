@@ -9,54 +9,52 @@ package com.force.codes.project.app.presentation_layer.views.viewholders;
 
 import android.view.View;
 import android.widget.ImageView;
-
 import androidx.annotation.NonNull;
 import androidx.databinding.BindingAdapter;
-import androidx.databinding.library.baseAdapters.BR;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
+import com.force.codes.project.app.BR;
 import com.force.codes.project.app.R;
 import com.force.codes.project.app.data_layer.model.news.ArticlesItem;
 import com.force.codes.project.app.databinding.HotNewsLayoutBinding;
-import com.force.codes.project.app.presentation_layer.controller.custom.interfaces.NewsItemCallback;
-
+import com.force.codes.project.app.presentation_layer.controller.interfaces.NewsItemCallback;
 import org.jetbrains.annotations.NotNull;
 
-public class HotNewsViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+public class HotNewsViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+  private final NewsItemCallback callback;
+  private final HotNewsLayoutBinding binding;
 
-    private NewsItemCallback callback;
-    private HotNewsLayoutBinding binding;
+  public HotNewsViewHolder(
+      @NonNull HotNewsLayoutBinding binding,
+      NewsItemCallback callback
+  ) {
+    super(binding.getRoot());
+    this.binding = binding;
+    this.callback = callback;
+    itemView.setOnClickListener(this);
+  }
 
-    public HotNewsViewHolder(
-            @NonNull HotNewsLayoutBinding binding,
-            NewsItemCallback callback
-    ){
-        super(binding.getRoot());
-        this.binding = binding;
-        this.callback = callback;
-        itemView.setOnClickListener(this);
-    }
+  @BindingAdapter({ "imgUrl" })
+  public static void setThumbnail(ImageView imageView, @NotNull String url) {
+    Glide.with(imageView.getContext())
+        .load(url)
+        .placeholder(R.drawable.progress_loading)
+        .centerCrop()
+        .diskCacheStrategy(DiskCacheStrategy.ALL)
+        .error(R.drawable.ic_refresh)
+        .into(imageView);
+  }
 
-    public void bindTo(ArticlesItem articlesItem){
-       binding.setArticleItem(articlesItem);
-       //binding.setVariable(BR.articleItem, articlesItem);
-       binding.executePendingBindings();
-    }
+  public void bindTo(ArticlesItem articlesItem) {
+    binding.setArticleItem(articlesItem);
+    binding.setVariable(BR.articleItem, articlesItem);
+    binding.executePendingBindings();
+  }
 
-    @BindingAdapter({"imgUrl"})
-    public static void
-    setThumbnail(ImageView imageView, @NotNull String url){
-        Glide.with(imageView.getContext())
-                .load(url)
-                .placeholder(R.drawable.progress_loading)
-                .centerCrop()
-                .error(R.drawable.ic_warning)
-                .into(imageView);
-    }
-
-    @Override
-    public void onClick(View v){
-        callback.hotNewsItemListener(getAdapterPosition());
-    }
+  @Override
+  public void onClick(View v) {
+    callback.hotNewsItemListener(getAdapterPosition());
+  }
 }

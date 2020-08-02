@@ -6,71 +6,77 @@ package com.force.codes.project.app.presentation_layer.views.viewholders;
  * FEU Institute of Technology
  */
 
-import android.annotation.SuppressLint;
+import android.content.res.Resources;
 import android.view.View;
-import android.widget.TextView;
-
 import androidx.databinding.BindingAdapter;
+import androidx.databinding.library.baseAdapters.BR;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.force.codes.project.app.R;
 import com.force.codes.project.app.data_layer.model.country.CountryDetails;
 import com.force.codes.project.app.databinding.CountryRowsBinding;
-import com.force.codes.project.app.presentation_layer.controller.custom.interfaces.FragmentCallback;
-import com.force.codes.project.app.presentation_layer.controller.custom.utils.StringUtils;
-
+import com.force.codes.project.app.presentation_layer.controller.interfaces.FragmentCallback;
+import com.force.codes.project.app.presentation_layer.controller.utils.Utils;
+import de.hdodenhof.circleimageview.CircleImageView;
 import org.jetbrains.annotations.NotNull;
 
-import de.hdodenhof.circleimageview.CircleImageView;
+public class CountryViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+  private final FragmentCallback callback;
+  private final CountryRowsBinding binding;
 
-public class CountryViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+  public CountryViewHolder(
+      @NotNull final CountryRowsBinding binding,
+      final FragmentCallback callback
+  ) {
+    super(binding.getRoot());
+    this.binding = binding;
+    this.callback = callback;
+    binding.getRoot().setOnClickListener(this);
+  }
 
-    private final FragmentCallback callback;
-    private final CountryRowsBinding rowsBinding;
+  @BindingAdapter({ "imageUrl" })
+  public static void setFlag(@NotNull CircleImageView flagPlaceholder, final String imageUrl) {
+    Glide.with(flagPlaceholder.getContext())
+        .asBitmap()
+        .apply(new RequestOptions()
+            .fitCenter()
+            .override(125, 125))
+        .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
+        .placeholder(R.drawable.cupertino_loading)
+        .load(imageUrl)
+        .into(flagPlaceholder);
+  }
 
-    public CountryViewHolder(@NotNull final CountryRowsBinding rowsBinding, final FragmentCallback callback){
-        super(rowsBinding.getRoot());
-        rowsBinding.getRoot().setOnClickListener(this);
-        this.rowsBinding = rowsBinding;
-        this.callback = callback;
+  public void setTextUpdate(CountryDetails details) {
+    String todayCases = String.valueOf(details.getTodayCases());
+    String totalCases = String.valueOf(details.getCases());
+
+    final Resources res = binding.getRoot().getResources();
+    final String NEW_CASES = res.getString(R.string.new_cases_total);
+    final String NO_NEW_CASES = res.getString(R.string.no_new_cases);
+    final String CONFIRMED = res.getString(R.string.confirmed_today);
+
+    if (details.getTodayCases() != 0) {
+      binding.newCasesText.setText(String.format("%s%s%s%s", Utils.formatNumber(todayCases),
+          NEW_CASES, Utils.formatNumber(totalCases), CONFIRMED));
+      return;
     }
 
-    @SuppressLint("SetTextI18n")
-    @BindingAdapter({"textUpdate"})
-    public static void setTextUpdate(TextView textUpdate, int newCases){
-        StringUtils utils = new StringUtils();
+    binding.newCasesText.setText(
+        String.format("%s%s", Utils.formatNumber(totalCases), NO_NEW_CASES));
+  }
 
-        if(newCases > 0){
-            textUpdate.setText(utils.formatNumber(String.valueOf(newCases)) + " new cases...");
-        }else{
-            textUpdate.setText(utils.formatNumber(String.valueOf(newCases)) + " henlo fren...");
-        }
-    }
+  public void bindTo(CountryDetails details) {
+    binding.setDetails(details);
+    binding.setVariable(BR.details, details);
+    binding.executePendingBindings();
+  }
 
-    @BindingAdapter({"imageUrl"})
-    public static void setFlag(@NotNull CircleImageView flagPlaceholder, final String imageUrl){
-        Glide.with(flagPlaceholder.getContext())
-                .asBitmap()
-                .apply(new RequestOptions()
-                        .fitCenter()
-                        .override(125, 125))
-                .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
-                .placeholder(R.drawable.cupertino_loading)
-                .load(imageUrl)
-                .into(flagPlaceholder);
-    }
-
-    public void bindTo(CountryDetails details){
-        rowsBinding.setDetails(details);
-        //rowsBinding.setVariable(BR.details, details);
-        rowsBinding.executePendingBindings();
-    }
-
-    @Override
-    public void onClick(View v){
-        callback.cardItemListener(getAdapterPosition());
-    }
+  @Override public void onClick(View v) {
+    callback.cardItemListener(
+        getAdapterPosition()
+    );
+  }
 }
