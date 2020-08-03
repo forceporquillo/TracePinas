@@ -26,7 +26,7 @@ import timber.log.Timber
 /**
  * @Author Force Porquillo
  */
-class NetworkUtils {
+open class NetworkUtils {
   private val disposable = CompositeDisposable()
   private var networkCallback: NetworkCallback? = null
   private var context: Context? = null
