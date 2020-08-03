@@ -4,6 +4,7 @@
  * Copyright (c) 2020.  All rights reserved.
  * Last modified 8/2/20 7:39 PM
  */
+
 package com.force.codes.project.app.data_layer.converters
 
 import androidx.room.TypeConverter
