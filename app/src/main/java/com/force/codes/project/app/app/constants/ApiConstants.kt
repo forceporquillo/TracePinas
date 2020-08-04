@@ -6,6 +6,9 @@
  */
 package com.force.codes.project.app.app.constants
 
+import com.force.codes.project.app.data_layer.model.twitter.TwitterData
+import io.reactivex.Flowable
+
 object ApiConstants {
   // region endpoint URLS
   const val TOTAL_BY_DATE = "https://covid-api.com/api/reports/total?date="
