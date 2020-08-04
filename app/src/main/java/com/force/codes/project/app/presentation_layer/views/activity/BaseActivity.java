@@ -6,6 +6,9 @@
 
 package com.force.codes.project.app.presentation_layer.views.activity;
 
+import android.os.Bundle;
+import android.view.View;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -40,4 +43,5 @@ public abstract class BaseActivity extends DaggerAppCompatActivity {
     return transaction.replace(R.id.fragment_container, fragment)
         .hide(fragment).show(fragment);
   }
+
 }

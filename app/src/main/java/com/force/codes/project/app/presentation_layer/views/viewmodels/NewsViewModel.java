@@ -77,8 +77,8 @@ public class NewsViewModel extends BaseViewModel {
     super.addToUnsubscribed(disposables);
   }
 
-  private void insertTwitterToDB(List<TwitterData> twitterDataList) {
-    newsRepository.insertTwitterData(twitterDataList);
+  private void insertTwitterToDB(List<TwitterData> twitterUser) {
+    newsRepository.insertTwitterUser(twitterUser);
   }
 
   public LiveData<PagedList<TwitterData>> pageListTwitterData() {
@@ -89,13 +89,12 @@ public class NewsViewModel extends BaseViewModel {
   }
 
   public void getNewsData() {
-    Disposable disposables = Flowable.fromPublisher(newsRepository
-        .getNewsResponseFromServer())
+    Disposable disposables = Flowable.fromPublisher(newsRepository.getNewsResponseFromServer())
         .doOnError(e -> onError.set(true))
         .subscribeOn(Schedulers.io())
-        .subscribe(newsData -> {
-          insertArticleToDB(newsData.getArticles());
-        }, Timber::e);
+        .subscribe(newsData -> insertArticleToDB(
+            newsData.getArticles()
+        ), Timber::e);
     super.addToUnsubscribed(disposables);
   }
 
