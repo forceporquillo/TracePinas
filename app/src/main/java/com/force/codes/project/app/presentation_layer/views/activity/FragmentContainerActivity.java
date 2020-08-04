@@ -18,11 +18,13 @@ import android.os.Bundle;
 import android.view.View;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import com.force.codes.project.app.R;
+import com.force.codes.project.app.databinding.ActivityFragmentManagerBinding;
 import com.force.codes.project.app.presentation_layer.controller.interfaces.BottomItemListener;
 import com.force.codes.project.app.presentation_layer.controller.model.BottomItem;
 import com.force.codes.project.app.presentation_layer.controller.support.BottomBar;
@@ -43,11 +45,10 @@ public class FragmentContainerActivity extends BaseActivity implements BottomIte
   private static final int MAP = 2;
   private static final int HELP = 3;
   private static final int[] arrItemId = new int[2];
-  @BindView(R.id.included)
-  View includedView;
-  private Unbinder unbinder;
   private Fragment fragment = getFragment();
+
   public FragmentContainerActivity() {
+
   }
 
   @NotNull
@@ -77,11 +78,9 @@ public class FragmentContainerActivity extends BaseActivity implements BottomIte
   @Override
   protected void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    setContentView(R.layout.activity_fragment_manager);
-    unbinder = ButterKnife.bind(this);
-
-    Timber.e("SDK Version %s", String.valueOf(Utils.getSDKInt()));
-    BottomBar bottomBar = new BottomBar(includedView, this, this);
+    ActivityFragmentManagerBinding binding =
+        DataBindingUtil.setContentView(this, R.layout.activity_fragment_manager);
+    BottomBar bottomBar = new BottomBar(binding.included.bottomBarRecyclerview, this, this);
 
     if (savedInstanceState != null) {
       fragment = getSupportFragmentManager()
@@ -159,6 +158,5 @@ public class FragmentContainerActivity extends BaseActivity implements BottomIte
   @Override
   protected void onDestroy() {
     super.onDestroy();
-    unbinder.unbind();
   }
 }
