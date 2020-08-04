@@ -20,13 +20,17 @@ object TwitterMediaConverter {
     val tweetsListType = object :
         TypeToken<List<TwitterMediaUrl?>?>() {
     }.type
-    return Gson().fromJson(tweets, tweetsListType)
+    return Gson().fromJson(
+        tweets, tweetsListType
+    )
   }
 
   @TypeConverter
   @JvmStatic fun toArrayList(
     objects: List<TwitterMediaUrl?>?
   ): String {
-    return Gson().toJson(objects)
+    return Gson().toJson(
+        objects
+    )
   }
 }
