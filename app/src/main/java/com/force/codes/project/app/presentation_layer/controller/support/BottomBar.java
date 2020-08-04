@@ -25,21 +25,17 @@ public class BottomBar {
   private final static int ITEM_LIMIT = 5;
   private final Context context;
   private final BottomItemListener listener;
-  @BindView(R.id.bottom_bar_recyclerview)
-  RecyclerView recyclerView;
+  private final RecyclerView recyclerView;
   private ArrayList<BottomItem> bottomItems;
 
   public BottomBar(
-      View view, Context context,
+      RecyclerView recyclerView,
+      Context context,
       BottomItemListener listener
   ) {
-    setType(view);
+    this.recyclerView = recyclerView;
     this.context = context;
     this.listener = listener;
-  }
-
-  private void setType(@NotNull View view) {
-    ButterKnife.bind(this, view);
     bottomItems = new ArrayList<>();
   }
 
