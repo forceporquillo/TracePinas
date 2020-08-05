@@ -26,7 +26,8 @@ import timber.log.Timber
 /**
  * @Author Force Porquillo
  */
-open class NetworkUtils {
+open class NetworkUtils
+{
   private val disposable = CompositeDisposable()
   private var networkCallback: NetworkCallback? = null
   private var context: Context? = null
@@ -48,17 +49,6 @@ open class NetworkUtils {
    * Fragment into super class BaseFragment to avoid memory leaks.
    */
   constructor()
-
-  /**
-   * Register a callback to be invoked when listening to network changes.
-   *
-   * @param networkCallback return callback reference from attached fragment.
-   */
-  fun setOnNetworkListener(
-    networkCallback: NetworkCallback?
-  ) {
-    this.networkCallback = networkCallback
-  }
 
   /**
    * Observing network connectivity.
@@ -128,6 +118,17 @@ open class NetworkUtils {
     )
   }
 
+  /**
+   * Register a callback to be invoked when listening to network changes.
+   *
+   * @param networkCallback return callback reference from attached fragment.
+   */
+  fun setOnNetworkListener(
+    networkCallback: NetworkCallback?
+  ) {
+    this.networkCallback = networkCallback
+  }
+  
   /**
    * Force both network upstreams to listen to network changes.
    *
