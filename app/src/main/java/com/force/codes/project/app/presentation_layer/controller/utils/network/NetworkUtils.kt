@@ -6,6 +6,7 @@
  */
 package com.force.codes.project.app.presentation_layer.controller.utils.network
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
@@ -128,15 +129,16 @@ open class NetworkUtils
   ) {
     this.networkCallback = networkCallback
   }
-  
+
   /**
    * Force both network upstreams to listen to network changes.
    *
    * Requires android version Marshmallow to emmit both upstreams.
    */
-  @RequiresApi(api = VERSION_CODES.M)
+
+  @RequiresApi(VERSION_CODES.M)
   fun startConnection() {
-    if (sDKInt >= 23) {
+    if (requiresSdkInt(VERSION_CODES.M)) {
       startInternetConnectivity()
       startNetworkConnectivity()
       return
