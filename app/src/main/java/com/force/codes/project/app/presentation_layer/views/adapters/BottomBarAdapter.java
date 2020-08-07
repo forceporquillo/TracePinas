@@ -54,20 +54,17 @@ public class BottomBarAdapter extends RecyclerView.Adapter<BottomBarViewHolder> 
 
   @Override public void onBindViewHolder(@NonNull BottomBarViewHolder holder, int position) {
     BottomItem bottomItem = bottomItems.get(position);
-
-    if (bottomItem != null) {
-      holder.resizeItemWidth(itemWidth);
-      holder.setIcon(bottomItem.getItemIconId());
-      holder.selectedStyle(selected,
-          bottomItem.getItemId(),
-          bottomItem.getItemIconId(),
-          bottomItem.getItemFillIconId());
-      holder.setItemTitle(bottomItem.getItemTitle());
-      setOnClickItem(holder,
-          bottomItem.getItemId(),
-          bottomItem.getItemIconId(),
-          bottomItem.getItemFillIconId());
-    }
+    holder.resizeItemWidth(itemWidth);
+    holder.setIcon(bottomItem.getItemIconId());
+    holder.selectedStyle(selected,
+        bottomItem.getItemId(),
+        bottomItem.getItemIconId(),
+        bottomItem.getItemFillIconId());
+    holder.setItemTitle(bottomItem.getItemTitle());
+    setOnClickItem(holder,
+        bottomItem.getItemId(),
+        bottomItem.getItemIconId(),
+        bottomItem.getItemFillIconId());
   }
 
   @Override public int getItemCount() {
