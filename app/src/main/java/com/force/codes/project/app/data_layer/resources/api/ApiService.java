@@ -7,6 +7,7 @@ package com.force.codes.project.app.data_layer.resources.api;
  *
  */
 
+import com.force.codes.project.app.data_layer.model.CountryDayOne;
 import com.force.codes.project.app.data_layer.model.overall.TotalByDate;
 import com.force.codes.project.app.data_layer.model.country.CountryDetails;
 import com.force.codes.project.app.data_layer.model.map_data.LocalData;
@@ -15,6 +16,7 @@ import com.force.codes.project.app.data_layer.model.news.NewsData;
 import com.force.codes.project.app.data_layer.model.twitter.TwitterData;
 import com.force.codes.project.app.data_layer.model.world.GlobalData;
 import io.reactivex.Flowable;
+import io.reactivex.Single;
 import java.util.List;
 import retrofit2.http.GET;
 import retrofit2.http.Url;
@@ -47,4 +49,11 @@ public interface ApiService {
   @GET
   Flowable<List<TotalByDate>>
   getTotalByDate(@Url String url);
+
+  @GET
+  Flowable<List<CountryDayOne>>
+  getCountryFromDayOne(@Url String url);
+
+  @GET Single<CountryDetails>
+  getCountryDetails(@Url String url);
 }

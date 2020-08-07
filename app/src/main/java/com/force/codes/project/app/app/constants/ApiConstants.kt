@@ -15,14 +15,15 @@ object ApiConstants {
   const val URL_PATH = "https://corona.lmao.ninja/v2/"
   const val LOCAL_URL = "https://coronavirus-ph-api.herokuapp.com/doh-data-drop"
   const val GLOBAL_CASE = "https://covid19.mathdro.id/api/confirmed"
-  const val NEWS_DATA =
-    "https://newsapi.org/v2/everything?q=COVID, Philippines&from=2020&sortBy=publishedAt&apiKey=0bf6fe738d0f4279a5c1169f11fe4c3f&pageSize=100&page=1"
-  const val TWITTER_BEARER_TOKEN =
-    "AAAAAAAAAAAAAAAAAAAAAA5SDwEAAAAAnF1q%2BmhNSAysxKDenHX4De2H7x0%3DyUJnEvO0oet43pc2mWNGTlNFyF6kXOeprKwF2wx5RRpixV3WBu"
-  private const val TWITTER_USER_ENDPOINT =
-    "https://api.twitter.com/1.1/statuses/user_timeline.json?screen_name="
+  const val NEWS_DATA = "https://newsapi.org/v2/everything?q=COVID, Philippines&" +
+      "from=2020&sortBy=publishedAt&apiKey=0bf6fe738d0f4279a5c1169f11fe4c3f&pageSize=100&page=1"
+  const val TWITTER_BEARER_TOKEN = "AAAAAAAAAAAAAAAAAAAAAA5SDwEAAAAAnF1q%2BmhNSAysxKDenHX4De2H7" +
+      "x0%3DyUJnEvO0oet43pc2mWNGTlNFyF6kXOeprKwF2wx5RRpixV3WBu"
+  private const val TWITTER_USER_ENDPOINT = "https://api.twitter.com/1.1/statuses/" +
+      "user_timeline.json?screen_name="
   private const val TWEET_MODE_EXTEND = "&count=25&tweet_mode=extended"
   private const val CORONA_LMAO_NINJA_V_2 = "https://corona.lmao.ninja/v2/"
+  private const val API_COVID19 = "https://api.covid19api.com/total/dayone/country/"
   @JvmStatic val url = arrayOf(
       "DOHGOVPH",
       "rapplerdotcom",
@@ -35,10 +36,14 @@ object ApiConstants {
   }
 
   @JvmStatic fun getUserTimeline(timelineIndex: Int): String {
-    return url[timelineIndex] + TWEET_MODE_EXTEND
+    return url[timelineIndex].plus(TWEET_MODE_EXTEND)
   }
 
   @JvmStatic fun getBaseUrlPath(endpoint: String): String {
-    return CORONA_LMAO_NINJA_V_2 + endpoint
+    return CORONA_LMAO_NINJA_V_2.plus(endpoint)
+  }
+
+  @JvmStatic fun getCountryDataFromDayOne(country: String?) : String {
+    return API_COVID19.plus(country)
   }
 }

@@ -140,7 +140,7 @@ public class NewsFragment extends BaseFragment
         url = Objects.requireNonNull(twitterDataList.get(position)
             .getEntities()).getMedia().get(0).getExpandedUrl();
       } catch (NullPointerException e) {
-        url = "twitter.com/" + twitterDataList.get(position).getUser().getScreenName();
+        url = "https://twitter.com/" + twitterDataList.get(position).getUser().getScreenName();
       }
     }
     assert getActivity() != null;

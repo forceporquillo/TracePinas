@@ -75,18 +75,7 @@ public class MyCountryFragment extends DaggerFragment {
 
   @Override public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
     super.onViewCreated(view, savedInstanceState);
-    setSpinner();
     setPieChart();
-  }
-
-  private List<String> spinnerList= new ArrayList<>(Arrays.asList(
-      "Philippines", "China", "USA", "Philippines", "China", "USA", "Philippines", "China", "USA",
-      "Philippines", "China", "USA", "Philippines", "China", "USA", "Philippines", "China", "USA",
-      "Philippines", "China", "USA", "Philippines", "China", "USA", "Philippines", "China", "USA",
-      "Philippines", "China", "USA", "Philippines", "China", "USA", "Philippines", "China", "USA",
-      "Philippines", "China", "USA", "Philippines", "China", "USA", "Philippines", "China", "USA"));
-
-  private void setSpinner(){
   }
 
   @Override public void onDestroyView() {
