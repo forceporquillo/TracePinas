@@ -41,4 +41,6 @@ public abstract class AppDatabase extends RoomDatabase {
   public abstract LiveDataDao liveDataDao();
 
   public abstract NewsDao newsDao();
+
+  public abstract MyCountryDao myCountryDao();
 }

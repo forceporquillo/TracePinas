@@ -12,15 +12,22 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import com.force.codes.project.app.BR;
 import com.force.codes.project.app.R;
+import com.force.codes.project.app.data_layer.model.country.CountryDetails;
 import com.force.codes.project.app.databinding.FragmentMyCountryBinding;
 import com.force.codes.project.app.presentation_layer.views.factory.ViewModelProviderFactory;
+import com.force.codes.project.app.presentation_layer.views.fragments.BaseFragment;
 import com.force.codes.project.app.presentation_layer.views.viewmodels.MyCountryViewModel;
+import com.github.pwittchen.reactivenetwork.library.rx2.Connectivity;
 import com.razerdp.widget.animatedpieview.AnimatedPieViewConfig;
 import com.razerdp.widget.animatedpieview.data.SimplePieInfo;
 import dagger.android.support.DaggerFragment;
@@ -35,7 +42,7 @@ import org.jetbrains.annotations.NotNull;
  * Use the {@link MyCountryFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class MyCountryFragment extends DaggerFragment {
+public class MyCountryFragment extends BaseFragment {
   private FragmentMyCountryBinding binding;
   private MyCountryViewModel viewModel;
 
@@ -71,11 +78,29 @@ public class MyCountryFragment extends DaggerFragment {
 
   @Override public void onStart() {
     super.onStart();
+    viewModel.getCountryData("philippines").observe(this, this::setPieChart);
   }
 
   @Override public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
     super.onViewCreated(view, savedInstanceState);
-    setPieChart();
+    viewModel.getListOfCountries().observe(getViewLifecycleOwner(), this::setCustomSpinner);
+  }
+
+  public void setCustomSpinner(List<CountryDetails> countryDetails){
+    binding.customSpinner.setOnClickListener(v -> {
+      FragmentManager fragmentManager = getChildFragmentManager();
+      FragmentTransaction transaction = fragmentManager.beginTransaction();
+      transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,
+          R.anim.enter_from_left, R.anim.exit_to_right);
+      transaction.replace(R.id.my_country_fragment,
+          CountryListFragment.newInstance(countryDetails),
+          CountryListFragment.class.getSimpleName()
+      ).commit();
+
+      //super.setFragment(CountryListFragment
+      //    .newInstance(countryDetails)
+      //).commit();
+    });
   }
 
   @Override public void onDestroyView() {
@@ -84,19 +109,28 @@ public class MyCountryFragment extends DaggerFragment {
     binding = null;
   }
 
-  private void setPieChart() {
+  private void setPieChart(CountryDetails countryDetails) {
     AnimatedPieViewConfig config = new AnimatedPieViewConfig();
 
     config.strokeWidth(70);
     config.startAngle(-90)
-        .addData(new SimplePieInfo(500, color(50, 120, 210), "Cases"))
-        .addData(new SimplePieInfo(370, color(255, 93, 93), "Deaths"))
-        .addData(new SimplePieInfo(200, color(88, 197, 30), "Recovered"));
+        .addData(new SimplePieInfo(countryDetails.getCases(), color(50, 120, 210), "Cases"))
+        .addData(new SimplePieInfo(countryDetails.getDeaths(), color(255, 93, 93), "Deaths"))
+        .addData(new SimplePieInfo(countryDetails.getRecovered(), color(88, 197, 30), "Recovered"));
     binding.circlePie.start(config);
     binding.invalidateAll();
   }
 
   private static int color(int r, int g, int b){
     return Color.rgb(r, g, b);
+  }
+
+  @Override public void onNetworkConnectionChanged(@org.jetbrains.annotations.Nullable Connectivity connectivity) {
+
+  }
+
+  @Override
+  public void onInternetConnectionChanged(@org.jetbrains.annotations.Nullable Boolean connected) {
+
   }
 }

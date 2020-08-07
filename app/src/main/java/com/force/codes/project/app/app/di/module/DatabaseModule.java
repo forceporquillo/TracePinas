@@ -15,6 +15,7 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
 import com.force.codes.project.app.data_layer.resources.database.AppDatabase;
 import com.force.codes.project.app.data_layer.resources.database.LiveDataDao;
 import com.force.codes.project.app.data_layer.resources.database.MapDao;
+import com.force.codes.project.app.data_layer.resources.database.MyCountryDao;
 import com.force.codes.project.app.data_layer.resources.database.NewsDao;
 import com.force.codes.project.app.data_layer.resources.database.WorldwideDao;
 import dagger.Module;
@@ -60,5 +61,11 @@ public class DatabaseModule {
   @Provides
   static NewsDao provideNewsDao(AppDatabase database) {
     return database.newsDao();
+  }
+
+  @Singleton
+  @Provides
+  static MyCountryDao providesMyCountryDao(AppDatabase appDatabase) {
+    return appDatabase.myCountryDao();
   }
 }

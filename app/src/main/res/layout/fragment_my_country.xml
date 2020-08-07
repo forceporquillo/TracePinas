@@ -5,9 +5,10 @@
   ~ Last modified 7/17/20 2:16 PM
   -->
 <layout xmlns:app="http://schemas.android.com/apk/res-auto">
-  <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+  <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
       xmlns:tools="http://schemas.android.com/tools"
       android:layout_width="match_parent"
+      android:id="@+id/my_country_fragment"
       android:layout_height="match_parent"
       android:background="@color/white"
       tools:context=".presentation_layer.views.fragments.viewpager.MyCountryFragment">
@@ -120,6 +121,13 @@
               android:layout_marginStart="@dimen/width_25dp"
               android:layout_below="@id/circle_pie">
 
+            <TextView
+                android:id="@+id/test"
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="henlo"/>
+
           </com.google.android.material.card.MaterialCardView>
 
           <com.google.android.material.card.MaterialCardView
@@ -171,7 +179,7 @@
           android:layout_marginEnd="@dimen/margin_10dp"
           android:layout_marginStart="@dimen/margin_10dp"/>
     </RelativeLayout>
-  </ScrollView>
+  </RelativeLayout>
   <data>
     <variable
         name="myCountry"

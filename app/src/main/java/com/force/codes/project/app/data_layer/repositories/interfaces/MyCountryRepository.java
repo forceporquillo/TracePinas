@@ -10,10 +10,12 @@ package com.force.codes.project.app.data_layer.repositories.interfaces;
 import com.force.codes.project.app.data_layer.model.CountryDayOne;
 import com.force.codes.project.app.data_layer.model.country.CountryDetails;
 import io.reactivex.Flowable;
+import io.reactivex.Observable;
 import io.reactivex.Single;
 import java.util.List;
 
 public interface MyCountryRepository {
   Flowable<List<CountryDayOne>> getCountryDataFromDayOne(String country);
-  Single<CountryDetails> getCountryDetails(String country);
+  Flowable<List<CountryDetails>> getAffectedCountryList();
+  Flowable<CountryDetails> getCountryDetails(String country);
 }
