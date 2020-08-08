@@ -13,9 +13,7 @@ import com.force.codes.project.app.data_layer.model.country.CountryDetails;
 import com.force.codes.project.app.data_layer.repositories.interfaces.MyCountryRepository;
 import com.force.codes.project.app.data_layer.resources.api.ApiService;
 import com.force.codes.project.app.data_layer.resources.database.MyCountryDao;
-import com.google.android.gms.common.api.Api;
 import io.reactivex.Flowable;
-import io.reactivex.Observable;
 import io.reactivex.Single;
 import io.reactivex.schedulers.Schedulers;
 import java.util.List;
@@ -24,8 +22,8 @@ import javax.inject.Inject;
 public class MyCountryRepositoryImpl implements MyCountryRepository {
   private final ApiService apiService;
   private final MyCountryDao dao;
-  @Inject
-  MyCountryRepositoryImpl(ApiService apiService, MyCountryDao dao) {
+
+  @Inject MyCountryRepositoryImpl(ApiService apiService, MyCountryDao dao) {
     this.apiService = apiService;
     this.dao = dao;
   }
@@ -39,7 +37,7 @@ public class MyCountryRepositoryImpl implements MyCountryRepository {
     return dao.getCountryDetails();
   }
 
-  @Override public Flowable<CountryDetails> getCountryDetails(String country) {
+  @Override public Single<CountryDetails> getCountryDetails(String country) {
     return apiService.getCountryDetails(ApiConstants
         .getBaseUrlPath("countries/".concat(country)))
         .subscribeOn(Schedulers.computation());
