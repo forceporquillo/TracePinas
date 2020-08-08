@@ -7,12 +7,14 @@
 
 package com.force.codes.project.app.app.di.module;
 
+import com.force.codes.project.app.data_layer.repositories.implementations.ListViewRepositoryImpl;
 import com.force.codes.project.app.data_layer.repositories.implementations.LiveOverviewRepositoryImpl;
 import com.force.codes.project.app.data_layer.repositories.implementations.MapRepositoryImpl;
 import com.force.codes.project.app.data_layer.repositories.implementations.MyCountryRepositoryImpl;
 import com.force.codes.project.app.data_layer.repositories.implementations.NewsRepositoryImpl;
 import com.force.codes.project.app.data_layer.repositories.implementations.OverAllRepositoryImpl;
 import com.force.codes.project.app.data_layer.repositories.implementations.WorldwideRepositoryImpl;
+import com.force.codes.project.app.data_layer.repositories.interfaces.ListViewRepository;
 import com.force.codes.project.app.data_layer.repositories.interfaces.LiveOverviewRepository;
 import com.force.codes.project.app.data_layer.repositories.interfaces.MapRepository;
 import com.force.codes.project.app.data_layer.repositories.interfaces.MyCountryRepository;
@@ -47,4 +49,9 @@ public abstract class RepositoryModule {
   @Binds
   abstract MyCountryRepository
   MyCountryRepository(MyCountryRepositoryImpl repository);
+
+  @Binds
+  abstract ListViewRepository
+  ListViewRepository(ListViewRepositoryImpl repository);
+
 }

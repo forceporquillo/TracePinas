@@ -10,6 +10,7 @@ package com.force.codes.project.app.app.di.module;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 import com.force.codes.project.app.presentation_layer.views.factory.ViewModelProviderFactory;
+import com.force.codes.project.app.presentation_layer.views.viewmodels.ListViewModel;
 import com.force.codes.project.app.presentation_layer.views.viewmodels.LiveDataViewModel;
 import com.force.codes.project.app.presentation_layer.views.viewmodels.MapViewModel;
 import com.force.codes.project.app.presentation_layer.views.viewmodels.MyCountryViewModel;
@@ -54,4 +55,9 @@ public abstract class ViewModelModule {
   @IntoMap
   @ViewModelKey(MyCountryViewModel.class)
   abstract ViewModel providesMyCountryViewModel(MyCountryViewModel myCountryViewModel);
+
+  @Binds
+  @IntoMap
+  @ViewModelKey(ListViewModel.class)
+  abstract ViewModel providesListViewModel(ListViewModel listViewModel);
 }

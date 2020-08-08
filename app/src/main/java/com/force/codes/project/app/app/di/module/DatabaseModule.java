@@ -13,6 +13,7 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 import com.force.codes.project.app.data_layer.resources.database.AppDatabase;
+import com.force.codes.project.app.data_layer.resources.database.ListViewDao;
 import com.force.codes.project.app.data_layer.resources.database.LiveDataDao;
 import com.force.codes.project.app.data_layer.resources.database.MapDao;
 import com.force.codes.project.app.data_layer.resources.database.MyCountryDao;
@@ -65,7 +66,13 @@ public class DatabaseModule {
 
   @Singleton
   @Provides
-  static MyCountryDao providesMyCountryDao(AppDatabase appDatabase) {
-    return appDatabase.myCountryDao();
+  static MyCountryDao providesMyCountryDao(AppDatabase database) {
+    return database.myCountryDao();
+  }
+
+  @Singleton
+  @Provides
+  static ListViewDao providesListViewDao(AppDatabase database) {
+    return database.listViewDao();
   }
 }
