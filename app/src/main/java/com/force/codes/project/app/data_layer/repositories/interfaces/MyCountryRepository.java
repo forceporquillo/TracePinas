@@ -17,5 +17,6 @@ import java.util.List;
 public interface MyCountryRepository {
   Flowable<List<CountryDayOne>> getCountryDataFromDayOne(String country);
   Flowable<List<CountryDetails>> getAffectedCountryList();
-  Flowable<CountryDetails> getCountryDetails(String country);
+  Single<CountryDetails> getCountryDetails(String country);
+  Flowable<String> getCountry();
 }

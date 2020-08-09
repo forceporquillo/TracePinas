@@ -17,4 +17,7 @@ import java.util.List;
 public interface MyCountryDao {
   @Query("SELECT * FROM CountryDetails")
   Flowable<List<CountryDetails>> getCountryDetails();
+
+  @Query("SELECT countryKey FROM PrimarySelected")
+  Flowable<String> getPrimarySelected();
 }

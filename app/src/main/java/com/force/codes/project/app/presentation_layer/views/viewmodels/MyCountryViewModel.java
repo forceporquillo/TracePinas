@@ -7,8 +7,6 @@
 
 package com.force.codes.project.app.presentation_layer.views.viewmodels;
 
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.LiveDataReactiveStreams;
 import androidx.lifecycle.MutableLiveData;
 import com.force.codes.project.app.data_layer.model.country.CountryDetails;
 import com.force.codes.project.app.data_layer.repositories.interfaces.MyCountryRepository;
@@ -22,29 +20,46 @@ import timber.log.Timber;
 public class MyCountryViewModel extends BaseViewModel {
   private final MyCountryRepository repository;
   private MutableLiveData<List<CountryDetails>> mutableLiveData;
-
+  private MutableLiveData<CountryDetails> liveData;
+  private final MutableLiveData<String> stringLiveData;
   @Inject
   public MyCountryViewModel(MyCountryRepository repository) {
     this.repository = repository;
     mutableLiveData = new MutableLiveData<>();
+    liveData = new MutableLiveData<>();
+    stringLiveData = new MutableLiveData<>();
   }
 
-  public MutableLiveData<List<CountryDetails>> getListOfCountries(){
+  public MutableLiveData<List<CountryDetails>> getListOfCountries() {
     Disposable disposable = repository.getAffectedCountryList()
-        .observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io())
-        .subscribe(countryDetails -> mutableLiveData.setValue(countryDetails));
-
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribeOn(Schedulers.io())
+        .subscribe(countryDetails ->
+                mutableLiveData.setValue(countryDetails),
+            Timber::e);
     addToUnsubscribed(disposable);
-
     return mutableLiveData;
   }
 
-  public LiveData<CountryDetails> getCountryData(String country) {
-    System.out.println(repository.getAffectedCountryList());
-    return LiveDataReactiveStreams.fromPublisher(repository
-        .getCountryDetails(country)
+  public MutableLiveData<CountryDetails> getCountryData(String country) {
+    Disposable disposable = repository.getCountryDetails(country)
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
-        .doOnError(Timber::e));
+        .subscribe(countryDetails -> liveData
+                .setValue(countryDetails),
+            Timber::e);
+
+    addToUnsubscribed(disposable);
+    return liveData;
+  }
+
+  public MutableLiveData<String> getPrimarySelected() {
+    Disposable disposable = repository.getCountry()
+        .subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe(stringLiveData::setValue, Timber::e);
+
+    addToUnsubscribed(disposable);
+    return stringLiveData;
   }
 }

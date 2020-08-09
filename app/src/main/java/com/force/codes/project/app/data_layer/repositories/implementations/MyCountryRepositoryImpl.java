@@ -42,4 +42,8 @@ public class MyCountryRepositoryImpl implements MyCountryRepository {
         .getBaseUrlPath("countries/".concat(country)))
         .subscribeOn(Schedulers.computation());
   }
+
+  @Override public Flowable<String> getCountry() {
+    return dao.getPrimarySelected();
+  }
 }
