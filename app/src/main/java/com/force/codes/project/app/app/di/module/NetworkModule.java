@@ -32,7 +32,6 @@ public class NetworkModule {
       .writeTimeout(TIMEOUT_MILLIS, TimeUnit.MILLISECONDS)
       .addInterceptor(providesLoggingInterceptor())
       .addInterceptor(chain -> {
-        // authenticates to twitter API with read/write access using Oauth2.
         Request makeRequest = chain.request().newBuilder()
             .addHeader("Authorization",
                 "Bearer " + TWITTER_BEARER_TOKEN)
