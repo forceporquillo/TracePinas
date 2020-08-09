@@ -9,6 +9,7 @@ package com.force.codes.project.app.presentation_layer.views.activity.list_compo
 
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.widget.Toast;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -17,17 +18,20 @@ import com.force.codes.project.app.R;
 import com.force.codes.project.app.data_layer.model.country.CountryDetails;
 import com.force.codes.project.app.databinding.ActivityListViewBinding;
 import com.force.codes.project.app.presentation_layer.controller.interfaces.ListItemListener;
+import com.force.codes.project.app.presentation_layer.controller.interfaces.ListViewCallback;
 import com.force.codes.project.app.presentation_layer.controller.utils.ItemDecoration;
 import com.force.codes.project.app.presentation_layer.views.activity.BaseActivity;
 import com.force.codes.project.app.presentation_layer.views.factory.ViewModelProviderFactory;
+import com.force.codes.project.app.presentation_layer.views.fragments.viewpager.MyCountryFragment;
 import com.force.codes.project.app.presentation_layer.views.viewmodels.ListViewModel;
 import java.util.List;
 import javax.inject.Inject;
 import timber.log.Timber;
 
-public class ListViewActivity extends BaseActivity implements ListItemListener {
+public class ListViewActivity extends BaseActivity implements ListViewCallback {
   private ActivityListViewBinding binding;
   private ListViewModel viewModel;
+  private List<CountryDetails> details;
 
   @Inject ViewModelProviderFactory factory;
 
@@ -36,6 +40,7 @@ public class ListViewActivity extends BaseActivity implements ListItemListener {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_list_view);
     binding = DataBindingUtil.setContentView(this, R.layout.activity_list_view);
+
     binding.setListActivity(this);
     binding.setLifecycleOwner(this);
     binding.setVariable(BR.listActivity, this);
@@ -55,25 +60,30 @@ public class ListViewActivity extends BaseActivity implements ListItemListener {
 
   @Override protected void onStart() {
     super.onStart();
-    viewModel.getCountryData().observe(this, this::setRecyclerView);
+    viewModel.getCountryData().observe(this, countryDetails -> {
+      details = countryDetails;
+      setRecyclerView(countryDetails);
+    });
   }
 
-  private void setRecyclerView(List<CountryDetails> details) {
+  private void setRecyclerView(final List<CountryDetails> details) {
     binding.listRecycler.setLayoutManager(new LinearLayoutManager(this));
     binding.listRecycler.addItemDecoration(new ItemDecoration(
-        this, ItemDecoration.VERTICAL_LIST, 0)
-    );
-    binding.listRecycler.setAdapter(new ListAdapter(details));
+        this, ItemDecoration.VERTICAL_LIST, 0));
+    binding.listRecycler.setAdapter(new ListAdapter(details, this));
     binding.invalidateAll();
-  }
-
-  @Override public void getResult(List<CountryDetails> details) {
-
   }
 
   @Override protected void onDestroy() {
     super.onDestroy();
-    Timber.e("onDestroy called");
+    if (binding != null) {
+      binding.unbind();
+      binding = null;
+    }
+    if (details != null) {
+      details.clear();
+      details = null;
+    }
   }
 
   @Override
@@ -85,7 +95,8 @@ public class ListViewActivity extends BaseActivity implements ListItemListener {
     return super.onOptionsItemSelected(item);
   }
 
-  @Override public void onBackPressed() {
-    super.onBackPressed();
+  @Override public void getPosition(int position) {
+    viewModel.insertSelectedCountry(details.get(position).getCountry());
+    finish();
   }
 }
