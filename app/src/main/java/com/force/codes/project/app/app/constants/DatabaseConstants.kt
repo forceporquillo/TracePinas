@@ -17,6 +17,6 @@ object DatabaseConstants {
   const val QUERY_ALL_PH_DATA = "SELECT * FROM LocalData"
   const val QUERY_ALL_GLOBAL_DATA = "SELECT * FROM GlobalData"
   const val QUERY_NEWS_DATA = "SELECT * FROM ArticlesItem LIMIT 100"
-  const val DATABASE_VERSION = 30
+  const val DATABASE_VERSION = 34
   const val QUERY_TWITTER_DATA = "SELECT * FROM TwitterData"
 }
