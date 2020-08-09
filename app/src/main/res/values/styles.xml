@@ -25,6 +25,7 @@
 
     <style name="search_style">
         <item name="fontFamily">@font/poppin_medium</item>
+        <item name="android:textColorHint">@android:color/white</item>
         <item name="abb_textSize">13dp</item>
     </style>
 

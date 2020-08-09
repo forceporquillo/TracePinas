@@ -15,6 +15,7 @@ package com.force.codes.project.app.presentation_layer.views.activity;
  */
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -158,5 +159,7 @@ public class FragmentContainerActivity extends BaseActivity implements BottomIte
   @Override
   protected void onDestroy() {
     super.onDestroy();
+
+    Timber.e("onDestroy called");
   }
 }

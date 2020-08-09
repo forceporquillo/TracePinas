@@ -30,4 +30,8 @@ public class ListViewModel extends BaseViewModel {
 
     return listMutableLiveData;
   }
+
+  public void insertSelectedCountry(String country) {
+    listViewRepository.insertSelected(country);
+  }
 }

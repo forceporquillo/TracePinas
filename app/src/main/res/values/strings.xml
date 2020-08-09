@@ -76,5 +76,6 @@
   <string name="confirmed_today">\u0020confirmed cases as of today</string>
   <string name="custom_spinner_text">Philippines</string>
   <string name="change">change</string>
+  <string name="select_country">Select Country</string>
 
 </resources>
