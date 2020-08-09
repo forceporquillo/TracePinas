@@ -48,5 +48,5 @@ public interface ApiService {
   Flowable<List<CountryDayOne>> getCountryFromDayOne(@Url String url);
 
   @GET
-  Flowable<CountryDetails> getCountryDetails(@Url String url);
+  Single<CountryDetails> getCountryDetails(@Url String url);
 }

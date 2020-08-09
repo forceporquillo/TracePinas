@@ -6,4 +6,5 @@ import java.util.List;
 
 public interface ListViewRepository {
   Flowable<List<CountryDetails>> getCountryDetails();
+  void insertSelected(String country);
 }
