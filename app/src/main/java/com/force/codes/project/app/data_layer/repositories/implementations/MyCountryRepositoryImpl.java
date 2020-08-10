@@ -33,10 +33,6 @@ public class MyCountryRepositoryImpl implements MyCountryRepository {
         .subscribeOn(Schedulers.computation());
   }
 
-  @Override public Flowable<List<CountryDetails>> getAffectedCountryList() {
-    return dao.getCountryDetails();
-  }
-
   @Override public Single<CountryDetails> getCountryDetails(String country) {
     return apiService.getCountryDetails(ApiConstants
         .getBaseUrlPath("countries/".concat(country)))
