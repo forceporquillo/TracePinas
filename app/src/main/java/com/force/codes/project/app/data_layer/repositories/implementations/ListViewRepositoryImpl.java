@@ -15,21 +15,27 @@ public class ListViewRepositoryImpl implements ListViewRepository {
   private final AppExecutors executors;
 
   @Inject
-  public ListViewRepositoryImpl(ListViewDao listViewDao,
-      AppExecutors executors) {
+  public ListViewRepositoryImpl(
+      ListViewDao listViewDao,
+      AppExecutors executors
+  ) {
     this.listViewDao = listViewDao;
     this.executors = executors;
   }
 
-  @Override public Flowable<List<CountryDetails>> getCountryDetails() {
-    return listViewDao.getCountryDetails();
+  @Override public Flowable<List<CountryDetails>> getCountryDetails(boolean order) {
+    return listViewDao.getCountryDetails(order);
   }
 
+  /**
+   * Run database insertion in the background thread.
+   * @param country item to be inserted from DB.
+   */
   @Override public void insertSelected(String country) {
-    PrimarySelected selected = new PrimarySelected();
     executors.diskIO().execute(() -> {
-      selected.setCountryKey(country);
-      listViewDao.insertCountry(selected);
+      listViewDao.insertSelected(
+          new PrimarySelected(1, country)
+      );
       Timber.e(country);
     });
   }

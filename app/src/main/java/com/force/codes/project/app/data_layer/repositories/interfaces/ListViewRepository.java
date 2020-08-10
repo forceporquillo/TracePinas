@@ -5,6 +5,6 @@ import io.reactivex.Flowable;
 import java.util.List;
 
 public interface ListViewRepository {
-  Flowable<List<CountryDetails>> getCountryDetails();
+  Flowable<List<CountryDetails>> getCountryDetails(boolean order);
   void insertSelected(String country);
 }
