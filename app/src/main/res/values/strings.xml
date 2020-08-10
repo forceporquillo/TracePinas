@@ -1,5 +1,5 @@
 <resources>
-  <string name="app_name">TRACE COVID PH</string>
+  <string name="app_name">TracePinas</string>
 
   <string name="hint_click_on_a_country_for_more_information">Hint: Click on a country for more
         statistics information</string>
