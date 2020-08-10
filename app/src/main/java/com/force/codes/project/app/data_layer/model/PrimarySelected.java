@@ -12,6 +12,15 @@ public class PrimarySelected {
 
   private String countryKey;
 
+  public PrimarySelected() {
+
+  }
+
+  public PrimarySelected(int id, String countryKey) {
+    this.id = id;
+    this.countryKey = countryKey;
+  }
+
   public void setId(int id) {
     this.id = id;
   }
