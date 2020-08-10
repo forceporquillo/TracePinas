@@ -23,9 +23,10 @@
           android:foreground="?attr/selectableItemBackground"
           app:cardBackgroundColor="@color/grayScale"
           app:cardCornerRadius="10dp"
-          android:id="@+id/custom_spinner"
+          android:id="@+id/card_spinner"
           android:layout_width="match_parent"
           android:layout_height="45dp"
+          android:onClick="@{(v) -> listCallback.startListActivity()}"
           android:layout_margin="@dimen/margin_10dp">
 
         <RelativeLayout
@@ -38,7 +39,7 @@
               android:layout_marginStart="20dp"
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
-              android:text="@string/custom_spinner_text"
+              android:text="@{countryViewModel.stringLiveData}"
               android:fontFamily="@font/poppin_regular"
               android:textColor="@color/white"
               android:textSize="16sp"/>
@@ -62,7 +63,7 @@
           android:layout_marginStart="@dimen/_10dp"
           android:layout_marginEnd="@dimen/_10dp"
           android:layout_marginBottom="@dimen/_10dp"
-          android:layout_below="@id/custom_spinner"
+          android:layout_below="@id/card_spinner"
           android:id="@+id/card_container"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content">
@@ -74,7 +75,7 @@
           <TextView
               android:textSize="20sp"
               android:id="@+id/covid_cases"
-              android:layout_marginTop="15dp"
+              android:layout_marginTop="10dp"
               android:textColor="#000000"
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
@@ -89,12 +90,12 @@
               android:layout_centerHorizontal="true"
               android:textColor="#000000"
               android:textSize="12sp"
-              android:text="Last updated: Aug. 3, 2020 5:39 PM"/>
+              android:text="@{Utils.getLongDate(countryViewModel.liveData.updated)}"/>
 
           <com.razerdp.widget.animatedpieview.AnimatedPieView
               android:layout_marginStart="30dp"
               android:layout_below="@id/last_updated"
-              android:layout_marginTop="@dimen/margin_10dp"
+              android:layout_marginTop="@dimen/margin_15dp"
               android:layout_marginBottom="@dimen/margin_10dp"
               android:layout_marginEnd="@dimen/_20dp"
               android:id="@+id/circle_pie"
@@ -123,11 +124,10 @@
               android:layout_below="@id/circle_pie">
 
             <TextView
-                android:id="@+id/test"
                 android:layout_gravity="center"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="henlo"/>
+                android:text="@{Utils.formatNumber(String.valueOf(countryViewModel.liveData.cases))}"/>
 
           </com.google.android.material.card.MaterialCardView>
 
@@ -142,7 +142,15 @@
               android:layout_width="150dp"
               android:layout_height="80dp"
               android:layout_marginEnd="@dimen/width_25dp"
-              android:layout_below="@id/circle_pie"/>
+              android:layout_below="@id/circle_pie">
+
+            <TextView
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{Utils.formatNumber(String.valueOf(countryViewModel.liveData.deaths))}"/>
+
+          </com.google.android.material.card.MaterialCardView>
 
           <com.google.android.material.card.MaterialCardView
               app:strokeWidth="0.5dp"
@@ -155,7 +163,14 @@
               android:layout_marginTop="@dimen/_10dp"
               android:layout_marginStart="@dimen/width_25dp"
               android:layout_marginBottom="@dimen/width_25dp"
-              android:layout_below="@id/confirmed_card_container"/>
+              android:layout_below="@id/confirmed_card_container">
+
+            <TextView
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{Utils.formatNumber(String.valueOf(countryViewModel.liveData.recovered))}"/>
+          </com.google.android.material.card.MaterialCardView>
 
           <com.google.android.material.card.MaterialCardView
               app:strokeWidth="0.5dp"
@@ -169,7 +184,15 @@
               android:layout_marginTop="@dimen/_10dp"
               android:layout_marginEnd="@dimen/width_25dp"
               android:layout_marginBottom="@dimen/width_25dp"
-              android:layout_below="@id/deaths_card_container"/>
+              android:layout_below="@id/deaths_card_container">
+
+            <TextView
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{Utils.formatNumber(String.valueOf(countryViewModel.liveData.active))}"/>
+
+          </com.google.android.material.card.MaterialCardView>
         </RelativeLayout>
       </androidx.cardview.widget.CardView>
 
@@ -182,8 +205,14 @@
     </RelativeLayout>
   </RelativeLayout>
   <data>
+    <import
+        type="com.force.codes.project.app.presentation_layer.controller.utils.Utils"/>
     <variable
-        name="myCountry"
-        type="com.force.codes.project.app.presentation_layer.views.fragments.viewpager.MyCountryFragment"/>
+        name="listCallback"
+        type="com.force.codes.project.app.presentation_layer.controller.interfaces.ListActivityListener"/>
+    <variable
+        name="countryViewModel"
+        type="com.force.codes.project.app.presentation_layer.views.viewmodels.MyCountryViewModel"/>
   </data>
 </layout>
+
