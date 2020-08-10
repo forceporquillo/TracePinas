@@ -31,26 +31,6 @@
                 android:layout_marginStart="15dp"
                 android:text="@string/worldwide_cases" />
 
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/favorites_button"
-                android:layout_width="32dp"
-                android:layout_height="32dp"
-                android:layout_alignParentEnd="true"
-                android:layout_centerVertical="true"
-                android:layout_marginEnd="@dimen/margin_15dp"
-                android:backgroundTint="#D3D3D3"
-                android:clickable="true"
-                android:focusable="true"
-                android:padding="8dp"
-                android:src="@drawable/icon_heart"
-                app:borderWidth="0dp"
-                app:elevation="0dp"
-                app:fabCustomSize="32dp"
-                app:fabSize="normal"
-                app:pressedTranslationZ="12dp"
-                app:rippleColor="@color/search_color">
-
-            </com.google.android.material.floatingactionbutton.FloatingActionButton>
         </RelativeLayout>
 
 <!--        <LinearLayout-->
