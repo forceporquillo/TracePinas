@@ -18,8 +18,12 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import com.force.codes.project.app.BR;
+import com.force.codes.project.app.R;
 import com.force.codes.project.app.data_layer.model.country.CountryDetails;
 import com.force.codes.project.app.databinding.FragmentMyCountryBinding;
+import com.force.codes.project.app.presentation_layer.controller.interfaces.ListActivityListener;
+import com.force.codes.project.app.presentation_layer.controller.utils.Utils;
+import com.force.codes.project.app.presentation_layer.controller.utils.threads.AppExecutors;
 import com.force.codes.project.app.presentation_layer.views.activity.list_component.ListViewActivity;
 import com.force.codes.project.app.presentation_layer.views.factory.ViewModelProviderFactory;
 import com.force.codes.project.app.presentation_layer.views.fragments.BaseFragment;
@@ -37,85 +41,92 @@ import timber.log.Timber;
  * Use the {@link MyCountryFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class MyCountryFragment extends BaseFragment {
+public class MyCountryFragment extends BaseFragment implements ListActivityListener {
   private static final String ARGS_KEY = "country";
-
+  private static final String DEFAULT_ENDPOINT = "Philippines";
   private FragmentMyCountryBinding binding;
   private MyCountryViewModel viewModel;
-  private String[] getArgsKey = new String[3];
-
-  @Inject ViewModelProviderFactory factory;
+  private String getArgsKey = null;
 
   public MyCountryFragment() {
     // Required empty public constructor
   }
 
-  public static MyCountryFragment setCallback(String country) {
-    MyCountryFragment fragment = new MyCountryFragment();
-    Bundle args = new Bundle();
-    System.out.println("Item " + country);
-    args.putString(ARGS_KEY, country);
-    fragment.setArguments(args);
-    return fragment;
-  }
+  @Inject ViewModelProviderFactory factory;
 
   public static MyCountryFragment newInstance() {
-    return new MyCountryFragment();
+    MyCountryFragment fragment = new MyCountryFragment();
+    Bundle args = new Bundle();
+    args.putString(ARGS_KEY, "");
+    fragment.setArguments(args);
+    return fragment;
   }
 
   @Override public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     if (savedInstanceState == null) {
-      getArgsKey[0] = "philippines";
-      viewModel = new ViewModelProvider(this, factory).get(MyCountryViewModel.class);
+        viewModel = new ViewModelProvider(this, factory).get(MyCountryViewModel.class);
     }
   }
 
   @Override public View
   onCreateView(@NotNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     binding = FragmentMyCountryBinding.inflate(inflater, container, false);
-    binding.setMyCountry(this);
+    binding.setCountryViewModel(viewModel);
     binding.setLifecycleOwner(this);
-    binding.setVariable(BR.myCountry, this);
-    binding.executePendingBindings();
+    binding.setListCallback(this);
     return binding.getRoot();
   }
 
   @Override public void onStart() {
     super.onStart();
-    viewModel.getPrimarySelected().observe(this, country -> {
-      if (!country.isEmpty()) {
-        for (int i = 0; i < getArgsKey.length - 1; ++i) {
-          if(i == 0) {
-            getArgsKey[i] = country.replaceAll(
-                "\\s+","")
-                .toLowerCase();
-          }
-          getArgsKey[i] = country;
-        }
-      } else{
-        getArgsKey[0] = "philippines";
-        getArgsKey[1] = "Philippines";
-      }
-    });
-
-    viewModel.getCountryData(getArgsKey[0]).observe(this, data ->
-        setPieChart(data, getArgsKey[0].equals(getArgsKey[3])));
-
-    binding.spinnerTitle.setText(getArgsKey[1]);
+    getArgsKey = getArgsKey == null ? DEFAULT_ENDPOINT : getArgsKey;
+    viewModel.getPrimarySelected().observe(this, country ->
+        Timber.i("LiveData auto update UI emits: %s", getArgsKey = country)
+    );
+    new AppExecutors(100).mainThread().execute(() ->
+        viewModel.getCountryData(getArgsKey).observe(this, data ->
+            setPieChart(data, getArgsKey.equals(DEFAULT_ENDPOINT))
+        )
+    );
     binding.invalidateAll();
   }
-  
+
   @Override public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
     super.onViewCreated(view, savedInstanceState);
-    viewModel.getListOfCountries().observe(getViewLifecycleOwner(), this::setCustomSpinner);
+    // rebinds missed pending bindings during runtime.
+    if (binding.hasPendingBindings()) {
+      binding.executePendingBindings();
+    }
   }
 
-  public void setCustomSpinner(List<CountryDetails> countryDetails) {
-    assert getActivity() != null;
-    binding.customSpinner.setOnClickListener(v ->
-        startActivity(new Intent(getActivity(), ListViewActivity.class))
-    );
+  @Override public void startListActivity() {
+    startActivity(new Intent(getActivity(), ListViewActivity.class));
+  }
+
+  private void setPieChart(final CountryDetails details, boolean animate) {
+    AnimatedPieViewConfig config = new AnimatedPieViewConfig();
+    config.strokeWidth(70);
+    config.animatePie(animate);
+    config.startAngle(-90)
+        .addData(new SimplePieInfo(
+            details.getCases(),
+            Color.rgb(50, 120, 210),
+            "Cases")
+        )
+        .addData(new SimplePieInfo(
+            details.getDeaths(),
+            Color.rgb(255, 93, 93),
+            "Deaths")
+        )
+        .addData(new SimplePieInfo(
+            details.getRecovered(),
+            Color.rgb(88, 197, 30),
+            "Recovered")
+        );
+
+    binding.circlePie.start(config);
+    binding.invalidateAll();
   }
 
   @Override public void onDestroyView() {
@@ -124,25 +135,8 @@ public class MyCountryFragment extends BaseFragment {
     binding = null;
   }
 
-  private void setPieChart(final CountryDetails countryDetails, boolean animate) {
-    AnimatedPieViewConfig config = new AnimatedPieViewConfig();
-    setStats(countryDetails);
-    config.strokeWidth(70);
-    config.animatePie(animate);
-    config.startAngle(-90)
-        .addData(new SimplePieInfo(countryDetails.getCases(), color(50, 120, 210), "Cases"))
-        .addData(new SimplePieInfo(countryDetails.getDeaths(), color(255, 93, 93), "Deaths"))
-        .addData(
-            new SimplePieInfo(countryDetails.getRecovered(), color(88, 197, 30), "Recovered"));
-    binding.circlePie.start(config);
-    binding.invalidateAll();
-  }
+  private void calculatePercentage() {
 
-  private void setStats(CountryDetails data) {
-  }
-
-  private static int color(int r, int g, int b) {
-    return Color.rgb(r, g, b);
   }
 
   @Override public void onNetworkConnectionChanged(Connectivity connectivity) {
@@ -153,4 +147,5 @@ public class MyCountryFragment extends BaseFragment {
   public void onInternetConnectionChanged(Boolean connected) {
 
   }
+
 }
