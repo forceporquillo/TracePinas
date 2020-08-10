@@ -11,10 +11,9 @@ import java.util.List;
 
 @Dao
 public interface ListViewDao {
-  @Query("SELECT * FROM CountryDetails")
-  Flowable<List<CountryDetails>> getCountryDetails();
+  @Query("SELECT * FROM CountryDetails ORDER BY CASE WHEN :cases = 1 THEN Cases END DESC, CASE WHEN :cases = 0 THEN country END")
+  Flowable<List<CountryDetails>> getCountryDetails(boolean cases);
 
   @Insert(onConflict = OnConflictStrategy.REPLACE)
-  void insertCountry(PrimarySelected selected);
-
+  void insertSelected(PrimarySelected selected);
 }
