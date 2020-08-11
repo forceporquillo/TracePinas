@@ -20,14 +20,12 @@ public class ListViewModel extends BaseViewModel {
     this.listMutableLiveData = new MutableLiveData<>();
   }
 
-  public MutableLiveData<List<CountryDetails>> getCountryData() {
-    Disposable disposable = listViewRepository.getCountryDetails()
-        .observeOn(Schedulers.io()).observeOn(
-        AndroidSchedulers.mainThread())
+  public MutableLiveData<List<CountryDetails>> getCountryData(boolean order) {
+    Disposable disposable = listViewRepository.getCountryDetails(order)
+        .observeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
         .subscribe(listMutableLiveData::setValue, Timber::e);
-
     addToUnsubscribed(disposable);
-
     return listMutableLiveData;
   }
 
