@@ -5,6 +5,7 @@
   -->
 
 <network-security-config>
+    <base-config cleartextTrafficPermitted="false"/>
     <domain-config cleartextTrafficPermitted="true">
         <domain includeSubdomains="true">https://www.google.com/</domain>
     </domain-config>

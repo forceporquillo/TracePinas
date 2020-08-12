@@ -28,7 +28,7 @@ interface NewsDao {
     items: List<ArticlesItem?>?
   )
 
-  @get:Query("SELECT * FROM TwitterData ORDER BY id DESC LIMIT 50")
+  @get:Query("SELECT * FROM TwitterData ORDER BY id DESC")
   @get:TypeConverters(TwitterMediaConverter::class)
   @get:Transaction
   val recentTweetsFromDatabase: Factory<Int?, TwitterData?>?
