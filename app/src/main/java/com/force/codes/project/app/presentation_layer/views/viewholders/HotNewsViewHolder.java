@@ -44,6 +44,7 @@ public class HotNewsViewHolder extends RecyclerView.ViewHolder implements View.O
         .centerCrop()
         .diskCacheStrategy(DiskCacheStrategy.ALL)
         .error(R.drawable.ic_refresh)
+        .dontAnimate()
         .into(imageView);
   }
 

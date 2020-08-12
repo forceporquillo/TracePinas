@@ -15,6 +15,7 @@ import android.widget.TextView;
 import androidx.databinding.BindingAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.force.codes.project.app.BR;
 import com.force.codes.project.app.R;
 import com.force.codes.project.app.data_layer.model.twitter.TwitterData;
@@ -42,10 +43,14 @@ public class HeaderNewsViewHolder extends RecyclerView.ViewHolder implements Vie
       Glide.with(imageView.getContext())
           .load(imageUrl)
           .centerCrop()
-          .dontAnimate()
+          .diskCacheStrategy(DiskCacheStrategy.ALL)
           .error(R.drawable.ic_warning)
+          .dontAnimate()
           .into(imageView);
+      return;
     }
+
+    imageView.setBackgroundResource(R.drawable.ic_refresh);
   }
 
   @BindingAdapter({ "dateTextView" })
