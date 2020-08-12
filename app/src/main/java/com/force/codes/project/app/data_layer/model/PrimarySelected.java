@@ -16,7 +16,7 @@ public class PrimarySelected {
   public PrimarySelected() {
 
   }
-  
+
   @Ignore
   public PrimarySelected(int id, String countryKey) {
     this.id = id;
