@@ -20,8 +20,12 @@ public class ListViewModel extends BaseViewModel {
     this.listMutableLiveData = new MutableLiveData<>();
   }
 
-  public MutableLiveData<List<CountryDetails>> getCountryData(boolean order) {
-    Disposable disposable = listViewRepository.getCountryDetails(order)
+  public void setListViewOrder(boolean order){
+    this.getListMutableLiveData(order);
+  }
+
+  public MutableLiveData<List<CountryDetails>> getListMutableLiveData(boolean setDefaultOrder) {
+    Disposable disposable = listViewRepository.getCountryDetails(setDefaultOrder)
         .observeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe(listMutableLiveData::setValue, Timber::e);
