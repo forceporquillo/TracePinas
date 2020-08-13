@@ -38,8 +38,7 @@ object Utils {
   fun getLongDate(
     milliseconds: Long
   ): String {
-    val formatter =
-      simpleDateFormat(
+    val formatter = simpleDateFormat(
           "EEE, dd MMM yyyy hh:mm:ss aaa"
       )
     val calendar = Calendar.getInstance()
@@ -73,7 +72,7 @@ object Utils {
 
   /**
    * @return thread count by multiplying
-   * device processors count by 2
+   * device processors by 2
    */
   @JvmStatic val threadCount: Int
     get() = Runtime.getRuntime()
@@ -85,8 +84,7 @@ object Utils {
           .getInstance().time
 
       @SuppressLint("SimpleDateFormat")
-      val dateFormat =
-        simpleDateFormat(
+      val dateFormat = simpleDateFormat(
             "yyyy-mm-dd"
         )
       return dateFormat.format(calendar)

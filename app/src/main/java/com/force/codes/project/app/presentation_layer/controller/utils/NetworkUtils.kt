@@ -4,21 +4,18 @@
  * FEU Institute of Technology
  * Last modified 7/30/20 5:00 PM
  */
-package com.force.codes.project.app.presentation_layer.controller.utils.network
+package com.force.codes.project.app.presentation_layer.controller.utils
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Build.VERSION_CODES
 import androidx.annotation.RequiresApi
 import com.force.codes.project.app.presentation_layer.controller.utils.Utils.requiresSdkInt
-import com.force.codes.project.app.presentation_layer.controller.utils.Utils.sDKInt
 import com.github.pwittchen.reactivenetwork.library.rx2.Connectivity
 import com.github.pwittchen.reactivenetwork.library.rx2.ConnectivityPredicate
 import com.github.pwittchen.reactivenetwork.library.rx2.ReactiveNetwork
 import com.github.pwittchen.reactivenetwork.library.rx2.internet.observing.InternetObservingSettings
-import com.github.pwittchen.reactivenetwork.library.rx2.internet.observing.InternetObservingStrategy
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
@@ -27,15 +24,15 @@ import timber.log.Timber
 /**
  * @Author Force Porquillo
  */
-open class NetworkUtils
-{
+open class NetworkUtils {
   private val disposable = CompositeDisposable()
   private var networkCallback: NetworkCallback? = null
   private var context: Context? = null
 
   /**
    * Singleton instance approach, if you're working on multiple Fragment
-   * or Activity that requires both upstream to observe network changes.
+   * or Activity that requires both upstream to observe network changes,
+   * You must create a Base class and extends thi.
    *
    * @param context instance NetworkUtils is linked to BaseFragment
    */
@@ -44,10 +41,10 @@ open class NetworkUtils
   }
 
   /**
-   * if only need {@method startNetworkConnectivity} to listen to network changes.
-   * You can directly instantiate an instance without requiring a context reference.
-   * But, you have to manually remove connectivity reference linked from attached
-   * Fragment into super class BaseFragment to avoid memory leaks.
+   * If only need {@method startNetworkConnectivity} to listen to network changes.
+   * You can directly instantiate an instance without passing a context reference.
+   * But, you have to manually remove connectivity reference linked from your attached
+   * fragment or activity that extends base super class to avoid memory leaks.
    */
   constructor()
 
@@ -63,13 +60,15 @@ open class NetworkUtils
             .subscribeOn(Schedulers.io())
             .filter(
                 ConnectivityPredicate.hasType(
-                    getActiveNetwork(context)
+                    getActiveNetwork(
+                        context
+                    )
                 )
             )
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe { connectivity: Connectivity? ->
+            .subscribe({ connectivity ->
               setNetworkConnectivity(connectivity)
-            }
+            }, { throwable -> Timber.e(throwable) })
     )
   }
 
@@ -80,7 +79,9 @@ open class NetworkUtils
    */
   fun startInternetConnectivity() {
     disposable.add(
-        ReactiveNetwork.observeInternetConnectivity(settings)
+        ReactiveNetwork.observeInternetConnectivity(
+            settings
+        )
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({ connectivity: Boolean ->
