@@ -5,7 +5,7 @@
  * Last modified 7/26/20 4:03 PM
  */
 
-package com.force.codes.project.app.presentation_layer.controller.utils.charts;
+package com.force.codes.project.app.presentation_layer.controller.utils;
 
 public interface ChartCallback {
   void helperUtil(ChartHelperUtil util);

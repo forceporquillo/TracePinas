@@ -4,7 +4,7 @@
  * Copyright (c) 2020.  All rights reserved.
  * Last modified 6/29/20 8:39 PM
  */
-package com.force.codes.project.app.presentation_layer.controller.utils.threads
+package com.force.codes.project.app.presentation_layer.controller.utils
 
 import android.os.Handler
 import android.os.Looper
@@ -21,7 +21,9 @@ class AppExecutors private constructor(
 
   constructor(delay: Int) : this(
       Executors.newSingleThreadExecutor(),
-      ThreadExecutor(delay),
+      ThreadExecutor(
+          delay
+      ),
       MainThreadExecutor(),
       Executors.newFixedThreadPool(
           threadCount
