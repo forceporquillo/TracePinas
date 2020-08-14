@@ -15,26 +15,22 @@ package com.force.codes.project.app.presentation_layer.views.activity;
  */
 
 import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
 import com.force.codes.project.app.R;
+
 import com.force.codes.project.app.databinding.ActivityFragmentManagerBinding;
 import com.force.codes.project.app.presentation_layer.controller.interfaces.BottomItemListener;
 import com.force.codes.project.app.presentation_layer.controller.model.BottomItem;
 import com.force.codes.project.app.presentation_layer.controller.support.BottomBar;
-import com.force.codes.project.app.presentation_layer.controller.utils.Utils;
+import com.force.codes.project.app.presentation_layer.views.activity.BaseActivity;
 import com.force.codes.project.app.presentation_layer.views.fragments.LiveDataFragment;
 import com.force.codes.project.app.presentation_layer.views.fragments.MapFragment;
 import com.force.codes.project.app.presentation_layer.views.fragments.NewsFragment;
 import com.force.codes.project.app.presentation_layer.views.fragments.StatisticsFragment;
-import com.force.codes.project.app.presentation_layer.controller.utils.threads.AppExecutors;
+import com.force.codes.project.app.presentation_layer.controller.utils.AppExecutors;
 import org.jetbrains.annotations.NotNull;
 import timber.log.Timber;
 
@@ -56,12 +52,9 @@ public class FragmentContainerActivity extends BaseActivity implements BottomIte
   private static BottomItem[] BottomItems() {
     final BottomItem[] bottomItems = new BottomItem[4];
     // region custom bottom navigation bar item instance
-    bottomItems[0] = new BottomItem(STATISTICS, "Statistics", R.drawable.ic_outline_stats,
-        R.drawable.ic_outline_colored_stats);
-    bottomItems[1] = new BottomItem(NEWS, "News", R.drawable.ic_outline_news,
-        R.drawable.ic_outline_colored_news);
-    bottomItems[2] =
-        new BottomItem(MAP, "Map", R.drawable.ic_outline_map, R.drawable.ic_outline_colored_map);
+    bottomItems[0] = new BottomItem(STATISTICS, "Statistics", R.drawable.ic_outline_stats, R.drawable.ic_outline_colored_stats);
+    bottomItems[1] = new BottomItem(NEWS, "News", R.drawable.ic_outline_news, R.drawable.ic_outline_colored_news);
+    bottomItems[2] = new BottomItem(MAP, "Map", R.drawable.ic_outline_map, R.drawable.ic_outline_colored_map);
     bottomItems[3] = new BottomItem(HELP, "Help", R.drawable.ic_outline_phone,
         R.drawable.ic_outline_colored_phone);
     // endregion
@@ -81,14 +74,12 @@ public class FragmentContainerActivity extends BaseActivity implements BottomIte
     super.onCreate(savedInstanceState);
     ActivityFragmentManagerBinding binding =
         DataBindingUtil.setContentView(this, R.layout.activity_fragment_manager);
-    BottomBar bottomBar = new BottomBar(binding.included.bottomBarRecyclerview, this, this);
-
+    BottomBar bottomBar = new BottomBar(binding.included
+        .recyclerView, this, this);
     if (savedInstanceState != null) {
       fragment = getSupportFragmentManager()
           .getFragment(savedInstanceState, FRAGMENT_STATE);
     }
-
-    // consumes 3 sec. delay when bundle is null, give way to load splash screen.
     new AppExecutors(savedInstanceState == null ? 3000 : 0).threadDelay().execute(() -> {
       setPrimaryFragment(savedInstanceState, fragment);
       setBottomBarItems(bottomBar, savedInstanceState);
