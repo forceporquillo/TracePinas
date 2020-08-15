@@ -6,19 +6,20 @@
  */
 package com.force.codes.project.app.presentation_layer.views.fragments
 
+import android.os.Build.VERSION
 import android.os.Build.VERSION_CODES
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.annotation.RequiresApi
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.force.codes.project.app.databinding.FragmentCountryStatisticsBinding
 import com.force.codes.project.app.presentation_layer.controller.utils.Utils.animate
+import com.force.codes.project.app.presentation_layer.controller.utils.NetworkCallback
+import com.force.codes.project.app.presentation_layer.controller.utils.NetworkUtils
+import com.force.codes.project.app.presentation_layer.controller.utils.AppExecutors
 import com.force.codes.project.app.presentation_layer.controller.utils.Utils.requiresSdkInt
-import com.force.codes.project.app.presentation_layer.controller.utils.network.NetworkCallback
-import com.force.codes.project.app.presentation_layer.controller.utils.network.NetworkUtils
-import com.force.codes.project.app.presentation_layer.controller.utils.threads.AppExecutors
 import com.force.codes.project.app.presentation_layer.views.fragments.viewpager.MyCountryFragment
 import com.force.codes.project.app.presentation_layer.views.fragments.viewpager.OverAllFragment
 import com.force.codes.project.app.presentation_layer.views.fragments.viewpager.WorldwideFragment
@@ -32,7 +33,8 @@ import timber.log.Timber
  * Use the [StatisticsFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class StatisticsFragment : Fragment(), NetworkCallback {
+class StatisticsFragment : Fragment(),
+    NetworkCallback {
   private var adapter: FragmentPagerItemAdapter? = null
   private var binding: FragmentCountryStatisticsBinding? = null
   private var networkUtils: NetworkUtils? = null
@@ -40,7 +42,8 @@ class StatisticsFragment : Fragment(), NetworkCallback {
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     savedInstanceState.let {
-      networkUtils = NetworkUtils(context?.applicationContext)
+      networkUtils = NetworkUtils(context)
+      networkUtils!!.setOnNetworkListener(this)
       adapter = FragmentPagerItemAdapter(
           childFragmentManager,
           FragmentPagerItems.with(context!!)
@@ -63,6 +66,16 @@ class StatisticsFragment : Fragment(), NetworkCallback {
     }
   }
 
+  override fun onPause() {
+    super.onPause()
+    Timber.e("onPause called")
+  }
+
+  override fun onDestroy() {
+    super.onDestroy()
+    Timber.e("onDestroy called")
+  }
+
   override fun onCreateView(
     inflater: LayoutInflater,
     container: ViewGroup?,
@@ -72,8 +85,6 @@ class StatisticsFragment : Fragment(), NetworkCallback {
         inflater, container, false
     )
     binding!!.statistics = this
-    binding!!.lifecycleOwner = this
-    binding!!.invalidateAll()
     return binding!!.root
   }
 
@@ -84,46 +95,30 @@ class StatisticsFragment : Fragment(), NetworkCallback {
     super.onViewCreated(view, savedInstanceState)
     binding!!.viewpager.adapter = adapter
     binding!!.tablayout.setViewPager(binding!!.viewpager)
-    networkUtils!!.setOnNetworkListener(this)
+    binding!!.invalidateAll()
+    if (binding!!.hasPendingBindings()) {
+      binding!!.executePendingBindings()
+    }
   }
 
-  override fun onDestroyView() {
-    super.onDestroyView()
-    binding!!.unbind()
-    binding = null
-    adapter = null
-    networkUtils!!.stopConnection()
-    networkUtils = null
-  }
-
-  @RequiresApi(api = VERSION_CODES.M)
   override fun onStart() {
     super.onStart()
-
-    return if (requiresSdkInt(
-            VERSION_CODES.M
-        )
-    ) networkUtils!!.startConnection()
-    else networkUtils!!.startInternetConnectivity()
+    if (VERSION.SDK_INT >= VERSION_CODES.M) {
+      networkUtils!!.startNetworkConnectivity()
+    } else {
+      Toast.makeText(context, "Your device must be Android Marshmallow " +
+          "to apply these features", Toast.LENGTH_SHORT).show()
+    }
   }
 
   override fun onNetworkConnectionChanged(
     connectivity: Connectivity?
   ) {
-    val available = connectivity?.available()
-
     Timber.i(
         "Connection status: %s",
-        connectivity!!.state()
-            .toString()
+        connectivity?.state().toString()
     )
-
-    return if (available!!)
-      showOrHideNetworkBanner(
-          available
-      ) else showOrHideNetworkBanner(
-        available
-    )
+    showOrHideNetworkBanner(connectivity?.available())
   }
 
   override fun onInternetConnectionChanged(
@@ -140,33 +135,35 @@ class StatisticsFragment : Fragment(), NetworkCallback {
   private fun showOrHideNetworkBanner(
     available: Boolean?
   ) {
-    val enable: Boolean? = null
+    var enable: Boolean? = null
     val banner = binding!!
         .network.networkParent
+    Timber.i("Network status: %s", available)
     if (!available!!) {
-      enable.let {
-        true
-      }
-      Timber.i("Network status: %s", available)
-      AppExecutors(100)
+      enable = true
+      AppExecutors(
+          100
+      )
           .threadDelay()
           .execute {
             banner.visibility = View.VISIBLE
           }
     } else {
-      enable.let {
-        false
-      }
       banner.visibility = View.GONE
     }
-
-    banner.animation = enable?.let {
-      animate(it, context!!)
-    }
-
+    banner.animation = enable?.let { animate(it, context!!) }
     // refresh UI state
-    binding!!.executePendingBindings()
     binding!!.invalidateAll()
+  }
+
+
+  override fun onDestroyView() {
+    super.onDestroyView()
+    binding!!.unbind()
+    binding = null
+    adapter = null
+    networkUtils!!.stopConnection()
+    networkUtils = null
   }
 
   companion object {
