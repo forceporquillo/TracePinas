@@ -21,7 +21,7 @@ import com.force.codes.project.app.R;
 import com.force.codes.project.app.databinding.FragmentWorldwideBinding;
 import com.force.codes.project.app.presentation_layer.controller.interfaces.FragmentCallback;
 import com.force.codes.project.app.presentation_layer.controller.interfaces.OnRequestResponse;
-import com.force.codes.project.app.presentation_layer.controller.utils.threads.AppExecutors;
+import com.force.codes.project.app.presentation_layer.controller.utils.AppExecutors;
 import com.force.codes.project.app.presentation_layer.views.adapters.CountryAdapter;
 import com.force.codes.project.app.presentation_layer.views.factory.ViewModelProviderFactory;
 import com.force.codes.project.app.presentation_layer.views.fragments.BaseFragment;

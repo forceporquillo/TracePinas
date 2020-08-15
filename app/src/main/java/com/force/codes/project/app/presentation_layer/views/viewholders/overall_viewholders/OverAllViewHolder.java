@@ -13,7 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import com.force.codes.project.app.R;
 import com.force.codes.project.app.databinding.CardViewLayoutBinding;
-import com.force.codes.project.app.presentation_layer.controller.utils.charts.ChartHelperUtil;
+import com.force.codes.project.app.presentation_layer.controller.utils.ChartHelperUtil;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;

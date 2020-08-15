@@ -7,15 +7,13 @@
 package com.force.codes.project.app.presentation_layer.views.fragments;
 
 import android.os.Bundle;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import com.force.codes.project.app.R;
-import com.force.codes.project.app.presentation_layer.controller.utils.network.NetworkCallback;
-import com.force.codes.project.app.presentation_layer.controller.utils.network.NetworkUtils;
+import com.force.codes.project.app.presentation_layer.controller.utils.NetworkCallback;
+import com.force.codes.project.app.presentation_layer.controller.utils.NetworkUtils;
 import com.force.codes.project.app.presentation_layer.views.fragments.viewpager.CountryListFragment;
 import dagger.android.support.DaggerFragment;
 

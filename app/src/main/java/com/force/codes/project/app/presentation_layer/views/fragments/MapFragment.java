@@ -33,7 +33,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import com.force.codes.project.app.R;
-import com.force.codes.project.app.presentation_layer.controller.utils.threads.AppExecutors;
+import com.force.codes.project.app.presentation_layer.controller.utils.AppExecutors;
 import com.force.codes.project.app.presentation_layer.views.adapters.CustomInfoWindowAdapter;
 import com.force.codes.project.app.presentation_layer.views.factory.ViewModelProviderFactory;
 import com.force.codes.project.app.presentation_layer.views.viewmodels.MapViewModel;

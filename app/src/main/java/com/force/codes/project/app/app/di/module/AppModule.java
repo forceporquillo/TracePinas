@@ -11,7 +11,7 @@ import android.app.Application;
 import androidx.lifecycle.MutableLiveData;
 import com.force.codes.project.app.data_layer.model.map_data.WorldData;
 import com.force.codes.project.app.presentation_layer.controller.model.BottomItem;
-import com.force.codes.project.app.presentation_layer.controller.utils.threads.AppExecutors;
+import com.force.codes.project.app.presentation_layer.controller.utils.AppExecutors;
 import com.google.android.gms.maps.model.Marker;
 import dagger.Module;
 import dagger.Provides;

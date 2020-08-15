@@ -8,7 +8,7 @@
 package com.force.codes.project.app.app.di.module;
 
 import com.force.codes.project.app.presentation_layer.views.activity.FragmentContainerActivity;
-import com.force.codes.project.app.presentation_layer.views.activity.list_component.ListViewActivity;
+import com.force.codes.project.app.presentation_layer.views.activity.ListViewActivity;
 import dagger.Module;
 import dagger.android.ContributesAndroidInjector;
 
