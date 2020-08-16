@@ -35,7 +35,7 @@ object DebugTreeApp {
           message
       )
 
-      if (t != null) {
+      t.let {
         if (priority == Log.ERROR) {
           CrashLibrary.logError(t)
         } else if (priority == Log.WARN) {
