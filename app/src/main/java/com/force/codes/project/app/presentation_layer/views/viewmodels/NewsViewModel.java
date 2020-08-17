@@ -81,7 +81,7 @@ public class NewsViewModel extends BaseViewModel {
     newsRepository.insertTwitterUser(twitterUser);
   }
 
-  public LiveData<PagedList<TwitterData>> pageListTwitterData() {
+  public LiveData<PagedList<TwitterData>> pagedListTwitterLiveData() {
       if (twitterLiveData == null) {
           twitterLiveData = newsRepository.getPagedListTwitter(config);
       }
@@ -102,7 +102,7 @@ public class NewsViewModel extends BaseViewModel {
     newsRepository.insertArticleData(articlesItems);
   }
 
-  public LiveData<PagedList<ArticlesItem>> pagedListLiveData() {
+  public LiveData<PagedList<ArticlesItem>> pagedListNewsLiveData() {
       if (articleLiveData == null) {
           return articleLiveData = newsRepository.getPagedListArticle(config);
       }

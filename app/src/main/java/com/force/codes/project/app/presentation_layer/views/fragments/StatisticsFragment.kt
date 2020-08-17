@@ -19,7 +19,6 @@ import com.force.codes.project.app.presentation_layer.controller.utils.Utils.ani
 import com.force.codes.project.app.presentation_layer.controller.utils.NetworkCallback
 import com.force.codes.project.app.presentation_layer.controller.utils.NetworkUtils
 import com.force.codes.project.app.presentation_layer.controller.utils.AppExecutors
-import com.force.codes.project.app.presentation_layer.controller.utils.Utils.requiresSdkInt
 import com.force.codes.project.app.presentation_layer.views.fragments.viewpager.MyCountryFragment
 import com.force.codes.project.app.presentation_layer.views.fragments.viewpager.OverAllFragment
 import com.force.codes.project.app.presentation_layer.views.fragments.viewpager.WorldwideFragment
@@ -136,15 +135,14 @@ class StatisticsFragment : Fragment(),
     available: Boolean?
   ) {
     var enable: Boolean? = null
-    val banner = binding!!
-        .network.networkParent
+    val banner = binding!!.network.relativeLayout
     Timber.i("Network status: %s", available)
     if (!available!!) {
       enable = true
       AppExecutors(
           100
       )
-          .threadDelay()
+          .delayCurrentThread()
           .execute {
             banner.visibility = View.VISIBLE
           }

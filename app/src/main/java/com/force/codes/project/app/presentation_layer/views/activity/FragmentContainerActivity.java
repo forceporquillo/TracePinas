@@ -25,7 +25,6 @@ import com.force.codes.project.app.databinding.ActivityFragmentManagerBinding;
 import com.force.codes.project.app.presentation_layer.controller.interfaces.BottomItemListener;
 import com.force.codes.project.app.presentation_layer.controller.model.BottomItem;
 import com.force.codes.project.app.presentation_layer.controller.support.BottomBar;
-import com.force.codes.project.app.presentation_layer.views.activity.BaseActivity;
 import com.force.codes.project.app.presentation_layer.views.fragments.LiveDataFragment;
 import com.force.codes.project.app.presentation_layer.views.fragments.MapFragment;
 import com.force.codes.project.app.presentation_layer.views.fragments.NewsFragment;
@@ -80,7 +79,7 @@ public class FragmentContainerActivity extends BaseActivity implements BottomIte
       fragment = getSupportFragmentManager()
           .getFragment(savedInstanceState, FRAGMENT_STATE);
     }
-    new AppExecutors(savedInstanceState == null ? 3000 : 0).threadDelay().execute(() -> {
+    new AppExecutors(savedInstanceState == null ? 3000 : 0).delayCurrentThread().execute(() -> {
       setPrimaryFragment(savedInstanceState, fragment);
       setBottomBarItems(bottomBar, savedInstanceState);
     });

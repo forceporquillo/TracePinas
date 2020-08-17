@@ -41,7 +41,7 @@ public class OverAllViewModel extends BaseViewModel {
 
   @RequiresApi(api = Build.VERSION_CODES.O)
   public void streamIterate() {
-    final SimpleDateFormat formatter = Utils.simpleDateFormat(GlobalConstants.TIME_FORMAT);
+    final SimpleDateFormat formatter = Utils.formatDate(GlobalConstants.TIME_FORMAT);
 
     if (Utils.getSDKInt() >= android.os.Build.VERSION_CODES.O) {
       final LocalDate start = LocalDate.of(2020, 1, 22);

@@ -8,9 +8,11 @@
 package com.force.codes.project.app.presentation_layer.controller.utils
 
 import android.annotation.SuppressLint
+import android.app.ActivityOptions
 import android.content.Context
 import android.graphics.Color
 import android.icu.text.DecimalFormat
+import android.os.Build
 import android.os.Build.VERSION
 import android.os.Build.VERSION_CODES
 import android.text.SpannableString
@@ -38,9 +40,9 @@ object Utils {
   fun getLongDate(
     milliseconds: Long
   ): String {
-    val formatter = simpleDateFormat(
-          "EEE, dd MMM yyyy hh:mm:ss aaa"
-      )
+    val formatter = formatDate(
+        "EEE, dd MMM yyyy hh:mm:ss aaa"
+    )
     val calendar = Calendar.getInstance()
     calendar.timeInMillis = milliseconds
     return formatter.format(
@@ -70,6 +72,9 @@ object Utils {
     return sDKInt > version
   }
 
+  @JvmStatic val deviceModel: String
+  get() = Build.MODEL
+
   /**
    * @return thread count by multiplying
    * device processors by 2
@@ -84,9 +89,9 @@ object Utils {
           .getInstance().time
 
       @SuppressLint("SimpleDateFormat")
-      val dateFormat = simpleDateFormat(
-            "yyyy-mm-dd"
-        )
+      val dateFormat = formatDate(
+          "yyyy-mm-dd"
+      )
       return dateFormat.format(calendar)
     }
 
@@ -110,7 +115,7 @@ object Utils {
   }
 
   @SuppressLint("SimpleDateFormat")
-  @JvmStatic fun simpleDateFormat(
+  @JvmStatic fun formatDate(
     format: String?
   ): SimpleDateFormat {
     return SimpleDateFormat(format)
@@ -120,10 +125,10 @@ object Utils {
     get() = Date()
 
   @JvmStatic fun animate(
-    flag: Boolean,
+    canAnimate: Boolean,
     context: Context?
   ): Animation {
-    return if (flag) {
+    return if (canAnimate) {
       AnimationUtils
           .loadAnimation(
               context, R.anim.pop_up_slide_down
@@ -132,6 +137,16 @@ object Utils {
         .loadAnimation(
             context, R.anim.pop_up_slide_up
         )
+  }
+
+  @JvmStatic fun activityOptions(
+    context: Context?,
+    anim1: Int,
+    anim2: Int
+  ): ActivityOptions {
+    return ActivityOptions.makeCustomAnimation(
+        context, anim1, anim2
+    )
   }
 
   @RequiresApi(api = VERSION_CODES.N)
