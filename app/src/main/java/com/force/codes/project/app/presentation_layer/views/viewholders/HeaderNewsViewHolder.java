@@ -81,7 +81,7 @@ public class HeaderNewsViewHolder extends RecyclerView.ViewHolder implements Vie
   }
 
   @Override public void onClick(View v) {
-    callback.headerNewsItemListener(
+    callback.recentTweetsItemListener(
         getAdapterPosition()
     );
   }

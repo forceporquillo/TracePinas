@@ -7,6 +7,6 @@
 package com.force.codes.project.app.presentation_layer.controller.interfaces
 
 interface NewsItemCallback {
-  fun headerNewsItemListener(position: Int)
+  fun recentTweetsItemListener(position: Int)
   fun hotNewsItemListener(position: Int)
 }
