@@ -92,9 +92,16 @@ class ItemDecoration(
       val right = left + (drawable?.intrinsicHeight ?: 0)
       drawable!!.apply {
         setBounds(
-            left, top + Utils.dpToPx(context, margin),
-            right, bottom - Utils.dpToPx(context, margin)
-
+            left,
+            top + Utils.dpToPx(
+            context,
+            margin
+        ),
+            right,
+            bottom - Utils.dpToPx(
+                context,
+                margin
+            )
         )
         draw(canvas!!)
       }

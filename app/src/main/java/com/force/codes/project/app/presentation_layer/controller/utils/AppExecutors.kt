@@ -36,7 +36,7 @@ class AppExecutors private constructor(
     return diskIO
   }
 
-  fun threadDelay(): Executor {
+  fun delayCurrentThread(): Executor {
     return delay
   }
 

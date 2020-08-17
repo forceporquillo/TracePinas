@@ -16,6 +16,7 @@ import com.github.pwittchen.reactivenetwork.library.rx2.Connectivity
 import com.github.pwittchen.reactivenetwork.library.rx2.ConnectivityPredicate
 import com.github.pwittchen.reactivenetwork.library.rx2.ReactiveNetwork
 import com.github.pwittchen.reactivenetwork.library.rx2.internet.observing.InternetObservingSettings
+import com.github.pwittchen.reactivenetwork.library.rx2.internet.observing.strategy.SocketInternetObservingStrategy
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
@@ -136,7 +137,6 @@ open class NetworkUtils {
    *
    * Requires android version Marshmallow to emmit both upstreams.
    */
-
   @RequiresApi(VERSION_CODES.M)
   fun startConnection() {
     if (requiresSdkInt(VERSION_CODES.M)) {
@@ -148,6 +148,12 @@ open class NetworkUtils {
   }
 
   companion object {
+    private val settings = InternetObservingSettings
+        .builder()
+        .strategy(SocketInternetObservingStrategy())
+        .host("https://www.github.com/forceporquillo")
+        .build()
+
     /**
      * Indicates there is no available network.
      */
@@ -190,7 +196,9 @@ open class NetworkUtils {
       ) {
         val network = service.activeNetwork
         capabilities?.let {
-          service.getNetworkCapabilities(network)
+          service.getNetworkCapabilities(
+              network
+          )
           return if (
               capabilities!!.hasTransport(
                   NetworkCapabilities.TRANSPORT_CELLULAR
@@ -201,7 +209,9 @@ open class NetworkUtils {
         val allNetworks = service.allNetworks
         for (network in allNetworks) {
           capabilities.let {
-            capabilities = service.getNetworkCapabilities(network)
+            capabilities = service.getNetworkCapabilities(
+                network
+            )
             return if (
                 capabilities!!.hasTransport(
                     NetworkCapabilities.TRANSPORT_WIFI
@@ -216,13 +226,5 @@ open class NetworkUtils {
       }
       return NOT_CONNECTED
     }
-
-    private val settings = InternetObservingSettings
-        .builder()
-        .host("https://github.com/forceporquillo")
-        .initialInterval(0)
-        .interval(2)
-        .timeout(2000)
-        .build()
   }
 }
