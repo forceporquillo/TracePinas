@@ -245,15 +245,21 @@ public class NewsFragment extends BaseFragment implements
     }
   }
 
+  private static final int THREAD_DELAY = 100;
+
   @Override public void onNetworkConnectionChanged(Connectivity connectivity) {
     final RelativeLayout networkBanner = binding.network.relativeLayout;
     if (isConnected = !connectivity.available()) {
       networkBanner.setAnimation(animate(true, context));
-      new AppExecutors(100)
+      new AppExecutors(THREAD_DELAY)
           .delayCurrentThread()
           .execute(() -> {
             networkBanner.setVisibility(View.VISIBLE);
-            Timber.i("Thread delay %s", 100);
+            Timber.i("Thread : " +
+                Thread.currentThread() +
+                "sleeps for %s",
+                THREAD_DELAY
+            );
           });
     } else {
       networkBanner.setAnimation(animate(false, context));
