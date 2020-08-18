@@ -13,7 +13,7 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Transaction
 import androidx.room.TypeConverters
-import com.force.codes.project.app.data_layer.converters.TwitterMediaConverter
+import com.force.codes.project.app.data_layer.resources.database.converters.TwitterMediaConverter
 import com.force.codes.project.app.data_layer.model.news.ArticlesItem
 import com.force.codes.project.app.data_layer.model.twitter.TwitterData
 

@@ -9,7 +9,7 @@ package com.force.codes.project.app.data_layer.model.twitter;
 
 import androidx.room.Entity;
 import androidx.room.TypeConverters;
-import com.force.codes.project.app.data_layer.converters.TwitterMediaConverter;
+import com.force.codes.project.app.data_layer.resources.database.converters.TwitterMediaConverter;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import java.util.List;

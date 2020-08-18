@@ -1,30 +1,30 @@
 /*
- * Created by Force Porquillo on 7/9/20 5:20 PM
+ * Created by Force Porquillo on 6/20/20 8:37 PM
  * FEU Institute of Technology
  * Copyright (c) 2020.  All rights reserved.
- * Last modified 7/9/20 5:20 PM
+ * Last modified 6/20/20 8:37 PM
  */
-package com.force.codes.project.app.data_layer.converters
+package com.force.codes.project.app.data_layer.resources.database.converters
 
 import androidx.room.TypeConverter
-import com.force.codes.project.app.data_layer.model.news.ArticlesItem
+import com.force.codes.project.app.data_layer.model.map_data.PHDataSet
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 
-object ArticleItemsConverter {
+object LocalDataConverter {
   @TypeConverter
   @JvmStatic fun fromListOfStrings(
     value: String?
-  ): List<ArticlesItem>? = value.let{
-    val listType =
-      object : TypeToken<List<ArticlesItem?>?>() {
-      }.type
+  ): List<PHDataSet>? = value.let {
+    val listType = object :
+        TypeToken<List<PHDataSet?>?>() {
+    }.type
     return Gson().fromJson(value, listType)
   }
 
   @TypeConverter
   @JvmStatic fun toListOfStrings(
-    objects: List<ArticlesItem?>?
+    objects: List<PHDataSet?>?
   ): String {
     return Gson().toJson(objects)
   }

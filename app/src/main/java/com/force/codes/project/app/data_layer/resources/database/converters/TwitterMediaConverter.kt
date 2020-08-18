@@ -5,7 +5,7 @@
  * Last modified 8/2/20 7:39 PM
  */
 
-package com.force.codes.project.app.data_layer.converters
+package com.force.codes.project.app.data_layer.resources.database.converters
 
 import androidx.room.TypeConverter
 import com.force.codes.project.app.data_layer.model.twitter.TwitterMediaUrl
