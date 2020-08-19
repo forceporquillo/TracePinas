@@ -18,6 +18,7 @@ import androidx.databinding.ObservableBoolean;
 import androidx.lifecycle.LiveData;
 import androidx.paging.PagedList;
 import com.force.codes.project.app.app.constants.ApiConstants;
+import com.force.codes.project.app.app.constants.PageListConstants;
 import com.force.codes.project.app.data_layer.model.news.ArticlesItem;
 import com.force.codes.project.app.data_layer.model.twitter.TwitterData;
 import com.force.codes.project.app.data_layer.repositories.interfaces.NewsRepository;
@@ -33,12 +34,6 @@ import static com.force.codes.project.app.app.constants.ApiConstants.getUrl;
 import static com.force.codes.project.app.app.constants.ApiConstants.getUserTimeline;
 
 public class NewsViewModel extends BaseViewModel {
-  static PagedList.Config config = new PagedList.Config.Builder()
-      .setPageSize(10)
-      .setPrefetchDistance(20)
-      .setInitialLoadSizeHint(30)
-      .setEnablePlaceholders(false)
-      .build();
   private NewsRepository newsRepository;
   private LiveData<PagedList<ArticlesItem>> articleLiveData;
   private LiveData<PagedList<TwitterData>> twitterLiveData;
@@ -49,13 +44,20 @@ public class NewsViewModel extends BaseViewModel {
     this.newsRepository = newsRepository;
   }
 
+  static PagedList.Config config = new PagedList.Config.Builder()
+      .setPageSize(PageListConstants.PAGE_SIZE)
+      .setPrefetchDistance(PageListConstants.FETCH_DISTANCE)
+      .setInitialLoadSizeHint(PageListConstants.PAGE_INITIAL_LOAD_SIZE_HINT)
+      .setEnablePlaceholders(PageListConstants.isEnable)
+      .build();
+
   /**
    * iterates all available user timeline listed in {@link
    * com.force.codes.project.app.app.constants.ApiConstants constant array}.
    *
-   * @return list of flowable list observables {@link TwitterData}
+   * @return list of Flowable list observables {@link TwitterData}
    */
-  final List<Flowable<List<TwitterData>>> flowableList() {
+  final List<Flowable<List<TwitterData>>> getListOfTwitterUsers() {
     final List<Flowable<List<TwitterData>>>
         listOfTwitterUsers = new ArrayList<>();
     for (int i = 0; i < getUrl().length; ++i)
@@ -66,7 +68,8 @@ public class NewsViewModel extends BaseViewModel {
   }
 
   public void getTwitterUserTimeline() {
-    Disposable disposables = Flowable.fromIterable(flowableList())
+    Disposable disposables = Flowable.fromIterable(
+        getListOfTwitterUsers())
         .flatMap(x -> {
           Timber.e(Thread.currentThread().getName());
           return x;
@@ -89,7 +92,8 @@ public class NewsViewModel extends BaseViewModel {
   }
 
   public void getNewsData() {
-    Disposable disposables = Flowable.fromPublisher(newsRepository.getNewsResponseFromServer())
+    Disposable disposables = Flowable.fromPublisher(newsRepository
+        .getNewsResponseFromServer())
         .doOnError(e -> onError.set(true))
         .subscribeOn(Schedulers.io())
         .subscribe(newsData -> insertArticleToDB(
