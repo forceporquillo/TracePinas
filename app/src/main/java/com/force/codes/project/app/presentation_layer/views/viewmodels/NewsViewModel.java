@@ -1,18 +1,11 @@
 /*
- * Created by Force Porquillo on 7/1/20 4:04 AM
+ * Created by Force Porquillo on 6/4/20 6:06 AM
  * FEU Institute of Technology
  * Copyright (c) 2020.  All rights reserved.
- * Last modified 7/1/20 4:01 AM
+ * Last modified 8/20/20 4:01 AM
  */
 
 package com.force.codes.project.app.presentation_layer.views.viewmodels;
-
-/*
- * Created by Force Porquillo on 6/4/20 6:06 AM
- * Copyright (c) 2020.  All rights reserved.
- * Last modified 6/4/20 6:06 AM
- *
- */
 
 import androidx.databinding.ObservableBoolean;
 import androidx.lifecycle.LiveData;
@@ -22,94 +15,99 @@ import com.force.codes.project.app.app.constants.PageListConstants;
 import com.force.codes.project.app.data_layer.model.news.ArticlesItem;
 import com.force.codes.project.app.data_layer.model.twitter.TwitterData;
 import com.force.codes.project.app.data_layer.repositories.interfaces.NewsRepository;
+import com.force.codes.project.app.presentation_layer.controller.utils.AppExecutors;
 import io.reactivex.Flowable;
-import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
+import org.jetbrains.annotations.NotNull;
 import timber.log.Timber;
 
-import static com.force.codes.project.app.app.constants.ApiConstants.getUrl;
-import static com.force.codes.project.app.app.constants.ApiConstants.getUserTimeline;
-
-public class NewsViewModel extends BaseViewModel {
-  private NewsRepository newsRepository;
+public final class NewsViewModel extends BaseViewModel {
+  private final NewsRepository newsRepository;
+  private final AppExecutors executors;
+  private final ObservableBoolean onError = new ObservableBoolean();
   private LiveData<PagedList<ArticlesItem>> articleLiveData;
   private LiveData<PagedList<TwitterData>> twitterLiveData;
-  private ObservableBoolean onError = new ObservableBoolean();
 
   @Inject
-  public NewsViewModel(final NewsRepository newsRepository) {
+  public NewsViewModel(final NewsRepository newsRepository,
+      final AppExecutors executors
+  ) {
     this.newsRepository = newsRepository;
+    this.executors = executors;
   }
 
-  static PagedList.Config config = new PagedList.Config.Builder()
+  private static final PagedList.Config config = new PagedList.Config.Builder()
       .setPageSize(PageListConstants.PAGE_SIZE)
       .setPrefetchDistance(PageListConstants.FETCH_DISTANCE)
       .setInitialLoadSizeHint(PageListConstants.PAGE_INITIAL_LOAD_SIZE_HINT)
       .setEnablePlaceholders(PageListConstants.isEnable)
       .build();
 
-  /**
-   * iterates all available user timeline listed in {@link
-   * com.force.codes.project.app.app.constants.ApiConstants constant array}.
-   *
-   * @return list of Flowable list observables {@link TwitterData}
-   */
-  final List<Flowable<List<TwitterData>>> getListOfTwitterUsers() {
-    final List<Flowable<List<TwitterData>>>
-        listOfTwitterUsers = new ArrayList<>();
-    for (int i = 0; i < getUrl().length; ++i)
+  @NotNull final List<Flowable<List<TwitterData>>> getListOfTwitterUsers() {
+    final List<Flowable<List<TwitterData>>> listOfTwitterUsers = new ArrayList<>();
+    for (int i = 0; i < ApiConstants.getTwitterUrl().length; ++i) {
       listOfTwitterUsers.add(i, newsRepository
-          .getTwitterUser(getUserTimeline(i))
+          .getTwitterUser(ApiConstants.getUserTimeline(i))
           .subscribeOn(Schedulers.computation()));
+    }
     return listOfTwitterUsers;
   }
 
+  /**
+   * This method is run and observe from custom background thread to avoid
+   * queue blocking. Since, we emmit two separate observable list from
+   * network and we want both observable to asynchronously run in parallel.
+   */
   public void getTwitterUserTimeline() {
-    Disposable disposables = Flowable.fromIterable(
+    super.addToUnsubscribed(Flowable.fromIterable(
         getListOfTwitterUsers())
-        .flatMap(x -> {
-          Timber.e(Thread.currentThread().getName());
-          return x;
-        })
-        .doOnError(e -> onError.set(true))
-        .subscribeOn(Schedulers.newThread())
-        .subscribe(this::insertTwitterToDB, Timber::e);
-    super.addToUnsubscribed(disposables);
+        .flatMap(x -> x)
+        .subscribeOn(Schedulers.from(executors.computationIO()))
+        .subscribe(this::insertTwitterDataToDB, t -> {
+          if (t == null) {
+            throw new AssertionError(
+                "This throwable must not be null");
+          }
+          onError.set(true);
+          Timber.e(t);
+        }));
   }
 
-  private void insertTwitterToDB(List<TwitterData> twitterUser) {
+  final void insertTwitterDataToDB(final List<TwitterData> twitterUser) {
     newsRepository.insertTwitterUser(twitterUser);
   }
 
-  public LiveData<PagedList<TwitterData>> pagedListTwitterLiveData() {
-      if (twitterLiveData == null) {
-          twitterLiveData = newsRepository.getPagedListTwitter(config);
-      }
+  public LiveData<PagedList<TwitterData>> getTwitterLiveData() {
+    if (twitterLiveData == null) {
+      twitterLiveData = newsRepository.getPagedListTwitter(config);
+    }
     return twitterLiveData;
   }
 
+  /**
+   * run on RxThreadScheduler
+   */
   public void getNewsData() {
-    Disposable disposables = Flowable.fromPublisher(newsRepository
+    super.addToUnsubscribed(Flowable.fromPublisher(newsRepository
         .getNewsResponseFromServer())
         .doOnError(e -> onError.set(true))
         .subscribeOn(Schedulers.io())
         .subscribe(newsData -> insertArticleToDB(
             newsData.getArticles()
-        ), Timber::e);
-    super.addToUnsubscribed(disposables);
+        ), Timber::e));
   }
 
-  private void insertArticleToDB(List<ArticlesItem> articlesItems) {
+  final void insertArticleToDB(final List<ArticlesItem> articlesItems) {
     newsRepository.insertArticleData(articlesItems);
   }
 
-  public LiveData<PagedList<ArticlesItem>> pagedListNewsLiveData() {
-      if (articleLiveData == null) {
-          return articleLiveData = newsRepository.getPagedListArticle(config);
-      }
+  public LiveData<PagedList<ArticlesItem>> getNewsLiveData() {
+    if (articleLiveData == null) {
+      return articleLiveData = newsRepository.getPagedListArticle(config);
+    }
     return articleLiveData;
   }
 
