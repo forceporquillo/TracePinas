@@ -32,42 +32,42 @@ public class OverAllViewModel extends BaseViewModel {
   private final OverAllRepository repository;
   private final MutableLiveData<List<TotalByDate>> mutableLiveData;
   private final List<String> endpointList;
+  private final List<Flowable<List<TotalByDate>>> totalByDateList;
 
-  @Inject OverAllViewModel(OverAllRepository repository) {
+  @Inject OverAllViewModel(final OverAllRepository repository) {
     this.repository = repository;
     this.mutableLiveData = new MutableLiveData<>();
     this.endpointList = new ArrayList<>();
+    this.totalByDateList = new ArrayList<>();
   }
 
   @RequiresApi(api = Build.VERSION_CODES.O)
   public void streamIterate() {
     final SimpleDateFormat formatter = Utils.formatDate(GlobalConstants.TIME_FORMAT);
-
-    if (Utils.getSDKInt() >= android.os.Build.VERSION_CODES.O) {
+    if (Utils.requiresSdkInt(android.os.Build.VERSION_CODES.O)) {
       final LocalDate start = LocalDate.of(2020, 1, 22);
       final LocalDate end = LocalDate.parse(formatter.format(Utils.getTodayDate()));
-
       Stream.iterate(start, d -> d.plusDays(1))
           .limit(ChronoUnit.DAYS.between(start, end))
           .forEach(x -> endpointList.add(ApiConstants.TOTAL_BY_DATE
-              .concat(x.toString())));
+              .concat(x.toString()))
+          );
     }
   }
 
-  public List<Flowable<List<TotalByDate>>> iterateTotalByDateEndpoint() {
-    List<Flowable<List<TotalByDate>>> totalByDateList = new ArrayList<>();
-
+  final List<Flowable<List<TotalByDate>>> iterateTotalByDateEndpoint() {
     for (int i = 0; i < endpointList.size(); ++i) {
-      totalByDateList.add(i, repository.getTotalByDateFromNetwork(endpointList.get(i))
-          .observeOn(Schedulers.computation())
-          .delay(20, TimeUnit.MILLISECONDS));
+      totalByDateList.add(i, repository.getTotalByDateFromNetwork(
+          endpointList.get(i)).observeOn(Schedulers.computation())
+          .delay(500, TimeUnit.MILLISECONDS)
+      );
     }
-
     return totalByDateList;
   }
 
   public void getTotalByDate() {
-    Disposable disposables = Flowable.fromIterable(iterateTotalByDateEndpoint())
+    final Disposable disposables = Flowable
+        .fromIterable(iterateTotalByDateEndpoint())
         .observeOn(Schedulers.computation())
         .flatMap(x -> x)
         .delay(200, TimeUnit.MILLISECONDS)
