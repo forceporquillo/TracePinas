@@ -35,7 +35,9 @@ public interface AppComponent {
   void inject(BaseApplication baseApplication);
 
   @Component.Builder interface Builder {
-    @BindsInstance Builder application(BaseApplication baseApplication);
+    @BindsInstance Builder application(
+        BaseApplication application
+    );
     Builder appModule(AppModule appModule);
     AppComponent build();
   }

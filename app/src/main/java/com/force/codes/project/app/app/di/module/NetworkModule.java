@@ -32,9 +32,11 @@ public class NetworkModule {
       .writeTimeout(TIMEOUT_MILLIS, TimeUnit.MILLISECONDS)
       .addInterceptor(providesLoggingInterceptor())
       .addInterceptor(chain -> {
-        Request makeRequest = chain.request().newBuilder()
-            .addHeader("Authorization",
-                "Bearer " + TWITTER_BEARER_TOKEN)
+        final Request makeRequest = chain.request()
+            .newBuilder()
+            .addHeader("Authorization", "Bearer "
+                    .concat(TWITTER_BEARER_TOKEN)
+            )
             .build();
         return chain.proceed(makeRequest);
       }).build();
@@ -57,7 +59,7 @@ public class NetworkModule {
   }
 
   @Provides
-  static ApiService providesRemoteApi(Retrofit retrofit) {
+  static ApiService providesRemoteApi(final Retrofit retrofit) {
     return retrofit.create(ApiService.class);
   }
 }
