@@ -21,26 +21,29 @@ import com.force.codes.project.app.data_layer.model.world.GlobalData;
 import com.force.codes.project.app.data_layer.repositories.interfaces.MapRepository;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
+import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
 import timber.log.Timber;
 
-public class MapViewModel extends BaseViewModel {
+public final class MapViewModel extends BaseViewModel {
   private final MapRepository mapRepository;
-  private MutableLiveData<LocalData> mutablePhData = new MutableLiveData<>();
-  private MutableLiveData<List<GlobalData>> mutableGlobalData = new MutableLiveData<>();
+  private final MutableLiveData<LocalData> mutablePhData;
+  private final MutableLiveData<List<GlobalData>> mutableGlobalData;
+  private final List<GlobalData> tempData = new ArrayList<>();
 
   @Inject
   public MapViewModel(MapRepository mapRepository) {
     this.mapRepository = mapRepository;
+    this.mutablePhData = new MutableLiveData<>();
+    this.mutableGlobalData = new MutableLiveData<>();
   }
 
   public void getAllPhData() {
-    Disposable disposable = mapRepository.getAllPHData()
+    final Disposable disposable = mapRepository.getAllPHData()
         .observeOn(AndroidSchedulers.mainThread())
-        .subscribe(phData ->
-            mutablePhData.setValue(phData), Timber::e);
-
+        .subscribe(mutablePhData::setValue, Timber::e);
     addToUnsubscribed(disposable);
   }
 
@@ -49,11 +52,21 @@ public class MapViewModel extends BaseViewModel {
   }
 
   public void getListGlobalData() {
-    Disposable disposable = mapRepository.getAllGlobalData()
+    super.addToUnsubscribed(mapRepository.getAllGlobalData()
         .observeOn(AndroidSchedulers.mainThread())
-        .subscribe(globalData ->
-            mutableGlobalData.setValue(globalData), Timber::e);
-    addToUnsubscribed(disposable);
+        .subscribeOn(Schedulers.computation())
+        .subscribe(globalData -> {
+          for (GlobalData data : globalData) {
+            if (checkIfEmpty(data)) {
+              tempData.add(data);
+              mutableGlobalData.setValue(tempData);
+            }
+          }
+        }, Timber::e));
+  }
+
+  private static boolean checkIfEmpty(GlobalData data) {
+    return data.getLatitude() == 0.0 && data.getLongitude() == 0.0;
   }
 
   public LiveData<List<GlobalData>> getMutableGlobalData() {

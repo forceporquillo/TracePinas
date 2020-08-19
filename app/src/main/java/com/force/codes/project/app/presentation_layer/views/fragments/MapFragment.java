@@ -25,15 +25,15 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.lifecycle.ViewModelProvider;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
+import com.force.codes.project.app.BR;
 import com.force.codes.project.app.R;
 import com.force.codes.project.app.data_layer.model.map_data.PHDataSet;
+import com.force.codes.project.app.databinding.FragmentMapBinding;
 import com.force.codes.project.app.presentation_layer.controller.utils.AppExecutors;
 import com.force.codes.project.app.presentation_layer.controller.utils.Utils;
 import com.force.codes.project.app.presentation_layer.views.adapters.CustomInfoWindowAdapter;
@@ -43,7 +43,6 @@ import com.github.pwittchen.reactivenetwork.library.rx2.Connectivity;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
@@ -68,15 +67,10 @@ public class MapFragment extends BaseFragment implements
     OnMapReadyCallback,
     ActivityCompat.OnRequestPermissionsResultCallback {
 
-  private static final int BUILD_VERSION = Build.VERSION.SDK_INT;
   private static final int LOCATION_PERMISSION_REQUEST_CODE = 1;
   private static final String GLOBAL_CASES = "Global Cases";
   private static final String PHILIPPINES = "Philippines";
-  private static final int DELAY = 1200;
-  @BindView(R.id.map_view)
-  MapView mapView;
-  @BindView(R.id.nice_spinner)
-  NiceSpinner niceSpinner;
+  private static final int DELAY = 0;
   @Inject
   Runnable[] runnable;
   @Inject
@@ -92,9 +86,8 @@ public class MapFragment extends BaseFragment implements
   private boolean isHardwareEnabled = false;
   private boolean isMapReady;
   private GoogleMap map;
-  private Unbinder unbinder;
-  private View view;
   private MapViewModel mapViewModel;
+  private FragmentMapBinding binding;
 
   public MapFragment() {
 
@@ -107,7 +100,6 @@ public class MapFragment extends BaseFragment implements
     return fragment;
   }
 
-  // SEPARATION OF CONCERNS.
   private static int computeRadiusPerCases(int cases) {
     if (cases / 5000 == 0 || cases / 5000 < 0) {
       return 5;
@@ -170,33 +162,46 @@ public class MapFragment extends BaseFragment implements
   @Override public void onMapReady(GoogleMap googleMap) {
     map = googleMap;
 
+    assert getContext() != null;
     isMapReady = googleMap.setMapStyle(MapStyleOptions
-        .loadRawResourceStyle(view.getContext(), R.raw.map_style_milk));
+        .loadRawResourceStyle(getContext(), R.raw.map_style_milk));
 
     if (isMapReady) {
       enableMyLocation();
-      map.setInfoWindowAdapter(new CustomInfoWindowAdapter(view.getContext()));
+      map.setInfoWindowAdapter(new CustomInfoWindowAdapter(getContext()));
     }
 
     googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(12.8797, 121.7740), 7));
     googleMap.setOnMyLocationButtonClickListener(this);
   }
 
-  @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
+  @Override public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {
-    view = inflater.inflate(R.layout.fragment_map, container, false);
-    unbinder = ButterKnife.bind(this, view);
+    binding = FragmentMapBinding.inflate(inflater, container, false);
+    binding.setMap(this);
+    binding.setLifecycleOwner(this);
+    binding.setVariable(BR.map, this);
 
-    mapView.onCreate(savedInstanceState);
-    mapView.getMapAsync(this);
+    binding.mapView.onCreate(savedInstanceState);
 
-    try {
-      MapsInitializer.initialize(view.getContext());
-    } catch (Exception e) {
-      Timber.e(e);
+    if (savedInstanceState == null) {
+      binding.mapView.getMapAsync(this);
+
+      try {
+        MapsInitializer.initialize(binding.getRoot().getContext());
+      } catch (Exception e) {
+        Timber.e(e);
+      }
     }
+    return binding.getRoot();
+  }
 
-    return view;
+  @Override public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+    super.onViewCreated(view, savedInstanceState);
+    if (binding.hasPendingBindings()) {
+      binding.executePendingBindings();
+      binding.invalidateAll();
+    }
   }
 
   @Override public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
@@ -214,11 +219,13 @@ public class MapFragment extends BaseFragment implements
       return true;
     }
     executors.computationIO().execute(() -> {
-      Geocoder convertCoordinate = new Geocoder(view.getContext(), Locale.getDefault());
+      Geocoder convertCoordinate =
+          new Geocoder(binding.getRoot().getContext(), Locale.getDefault());
       try {
         List<Address> address = convertCoordinate.getFromLocation(11.5810, 122.1178, 1);
         executors.mainThread().execute(() ->
-            Toast.makeText(view.getContext(), address.get(0).getLocality(), Toast.LENGTH_LONG)
+            Toast.makeText(binding.getRoot().getContext(), address.get(0).getLocality(),
+                Toast.LENGTH_LONG)
                 .show());
       } catch (IOException e) {
         e.printStackTrace();
@@ -229,6 +236,7 @@ public class MapFragment extends BaseFragment implements
 
   @RequiresApi(api = Build.VERSION_CODES.N)
   private void setSpinner() {
+    final NiceSpinner niceSpinner = binding.niceSpinner;
     niceSpinner.attachDataSource(dataSet);
     niceSpinner.setOnSpinnerItemSelectedListener((parent, view, position, id) -> {
       String atPosition = (String) parent.getItemAtPosition(position);
@@ -258,38 +266,38 @@ public class MapFragment extends BaseFragment implements
       final Map<LatLng, Integer> mapOfCases = new HashMap<>();
 
       executors.computationIO().execute(() -> {
-          for (PHDataSet dataSet : listData.getData()) {
-            final String[] lat = new String[] {
-                dataSet.getLatitude(),
-                dataSet.getLongitude()
-            };
-            if (!checkIfEmpty(lat)) {
-              latLang.add(coordinate(lat[0], lat[1]));
+        for (PHDataSet dataSet : listData.getData()) {
+          final String[] lat = new String[] {
+              dataSet.getLatitude(),
+              dataSet.getLongitude()
+          };
+          if (!checkIfEmpty(lat)) {
+            latLang.add(coordinate(lat[0], lat[1]));
+          }
+        }
+
+        for (LatLng lt : latLang) {
+          Integer cases = mapOfCases.get(lt);
+          mapOfCases.put(lt, (cases == null) ? 1 : cases + 1);
+        }
+
+        executors.mainThread().execute(() -> {
+          if (isMapReady) {
+            for (Map.Entry<LatLng, Integer> entry : mapOfCases.entrySet()) {
+              marker[0] = map.addMarker(getMarkerOptions(
+                  entry.getKey(), entry.getValue())
+              );
+              marker[0].setSnippet(entry.getValue().toString());
+              marker[0].setTag(entry.getKey());
             }
           }
-
-          for (LatLng lt : latLang) {
-            Integer cases = mapOfCases.get(lt);
-            mapOfCases.put(lt, (cases == null) ? 1 : cases + 1);
-          }
-
-          executors.mainThread().execute(() -> {
-            if (isMapReady) {
-              for (Map.Entry<LatLng, Integer> entry : mapOfCases.entrySet()) {
-                marker[0] = map.addMarker(getMarkerOptions(
-                    entry.getKey(), entry.getValue())
-                );
-                marker[0].setSnippet(entry.getValue().toString());
-                marker[0].setTag(entry.getKey());
-              }
-            }
-          });
+        });
       });
     });
   }
 
   private void enableMyLocation() {
-    if (ContextCompat.checkSelfPermission(view.getContext(),
+    if (ContextCompat.checkSelfPermission(binding.getRoot().getContext(),
         Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
       if (map != null) {
         map.setMyLocationEnabled(true);
@@ -307,7 +315,7 @@ public class MapFragment extends BaseFragment implements
     assert getActivity() != null;
 
     if (savedInstanceState == null) {
-      if (BUILD_VERSION <= Build.VERSION_CODES.N) {
+      if (Utils.getSDKInt() <= Build.VERSION_CODES.N) {
         getActivity().getWindow().setFlags(WindowManager.LayoutParams.FLAG_HARDWARE_ACCELERATED,
             WindowManager.LayoutParams.FLAG_HARDWARE_ACCELERATED);
         isHardwareEnabled = true;
@@ -318,7 +326,6 @@ public class MapFragment extends BaseFragment implements
       mapViewModel.getAllPhData();
     }
   }
-
 
   @RequiresApi(api = Build.VERSION_CODES.N)
   private void getGlobalLiveData(Marker[] marker) {
@@ -334,35 +341,37 @@ public class MapFragment extends BaseFragment implements
   }
 
   @NotNull private MarkerOptions getMarkerOptions(@NotNull LatLng gc, int cases) {
-    return new MarkerOptions().position(new LatLng(gc.latitude, gc.longitude)).alpha(0.7f)
-        .flat(true).icon(BitmapDescriptorFactory.fromBitmap(
-            getBitmapFromVector(view.getContext(), cases)));
+    return new MarkerOptions()
+        .position(new LatLng(
+            gc.latitude,
+            gc.longitude)
+        )
+        .alpha(0.7f)
+        .flat(true)
+        .icon(BitmapDescriptorFactory
+            .fromBitmap(getBitmapFromVector(getContext(), cases)));
   }
 
   @RequiresApi(api = Build.VERSION_CODES.N)
   @Override public void onStart() {
     super.onStart();
-    mapView.onStart();
+    binding.mapView.onStart();
     getLocalLiveData(marker);
   }
 
   @RequiresApi(api = Build.VERSION_CODES.N)
   @Override public void onResume() {
     super.onResume();
-    mapView.onResume();
+    binding.mapView.onResume();
     setSpinner();
   }
 
   @Override
   public void onDestroyView() {
     super.onDestroyView();
-    mapView.onDestroy();
-
-    mapView = null;
+    binding.mapView.onDestroy();
     map = null;
     marker = null;
-    view = null;
-    unbinder.unbind();
 
     if (isHardwareEnabled) {
       if (getActivity() == null) {
@@ -375,23 +384,19 @@ public class MapFragment extends BaseFragment implements
     }
   }
 
-  @Override public void onDestroy() {
-    super.onDestroy();
-  }
-
   @Override public void onStop() {
     super.onStop();
-    mapView.onStop();
+    binding.mapView.onStop();
   }
 
   @Override public void onLowMemory() {
     super.onLowMemory();
-    mapView.onLowMemory();
+    binding.mapView.onLowMemory();
   }
 
   @Override public void onPause() {
     super.onPause();
-    mapView.onPause();
+    binding.mapView.onPause();
   }
 
   @Override public void onNetworkConnectionChanged(Connectivity connectivity) {
