@@ -7,7 +7,9 @@
 package com.force.codes.project.app.app.constants
 
 object PageListConstants {
-  const val PAGE_SIZE = 11 // page size
-  const val PAGE_INITIAL_LOAD_SIZE_HINT = 100 // page size on first load
+  const val PAGE_SIZE = 10 // page size
+  const val FETCH_DISTANCE = 20
+  const val PAGE_INITIAL_LOAD_SIZE_HINT = 30 // page size on first load
   const val PAGE_MAX_SIZE = 215 // triggers when to fetch a page
+  const val isEnable = false
 }
