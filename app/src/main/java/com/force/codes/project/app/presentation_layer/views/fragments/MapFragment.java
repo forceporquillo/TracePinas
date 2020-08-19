@@ -33,7 +33,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import com.force.codes.project.app.R;
+import com.force.codes.project.app.data_layer.model.map_data.PHDataSet;
 import com.force.codes.project.app.presentation_layer.controller.utils.AppExecutors;
+import com.force.codes.project.app.presentation_layer.controller.utils.Utils;
 import com.force.codes.project.app.presentation_layer.views.adapters.CustomInfoWindowAdapter;
 import com.force.codes.project.app.presentation_layer.views.factory.ViewModelProviderFactory;
 import com.force.codes.project.app.presentation_layer.views.viewmodels.MapViewModel;
@@ -127,8 +129,8 @@ public class MapFragment extends BaseFragment implements
     return new LatLng(Double.parseDouble(lat), Double.parseDouble(lng));
   }
 
-  private static boolean isEmpty(@NotNull String lat, String lng) {
-    return lat.isEmpty() && lng.isEmpty();
+  private static boolean checkIfEmpty(@NotNull String[] coordinates) {
+    return coordinates[0].isEmpty() && coordinates[1].isEmpty();
   }
 
   private static boolean isEmpty(double latitude, double longitude) {
@@ -250,57 +252,40 @@ public class MapFragment extends BaseFragment implements
   }
 
   @RequiresApi(api = Build.VERSION_CODES.N)
-  private void getLocalLiveData(Marker[] marker) {
+  private void getLocalLiveData(final Marker[] marker) {
     mapViewModel.getMutablePhData().observe(this, listData -> {
       final ArrayList<LatLng> latLang = new ArrayList<>();
       final Map<LatLng, Integer> mapOfCases = new HashMap<>();
 
       executors.computationIO().execute(() -> {
-        listData.getData().forEach(phDataSet -> {
-          final String lat = phDataSet.getLatitude();
-          final String lng = phDataSet.getLongitude();
-          assert lat != null;
-          assert lng != null;
-          if (!isEmpty(lat, lng)) {
-            latLang.add(coordinate(lat, lng));
+          for (PHDataSet dataSet : listData.getData()) {
+            final String[] lat = new String[] {
+                dataSet.getLatitude(),
+                dataSet.getLongitude()
+            };
+            if (!checkIfEmpty(lat)) {
+              latLang.add(coordinate(lat[0], lat[1]));
+            }
           }
-        });
 
-        latLang.forEach(latLng -> {
-          Integer numCases = mapOfCases.get(latLng);
-          mapOfCases.put(latLng, (numCases == null) ? 1 : numCases + 1);
-        });
-
-        executors.mainThread().execute(() -> {
-          if (isMapReady) {
-            mapOfCases.forEach((latLng, numCases) -> {
-              marker[0] = map.addMarker(getMarkerOptions(latLng, numCases));
-              marker[0].setSnippet(numCases.toString());
-              marker[0].setTag(latLng);
-            });
+          for (LatLng lt : latLang) {
+            Integer cases = mapOfCases.get(lt);
+            mapOfCases.put(lt, (cases == null) ? 1 : cases + 1);
           }
-        });
+
+          executors.mainThread().execute(() -> {
+            if (isMapReady) {
+              for (Map.Entry<LatLng, Integer> entry : mapOfCases.entrySet()) {
+                marker[0] = map.addMarker(getMarkerOptions(
+                    entry.getKey(), entry.getValue())
+                );
+                marker[0].setSnippet(entry.getValue().toString());
+                marker[0].setTag(entry.getKey());
+              }
+            }
+          });
       });
     });
-  }
-
-  @RequiresApi(api = Build.VERSION_CODES.N)
-  private void getGlobalLiveData(Marker[] marker) {
-    mapViewModel.getMutableGlobalData().observe(this, data ->
-        data.forEach(gd -> {
-          if (!isEmpty(gd.getLatitude(), gd.getLongitude())) {
-            marker[0] = map.addMarker(getMarkerOptions(new LatLng(
-                gd.getLatitude(), gd.getLongitude()), gd.getConfirmed()));
-            marker[0].setTitle(gd.getCombinedKey());
-            marker[0].setSnippet(String.valueOf(gd.getConfirmed()));
-          }
-        }));
-  }
-
-  @NotNull private MarkerOptions getMarkerOptions(@NotNull LatLng gc, int cases) {
-    return new MarkerOptions().position(new LatLng(gc.latitude, gc.longitude)).alpha(0.7f)
-        .flat(true).icon(BitmapDescriptorFactory.fromBitmap(
-            getBitmapFromVector(view.getContext(), cases)));
   }
 
   private void enableMyLocation() {
@@ -332,6 +317,26 @@ public class MapFragment extends BaseFragment implements
       mapViewModel.getListGlobalData();
       mapViewModel.getAllPhData();
     }
+  }
+
+
+  @RequiresApi(api = Build.VERSION_CODES.N)
+  private void getGlobalLiveData(Marker[] marker) {
+    mapViewModel.getMutableGlobalData().observe(this, data ->
+        data.forEach(gd -> {
+          if (!isEmpty(gd.getLatitude(), gd.getLongitude())) {
+            marker[0] = map.addMarker(getMarkerOptions(new LatLng(
+                gd.getLatitude(), gd.getLongitude()), gd.getConfirmed()));
+            marker[0].setTitle(gd.getCombinedKey());
+            marker[0].setSnippet(String.valueOf(gd.getConfirmed()));
+          }
+        }));
+  }
+
+  @NotNull private MarkerOptions getMarkerOptions(@NotNull LatLng gc, int cases) {
+    return new MarkerOptions().position(new LatLng(gc.latitude, gc.longitude)).alpha(0.7f)
+        .flat(true).icon(BitmapDescriptorFactory.fromBitmap(
+            getBitmapFromVector(view.getContext(), cases)));
   }
 
   @RequiresApi(api = Build.VERSION_CODES.N)
