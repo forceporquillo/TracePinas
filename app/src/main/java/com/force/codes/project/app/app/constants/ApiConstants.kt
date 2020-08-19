@@ -24,7 +24,7 @@ object ApiConstants{
   private const val TWEET_MODE_EXTEND = "&count=25&tweet_mode=extended"
   private const val API_COVID19 = "https://api.covid19api.com/total/dayone/country/"
   private const val API_KEY = ""
-  @JvmStatic val url = arrayOf(
+  @JvmStatic val twitterUrl = arrayOf(
       "DOHGOVPH",
       "rapplerdotcom",
       "ABSCBNNews"
@@ -36,7 +36,7 @@ object ApiConstants{
   }
 
   @JvmStatic fun getUserTimeline(timelineIndex: Int): String {
-    return url[timelineIndex].plus(TWEET_MODE_EXTEND)
+    return twitterUrl[timelineIndex].plus(TWEET_MODE_EXTEND)
   }
 
   @JvmStatic fun getBaseUrlPath(endpoint: String): String {
