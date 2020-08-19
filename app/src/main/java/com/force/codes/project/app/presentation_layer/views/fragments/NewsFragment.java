@@ -113,7 +113,7 @@ public class NewsFragment extends BaseFragment implements
   public void onStart() {
     super.onStart();
     connectivity.setOnNetworkListener(this);
-    newsViewModel.pagedListTwitterLiveData().observe(this, twitterDataPagedList -> {
+    newsViewModel.getTwitterLiveData().observe(this, twitterDataPagedList -> {
       if (isPagedListEmpty(twitterDataPagedList)) {
         headerNewsAdapter.submitList((PagedList<TwitterData>)
             (twitterDataList = twitterDataPagedList)
@@ -122,7 +122,7 @@ public class NewsFragment extends BaseFragment implements
       }
     });
 
-    newsViewModel.pagedListNewsLiveData().observe(this, articlesItems -> {
+    newsViewModel.getNewsLiveData().observe(this, articlesItems -> {
       if (isPagedListEmpty(articlesItems)) {
         hotNewsAdapter.submitList((PagedList<ArticlesItem>)
             (articlesItemList = articlesItems)
