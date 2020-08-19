@@ -24,7 +24,16 @@ public abstract class BaseViewModel extends ViewModel {
 
   @Override
   protected void onCleared() {
-    compositeDisposable.clear();
     super.onCleared();
+
+    if (compositeDisposable.isDisposed()) {
+      throw new AssertionError(
+              "Observer is already "
+          + "dispose and is null"
+      );
+    }
+
+    compositeDisposable.clear();
+    compositeDisposable.dispose();
   }
 }
