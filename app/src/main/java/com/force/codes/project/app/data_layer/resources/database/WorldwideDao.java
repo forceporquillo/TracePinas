@@ -27,7 +27,7 @@ import java.util.List;
 @Dao
 public interface WorldwideDao {
   @Transaction
-  @Query(DatabaseConstants.QUERY_ALL_DATA)
+  @Query(DatabaseConstants.QUERY_COUNTRY_DETAILS)
   DataSource.Factory<Integer, CountryDetails> getDataFromDatabase();
 
   @Insert(onConflict = OnConflictStrategy.REPLACE)

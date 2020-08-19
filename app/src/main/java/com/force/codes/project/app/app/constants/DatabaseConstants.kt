@@ -13,10 +13,29 @@ package com.force.codes.project.app.app.constants
  *
  */
 object DatabaseConstants {
-  const val QUERY_ALL_DATA = "SELECT * FROM CountryDetails"
-  const val QUERY_ALL_PH_DATA = "SELECT * FROM LocalData"
-  const val QUERY_ALL_GLOBAL_DATA = "SELECT * FROM GlobalData"
-  const val QUERY_NEWS_DATA = "SELECT * FROM ArticlesItem LIMIT 100"
+  const val QUERY_COUNTRY_DETAILS =
+    "SELECT * FROM CountryDetails"
+
+  const val QUERY_ALL_PH_DATA =
+    "SELECT * FROM LocalData"
+
+  const val QUERY_ALL_GLOBAL_DATA =
+    "SELECT * FROM GlobalData"
+
   const val DATABASE_VERSION = 34
-  const val QUERY_TWITTER_DATA = "SELECT * FROM TwitterData"
+
+  const val QUERY_ARTICLES_ITEM_LIMIT =
+    "SELECT * FROM ArticlesItem " +
+      "ORDER BY publishedAt DESC LIMIT 100"
+
+  const val QUERY_TWITTER_DATA =
+    "SELECT * FROM TwitterData " +
+      "ORDER BY id DESC"
+
+  const val QUERY_LIST_VIEW_DATA =
+    "SELECT * FROM CountryDetails " +
+        "ORDER BY CASE WHEN :cases = 1 " +
+        "THEN Cases END DESC, " +
+        "CASE WHEN :cases = 0 " +
+        "THEN country END"
 }
