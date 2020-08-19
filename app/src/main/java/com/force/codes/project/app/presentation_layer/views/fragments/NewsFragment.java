@@ -20,7 +20,6 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -140,7 +139,8 @@ public class NewsFragment extends BaseFragment implements
   }
 
   @Override public View
-  onCreateView(@NotNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+  onCreateView(@NotNull LayoutInflater inflater,
+      ViewGroup container, Bundle savedInstanceState) {
     binding = FragmentNewsBinding.inflate(inflater, container, false);
     binding.setNews(this);
     binding.setLifecycleOwner(this);
@@ -149,7 +149,8 @@ public class NewsFragment extends BaseFragment implements
     return binding.getRoot();
   }
 
-  @Override public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+  @Override public void onViewCreated(@NonNull View view,
+      @Nullable Bundle savedInstanceState) {
     super.onViewCreated(view, savedInstanceState);
     setRecyclerView();
     setSwipeRefresh(view);
@@ -184,8 +185,14 @@ public class NewsFragment extends BaseFragment implements
   }
 
   private void setRecyclerView() {
-    final NewsGroupAdapter groupAdapter = new NewsGroupAdapter(headerNewsAdapter, hotNewsAdapter);
-    binding.newsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+    final NewsGroupAdapter groupAdapter =
+        new NewsGroupAdapter(
+            headerNewsAdapter,
+            hotNewsAdapter
+        );
+    binding.newsRecyclerView.setLayoutManager(
+        new LinearLayoutManager(getContext())
+    );
     binding.newsRecyclerView.setAdapter(groupAdapter);
   }
 
@@ -199,7 +206,9 @@ public class NewsFragment extends BaseFragment implements
     super.onResume();
     if (newsViewModel.getOnError().get()) {
       binding.swipeFresh.setRefreshing(false);
-      Toast.makeText(getContext(), R.string.check_connection, Toast.LENGTH_SHORT).show();
+      Toast.makeText(getContext(),
+          R.string.check_connection,
+          Toast.LENGTH_SHORT).show();
     }
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
       Timber.d("listening to upstream network chain");
@@ -231,13 +240,13 @@ public class NewsFragment extends BaseFragment implements
     final String packageInfo = getResources().getString(R.string.package_name);
     assert getActivity() != null;
     try {
-      // get the Twitter app if possible
       getActivity().getPackageManager().getPackageInfo(packageInfo, 0);
-      twitterIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(twitterUrl)
-      ).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+      twitterIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(twitterUrl))
+          .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
     } catch (PackageManager.NameNotFoundException e) {
-      // revert to browser if no twitter app is installed in device.
-      Timber.e(e, getString(R.string.twitter_app_message), Utils.getDeviceModel());
+      Timber.e(e, getString(R.string.twitter_app_message),
+          Utils.getDeviceModel()
+      );
       twitterIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(twitterUrl));
     } finally {
       getActivity().startActivity(twitterIntent, Utils.activityOptions(
@@ -245,20 +254,19 @@ public class NewsFragment extends BaseFragment implements
     }
   }
 
-  private static final int THREAD_DELAY = 100;
+  private static final int DELAY_MILL = 100;
 
   @Override public void onNetworkConnectionChanged(Connectivity connectivity) {
     final RelativeLayout networkBanner = binding.network.relativeLayout;
     if (isConnected = !connectivity.available()) {
       networkBanner.setAnimation(animate(true, context));
-      new AppExecutors(THREAD_DELAY)
+      new AppExecutors(DELAY_MILL)
           .delayCurrentThread()
           .execute(() -> {
             networkBanner.setVisibility(View.VISIBLE);
             Timber.i("Thread : " +
                 Thread.currentThread() +
-                "sleeps for %s",
-                THREAD_DELAY
+                "sleeps for %s", DELAY_MILL
             );
           });
     } else {
