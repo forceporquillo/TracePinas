@@ -31,7 +31,7 @@ class NewsRepositoryImpl
 
   override fun getTwitterUser(
     userTimeline: String?
-  ): Flowable<List<TwitterData?>?>? {
+  ): Flowable<List<TwitterData?>?> {
     return apiService.getTwitterResponse(
         userTimeline?.let {
           getTwitterEndpoint(it)
@@ -40,7 +40,7 @@ class NewsRepositoryImpl
   }
 
   override val newsResponseFromServer:
-      Flowable<NewsData?>?
+      Flowable<NewsData?>
     get() {
       return apiService.getNewsResponse(
           ApiConstants.NEWS_DATA
@@ -94,5 +94,4 @@ class NewsRepositoryImpl
           )
         }
   }
-
 }

@@ -15,10 +15,10 @@ import com.force.codes.project.app.data_layer.model.twitter.TwitterData
 import io.reactivex.Flowable
 
 interface NewsRepository {
-  val newsResponseFromServer: Flowable<NewsData?>?
+  val newsResponseFromServer: Flowable<NewsData?>
   fun getPagedListArticle(config: Config?): LiveData<PagedList<ArticlesItem?>?>?
   fun insertArticleData(items: List<ArticlesItem?>?)
-  fun getTwitterUser(userTimeline: String?): Flowable<List<TwitterData?>?>?
+  fun getTwitterUser(userTimeline: String?): Flowable<List<TwitterData?>?>
   fun getPagedListTwitter(config: Config?): LiveData<PagedList<TwitterData?>?>?
   fun insertTwitterUser(twitterUser: List<TwitterData?>?)
 }
