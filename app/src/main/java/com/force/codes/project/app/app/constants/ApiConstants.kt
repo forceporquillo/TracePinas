@@ -6,24 +6,24 @@
  */
 package com.force.codes.project.app.app.constants
 
-import com.force.codes.project.app.data_layer.model.twitter.TwitterData
-import io.reactivex.Flowable
+import com.force.codes.project.app.BaseApplication
+import com.force.codes.project.app.R
 
-object ApiConstants {
-  // region endpoint URLS
-  const val TOTAL_BY_DATE = "https://covid-api.com/api/reports/total?date="
-  const val URL_PATH = "https://corona.lmao.ninja/v2/"
-  const val LOCAL_URL = "https://coronavirus-ph-api.herokuapp.com/doh-data-drop"
-  const val GLOBAL_CASE = "https://covid19.mathdro.id/api/confirmed"
+object ApiConstants{
   const val NEWS_DATA = "https://newsapi.org/v2/everything?q=COVID, Philippines&" +
       "from=2020&sortBy=publishedAt&apiKey=0bf6fe738d0f4279a5c1169f11fe4c3f&pageSize=100&page=1"
   const val TWITTER_BEARER_TOKEN = "AAAAAAAAAAAAAAAAAAAAAA5SDwEAAAAAnF1q%2BmhNSAysxKDenHX4De2H7" +
       "x0%3DyUJnEvO0oet43pc2mWNGTlNFyF6kXOeprKwF2wx5RRpixV3WBu"
   private const val TWITTER_USER_ENDPOINT = "https://api.twitter.com/1.1/statuses/" +
       "user_timeline.json?screen_name="
+
+  const val TOTAL_BY_DATE = "https://covid-api.com/api/reports/total?date="
+  const val URL_PATH = "https://corona.lmao.ninja/v2/"
+  const val LOCAL_URL = "https://coronavirus-ph-api.herokuapp.com/doh-data-drop"
+  const val GLOBAL_CASE = "https://covid19.mathdro.id/api/confirmed"
   private const val TWEET_MODE_EXTEND = "&count=25&tweet_mode=extended"
-  private const val CORONA_LMAO_NINJA_V_2 = "https://corona.lmao.ninja/v2/"
   private const val API_COVID19 = "https://api.covid19api.com/total/dayone/country/"
+  private const val API_KEY = ""
   @JvmStatic val url = arrayOf(
       "DOHGOVPH",
       "rapplerdotcom",
@@ -40,10 +40,10 @@ object ApiConstants {
   }
 
   @JvmStatic fun getBaseUrlPath(endpoint: String): String {
-    return CORONA_LMAO_NINJA_V_2.plus(endpoint)
+    return URL_PATH.plus(endpoint)
   }
 
-  @JvmStatic fun getCountryDataFromDayOne(country: String?) : String {
+  @JvmStatic fun getCountryDataFromDayOne(country: String?): String {
     return API_COVID19.plus(country)
   }
 }
