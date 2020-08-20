@@ -59,7 +59,7 @@ public final class NewsViewModel extends BaseViewModel {
   /**
    * This method is run and observe from custom background thread to avoid
    * queue blocking. Since, we emmit two separate observable list from
-   * network and we want both observable to asynchronously run in parallel.
+   * network and we want both observables to asynchronously run in parallel.
    */
   public void getTwitterUserTimeline() {
     super.addToUnsubscribed(Flowable.fromIterable(
