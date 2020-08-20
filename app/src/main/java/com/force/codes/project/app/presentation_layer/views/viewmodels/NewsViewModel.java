@@ -41,7 +41,7 @@ public final class NewsViewModel extends BaseViewModel {
 
   private static final PagedList.Config config = new PagedList.Config.Builder()
       .setPageSize(PageListConstants.PAGE_SIZE)
-      .setPrefetchDistance(PageListConstants.FETCH_DISTANCE)
+      .setPrefetchDistance(PageListConstants.PRE_FETCH_DISTANCE)
       .setInitialLoadSizeHint(PageListConstants.PAGE_INITIAL_LOAD_SIZE_HINT)
       .setEnablePlaceholders(PageListConstants.isEnable)
       .build();
