@@ -34,6 +34,7 @@ import androidx.paging.PagedList;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.force.codes.project.app.BR;
+import com.force.codes.project.app.BuildConfig;
 import com.force.codes.project.app.R;
 import com.force.codes.project.app.data_layer.model.news.ArticlesItem;
 import com.force.codes.project.app.data_layer.model.twitter.TwitterData;
@@ -244,9 +245,9 @@ public class NewsFragment extends BaseFragment implements
       twitterIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(twitterUrl))
           .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
     } catch (PackageManager.NameNotFoundException e) {
-      Timber.e(e, getString(R.string.twitter_app_message),
-          Utils.getDeviceModel()
-      );
+      if (BuildConfig.DEBUG) {
+        Timber.e(e, getString(R.string.twitter_app_message), Utils.getDeviceModel());
+      }
       twitterIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(twitterUrl));
     } finally {
       getActivity().startActivity(twitterIntent, Utils.activityOptions(
