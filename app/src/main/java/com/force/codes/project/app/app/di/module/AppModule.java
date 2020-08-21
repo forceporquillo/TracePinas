@@ -15,6 +15,7 @@ import com.force.codes.project.app.presentation_layer.controller.utils.AppExecut
 import com.google.android.gms.maps.model.Marker;
 import dagger.Module;
 import dagger.Provides;
+import io.reactivex.disposables.Disposable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
@@ -68,5 +69,11 @@ public class AppModule {
   @Singleton
   public Application providesApplication() {
     return application;
+  }
+
+  @Provides
+  @Singleton
+  public Disposable[] providesDisposable() {
+    return new Disposable[3];
   }
 }
