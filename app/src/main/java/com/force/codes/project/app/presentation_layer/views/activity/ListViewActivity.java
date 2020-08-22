@@ -46,16 +46,17 @@ public class ListViewActivity extends BaseActivity implements ListViewCallback {
     binding.setLifecycleOwner(this);
     binding.setVariable(BR.listActivity, this);
     binding.toolbar.setTitle("");
+
     if (savedInstanceState == null) {
       viewModel = new ViewModelProvider(this, factory).get(ListViewModel.class);
       setSupportActionBar(binding.toolbar);
-      if (getSupportActionBar() != null) {
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
-      }
-      if (binding.hasPendingBindings()) {
-        binding.executePendingBindings();
-      }
+    }
+    if (getSupportActionBar() != null) {
+      getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+      getSupportActionBar().setDisplayShowHomeEnabled(true);
+    }
+    if (binding.hasPendingBindings()) {
+      binding.executePendingBindings();
     }
   }
 
