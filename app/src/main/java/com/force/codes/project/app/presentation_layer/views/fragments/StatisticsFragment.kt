@@ -15,7 +15,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.force.codes.project.app.databinding.FragmentCountryStatisticsBinding
-import com.force.codes.project.app.presentation_layer.controller.utils.Utils.animate
+import com.force.codes.project.app.presentation_layer.controller.utils.Utils.animationUtils
 import com.force.codes.project.app.presentation_layer.controller.utils.NetworkCallback
 import com.force.codes.project.app.presentation_layer.controller.utils.NetworkUtils
 import com.force.codes.project.app.presentation_layer.controller.utils.AppExecutors
@@ -92,11 +92,13 @@ class StatisticsFragment : Fragment(),
     savedInstanceState: Bundle?
   ) {
     super.onViewCreated(view, savedInstanceState)
-    binding!!.viewpager.adapter = adapter
-    binding!!.tablayout.setViewPager(binding!!.viewpager)
-    binding!!.invalidateAll()
-    if (binding!!.hasPendingBindings()) {
-      binding!!.executePendingBindings()
+    savedInstanceState.let {
+      binding!!.viewpager.adapter = adapter
+      binding!!.tablayout.setViewPager(binding!!.viewpager)
+      binding!!.invalidateAll()
+      if (binding!!.hasPendingBindings()) {
+        binding!!.executePendingBindings()
+      }
     }
   }
 
@@ -113,8 +115,7 @@ class StatisticsFragment : Fragment(),
   override fun onNetworkConnectionChanged(
     connectivity: Connectivity?
   ) {
-    Timber.i(
-        "Connection status: %s",
+    Timber.i("Connection status: %s",
         connectivity?.state().toString()
     )
     showOrHideNetworkBanner(connectivity?.available())
@@ -124,11 +125,8 @@ class StatisticsFragment : Fragment(),
     connected: Boolean?
   ) {
     return if (connected!!)
-      showOrHideNetworkBanner(
-          connected
-      ) else showOrHideNetworkBanner(
-        connected
-    )
+      showOrHideNetworkBanner(connected)
+    else showOrHideNetworkBanner(connected)
   }
 
   private fun showOrHideNetworkBanner(
@@ -149,11 +147,12 @@ class StatisticsFragment : Fragment(),
     } else {
       banner.visibility = View.GONE
     }
-    banner.animation = enable?.let { animate(it, context!!) }
+    banner.animation = enable?.let {
+      animationUtils(it, context!!)
+    }
     // refresh UI state
     binding!!.invalidateAll()
   }
-
 
   override fun onDestroyView() {
     super.onDestroyView()

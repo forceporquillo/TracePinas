@@ -55,7 +55,7 @@ import javax.inject.Inject;
 import org.jetbrains.annotations.NotNull;
 import timber.log.Timber;
 
-import static com.force.codes.project.app.presentation_layer.controller.utils.Utils.animate;
+import static com.force.codes.project.app.presentation_layer.controller.utils.Utils.animationUtils;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -250,7 +250,7 @@ public class NewsFragment extends BaseFragment implements
       }
       twitterIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(twitterUrl));
     } finally {
-      getActivity().startActivity(twitterIntent, Utils.activityOptions(
+      getActivity().startActivity(twitterIntent, Utils.customAnim(
           getContext(), R.anim.push_in, R.anim.push_out).toBundle());
     }
   }
@@ -260,7 +260,7 @@ public class NewsFragment extends BaseFragment implements
   @Override public void onNetworkConnectionChanged(Connectivity connectivity) {
     final RelativeLayout networkBanner = binding.network.relativeLayout;
     if (isConnected = !connectivity.available()) {
-      networkBanner.setAnimation(animate(true, context));
+      networkBanner.setAnimation(animationUtils(true, context));
       new AppExecutors(DELAY_MILL)
           .delayCurrentThread()
           .execute(() -> {
@@ -271,7 +271,7 @@ public class NewsFragment extends BaseFragment implements
             );
           });
     } else {
-      networkBanner.setAnimation(animate(false, context));
+      networkBanner.setAnimation(animationUtils(false, context));
       networkBanner.setVisibility(View.GONE);
     }
     // refresh UI state since we update the network views.
