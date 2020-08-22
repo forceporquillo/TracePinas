@@ -7,7 +7,7 @@
 
 package com.force.codes.project.app.app.di.module;
 
-import com.force.codes.project.app.presentation_layer.views.activity.FragmentContainerActivity;
+import com.force.codes.project.app.presentation_layer.views.activity.NavHostActivity;
 import com.force.codes.project.app.presentation_layer.views.activity.ListViewActivity;
 import dagger.Module;
 import dagger.android.ContributesAndroidInjector;
@@ -15,7 +15,7 @@ import dagger.android.ContributesAndroidInjector;
 @Module
 public abstract class ActivityBuilderModule {
   @ContributesAndroidInjector(modules = FragmentBuilderModule.class)
-  abstract FragmentContainerActivity bindFragmentContainerActivity();
+  abstract NavHostActivity bindFragmentContainerActivity();
 
   @ContributesAndroidInjector()
   abstract ListViewActivity bindListViewActivity();
