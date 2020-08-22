@@ -15,21 +15,21 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.force.codes.project.app.R;
 import com.force.codes.project.app.databinding.BottombarItemBinding;
 import com.force.codes.project.app.presentation_layer.controller.interfaces.BottomItemListener;
-import com.force.codes.project.app.presentation_layer.controller.model.BottomItem;
+import com.force.codes.project.app.presentation_layer.controller.model.BottomBarItem;
 import com.force.codes.project.app.presentation_layer.views.viewholders.BottomBarViewHolder;
 import java.util.ArrayList;
 
 public class BottomBarAdapter extends RecyclerView.Adapter<BottomBarViewHolder> {
-  private final ArrayList<BottomItem> bottomItems;
+  private final ArrayList<BottomBarItem> bottomBarItems;
   private final BottomItemListener bottomItemListener;
   private final int itemWidth;
   private int selected;
 
   public BottomBarAdapter(
-      final int selected, final int itemWidth, final ArrayList<BottomItem> bottomItems,
+      final int selected, final int itemWidth, final ArrayList<BottomBarItem> bottomBarItems,
       final BottomItemListener bottomItemListener) {
     this.selected = selected;
-    this.bottomItems = bottomItems;
+    this.bottomBarItems = bottomBarItems;
     this.itemWidth = itemWidth;
     this.bottomItemListener = bottomItemListener;
   }
@@ -53,21 +53,21 @@ public class BottomBarAdapter extends RecyclerView.Adapter<BottomBarViewHolder> 
   }
 
   @Override public void onBindViewHolder(@NonNull BottomBarViewHolder holder, int position) {
-    BottomItem bottomItem = bottomItems.get(position);
+    BottomBarItem bottomBarItem = bottomBarItems.get(position);
     holder.resizeItemWidth(itemWidth);
-    holder.setIcon(bottomItem.getItemIconId());
+    holder.setIcon(bottomBarItem.getItemIconId());
     holder.selectedStyle(selected,
-        bottomItem.getItemId(),
-        bottomItem.getItemIconId(),
-        bottomItem.getItemFillIconId());
-    holder.setItemTitle(bottomItem.getItemTitle());
+        bottomBarItem.getItemId(),
+        bottomBarItem.getItemIconId(),
+        bottomBarItem.getItemFillIconId());
+    holder.setItemTitle(bottomBarItem.getItemTitle());
     setOnClickItem(holder,
-        bottomItem.getItemId(),
-        bottomItem.getItemIconId(),
-        bottomItem.getItemFillIconId());
+        bottomBarItem.getItemId(),
+        bottomBarItem.getItemIconId(),
+        bottomBarItem.getItemFillIconId());
   }
 
   @Override public int getItemCount() {
-    return !bottomItems.isEmpty() ? bottomItems.size() : 0;
+    return !bottomBarItems.isEmpty() ? bottomBarItems.size() : 0;
   }
 }
