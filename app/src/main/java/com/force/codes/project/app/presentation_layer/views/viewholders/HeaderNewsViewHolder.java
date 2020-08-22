@@ -69,14 +69,14 @@ public class HeaderNewsViewHolder extends RecyclerView.ViewHolder implements Vie
         binding.layoutParent.getLayoutParams();
     Context context = binding.layoutParent.getContext();
     if (index == 0) {
-      params.setMarginStart(Utils.dpToPx(context, 15));
-      params.setMarginEnd(Utils.dpToPx(context, 10));
+      params.setMarginStart(Utils.dpToPx(context, 15, true));
+      params.setMarginEnd(Utils.dpToPx(context, 10, true));
       return;
     }
-    params.setMarginEnd(Utils.dpToPx(context, 10));
+    params.setMarginEnd(Utils.dpToPx(context, 10, true));
     // adds 15dp margin at the end of last index item.
     if (index == (getAdapterPosition() - 1)) {
-      params.setMarginEnd(Utils.dpToPx(context, 15));
+      params.setMarginEnd(Utils.dpToPx(context, 15, true));
     }
   }
 

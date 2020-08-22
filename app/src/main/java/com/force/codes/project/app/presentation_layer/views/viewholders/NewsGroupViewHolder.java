@@ -50,8 +50,8 @@ public class NewsGroupViewHolder extends RecyclerView.ViewHolder {
     RelativeLayout.LayoutParams params = (RelativeLayout
         .LayoutParams) binding.headParent.getLayoutParams();
     Context c = binding.headParent.getContext();
-    params.setMargins(0, Utils.dpToPx(c, 15), 0, 0);
-    params.height = Utils.dpToPx(c, 20);
+    params.setMargins(0, Utils.dpToPx(c, 15, true), 0, 0);
+    params.height = Utils.dpToPx(c, 20, true);
   }
 
   public int getAdapter() {
