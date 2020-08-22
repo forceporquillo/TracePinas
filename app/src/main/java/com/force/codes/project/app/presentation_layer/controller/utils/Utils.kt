@@ -73,7 +73,7 @@ object Utils {
   }
 
   @JvmStatic val deviceModel: String
-  get() = Build.MODEL
+    get() = Build.MODEL
 
   /**
    * @return thread count by multiplying
@@ -102,16 +102,24 @@ object Utils {
    * @return pixel based on device dpi and resolution.
    */
   @JvmStatic fun dpToPx(
-    context: Context,
-    densityPixel: Int
+    context: Context?,
+    fromDpWidth: Int?,
+    useComplexUnit: Boolean?
   ): Int {
-    val resources = context.resources
-    return TypedValue.applyDimension(
-        TypedValue.COMPLEX_UNIT_DIP,
-        densityPixel.toFloat(),
-        resources.displayMetrics
-    )
-        .toInt()
+    val resources = context!!.resources
+    useComplexUnit!!.let {
+      if (it) {
+        return TypedValue.applyDimension(
+            TypedValue.COMPLEX_UNIT_DIP,
+            fromDpWidth!!.toFloat(),
+            resources.displayMetrics
+        )
+            .toInt()
+      }
+      return resources
+          .displayMetrics
+          .widthPixels / fromDpWidth!!
+    }
   }
 
   @SuppressLint("SimpleDateFormat")
@@ -124,7 +132,7 @@ object Utils {
   @JvmStatic val todayDate: Date
     get() = Date()
 
-  @JvmStatic fun animate(
+  @JvmStatic fun animationUtils(
     canAnimate: Boolean,
     context: Context?
   ): Animation {
@@ -139,13 +147,15 @@ object Utils {
         )
   }
 
-  @JvmStatic fun activityOptions(
+  @JvmStatic fun customAnim(
     context: Context?,
-    anim1: Int,
-    anim2: Int
+    pushAnim: Int,
+    pullAnim: Int
   ): ActivityOptions {
     return ActivityOptions.makeCustomAnimation(
-        context, anim1, anim2
+        context,
+        pushAnim,
+        pullAnim
     )
   }
 
