@@ -87,6 +87,10 @@ open class NetworkUtils {
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({ connectivity: Boolean ->
               setInternetConnectivity(connectivity)
+              if (connectivity) {
+                Timber.e("CONNECTED")
+              } else
+                Timber.e("NOT CONNECTED")
             }) { obj: Throwable ->
               obj.printStackTrace()
             }
@@ -150,8 +154,9 @@ open class NetworkUtils {
   companion object {
     private val settings = InternetObservingSettings
         .builder()
+        .interval(2)
+        .initialInterval(2)
         .strategy(SocketInternetObservingStrategy())
-        .host("https://www.github.com/forceporquillo")
         .build()
 
     /**

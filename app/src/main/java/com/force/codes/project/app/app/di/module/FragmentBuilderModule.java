@@ -7,9 +7,9 @@
 
 package com.force.codes.project.app.app.di.module;
 
-import com.force.codes.project.app.presentation_layer.views.fragments.LiveDataFragment;
-import com.force.codes.project.app.presentation_layer.views.fragments.MapFragment;
-import com.force.codes.project.app.presentation_layer.views.fragments.NewsFragment;
+import com.force.codes.project.app.presentation_layer.views.fragments.bottombar.LiveDataFragment;
+import com.force.codes.project.app.presentation_layer.views.fragments.bottombar.MapFragment;
+import com.force.codes.project.app.presentation_layer.views.fragments.bottombar.NewsFragment;
 import com.force.codes.project.app.presentation_layer.views.fragments.viewpager.MyCountryFragment;
 import com.force.codes.project.app.presentation_layer.views.fragments.viewpager.OverAllFragment;
 import com.force.codes.project.app.presentation_layer.views.fragments.viewpager.WorldwideFragment;

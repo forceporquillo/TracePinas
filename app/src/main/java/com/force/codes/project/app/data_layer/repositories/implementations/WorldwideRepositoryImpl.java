@@ -16,7 +16,7 @@ import com.force.codes.project.app.data_layer.model.country.CountryDetails;
 import com.force.codes.project.app.data_layer.repositories.interfaces.WorldwideRepository;
 import com.force.codes.project.app.data_layer.resources.api.ApiService;
 import com.force.codes.project.app.data_layer.resources.database.WorldwideDao;
-import com.force.codes.project.app.presentation_layer.controller.utils.AppExecutors;
+import com.force.codes.project.app.presentation_layer.controller.service.AppExecutors;
 import io.reactivex.Flowable;
 import io.reactivex.schedulers.Schedulers;
 import java.util.List;

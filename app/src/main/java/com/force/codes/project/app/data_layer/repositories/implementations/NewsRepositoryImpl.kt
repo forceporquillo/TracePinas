@@ -18,8 +18,9 @@ import com.force.codes.project.app.data_layer.model.twitter.TwitterData
 import com.force.codes.project.app.data_layer.repositories.interfaces.NewsRepository
 import com.force.codes.project.app.data_layer.resources.api.ApiService
 import com.force.codes.project.app.data_layer.resources.database.NewsDao
-import com.force.codes.project.app.presentation_layer.controller.utils.AppExecutors
+import com.force.codes.project.app.presentation_layer.controller.service.AppExecutors
 import io.reactivex.Flowable
+import timber.log.Timber
 import javax.inject.Inject
 
 class NewsRepositoryImpl

@@ -4,7 +4,7 @@ import com.force.codes.project.app.data_layer.model.PrimarySelected;
 import com.force.codes.project.app.data_layer.model.country.CountryDetails;
 import com.force.codes.project.app.data_layer.repositories.interfaces.ListViewRepository;
 import com.force.codes.project.app.data_layer.resources.database.ListViewDao;
-import com.force.codes.project.app.presentation_layer.controller.utils.AppExecutors;
+import com.force.codes.project.app.presentation_layer.controller.service.AppExecutors;
 import io.reactivex.Flowable;
 import java.util.List;
 import javax.inject.Inject;
