@@ -1,4 +1,5 @@
 
+
 ## COVID19 Tracker App 📱
 This COVID19 Tracker app is a mobile version of a virus tracker inspired by various tracking web apps out there. This app has a bunch of features such as data breakdown visualization of each country using charts and graphs from day 1 up to present. Maps to provide seamless hover to different affected countries, news, and tweets from local media providers to give updates anywhere in the world.
 
@@ -27,7 +28,7 @@ This project requires a newer version of Android Studio such as
 - AndroidX dependencies 
 -- migrate to  [https://developer.android.com/jetpack/androidx/migrate](https://developer.android.com/jetpack/androidx/migrate)
 
-- Java 8 or later.
+- Kotlin, Java 8 or later.
 
 - Google Maps SDK API - you can obtain your own api here [https://developers.google.com/maps/documentation/android-sdk/overview](https://developers.google.com/maps/documentation/android-sdk/overview)
 
@@ -51,7 +52,9 @@ resValue "string", "maps_api_key", (secureProps.getProperty("MAPS_API_KEY") ?: "
 
 - **Offline First Architecture** - All the data is first tried to be loaded from the local database and then updated from the server. This ensures that the app is usable even in an offline mode.
 
-- **Modular and Adaptive UI Design** -  Adaps to different screen sizes and densities of device.
+- **Adaptive UI Design** -  Adaps to different screen sizes and densities of device.
+
+- **Repository Pattern** - Abstracts the data store and enables business logic to define read and write operations on a logical level.
 
 - **Modular** - The app is broken into modules of features and libraries which can be combined to build instant-apps, complete apps or lite version of apps.
 
@@ -100,7 +103,7 @@ resValue "string", "maps_api_key", (secureProps.getProperty("MAPS_API_KEY") ?: "
 **PH DATASETS/DOH**
 - **Katerinahronik** - [https://apify.com/katerinahronik/covid-philippines](https://apify.com/katerinahronik/covid-philippines) from 
 - **DOH** [https://ncovtracker.doh.gov.ph/](https://ncovtracker.doh.gov.ph/)
-- **Sorxrob Github** -- (https://github.com/sorxrob/coronavirus-ph-api)
+- **Sorxrob Github** - https://github.com/sorxrob/coronavirus-ph-api (*DEPRECATED*)
 
 ## Contributing 🧑🏻‍🔧📲
 I love contributions! There is a lot to do in this app so why not chat or email me about what you're interested in doing? Or you can directly submit a [pull request](https://github.com/forceporquillo/android-covid19-tracker/pulls) and I'd to love merged it.
