@@ -10,7 +10,7 @@
 
         <variable
             name="news"
-            type="com.force.codes.project.app.presentation_layer.views.fragments.NewsFragment" />
+            type="com.force.codes.project.app.presentation_layer.views.fragments.bottombar.NewsFragment" />
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout

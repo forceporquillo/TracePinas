@@ -10,7 +10,7 @@
 
         <variable
             name="bottomBar"
-            type="com.force.codes.project.app.presentation_layer.views.viewholders.BottomBarViewHolder" />
+            type="com.force.codes.project.app.presentation_layer.controller.navigation.BottomBarViewHolder" />
     </data>
 
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"

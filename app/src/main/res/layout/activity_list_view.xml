@@ -10,7 +10,7 @@
       xmlns:tools="http://schemas.android.com/tools"
       android:layout_width="match_parent"
       android:layout_height="match_parent"
-      tools:context=".presentation_layer.views.activity.list_component.ListViewActivity">
+      tools:context=".presentation_layer.views.activity.ListViewActivity">
 
     <com.google.android.material.appbar.AppBarLayout
         app:elevation="0dp"
@@ -57,7 +57,7 @@
   <data>
     <variable
         name="listActivity"
-        type="com.force.codes.project.app.presentation_layer.views.activity.list_component.ListViewActivity"
+        type="com.force.codes.project.app.presentation_layer.views.activity.ListViewActivity"
         />
   </data>
 </layout>

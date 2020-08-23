@@ -9,7 +9,7 @@
     <data>
         <variable
             name="statistics"
-            type="com.force.codes.project.app.presentation_layer.views.fragments.StatisticsFragment"/>
+            type="com.force.codes.project.app.presentation_layer.views.fragments.bottombar.StatisticsFragment"/>
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"

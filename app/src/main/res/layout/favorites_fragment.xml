@@ -9,7 +9,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/foregroundColor2"
-    tools:context="com.force.codes.project.app.presentation_layer.views.fragments.HelpCenterFragment">
+    tools:context="com.force.codes.project.app.presentation_layer.views.fragments.bottombar.HelpCenterFragment">
 
     <TextView
         android:layout_width="match_parent"

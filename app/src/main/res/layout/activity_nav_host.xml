@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+  ~ Created by Force Porquillo on 5/22/20 10:11 PM
+  ~ Copyright (c) 2020.  All rights reserved.
+  ~ Last modified 5/22/20 8:19 PM
+  ~
+  -->
+<layout>
+    <data>
+        <variable
+            name="activity"
+            type="com.force.codes.project.app.presentation_layer.views.activity.NavHostActivity"
+            />
+    </data>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/foregroundColor2">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="SPLASH SCREEN"
+        android:layout_centerInParent="true"
+        android:textSize="25sp"
+        android:fontFamily="@font/poppin_bold"/>
+
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/fragment_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/bottom_bar"/>
+
+    <include
+        android:id="@+id/bottom_bar"
+        layout="@layout/bottombar_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true" />
+</RelativeLayout>
+</layout>
