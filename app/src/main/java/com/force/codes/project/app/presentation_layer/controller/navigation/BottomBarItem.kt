@@ -4,7 +4,7 @@
  * Copyright (c) 2020.  All rights reserved.
  * Last modified 6/19/20 12:10 AM
  */
-package com.force.codes.project.app.presentation_layer.controller.model
+package com.force.codes.project.app.presentation_layer.controller.navigation
 
 class BottomBarItem(
   var itemId: Int,
