@@ -5,7 +5,7 @@
  * Last modified 8/1/20 10:55 PM
  */
 
-package com.force.codes.project.app.presentation_layer.controller.utils
+package com.force.codes.project.app.presentation_layer.controller.layout
 
 import android.R.attr
 import android.content.Context
@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ItemDecoration
 import androidx.recyclerview.widget.RecyclerView.LayoutParams
 import androidx.recyclerview.widget.RecyclerView.State
+import com.force.codes.project.app.presentation_layer.controller.utils.Utils
 
 /**
  * A custom item decoration in [RecyclerView]
@@ -92,9 +93,11 @@ class ItemDecoration(
       val right = left + (drawable?.intrinsicHeight ?: 0)
       drawable!!.apply {
         setBounds(left, top + Utils.dpToPx(
-            context, margin, true),
+            context, margin, true
+        ),
             right, bottom - Utils.dpToPx(
-            context, margin, true)
+            context, margin, true
+        )
         )
         draw(canvas!!)
       }
