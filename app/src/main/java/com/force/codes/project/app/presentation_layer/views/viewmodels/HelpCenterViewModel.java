@@ -13,6 +13,8 @@ package com.force.codes.project.app.presentation_layer.views.viewmodels;
  * FEU Institute of Technology
  */
 
+import com.force.codes.project.app.presentation_layer.views.base.BaseViewModel;
+
 public class HelpCenterViewModel extends BaseViewModel {
   // TODO: Implement the ViewModel
 }

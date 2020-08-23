@@ -10,10 +10,10 @@ package com.force.codes.project.app.presentation_layer.views.viewmodels;
 import androidx.lifecycle.MutableLiveData;
 import com.force.codes.project.app.data_layer.model.country.CountryDetails;
 import com.force.codes.project.app.data_layer.repositories.interfaces.MyCountryRepository;
+import com.force.codes.project.app.presentation_layer.views.base.BaseViewModel;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
-import java.util.List;
 import javax.inject.Inject;
 import timber.log.Timber;
 

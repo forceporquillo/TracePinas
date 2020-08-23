@@ -14,5 +14,7 @@ package com.force.codes.project.app.presentation_layer.views.viewmodels;
  *
  */
 
+import com.force.codes.project.app.presentation_layer.views.base.BaseViewModel;
+
 class HomeViewModel extends BaseViewModel {
 }

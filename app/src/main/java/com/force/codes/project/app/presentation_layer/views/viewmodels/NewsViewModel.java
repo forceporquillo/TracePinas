@@ -15,9 +15,11 @@ import com.force.codes.project.app.app.constants.PageListConstants;
 import com.force.codes.project.app.data_layer.model.news.ArticlesItem;
 import com.force.codes.project.app.data_layer.model.twitter.TwitterData;
 import com.force.codes.project.app.data_layer.repositories.interfaces.NewsRepository;
-import com.force.codes.project.app.presentation_layer.controller.utils.AppExecutors;
+import com.force.codes.project.app.presentation_layer.controller.service.AppExecutors;
+import com.force.codes.project.app.presentation_layer.views.base.BaseViewModel;
 import io.reactivex.Flowable;
 import io.reactivex.disposables.Disposable;
+import io.reactivex.plugins.RxJavaPlugins;
 import io.reactivex.schedulers.Schedulers;
 import java.util.ArrayList;
 import java.util.List;
@@ -105,11 +107,13 @@ public final class NewsViewModel extends BaseViewModel {
   public void getNewsData() {
     disposables[1] = Flowable.fromPublisher(newsRepository
         .getNewsResponseFromServer())
-        .doOnError(e -> onError.set(true))
         .subscribeOn(Schedulers.io())
         .subscribe(newsData -> insertArticleToDB(
             newsData.getArticles()
-        ), Timber::e);
+        ), t -> {
+          Timber.e(t);
+          onError.set(true);
+        });
     super.addToUnsubscribed(disposables[1]);
   }
 

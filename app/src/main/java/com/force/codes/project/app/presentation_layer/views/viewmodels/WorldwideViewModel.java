@@ -18,24 +18,27 @@ import androidx.paging.PagedList;
 import com.force.codes.project.app.app.constants.PageListConstants;
 import com.force.codes.project.app.data_layer.model.country.CountryDetails;
 import com.force.codes.project.app.data_layer.repositories.interfaces.WorldwideRepository;
+import com.force.codes.project.app.presentation_layer.views.base.BaseViewModel;
 import io.reactivex.Flowable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 import javax.inject.Inject;
 
 public class WorldwideViewModel extends BaseViewModel {
-  static final PagedList.Config config = new PagedList.Config.Builder()
-      .setPageSize(PageListConstants.PAGE_SIZE)
-      .setMaxSize(PageListConstants.PAGE_MAX_SIZE)
-      .setEnablePlaceholders(false)
-      .build();
   private final WorldwideRepository repository;
+
   private LiveData<PagedList<CountryDetails>> listLiveData;
 
   @Inject
   public WorldwideViewModel(WorldwideRepository repository) {
     this.repository = repository;
   }
+
+  static final PagedList.Config config = new PagedList.Config.Builder()
+      .setPageSize(PageListConstants.PAGE_SIZE)
+      .setMaxSize(PageListConstants.PAGE_MAX_SIZE)
+      .setEnablePlaceholders(false)
+      .build();
 
   public LiveData<PagedList<CountryDetails>> getDataFromDatabase() {
     if (listLiveData == null) {
