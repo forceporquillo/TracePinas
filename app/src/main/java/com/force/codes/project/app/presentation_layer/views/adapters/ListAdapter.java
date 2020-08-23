@@ -13,17 +13,17 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.force.codes.project.app.data_layer.model.country.CountryDetails;
 import com.force.codes.project.app.databinding.ListViewItemsBinding;
-import com.force.codes.project.app.presentation_layer.controller.interfaces.ListViewCallback;
+import com.force.codes.project.app.presentation_layer.controller.support.StackEventListener;
 import com.force.codes.project.app.presentation_layer.views.viewholders.ListViewHolder;
 import java.util.List;
 
 public class ListAdapter extends RecyclerView.Adapter<ListViewHolder> {
   private final List<CountryDetails> countryDetailsList;
-  private final ListViewCallback callback;
+  private final StackEventListener.onGetAdapterPosition callback;
 
   public ListAdapter(
       List<CountryDetails> countryDetailsList,
-      ListViewCallback callback
+      StackEventListener.onGetAdapterPosition callback
   ) {
     this.countryDetailsList = countryDetailsList;
     this.callback = callback;
@@ -39,7 +39,6 @@ public class ListAdapter extends RecyclerView.Adapter<ListViewHolder> {
 
   @Override public void onBindViewHolder(@NonNull ListViewHolder holder, int position) {
     holder.setBinding(countryDetailsList.get(position));
-
   }
 
   @Override public int getItemCount() {

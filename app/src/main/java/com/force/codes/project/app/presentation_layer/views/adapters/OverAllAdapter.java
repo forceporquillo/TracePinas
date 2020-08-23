@@ -16,7 +16,7 @@ import com.force.codes.project.app.R;
 import com.force.codes.project.app.databinding.CardViewLayoutBinding;
 import com.force.codes.project.app.presentation_layer.controller.utils.ChartCallback;
 import com.force.codes.project.app.presentation_layer.controller.utils.ChartHelperUtil;
-import com.force.codes.project.app.presentation_layer.views.viewholders.overall_viewholders.BaseBinderViewHolder;
+import com.force.codes.project.app.presentation_layer.views.base.BaseBinderViewHolder;
 import com.force.codes.project.app.presentation_layer.views.viewholders.overall_viewholders.OverAllViewHolder;
 import java.util.ArrayList;
 import java.util.Arrays;

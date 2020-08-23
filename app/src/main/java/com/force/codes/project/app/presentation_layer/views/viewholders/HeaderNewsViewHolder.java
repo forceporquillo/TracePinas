@@ -20,16 +20,16 @@ import com.force.codes.project.app.BR;
 import com.force.codes.project.app.R;
 import com.force.codes.project.app.data_layer.model.twitter.TwitterData;
 import com.force.codes.project.app.databinding.HeaderNewsLayoutBinding;
-import com.force.codes.project.app.presentation_layer.controller.interfaces.NewsItemCallback;
+import com.force.codes.project.app.presentation_layer.controller.support.StackEventListener;
 import com.force.codes.project.app.presentation_layer.controller.utils.Utils;
 
 public class HeaderNewsViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-  private NewsItemCallback callback;
+  private StackEventListener.NewsItemCallback callback;
   private HeaderNewsLayoutBinding binding;
 
   public HeaderNewsViewHolder(
       final HeaderNewsLayoutBinding binding,
-      final NewsItemCallback callback
+      final StackEventListener.NewsItemCallback callback
   ) {
     super(binding.getRoot());
     this.binding = binding;
@@ -81,8 +81,6 @@ public class HeaderNewsViewHolder extends RecyclerView.ViewHolder implements Vie
   }
 
   @Override public void onClick(View v) {
-    callback.recentTweetsItemListener(
-        getAdapterPosition()
-    );
+    callback.onRecentTweetsListener(getAdapterPosition());
   }
 }

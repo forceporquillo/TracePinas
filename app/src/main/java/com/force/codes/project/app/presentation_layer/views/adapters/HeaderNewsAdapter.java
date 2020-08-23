@@ -16,7 +16,7 @@ import androidx.recyclerview.widget.DiffUtil;
 import com.force.codes.project.app.R;
 import com.force.codes.project.app.data_layer.model.twitter.TwitterData;
 import com.force.codes.project.app.databinding.HeaderNewsLayoutBinding;
-import com.force.codes.project.app.presentation_layer.controller.interfaces.NewsItemCallback;
+import com.force.codes.project.app.presentation_layer.controller.support.StackEventListener;
 import com.force.codes.project.app.presentation_layer.views.viewholders.HeaderNewsViewHolder;
 
 public class HeaderNewsAdapter extends PagedListAdapter<TwitterData, HeaderNewsViewHolder> {
@@ -34,9 +34,9 @@ public class HeaderNewsAdapter extends PagedListAdapter<TwitterData, HeaderNewsV
       return oldItem.getFullText().equals(newItem.getFullText());
     }
   };
-  private NewsItemCallback callback;
+  private StackEventListener.NewsItemCallback callback;
 
-  public HeaderNewsAdapter(NewsItemCallback callback) {
+  public HeaderNewsAdapter(StackEventListener.NewsItemCallback callback) {
     super(DIFF_CALLBACK);
     this.callback = callback;
   }

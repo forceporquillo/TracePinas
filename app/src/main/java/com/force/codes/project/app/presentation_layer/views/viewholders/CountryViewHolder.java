@@ -17,18 +17,20 @@ import com.bumptech.glide.request.RequestOptions;
 import com.force.codes.project.app.R;
 import com.force.codes.project.app.data_layer.model.country.CountryDetails;
 import com.force.codes.project.app.databinding.CountryRowsBinding;
-import com.force.codes.project.app.presentation_layer.controller.interfaces.FragmentCallback;
+import com.force.codes.project.app.presentation_layer.controller.support.GlideApp;
+import com.force.codes.project.app.presentation_layer.controller.support.GlideAppImpl;
+import com.force.codes.project.app.presentation_layer.controller.support.StackEventListener;
 import com.force.codes.project.app.presentation_layer.controller.utils.Utils;
 import de.hdodenhof.circleimageview.CircleImageView;
 import org.jetbrains.annotations.NotNull;
 
 public class CountryViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-  private final FragmentCallback callback;
+  private final StackEventListener.onGetAdapterPosition callback;
   private final CountryRowsBinding binding;
 
   public CountryViewHolder(
       @NotNull final CountryRowsBinding binding,
-      final FragmentCallback callback
+      final StackEventListener.onGetAdapterPosition callback
   ) {
     super(binding.getRoot());
     this.binding = binding;
@@ -38,7 +40,7 @@ public class CountryViewHolder extends RecyclerView.ViewHolder implements View.O
 
   @BindingAdapter({ "imageUrl" })
   public static void setFlag(@NotNull CircleImageView flagPlaceholder, final String imageUrl) {
-    Glide.with(flagPlaceholder.getContext())
+    GlideApp.with(flagPlaceholder.getContext())
         .asBitmap()
         .apply(new RequestOptions()
             .fitCenter()
@@ -75,8 +77,6 @@ public class CountryViewHolder extends RecyclerView.ViewHolder implements View.O
   }
 
   @Override public void onClick(View v) {
-    callback.cardItemListener(
-        getAdapterPosition()
-    );
+    callback.onItemClicked(getAdapterPosition());
   }
 }

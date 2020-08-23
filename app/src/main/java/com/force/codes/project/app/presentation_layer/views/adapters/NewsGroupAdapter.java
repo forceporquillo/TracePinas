@@ -17,7 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.force.codes.project.app.R;
 import com.force.codes.project.app.databinding.NewsGroupLayoutBinding;
 import com.force.codes.project.app.presentation_layer.controller.model.Group;
-import com.force.codes.project.app.presentation_layer.controller.utils.ItemDecoration;
+import com.force.codes.project.app.presentation_layer.controller.layout.ItemDecoration;
 import com.force.codes.project.app.presentation_layer.views.viewholders.NewsGroupViewHolder;
 import java.util.ArrayList;
 import java.util.Arrays;

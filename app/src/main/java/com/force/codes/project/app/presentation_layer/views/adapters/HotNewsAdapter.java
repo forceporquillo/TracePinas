@@ -16,13 +16,13 @@ import androidx.recyclerview.widget.DiffUtil;
 import com.force.codes.project.app.R;
 import com.force.codes.project.app.data_layer.model.news.ArticlesItem;
 import com.force.codes.project.app.databinding.HotNewsLayoutBinding;
-import com.force.codes.project.app.presentation_layer.controller.interfaces.NewsItemCallback;
+import com.force.codes.project.app.presentation_layer.controller.support.StackEventListener;
 import com.force.codes.project.app.presentation_layer.views.viewholders.HotNewsViewHolder;
 
 public class HotNewsAdapter extends PagedListAdapter<ArticlesItem, HotNewsViewHolder> {
-  private NewsItemCallback callback;
+  private StackEventListener.NewsItemCallback callback;
 
-  public HotNewsAdapter(NewsItemCallback callback) {
+  public HotNewsAdapter(StackEventListener.NewsItemCallback callback) {
     super(DIFF_CALLBACK);
     this.callback = callback;
   }
@@ -47,7 +47,8 @@ public class HotNewsAdapter extends PagedListAdapter<ArticlesItem, HotNewsViewHo
 
   private static DiffUtil.ItemCallback<ArticlesItem> DIFF_CALLBACK = new DiffUtil
       .ItemCallback<ArticlesItem>() {
-    @Override public boolean areItemsTheSame(@NonNull ArticlesItem oldItem, @NonNull ArticlesItem newItem) {
+    @Override
+    public boolean areItemsTheSame(@NonNull ArticlesItem oldItem, @NonNull ArticlesItem newItem) {
       return oldItem.getPublishedAt().equals(newItem.getPublishedAt());
     }
 

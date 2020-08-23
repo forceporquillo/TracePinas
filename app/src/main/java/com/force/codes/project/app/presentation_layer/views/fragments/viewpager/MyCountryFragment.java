@@ -19,11 +19,11 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import com.force.codes.project.app.data_layer.model.country.CountryDetails;
 import com.force.codes.project.app.databinding.FragmentMyCountryBinding;
-import com.force.codes.project.app.presentation_layer.controller.interfaces.ListActivityListener;
-import com.force.codes.project.app.presentation_layer.controller.utils.AppExecutors;
+import com.force.codes.project.app.presentation_layer.controller.support.StackEventListener;
+import com.force.codes.project.app.presentation_layer.controller.service.AppExecutors;
 import com.force.codes.project.app.presentation_layer.views.activity.ListViewActivity;
 import com.force.codes.project.app.presentation_layer.views.factory.ViewModelProviderFactory;
-import com.force.codes.project.app.presentation_layer.views.fragments.BaseFragment;
+import com.force.codes.project.app.presentation_layer.views.base.BaseFragment;
 import com.force.codes.project.app.presentation_layer.views.viewmodels.MyCountryViewModel;
 import com.github.pwittchen.reactivenetwork.library.rx2.Connectivity;
 import com.razerdp.widget.animatedpieview.AnimatedPieViewConfig;
@@ -37,7 +37,7 @@ import timber.log.Timber;
  * Use the {@link MyCountryFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class MyCountryFragment extends BaseFragment implements ListActivityListener {
+public class MyCountryFragment extends BaseFragment implements StackEventListener.ListActivityListener {
   private static final String ARGS_KEY = "country";
   private static final String DEFAULT_ENDPOINT = "Philippines";
   private FragmentMyCountryBinding binding;
@@ -96,7 +96,7 @@ public class MyCountryFragment extends BaseFragment implements ListActivityListe
     }
   }
 
-  @Override public void startListActivity() {
+  @Override public void onStartListActivity() {
     startActivity(new Intent(getActivity(), ListViewActivity.class));
   }
 

@@ -14,21 +14,20 @@ import androidx.databinding.BindingAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.bumptech.glide.request.RequestOptions;
 import com.force.codes.project.app.BR;
 import com.force.codes.project.app.R;
 import com.force.codes.project.app.data_layer.model.news.ArticlesItem;
 import com.force.codes.project.app.databinding.HotNewsLayoutBinding;
-import com.force.codes.project.app.presentation_layer.controller.interfaces.NewsItemCallback;
+import com.force.codes.project.app.presentation_layer.controller.support.StackEventListener;
 import org.jetbrains.annotations.NotNull;
 
 public class HotNewsViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-  private final NewsItemCallback callback;
+  private final StackEventListener.NewsItemCallback callback;
   private final HotNewsLayoutBinding binding;
 
   public HotNewsViewHolder(
       @NonNull HotNewsLayoutBinding binding,
-      NewsItemCallback callback
+      StackEventListener.NewsItemCallback callback
   ) {
     super(binding.getRoot());
     this.binding = binding;
@@ -56,6 +55,6 @@ public class HotNewsViewHolder extends RecyclerView.ViewHolder implements View.O
 
   @Override
   public void onClick(View v) {
-    callback.hotNewsItemListener(getAdapterPosition());
+    callback.onLocalNewsListener(getAdapterPosition());
   }
 }

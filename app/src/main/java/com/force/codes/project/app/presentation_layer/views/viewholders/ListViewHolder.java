@@ -7,24 +7,20 @@
 
 package com.force.codes.project.app.presentation_layer.views.viewholders;
 
-import android.content.res.Resources;
 import android.view.View;
-import android.widget.RelativeLayout;
 import androidx.annotation.NonNull;
-import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 import com.force.codes.project.app.BR;
-import com.force.codes.project.app.R;
 import com.force.codes.project.app.data_layer.model.country.CountryDetails;
 import com.force.codes.project.app.databinding.ListViewItemsBinding;
-import com.force.codes.project.app.presentation_layer.controller.interfaces.ListViewCallback;
-import com.force.codes.project.app.presentation_layer.controller.utils.Utils;
+import com.force.codes.project.app.presentation_layer.controller.support.StackEventListener;
 
-public class ListViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+public class ListViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
   private ListViewItemsBinding binding;
-  private ListViewCallback callback;
+  private StackEventListener.onGetAdapterPosition callback;
 
-  public ListViewHolder(@NonNull ListViewItemsBinding binding, ListViewCallback callback) {
+  public ListViewHolder(@NonNull ListViewItemsBinding binding,
+      StackEventListener.onGetAdapterPosition callback) {
     super(binding.getRoot());
     this.binding = binding;
     this.callback = callback;
@@ -38,6 +34,6 @@ public class ListViewHolder extends RecyclerView.ViewHolder implements View.OnCl
   }
 
   @Override public void onClick(View v) {
-    callback.getPosition(getAdapterPosition());
+    callback.onItemClicked(getAdapterPosition());
   }
 }

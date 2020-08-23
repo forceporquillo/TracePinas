@@ -14,10 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import com.force.codes.project.app.R;
 import com.force.codes.project.app.data_layer.model.country.CountryDetails;
-import com.force.codes.project.app.presentation_layer.views.fragments.BaseFragment;
-import com.github.pwittchen.reactivenetwork.library.rx2.Connectivity;
 import java.util.List;
-import org.jetbrains.annotations.Nullable;
 
 /**
  * A simple {@link Fragment} subclass.

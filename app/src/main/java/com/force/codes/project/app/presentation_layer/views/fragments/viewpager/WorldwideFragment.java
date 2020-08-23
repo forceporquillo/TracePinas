@@ -19,28 +19,31 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.force.codes.project.app.R;
 import com.force.codes.project.app.databinding.FragmentWorldwideBinding;
-import com.force.codes.project.app.presentation_layer.controller.interfaces.FragmentCallback;
-import com.force.codes.project.app.presentation_layer.controller.interfaces.OnRequestResponse;
-import com.force.codes.project.app.presentation_layer.controller.utils.AppExecutors;
+import com.force.codes.project.app.presentation_layer.controller.support.StackEventListener;
+import com.force.codes.project.app.presentation_layer.controller.service.AppExecutors;
 import com.force.codes.project.app.presentation_layer.views.adapters.CountryAdapter;
+import com.force.codes.project.app.presentation_layer.views.base.BaseFragment;
 import com.force.codes.project.app.presentation_layer.views.factory.ViewModelProviderFactory;
-import com.force.codes.project.app.presentation_layer.views.fragments.BaseFragment;
-import com.force.codes.project.app.presentation_layer.views.fragments.HelpCenterFragment;
-import com.force.codes.project.app.presentation_layer.views.fragments.StatisticsFragment;
+import com.force.codes.project.app.presentation_layer.views.fragments.bottombar.HelpCenterFragment;
+import com.force.codes.project.app.presentation_layer.views.fragments.bottombar.StatisticsFragment;
 import com.force.codes.project.app.presentation_layer.views.viewmodels.WorldwideViewModel;
 import com.github.pwittchen.reactivenetwork.library.rx2.Connectivity;
 import javax.inject.Inject;
 import org.jetbrains.annotations.NotNull;
 
 public class WorldwideFragment extends BaseFragment implements
-    FragmentCallback, View.OnClickListener, OnRequestResponse {
+    StackEventListener.onGetAdapterPosition, View.OnClickListener,
+    StackEventListener.LiveStateResponse {
 
   @Inject
   ViewModelProviderFactory factory;
   @Inject
   AppExecutors appExecutors;
+
   private FragmentWorldwideBinding binding;
+
   private WorldwideViewModel viewModel;
+
   private CountryAdapter countryAdapter;
 
   public WorldwideFragment() {
@@ -105,11 +108,6 @@ public class WorldwideFragment extends BaseFragment implements
     binding.shimmerLayout.startShimmer();
   }
 
-  @Override
-  public void onErrorResponse(Boolean onErrorRequest) {
-    if (onErrorRequest) swipeRefreshLayout().setRefreshing(false);
-  }
-
   private SwipeRefreshLayout swipeRefreshLayout() {
     binding.swipeFresh.setColorSchemeResources(R.color.blue, R.color.blue, R.color.blue);
     binding.swipeFresh.setOnRefreshListener(() -> viewModel.getDataFromNetwork());
@@ -129,12 +127,6 @@ public class WorldwideFragment extends BaseFragment implements
     super.setFragment(fragment).commit();
   }
 
-  @Override
-  public void cardItemListener(int position) {
-    Fragment fragment = StatisticsFragment.newInstance();
-    //super.setDelegateFragment(fragment).commit();
-  }
-
   final void setRecyclerView() {
     binding.recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
     binding.recyclerView.addItemDecoration(new DividerItemDecoration(
@@ -147,5 +139,15 @@ public class WorldwideFragment extends BaseFragment implements
   @Override
   public void onNetworkConnectionChanged(Connectivity connectivity) {
 
+  }
+
+  @Override public void onItemClicked(int index) {
+    Fragment fragment = StatisticsFragment.newInstance();
+  }
+
+  @Override public void onErrorResponse(boolean isError) {
+    if (isError) {
+      swipeRefreshLayout().setRefreshing(false);
+    }
   }
 }
