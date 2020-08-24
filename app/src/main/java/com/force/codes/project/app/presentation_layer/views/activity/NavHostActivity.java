@@ -15,6 +15,7 @@ package com.force.codes.project.app.presentation_layer.views.activity;
  */
 
 import android.content.Context;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.view.View;
 import androidx.annotation.NonNull;
@@ -24,23 +25,26 @@ import androidx.fragment.app.Fragment;
 import com.force.codes.project.app.R;
 import com.force.codes.project.app.databinding.ActivityNavHostBinding;
 import com.force.codes.project.app.databinding.BottombarLayoutBinding;
-import com.force.codes.project.app.presentation_layer.controller.interfaces.BottomItemListener;
-import com.force.codes.project.app.presentation_layer.controller.model.BottomBarItem;
-import com.force.codes.project.app.presentation_layer.controller.support.BottomBar;
-import com.force.codes.project.app.presentation_layer.controller.utils.AppExecutors;
-import com.force.codes.project.app.presentation_layer.views.activity.NavigationView.BottomBarDrawableArray;
-import com.force.codes.project.app.presentation_layer.views.fragments.LiveDataFragment;
-import com.force.codes.project.app.presentation_layer.views.fragments.MapFragment;
-import com.force.codes.project.app.presentation_layer.views.fragments.NewsFragment;
-import com.force.codes.project.app.presentation_layer.views.fragments.ReadNewsFragment;
-import com.force.codes.project.app.presentation_layer.views.fragments.StatisticsFragment;
+import com.force.codes.project.app.presentation_layer.controller.navigation.NavigationView;
+import com.force.codes.project.app.presentation_layer.controller.support.StackEventListener;
+import com.force.codes.project.app.presentation_layer.controller.navigation.BottomBarItem;
+import com.force.codes.project.app.presentation_layer.controller.navigation.BottomBar;
+import com.force.codes.project.app.presentation_layer.controller.service.AppExecutors;
+import com.force.codes.project.app.presentation_layer.controller.navigation.NavigationView.BottomBarDrawableArray;
+import com.force.codes.project.app.presentation_layer.views.base.BaseActivity;
+import com.force.codes.project.app.presentation_layer.views.fragments.bottombar.HelpCenterFragment;
+import com.force.codes.project.app.presentation_layer.views.fragments.bottombar.LiveDataFragment;
+import com.force.codes.project.app.presentation_layer.views.fragments.bottombar.MapFragment;
+import com.force.codes.project.app.presentation_layer.views.fragments.bottombar.NewsFragment;
+import com.force.codes.project.app.presentation_layer.views.fragments.bottombar.StatisticsFragment;
 import org.jetbrains.annotations.NotNull;
 
-import static com.force.codes.project.app.presentation_layer.views.activity.NavigationView.BottomBarDrawableArray.DRAWABLE_ICONS;
-import static com.force.codes.project.app.presentation_layer.views.fragments.StatisticsFragment.newInstance;
+import static com.force.codes.project.app.presentation_layer.controller.navigation.NavigationView.BottomBarDrawableArray.DRAWABLE_ICONS;
+import static com.force.codes.project.app.presentation_layer.controller.navigation.NavigationView.setDelegateFragment;
 
-public class NavHostActivity extends BaseActivity implements BottomItemListener {
-  private static final String SAVE_FRAGMENT_STATE = "save_fragment_state";
+public class NavHostActivity extends BaseActivity
+    implements StackEventListener.BottomItemListener {
+  private static final String SAVE_FRAGMENT_STATE = "SAVE_FRAGMENT_STATE";
 
   private static final String LAST_NAV_INDEX = "KEY_INDEX";
 
@@ -64,6 +68,7 @@ public class NavHostActivity extends BaseActivity implements BottomItemListener 
 
   @Override protected void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
+    this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
     binding = DataBindingUtil.setContentView(this, R.layout.activity_nav_host);
     final BottombarLayoutBinding layoutBinding = binding.bottomBar;
     final BottomBar bottomBar = new BottomBar(layoutBinding.recyclerView, this, this);
@@ -72,7 +77,8 @@ public class NavHostActivity extends BaseActivity implements BottomItemListener 
           .getFragment(savedInstanceState, SAVE_FRAGMENT_STATE);
     }
     new AppExecutors(savedInstanceState == null ? 3000 : 0)
-        .delayCurrentThread().execute(() -> {
+        .delayUIThread().execute(() -> {
+      NavigationView.setSupportFragmentManager(getSupportFragmentManager());
       setPrimaryFragment(savedInstanceState);
       setBottomBarItems(bottomBar, savedInstanceState);
       layoutBinding.bottomParentContainer.setVisibility(View.VISIBLE);
@@ -82,10 +88,10 @@ public class NavHostActivity extends BaseActivity implements BottomItemListener 
     }
   }
 
-  private boolean isFragmentReselected(final int itemId, final Fragment fragment) {
-    if (!isInStackList(itemId, fragment)) {
+  private static boolean isFragmentReselected(final int index, final Fragment fragment) {
+    if (!isVisibleInStackList(index, fragment)) {
       throw new IllegalArgumentException(fragment.getClass().getSimpleName()
-          .concat(" is not present in ListStack index " + itemId));
+          .concat(" is not present in BottomDrawableArray.ListStack index " + index));
     }
     if (FRAGMENT_HASHCODE[0] == FRAGMENT_HASHCODE[1]) {
       return false;
@@ -119,16 +125,31 @@ public class NavHostActivity extends BaseActivity implements BottomItemListener 
     );
   }
 
+  private static void changeFragment(final Fragment fragment, final int itemId) {
+    if (isFragmentReselected(itemId, fragment)) {
+      setDelegateFragment(fragment, itemId);
+    }
+  }
+
   @Override protected void onSaveInstanceState(@NonNull Bundle outState) {
     super.onSaveInstanceState(outState);
     if (fragment != null) {
+      if (fragment instanceof StatisticsFragment) {
+        // We don't want to save the state of StatisticsFragment since it's a holder class
+        // for FragmentViewPager. It'll automatically remove in stack when we navigate to
+        // different fragments in ViewPager. When the device rotates or change its
+        // configurations it returns the current state of fragment in ViewPager, not the
+        // StatisticFragment class itself which is not listed in fragment manager stack,
+        // and this throws an IllegalStateException error.
+        return;
+      }
       getSupportFragmentManager().putFragment(outState, SAVE_FRAGMENT_STATE, fragment);
       outState.putInt(LAST_NAV_INDEX, FRAGMENT_HASHCODE[0]);
     }
   }
 
-  private static boolean isInStackList(final int itemId, @NotNull final Fragment fragment) {
-    return BottomBarDrawableArray.getOrderedFragStackList()
+  private static boolean isVisibleInStackList(final int itemId, @NotNull final Fragment fragment) {
+    return BottomBarDrawableArray.getFragStackList()
         .get(itemId)
         .getClass()
         .getSimpleName()
@@ -139,8 +160,9 @@ public class NavHostActivity extends BaseActivity implements BottomItemListener 
 
   final void setPrimaryFragment(final Bundle savedInstanceState) {
     if (savedInstanceState == null) {
-      NavHostActivity.FRAGMENT_HASHCODE[0] = STATISTICS;
-      super.setFragment(newInstance()).commit();
+      setDelegateFragment(StatisticsFragment.newInstance(),
+          FRAGMENT_HASHCODE[0] = STATISTICS
+      );
       return;
     }
     super.setFragment(fragment).commit();
@@ -152,18 +174,22 @@ public class NavHostActivity extends BaseActivity implements BottomItemListener 
       if (binding.hasPendingBindings()) {
         binding.invalidateAll();
       }
+      return;
     }
+    throw new NullPointerException(getResources()
+        .getString(R.string.layout_binding_npe)
+        .concat(binding.toString())
+    );
   }
 
   @Override
-  public void itemSelect(int itemId) {
-    FRAGMENT_HASHCODE[1] = itemId;
-    switch (itemId) {
+  public void onBottomBarItemSelected(final int itemId) {
+    switch (FRAGMENT_HASHCODE[1] = itemId) {
       case STATISTICS:
         fragment = StatisticsFragment.newInstance();
         break;
       case NEWS:
-        fragment = NewsFragment.newInstance();
+        fragment = NewsFragment.newInstance(true);
         break;
       case MAP:
         fragment = MapFragment.newInstance();
@@ -172,12 +198,12 @@ public class NavHostActivity extends BaseActivity implements BottomItemListener 
         fragment = LiveDataFragment.newInstance();
         break;
       case CAUTIONS:
-        fragment = new ReadNewsFragment();
+        fragment = HelpCenterFragment.newInstance();
+        break;
+      default:
+        throw new IllegalArgumentException();
     }
-
-    if (isFragmentReselected(itemId, fragment)) {
-      setFragment(fragment).commit();
-    }
+    changeFragment(fragment, itemId);
   }
 
   @Override
@@ -188,7 +214,6 @@ public class NavHostActivity extends BaseActivity implements BottomItemListener 
       super.onBackPressed();
       return;
     }
-
     finish();
   }
 
