@@ -11,7 +11,12 @@
   <string name="worldwide_cases">Worldwide</string>
   <string name="live_overview">Live Overview</string>
 
-
+  <string name="statistics">Statistics</string>
+  <string name="news">News</string>
+  <string name="map">Map</string>
+  <string name="help">Help</string>
+  <string name="caution">Caution</string>
+  <string name="layout_binding_npe">Layout Binding must be instantiated from\u0020</string>
   <string name="deaths_cases">Deaths</string>
   <string name="confirmed_cases">Confirmed</string>
   <string name="recovered_cases">Recovered</string>
@@ -69,7 +74,6 @@
   <string name="TOTAL">Total Infected: %1s</string>
   <string name="DEFAULT">Philippines</string>
   <string name="TWITTER_BEARER_TOKEN">AAAAAAAAAAAAAAAAAAAAAA5SDwEAAAAAnF1q</string>
-  <string name="statistics">Statistics</string>
 
   <string name="new_cases_total">\u0020new cases with the total of\u0020</string>
   <string name="no_new_cases">\u0020total confirmed cases as of today</string>
@@ -77,5 +81,15 @@
   <string name="custom_spinner_text">Philippines</string>
   <string name="change">change</string>
   <string name="select_country">Select Country</string>
+
+  <string name="check_connection">Please check your internet connection</string>
+  <string name="twitter_url">https://twitter.com/</string>
+  <string name="package_name">com.twitter.android</string>
+  <string name="twitter_app_message">No Twitter app installed in this device: </string>
+  <string name="plus_cases">+%1s</string>
+
+  <!--
+  URL
+  -->
 
 </resources>
