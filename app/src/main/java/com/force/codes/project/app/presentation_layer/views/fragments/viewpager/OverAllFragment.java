@@ -25,7 +25,7 @@ import com.force.codes.project.app.R;
 import com.force.codes.project.app.databinding.FragmentOverAllBinding;
 import com.force.codes.project.app.presentation_layer.views.adapters.OverAllAdapter;
 import com.force.codes.project.app.presentation_layer.views.factory.ViewModelProviderFactory;
-import com.force.codes.project.app.presentation_layer.views.fragments.BaseFragment;
+import com.force.codes.project.app.presentation_layer.views.base.BaseFragment;
 import com.force.codes.project.app.presentation_layer.views.viewmodels.OverAllViewModel;
 import com.github.pwittchen.reactivenetwork.library.rx2.Connectivity;
 import javax.inject.Inject;

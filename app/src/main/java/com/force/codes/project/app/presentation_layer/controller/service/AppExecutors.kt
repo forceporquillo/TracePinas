@@ -4,7 +4,7 @@
  * Copyright (c) 2020.  All rights reserved.
  * Last modified 6/29/20 8:39 PM
  */
-package com.force.codes.project.app.presentation_layer.controller.utils
+package com.force.codes.project.app.presentation_layer.controller.service
 
 import android.os.Handler
 import android.os.Looper
@@ -36,7 +36,7 @@ class AppExecutors private constructor(
     return diskIO
   }
 
-  fun delayCurrentThread(): Executor {
+  fun delayUIThread(): Executor {
     return delay
   }
 
