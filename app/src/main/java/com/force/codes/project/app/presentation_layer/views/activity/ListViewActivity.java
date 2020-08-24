@@ -10,9 +10,7 @@ package com.force.codes.project.app.presentation_layer.views.activity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import androidx.databinding.BindingAdapter;
 import androidx.databinding.DataBindingUtil;
-import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -20,17 +18,17 @@ import com.force.codes.project.app.BR;
 import com.force.codes.project.app.R;
 import com.force.codes.project.app.data_layer.model.country.CountryDetails;
 import com.force.codes.project.app.databinding.ActivityListViewBinding;
-import com.force.codes.project.app.presentation_layer.controller.interfaces.ListViewCallback;
-import com.force.codes.project.app.presentation_layer.controller.utils.ItemDecoration;
-import com.force.codes.project.app.presentation_layer.views.activity.BaseActivity;
+import com.force.codes.project.app.presentation_layer.controller.support.StackEventListener;
+import com.force.codes.project.app.presentation_layer.controller.layout.ItemDecoration;
 import com.force.codes.project.app.presentation_layer.views.adapters.ListAdapter;
+import com.force.codes.project.app.presentation_layer.views.base.BaseActivity;
 import com.force.codes.project.app.presentation_layer.views.factory.ViewModelProviderFactory;
-import com.force.codes.project.app.presentation_layer.views.fragments.viewpager.MyCountryFragment;
 import com.force.codes.project.app.presentation_layer.views.viewmodels.ListViewModel;
 import java.util.List;
 import javax.inject.Inject;
 
-public class ListViewActivity extends BaseActivity implements ListViewCallback {
+public class ListViewActivity extends BaseActivity
+    implements StackEventListener.onGetAdapterPosition {
   private ActivityListViewBinding binding;
   private ListViewModel viewModel;
   private List<CountryDetails> details;
@@ -103,14 +101,13 @@ public class ListViewActivity extends BaseActivity implements ListViewCallback {
     }
   }
 
-  @Override public void getPosition(int position) {
-    viewModel.insertSelectedCountry(details.get(position).getCountry());
-    this.finish();
-  }
-
   @Override public boolean onCreateOptionsMenu(Menu menu) {
     getMenuInflater().inflate(R.menu.menu_items, menu);
     return true;
   }
 
+  @Override public void onItemClicked(int index) {
+    viewModel.insertSelectedCountry(details.get(index).getCountry());
+    this.finish();
+  }
 }
