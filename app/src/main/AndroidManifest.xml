@@ -23,7 +23,7 @@
       tools:targetApi="n">
     <activity android:name=".presentation_layer.views.activity.ListViewActivity"/>
 
-    <activity android:name=".presentation_layer.views.activity.FragmentContainerActivity">
+    <activity android:name=".presentation_layer.views.activity.NavHostActivity">
       <intent-filter>
         <action android:name="android.intent.action.MAIN" />
 
@@ -31,7 +31,7 @@
       </intent-filter>
     </activity>
 
-    <activity android:name=".presentation_layer.views.activity.BaseActivity" />
+    <activity android:name=".presentation_layer.views.base.BaseActivity" />
     <meta-data
         android:name="com.google.android.geo.API_KEY"
         android:value="@string/maps_api_key" />
