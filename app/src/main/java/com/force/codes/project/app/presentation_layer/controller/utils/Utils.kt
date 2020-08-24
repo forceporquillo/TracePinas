@@ -103,7 +103,7 @@ object Utils {
    */
   @JvmStatic fun dpToPx(
     context: Context?,
-    fromDpWidth: Int?,
+    marginWidth: Int?,
     useComplexUnit: Boolean?
   ): Int {
     val resources = context!!.resources
@@ -111,14 +111,14 @@ object Utils {
       if (it) {
         return TypedValue.applyDimension(
             TypedValue.COMPLEX_UNIT_DIP,
-            fromDpWidth!!.toFloat(),
+            marginWidth!!.toFloat(),
             resources.displayMetrics
         )
             .toInt()
       }
       return resources
           .displayMetrics
-          .widthPixels / fromDpWidth!!
+          .widthPixels / marginWidth!!
     }
   }
 
@@ -147,16 +147,26 @@ object Utils {
         )
   }
 
+  @JvmStatic fun getDeviceWidth(
+    context: Context?
+  ): Int {
+    return context!!
+        .resources
+        .displayMetrics
+        .widthPixels
+  }
+
   @JvmStatic fun customAnim(
     context: Context?,
     pushAnim: Int,
     pullAnim: Int
   ): ActivityOptions {
-    return ActivityOptions.makeCustomAnimation(
-        context,
-        pushAnim,
-        pullAnim
-    )
+    return ActivityOptions
+        .makeCustomAnimation(
+            context,
+            pushAnim,
+            pullAnim
+        )
   }
 
   @RequiresApi(api = VERSION_CODES.N)
