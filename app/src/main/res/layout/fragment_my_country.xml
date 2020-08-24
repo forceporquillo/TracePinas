@@ -26,8 +26,15 @@
           android:id="@+id/card_spinner"
           android:layout_width="match_parent"
           android:layout_height="45dp"
-          android:onClick="@{(v) -> listCallback.onStartListActivity()}"
+          android:onClick="@{(v) -> listCallback.onStartListViewActivity()}"
           android:layout_margin="@dimen/margin_10dp">
+
+        <androidx.cardview.widget.CardView
+            android:labelFor="@id/card_spinner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+        </androidx.cardview.widget.CardView>
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -54,11 +61,10 @@
               android:layout_marginEnd="20dp"
               android:textColor="@color/white"
               android:textSize="12sp"/>
-
         </RelativeLayout>
       </androidx.cardview.widget.CardView>
 
-      <androidx.cardview.widget.CardView
+      <!-- <androidx.cardview.widget.CardView
           app:cardCornerRadius="@dimen/margin_15dp"
           android:layout_marginStart="@dimen/_10dp"
           android:layout_marginEnd="@dimen/_10dp"
@@ -244,9 +250,237 @@
           </com.google.android.material.card.MaterialCardView>
         </RelativeLayout>
       </androidx.cardview.widget.CardView>
+      -->
+
+      <androidx.cardview.widget.CardView
+          android:layout_below="@id/card_spinner"
+          app:cardCornerRadius="10dp"
+          android:id="@+id/card"
+          app:cardBackgroundColor="@color/grayScale"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_margin="10dp">
+
+        <RelativeLayout
+            android:padding="@dimen/margin_10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+          <TextView
+              style="@style/stats_update"
+              android:layout_margin="@dimen/margin_10dp"
+              android:id="@+id/text"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:text="Last Updated: "/>
+
+          <View
+              android:background="@color/white"
+              android:layout_below="@id/text"
+              android:layout_width="match_parent"
+              android:layout_height="0.5dp"/>
+
+          <TextView
+              android:layout_marginTop="@dimen/margin_10dp"
+              android:id="@+id/text_title"
+              android:layout_below="@id/text"
+              android:layout_width="wrap_content"
+              android:layout_marginStart="@dimen/margin_10dp"
+              android:layout_marginEnd="@dimen/margin_10dp"
+              android:textSize="20sp"
+              android:textColor="@color/white"
+              android:fontFamily="@font/poppin_medium"
+              android:layout_height="wrap_content"
+              android:text="Total Confirmed Cases"/>
+
+          <TextView
+              android:includeFontPadding="true"
+              android:id="@+id/cases_number"
+              style="@style/stats_big_text"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:text="189, 601"
+              android:layout_below="@id/text_title"
+              android:layout_alignParentEnd="true"
+              android:layout_marginEnd="10dp"/>
+
+          <TextView
+              android:layout_marginTop="-20dp"
+              style="@style/new_cases_increment"
+              android:layout_below="@id/cases_number"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:textStyle="italic"
+              android:text="New Cases: +2,353"
+              android:layout_alignParentEnd="true"/>
+
+        </RelativeLayout>
+
+      </androidx.cardview.widget.CardView>
+
+      <RelativeLayout
+          android:layout_below="@id/card"
+          android:id="@+id/grid_container"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content">
+
+        <GridLayout
+            android:layout_marginStart="@dimen/margin_10dp"
+            android:layout_marginEnd="@dimen/margin_10dp"
+            android:id="@+id/grid"
+            android:layout_centerHorizontal="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:rowCount="2"
+            android:columnCount="2">
+
+          <androidx.cardview.widget.CardView
+              android:id="@+id/test_card"
+              android:layout_gravity="start"
+              app:cardCornerRadius="@dimen/_10dp"
+              app:cardBackgroundColor="@color/grayScale"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content">
+
+            <RelativeLayout
+                android:padding="@dimen/_10dp"
+                android:id="@+id/container_deaths"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+              <TextView
+                  android:layout_alignParentStart="true"
+                  android:id="@+id/text_deaths"
+                  style="@style/grid_text_titles"
+                  android:padding="5dp"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:text="Total Recovered"/>
+
+              <TextView
+                  android:layout_alignParentEnd="true"
+                  android:layout_marginTop="@dimen/margin_10dp"
+                  android:layout_marginStart="20dp"
+                  android:layout_below="@id/text_deaths"
+                  style="@style/grid_stats_text"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:text="5,542,223"/>
+
+            </RelativeLayout>
+          </androidx.cardview.widget.CardView>
+
+          <androidx.cardview.widget.CardView
+              android:layout_gravity="clip_horizontal|end"
+              app:cardCornerRadius="@dimen/_10dp"
+              app:cardBackgroundColor="@color/grayScale"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content">
+
+            <RelativeLayout
+                android:id="@+id/container_infected"
+                android:padding="@dimen/margin_10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+              <TextView
+                  android:padding="5dp"
+                  android:id="@+id/text_infected"
+                  style="@style/grid_text_titles"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:text="Total Recovered"/>
+
+              <TextView
+                  android:layout_alignParentEnd="true"
+                  android:gravity="end"
+                  android:layout_marginTop="@dimen/margin_10dp"
+                  android:layout_marginStart="20dp"
+                  android:layout_below="@id/text_infected"
+                  style="@style/grid_stats_text"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:text="5,542,223"/>
+
+            </RelativeLayout>
+          </androidx.cardview.widget.CardView>
+
+          <androidx.cardview.widget.CardView
+              android:layout_marginTop="@dimen/_10dp"
+              android:layout_gravity="clip_horizontal|end"
+              app:cardCornerRadius="@dimen/_10dp"
+              app:cardBackgroundColor="@color/grayScale"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content">
+
+            <RelativeLayout
+                android:id="@+id/container_recovered"
+                android:padding="@dimen/margin_10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+              <TextView
+                  android:padding="5dp"
+                  android:id="@+id/text_recovered"
+                  style="@style/grid_text_titles"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:text="Total Recovered"/>
+
+              <TextView
+                  android:layout_alignParentEnd="true"
+                  android:gravity="end"
+                  android:layout_marginTop="@dimen/margin_10dp"
+                  android:layout_marginStart="20dp"
+                  android:layout_below="@id/text_recovered"
+                  style="@style/grid_stats_text"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:text="5,542,223"/>
+
+            </RelativeLayout>
+          </androidx.cardview.widget.CardView>
+
+          <androidx.cardview.widget.CardView
+              android:layout_marginTop="@dimen/_10dp"
+              android:layout_gravity="clip_horizontal|end"
+              app:cardCornerRadius="@dimen/_10dp"
+              app:cardBackgroundColor="@color/grayScale"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content">
+
+            <RelativeLayout
+                android:id="@+id/container_tested"
+                android:padding="@dimen/margin_10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+              <TextView
+                  android:padding="5dp"
+                  android:id="@+id/text_tested"
+                  style="@style/grid_text_titles"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:text="Total Recovered"/>
+
+              <TextView
+                  android:layout_alignParentEnd="true"
+                  android:gravity="end"
+                  android:layout_marginTop="@dimen/margin_10dp"
+                  android:layout_marginStart="20dp"
+                  android:layout_below="@id/text_tested"
+                  style="@style/grid_stats_text"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:text="5,542,223"/>
+
+            </RelativeLayout>
+          </androidx.cardview.widget.CardView>
+        </GridLayout>
+      </RelativeLayout>
 
       <androidx.recyclerview.widget.RecyclerView
-          android:layout_below="@id/card_container"
+          android:layout_below="@id/grid_container"
           android:layout_width="match_parent"
           android:layout_height="match_parent"
           android:layout_marginEnd="@dimen/margin_10dp"
