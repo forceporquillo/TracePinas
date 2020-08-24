@@ -7,7 +7,6 @@
 
 package com.force.codes.project.app.presentation_layer.views.fragments.viewpager;
 
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -41,19 +40,12 @@ import timber.log.Timber;
  * Use the {@link MyCountryFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class MyCountryFragment extends BaseFragment implements
-    StackEventListener.ListActivityListener {
-
+public class MyCountryFragment extends BaseFragment
+    implements StackEventListener.ListActivityListener {
   private static final String ARGS_KEY = "country";
-
   private static final String DEFAULT_ENDPOINT = "Philippines";
-
-  private static final int MARGIN_WIDTH = 10;
-
   private FragmentMyCountryBinding binding;
-
   private MyCountryViewModel viewModel;
-
   private String getArgsKey = null;
 
   public MyCountryFragment() {
@@ -116,17 +108,18 @@ public class MyCountryFragment extends BaseFragment implements
     params.resolveLayoutDirection(0);
     for (int i = 0; i < boxLayout(binding).length; ++i) {
       params = boxLayout(binding)[i].getLayoutParams();
-      if (i % 2 == 0) {
-        params.width = getBoxWidth(deviceWidth, MARGIN_WIDTH * 2);
+      if (i % 2 != 0) {
+        params.width = getBoxWidth(deviceWidth, 10);
       } else {
-        params.width = getBoxWidth(deviceWidth, MARGIN_WIDTH);
+        params.width = getBoxWidth(deviceWidth, 20);
       }
       boxLayout(binding)[i].setLayoutParams(params);
     }
   }
 
   final int getBoxWidth(final int deviceWidth, final int width) {
-    return (deviceWidth / 2) - Utils.dpToPx(getContext(), width, true);
+    return (deviceWidth / 2) - Utils.dpToPx(getContext(),
+        width, true);
   }
 
   @Override public void onStartListViewActivity() {
