@@ -3,7 +3,7 @@ package com.force.codes.project.app.presentation_layer.controller.support;
 public interface StackEventListener {
 
   interface ListActivityListener {
-    void onStartListActivity();
+    void onStartListViewActivity();
   }
 
   interface BottomItemListener{

@@ -8,7 +8,6 @@
 package com.force.codes.project.app;
 
 import android.app.Application;
-import com.force.codes.project.app.app.constants.ApiConstants;
 import com.force.codes.project.app.app.debug.DebugTreeApp;
 import com.force.codes.project.app.app.debug.DetectLeak;
 import com.force.codes.project.app.app.di.AppComponent;
