@@ -3,7 +3,7 @@
 ## COVID19 Tracker App 📱
 This COVID19 Tracker app is a mobile version of a virus tracker inspired by various tracking web apps out there. This app has a bunch of features such as data breakdown visualization of each country using charts and graphs from day 1 up to present. Maps to provide seamless hover to different affected countries, news, and tweets from local media providers to give updates anywhere in the world.
 
-![https://github.com/forceporquillo/android-henlo-fren/blob/2f01d81cd4e0f8e682db75f24a6ba48e56f15285/preview_screenshot.jpg](https://github.com/forceporquillo/android-henlo-fren/blob/2f01d81cd4e0f8e682db75f24a6ba48e56f15285/preview_screenshot.jpg)
+![https://github.com/forceporquillo/TracePinas/blob/master/screenshots/preview_screenshot.jpg](https://github.com/forceporquillo/TracePinas/blob/master/screenshots/preview_screenshot.jpg)
 
 
 ## Summary 📋
@@ -104,6 +104,7 @@ resValue "string", "maps_api_key", (secureProps.getProperty("MAPS_API_KEY") ?: "
 - **Katerinahronik** - [https://apify.com/katerinahronik/covid-philippines](https://apify.com/katerinahronik/covid-philippines) from 
 - **DOH** [https://ncovtracker.doh.gov.ph/](https://ncovtracker.doh.gov.ph/)
 - **Sorxrob Github** - https://github.com/sorxrob/coronavirus-ph-api (*DEPRECATED*)
+- **Simperfy** - [https://github.com/Simperfy/Covid-19-API-Philippines-DOH](https://github.com/Simperfy/Covid-19-API-Philippines-DOH)
 
 ## Contributing 🧑🏻‍🔧📲
 I love contributions! There is a lot to do in this app so why not chat or email me about what you're interested in doing? Or you can directly submit a [pull request](https://github.com/forceporquillo/android-covid19-tracker/pulls) and I'd to love merged it.
@@ -115,14 +116,14 @@ If you find some issues about this app you can submit a [issue](https://github.c
 ***Force Porquillo***
 FEU Institute of Technology <br/>
 [
-![https://github.com/forceporquillo/android-covid19-tracker/blob/master/gmail_icon.png|width=5px](https://github.com/forceporquillo/android-covid19-tracker/blob/master/gmail_icon.png)](fporquillo18@gmail.com)[
-![https://github.com/forceporquillo/android-covid19-tracker/blob/master/github_icon.png|width=5px](https://github.com/forceporquillo/android-covid19-tracker/blob/master/github_icon.png)](https://github.com/forceporquillo)[
-![https://github.com/forceporquillo/android-covid19-tracker/blob/master/twitter_icon.png|width=5px](https://github.com/forceporquillo/android-covid19-tracker/blob/master/twitter_icon.png)](https://www.twitter.com/tito_4s)
+![https://github.com/forceporquillo/android-covid19-tracker/blob/master/screenshots/gmail_icon.png|width=5px](https://github.com/forceporquillo/android-covid19-tracker/blob/master/screenshots/gmail_icon.png)](fporquillo18@gmail.com)[
+![https://github.com/forceporquillo/android-covid19-tracker/blob/master/screenshots/github_icon.png|width=5px](https://github.com/forceporquillo/android-covid19-tracker/blob/master/screenshots/github_icon.png)](https://github.com/forceporquillo)[
+![https://github.com/forceporquillo/android-covid19-tracker/blob/master/screenshots/twitter_icon.png|width=5px](https://github.com/forceporquillo/android-covid19-tracker/blob/master/screenshots/twitter_icon.png)](https://www.twitter.com/tito_4s)
 
 ## Find this project useful ?  ❤️🔥💯
 -   Support it by clicking the  ⭐ or ☕🙏
 
-[![Foo](https://camo.githubusercontent.com/4ba50f927b0ea667976efa9f43ae166caa2c4cf7/68747470733a2f2f63646e2e6275796d6561636f666665652e636f6d2f627574746f6e732f6c61746f2d6f72616e67652e706e67)](https://www.buymeacoffee.com/forcecodes)
+[![Coffee](https://github.com/forceporquillo/TracePinas/blob/master/screenshots/buy_me_coffee.png)](https://www.buymeacoffee.com/forcecodes)
 ## License
 
 Copyright 2020 Force Porquillo
