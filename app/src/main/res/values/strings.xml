@@ -33,6 +33,8 @@
   <string name="last_updated">Last updated:</string>
   <string name="updates">Feed</string>
 
+  <string name="last_update_my">Last update %s</string>
+
   <!-- LIVE DATA FRAGMENT STRINGS -->
   <string name="report_covid">Report your COVID-19 health status.</string>
   <string name="total_cases">Total Cases</string>
@@ -87,6 +89,7 @@
   <string name="package_name">com.twitter.android</string>
   <string name="twitter_app_message">No Twitter app installed in this device: </string>
   <string name="plus_cases">+%1s</string>
+  <string name="NOT_CONNECTED">Failed to set network request. Please try again when connection improves.</string>
 
   <!--
   URL

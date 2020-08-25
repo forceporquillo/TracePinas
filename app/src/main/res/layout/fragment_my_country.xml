@@ -17,524 +17,579 @@
     <ScrollView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-      <androidx.cardview.widget.CardView
-          android:clickable="true"
-          android:focusable="true"
-          android:foreground="?attr/selectableItemBackground"
-          app:cardBackgroundColor="@color/grayScale"
-          app:cardCornerRadius="10dp"
-          android:id="@+id/card_spinner"
-          android:layout_width="match_parent"
-          android:layout_height="45dp"
-          android:onClick="@{(v) -> listCallback.onStartListViewActivity()}"
-          android:layout_margin="@dimen/margin_10dp">
-
         <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-          <TextView
-              android:id="@+id/spinner_title"
-              android:layout_centerVertical="true"
-              android:layout_marginStart="20dp"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:text="@{countryViewModel.stringLiveData}"
-              android:fontFamily="@font/poppin_regular"
-              android:textColor="@color/white"
-              android:textSize="16sp"/>
-
-          <TextView
-              android:layout_centerVertical="true"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:text="@string/change"
-              android:fontFamily="@font/poppin_regular"
-              android:layout_alignParentEnd="true"
-              android:layout_marginEnd="20dp"
-              android:textColor="@color/white"
-              android:textSize="12sp"/>
-        </RelativeLayout>
-      </androidx.cardview.widget.CardView>
-
-      <!-- <androidx.cardview.widget.CardView
-          app:cardCornerRadius="@dimen/margin_15dp"
-          android:layout_marginStart="@dimen/_10dp"
-          android:layout_marginEnd="@dimen/_10dp"
-          android:layout_marginBottom="@dimen/_10dp"
-          android:layout_below="@id/card_spinner"
-          android:id="@+id/card_container"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content">
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-          <TextView
-              android:textSize="20sp"
-              android:id="@+id/covid_cases"
-              android:layout_marginTop="10dp"
-              android:textColor="#000000"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:layout_centerHorizontal="true"
-              android:text="COVID-19 Cases"/>
-
-          <TextView
-              android:id="@+id/last_updated"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:layout_below="@id/covid_cases"
-              android:layout_centerHorizontal="true"
-              android:textColor="#000000"
-              android:textSize="12sp"
-              android:text="@{Utils.getLongDate(countryViewModel.liveData.updated)}"/>
-
-          <com.razerdp.widget.animatedpieview.AnimatedPieView
-              android:layout_marginStart="30dp"
-              android:layout_below="@id/last_updated"
-              android:layout_marginTop="@dimen/margin_15dp"
-              android:layout_marginBottom="@dimen/margin_10dp"
-              android:layout_marginEnd="@dimen/_20dp"
-              android:id="@+id/circle_pie"
-              android:layout_width="170dp"
-              android:layout_height="170dp"/>
-
-            <include
-                android:layout_marginTop="25dp"
-                android:layout_below="@id/last_updated"
-                android:layout_alignParentEnd="true"
-                android:layout_marginEnd="@dimen/_20dp"
-                android:layout_height="wrap_content"
-                android:layout_width="wrap_content"
-                layout="@layout/custom_card_cases"/>
-
-          <com.google.android.material.card.MaterialCardView
-              android:layout_marginEnd="2.5dp"
-              app:strokeWidth="1dp"
-              app:strokeColor="#AAAAAA"
-              app:cardElevation="0dp"
-              android:layout_marginTop="@dimen/_10dp"
-              android:id="@+id/confirmed_card_container"
-              android:layout_width="wrap_content"
-              app:cardCornerRadius="5dp"
-              android:layout_height="wrap_content"
-              android:layout_marginStart="@dimen/width_25dp"
-              android:layout_below="@id/circle_pie">
-
-            <RelativeLayout
-                android:padding="10dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-              <View
-                  android:id="@+id/view"
-                  android:layout_width="20dp"
-                  android:layout_height="@dimen/_20dp"
-                  android:background="@color/blue"/>
-
-              <TextView
-                  android:layout_marginStart="@dimen/_10dp"
-                  android:layout_toEndOf="@id/view"
-                  android:layout_width="wrap_content"
-                  android:layout_height="wrap_content"
-                  android:text="Confirmed"
-                  android:fontFamily="@font/poppin_medium"
-                  android:textSize="12sp"/>
-
-              <LinearLayout
-                  android:layout_marginTop="@dimen/margin_5dp"
-                  android:layout_below="@id/view"
-                  android:layout_width="wrap_content"
-                  android:layout_height="wrap_content"
-                  android:orientation="horizontal">
-
-                <TextView
-                    android:gravity="center"
-                    android:id="@id/cases"
-                    android:textSize="22sp"
-                    android:textColor="#000000"
-                    android:fontFamily="@font/poppin_medium"
-                    android:layout_gravity="center"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@{Utils.formatNumber(String.valueOf(countryViewModel.liveData.cases))}"
-                    />
-
-                <TextView
-                    android:textColor="#000000"
-                    android:layout_marginStart="@dimen/margin_5dp"
-                    android:layout_gravity="center"
-                    android:textSize="12sp"
-                    android:layout_width="wrap_content"
-                    android:text="@{String.format(@string/new_cases(Utils.formatNumber(String.valueOf(countryViewModel.liveData.todayCases))))}"
-                    android:layout_height="wrap_content">
-
-                </TextView>
-              </LinearLayout>
-            </RelativeLayout>
-          </com.google.android.material.card.MaterialCardView>
-
-          <com.google.android.material.card.MaterialCardView
-              android:layout_marginStart="2.5dp"
-              app:strokeWidth="1dp"
-              app:strokeColor="#AAAAAA"
-              app:cardElevation="0dp"
-              android:layout_marginTop="@dimen/_10dp"
-              android:id="@+id/deaths_card_container"
-              app:cardCornerRadius="5dp"
-              android:layout_alignParentEnd="true"
-              android:layout_width="150dp"
-              android:layout_height="80dp"
-              android:layout_marginEnd="@dimen/width_25dp"
-              android:layout_below="@id/circle_pie">
-
-            <TextView
-                android:layout_gravity="center"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@{Utils.formatNumber(String.valueOf(countryViewModel.liveData.deaths))}"/>
-
-          </com.google.android.material.card.MaterialCardView>
-
-          <com.google.android.material.card.MaterialCardView
-              android:layout_marginEnd="2.5dp"
-              app:strokeWidth="1dp"
-              app:strokeColor="#AAAAAA"
-              app:cardElevation="0dp"
-              android:id="@+id/recovered_card_container"
-              android:layout_width="150dp"
-              app:cardCornerRadius="5dp"
-              android:layout_height="80dp"
-              android:layout_marginTop="@dimen/_10dp"
-              android:layout_marginStart="@dimen/width_25dp"
-              android:layout_marginBottom="@dimen/width_25dp"
-              android:layout_below="@id/confirmed_card_container">
-
-            <TextView
-                android:layout_gravity="center"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@{Utils.formatNumber(String.valueOf(countryViewModel.liveData.recovered))}"/>
-          </com.google.android.material.card.MaterialCardView>
-
-          <com.google.android.material.card.MaterialCardView
-              android:layout_marginStart="2.5dp"
-              app:strokeWidth="1dp"
-              app:strokeColor="#AAAAAA"
-              app:cardElevation="0dp"
-              android:id="@+id/active_card_container"
-              app:cardCornerRadius="5dp"
-              android:layout_alignParentEnd="true"
-              android:layout_width="150dp"
-              android:layout_height="80dp"
-              android:layout_marginTop="@dimen/_10dp"
-              android:layout_marginEnd="@dimen/width_25dp"
-              android:layout_marginBottom="@dimen/width_25dp"
-              android:layout_below="@id/deaths_card_container">
-
-            <TextView
-                android:layout_gravity="center"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@{Utils.formatNumber(String.valueOf(countryViewModel.liveData.active))}"/>
-
-          </com.google.android.material.card.MaterialCardView>
-        </RelativeLayout>
-      </androidx.cardview.widget.CardView>
-      -->
-
-      <androidx.cardview.widget.CardView
-          android:layout_below="@id/card_spinner"
-          app:cardCornerRadius="10dp"
-          android:id="@+id/card"
-          app:cardBackgroundColor="@color/grayScale"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:layout_margin="10dp">
-
-        <RelativeLayout
-            android:padding="@dimen/margin_10dp"
+            android:id="@+id/parent_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-          <TextView
-              style="@style/stats_update"
-              android:layout_margin="@dimen/margin_10dp"
-              android:id="@+id/text"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:text="Last Updated: "/>
-
-          <View
-              android:background="@color/white"
-              android:layout_below="@id/text"
+          <androidx.cardview.widget.CardView
+              android:clickable="true"
+              android:focusable="true"
+              android:foreground="?attr/selectableItemBackground"
+              app:cardBackgroundColor="@color/grayScale"
+              app:cardCornerRadius="10dp"
+              android:id="@+id/card_spinner"
               android:layout_width="match_parent"
-              android:layout_height="0.5dp"/>
+              android:layout_height="45dp"
+              android:onClick="@{(v) -> listCallback.onStartListViewActivity()}"
+              android:layout_margin="@dimen/margin_10dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+              <TextView
+                  android:id="@+id/spinner_title"
+                  android:layout_centerVertical="true"
+                  android:layout_marginStart="20dp"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:text="@{countryViewModel.stringLiveData}"
+                  android:fontFamily="@font/poppin_regular"
+                  android:textColor="@color/white"
+                  android:textSize="16sp"/>
+
+              <TextView
+                  android:layout_centerVertical="true"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:text="@string/change"
+                  android:fontFamily="@font/poppin_regular"
+                  android:layout_alignParentEnd="true"
+                  android:layout_marginEnd="20dp"
+                  android:textColor="@color/white"
+                  android:textSize="12sp"/>
+            </RelativeLayout>
+          </androidx.cardview.widget.CardView>
+
+          <!-- <androidx.cardview.widget.CardView
+              app:cardCornerRadius="@dimen/margin_15dp"
+              android:layout_marginStart="@dimen/_10dp"
+              android:layout_marginEnd="@dimen/_10dp"
+              android:layout_marginBottom="@dimen/_10dp"
+              android:layout_below="@id/card_spinner"
+              android:id="@+id/card_container"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+              <TextView
+                  android:textSize="20sp"
+                  android:id="@+id/covid_cases"
+                  android:layout_marginTop="10dp"
+                  android:textColor="#000000"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:layout_centerHorizontal="true"
+                  android:text="COVID-19 Cases"/>
+
+              <TextView
+                  android:id="@+id/last_updated"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:layout_below="@id/covid_cases"
+                  android:layout_centerHorizontal="true"
+                  android:textColor="#000000"
+                  android:textSize="12sp"
+                  android:text="@{Utils.getLongDate(countryViewModel.liveData.updated)}"/>
+
+              <com.razerdp.widget.animatedpieview.AnimatedPieView
+                  android:layout_marginStart="30dp"
+                  android:layout_below="@id/last_updated"
+                  android:layout_marginTop="@dimen/margin_15dp"
+                  android:layout_marginBottom="@dimen/margin_10dp"
+                  android:layout_marginEnd="@dimen/_20dp"
+                  android:id="@+id/circle_pie"
+                  android:layout_width="170dp"
+                  android:layout_height="170dp"/>
+
+                <include
+                    android:layout_marginTop="25dp"
+                    android:layout_below="@id/last_updated"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginEnd="@dimen/_20dp"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    layout="@layout/custom_card_cases"/>
+
+              <com.google.android.material.card.MaterialCardView
+                  android:layout_marginEnd="2.5dp"
+                  app:strokeWidth="1dp"
+                  app:strokeColor="#AAAAAA"
+                  app:cardElevation="0dp"
+                  android:layout_marginTop="@dimen/_10dp"
+                  android:id="@+id/confirmed_card_container"
+                  android:layout_width="wrap_content"
+                  app:cardCornerRadius="5dp"
+                  android:layout_height="wrap_content"
+                  android:layout_marginStart="@dimen/width_25dp"
+                  android:layout_below="@id/circle_pie">
+
+                <RelativeLayout
+                    android:padding="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                  <View
+                      android:id="@+id/view"
+                      android:layout_width="20dp"
+                      android:layout_height="@dimen/_20dp"
+                      android:background="@color/blue"/>
+
+                  <TextView
+                      android:layout_marginStart="@dimen/_10dp"
+                      android:layout_toEndOf="@id/view"
+                      android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:text="Confirmed"
+                      android:fontFamily="@font/poppin_medium"
+                      android:textSize="12sp"/>
+
+                  <LinearLayout
+                      android:layout_marginTop="@dimen/margin_5dp"
+                      android:layout_below="@id/view"
+                      android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:orientation="horizontal">
+
+                    <TextView
+                        android:gravity="center"
+                        android:id="@id/cases"
+                        android:textSize="22sp"
+                        android:textColor="#000000"
+                        android:fontFamily="@font/poppin_medium"
+                        android:layout_gravity="center"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@{Utils.formatNumber(String.valueOf(countryViewModel.liveData.cases))}"
+                        />
+
+                    <TextView
+                        android:textColor="#000000"
+                        android:layout_marginStart="@dimen/margin_5dp"
+                        android:layout_gravity="center"
+                        android:textSize="12sp"
+                        android:layout_width="wrap_content"
+                        android:text="@{String.format(@string/new_cases(Utils.formatNumber(String.valueOf(countryViewModel.liveData.todayCases))))}"
+                        android:layout_height="wrap_content">
+
+                    </TextView>
+                  </LinearLayout>
+                </RelativeLayout>
+              </com.google.android.material.card.MaterialCardView>
+
+              <com.google.android.material.card.MaterialCardView
+                  android:layout_marginStart="2.5dp"
+                  app:strokeWidth="1dp"
+                  app:strokeColor="#AAAAAA"
+                  app:cardElevation="0dp"
+                  android:layout_marginTop="@dimen/_10dp"
+                  android:id="@+id/deaths_card_container"
+                  app:cardCornerRadius="5dp"
+                  android:layout_alignParentEnd="true"
+                  android:layout_width="150dp"
+                  android:layout_height="80dp"
+                  android:layout_marginEnd="@dimen/width_25dp"
+                  android:layout_below="@id/circle_pie">
+
+                <TextView
+                    android:layout_gravity="center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{Utils.formatNumber(String.valueOf(countryViewModel.liveData.deaths))}"/>
+
+              </com.google.android.material.card.MaterialCardView>
+
+              <com.google.android.material.card.MaterialCardView
+                  android:layout_marginEnd="2.5dp"
+                  app:strokeWidth="1dp"
+                  app:strokeColor="#AAAAAA"
+                  app:cardElevation="0dp"
+                  android:id="@+id/recovered_card_container"
+                  android:layout_width="150dp"
+                  app:cardCornerRadius="5dp"
+                  android:layout_height="80dp"
+                  android:layout_marginTop="@dimen/_10dp"
+                  android:layout_marginStart="@dimen/width_25dp"
+                  android:layout_marginBottom="@dimen/width_25dp"
+                  android:layout_below="@id/confirmed_card_container">
+
+                <TextView
+                    android:layout_gravity="center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{Utils.formatNumber(String.valueOf(countryViewModel.liveData.recovered))}"/>
+              </com.google.android.material.card.MaterialCardView>
+
+              <com.google.android.material.card.MaterialCardView
+                  android:layout_marginStart="2.5dp"
+                  app:strokeWidth="1dp"
+                  app:strokeColor="#AAAAAA"
+                  app:cardElevation="0dp"
+                  android:id="@+id/active_card_container"
+                  app:cardCornerRadius="5dp"
+                  android:layout_alignParentEnd="true"
+                  android:layout_width="150dp"
+                  android:layout_height="80dp"
+                  android:layout_marginTop="@dimen/_10dp"
+                  android:layout_marginEnd="@dimen/width_25dp"
+                  android:layout_marginBottom="@dimen/width_25dp"
+                  android:layout_below="@id/deaths_card_container">
+
+                <TextView
+                    android:layout_gravity="center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{Utils.formatNumber(String.valueOf(countryViewModel.liveData.active))}"/>
+
+              </com.google.android.material.card.MaterialCardView>
+            </RelativeLayout>
+          </androidx.cardview.widget.CardView>
+          -->
+
+          <androidx.cardview.widget.CardView
+              android:layout_below="@id/card_spinner"
+              app:cardCornerRadius="10dp"
+              android:id="@+id/card"
+              app:cardBackgroundColor="@color/grayScale"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_margin="10dp">
+
+            <RelativeLayout
+                android:padding="@dimen/margin_10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+              <TextView
+                  style="@style/stats_update"
+                  android:layout_margin="@dimen/margin_10dp"
+                  android:id="@+id/text"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:text="Filter by region:" />
+
+              <View
+                  android:background="@color/white"
+                  android:layout_below="@id/text"
+                  android:layout_width="match_parent"
+                  android:layout_height="0.5dp"/>
+
+              <TextView
+                  android:layout_marginTop="@dimen/margin_10dp"
+                  android:id="@+id/text_title"
+                  android:layout_below="@id/text"
+                  android:layout_width="wrap_content"
+                  android:layout_marginStart="@dimen/margin_10dp"
+                  android:layout_marginEnd="@dimen/margin_10dp"
+                  android:textSize="20sp"
+                  android:textColor="@color/white"
+                  android:fontFamily="@font/poppin_medium"
+                  android:layout_height="wrap_content"
+                  android:text="Nationwide Confirmed Cases"/>
+
+              <com.github.mikephil.charting.charts.LineChart
+                  android:id="@+id/line_chart"
+                  android:layout_width="50dp"
+                  android:layout_height="wrap_content"
+                  android:layout_alignParentBottom="true"
+                  android:layout_alignParentStart="true"
+                  android:layout_below="@id/text_title"
+                  android:layout_marginEnd="@dimen/_20dp"
+                  android:layout_alignBottom="@id/new_cases"
+                  android:layout_toStartOf="@id/cases_number"
+                  />
+
+              <TextView
+                  android:includeFontPadding="true"
+                  android:id="@+id/cases_number"
+                  style="@style/stats_big_text"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:text="@{Utils.formatNumber(String.valueOf(countryViewModel.liveData.cases))}"
+                  android:layout_below="@id/text_title"
+                  android:layout_alignParentEnd="true"
+                  android:layout_marginEnd="10dp"/>
+
+              <TextView
+                  android:layout_marginEnd="@dimen/margin_5dp"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:layout_below="@id/cases_number"
+                  android:layout_marginTop="-20dp"
+                  android:layout_toStartOf="@id/new_cases"
+                  android:text="New Cases:"
+                  style="@style/new_cases_increment"/>
+
+              <TextView
+                  android:layout_marginEnd="@dimen/margin_10dp"
+                  android:id="@+id/new_cases"
+                  android:layout_alignParentEnd="true"
+                  android:layout_marginTop="-20dp"
+                  style="@style/new_cases_increment_num"
+                  android:layout_below="@id/cases_number"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:text="@{String.format(@string/plus_cases, Utils.formatNumber(String.valueOf(countryViewModel.liveData.todayCases)))}"/>
+
+            </RelativeLayout>
+
+          </androidx.cardview.widget.CardView>
+
+          <RelativeLayout
+              android:layout_below="@id/card"
+              android:id="@+id/grid_container"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content">
+
+            <GridLayout
+                android:layout_marginStart="@dimen/margin_10dp"
+                android:layout_marginEnd="@dimen/margin_10dp"
+                android:id="@+id/grid"
+                android:layout_centerHorizontal="true"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:rowCount="2"
+                android:columnCount="2">
+
+              <androidx.cardview.widget.CardView
+                  android:id="@+id/test_card"
+                  android:layout_gravity="start"
+                  app:cardCornerRadius="@dimen/_10dp"
+                  app:cardBackgroundColor="@color/grayScale"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content">
+
+                <RelativeLayout
+                    android:padding="@dimen/_10dp"
+                    android:id="@+id/container_deaths"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                  <TextView
+                      android:layout_alignParentStart="true"
+                      android:id="@+id/text_deaths"
+                      style="@style/grid_text_titles"
+                      android:padding="5dp"
+                      android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:text="Deceased"/>
+
+                  <TextView
+                      android:id="@+id/decease_number"
+                      android:layout_alignParentEnd="true"
+                      android:layout_marginTop="@dimen/margin_10dp"
+                      android:layout_marginStart="5dp"
+                      android:layout_below="@id/text_deaths"
+                      style="@style/grid_stats_text"
+                      android:textColor="@color/red"
+                      android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:text="@{Utils.formatNumber(String.valueOf(countryViewModel.liveData.deaths))}"/>
+
+                  <TextView
+                      android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      style="@style/grid_stats_small"
+                      android:text="@{String.format(@string/plus_cases, Utils.formatNumber(String.valueOf(countryViewModel.liveData.todayDeaths)))}"
+                      android:textColor="@color/red"
+                      android:layout_marginTop="-5dp"
+                      android:layout_below="@id/decease_number"
+                      android:layout_alignParentEnd="true"/>
+
+                </RelativeLayout>
+              </androidx.cardview.widget.CardView>
+
+              <androidx.cardview.widget.CardView
+                  android:layout_gravity="clip_horizontal|end"
+                  app:cardCornerRadius="@dimen/_10dp"
+                  app:cardBackgroundColor="@color/grayScale"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content">
+
+                <RelativeLayout
+                    android:id="@+id/container_infected"
+                    android:padding="@dimen/margin_10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                  <TextView
+                      android:padding="5dp"
+                      android:id="@+id/text_infected"
+                      style="@style/grid_text_titles"
+                      android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:text="Recovered"/>
+
+                  <TextView
+                      android:id="@+id/recovered_number"
+                      android:layout_alignParentEnd="true"
+                      android:gravity="end"
+                      android:layout_marginTop="@dimen/margin_10dp"
+                      android:layout_marginStart="5dp"
+                      android:layout_below="@id/text_infected"
+                      style="@style/grid_stats_text"
+                      android:textColor="@color/green"
+                      android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:text="@{Utils.formatNumber(String.valueOf(countryViewModel.liveData.recovered))}"/>
+
+                  <TextView
+                      android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      style="@style/grid_stats_small"
+                      android:text="@{String.format(@string/plus_cases, Utils.formatNumber(String.valueOf(countryViewModel.liveData.todayRecovered)))}"
+                      android:textColor="@color/green"
+                      android:layout_marginTop="-5dp"
+                      android:layout_below="@id/recovered_number"
+                      android:layout_alignParentEnd="true"/>
+
+                </RelativeLayout>
+              </androidx.cardview.widget.CardView>
+
+              <androidx.cardview.widget.CardView
+                  android:layout_marginBottom="@dimen/margin_5dp"
+                  android:layout_marginTop="@dimen/_10dp"
+                  android:layout_gravity="clip_horizontal|end"
+                  app:cardCornerRadius="@dimen/_10dp"
+                  app:cardBackgroundColor="@color/grayScale"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content">
+
+                <RelativeLayout
+                    android:id="@+id/container_recovered"
+                    android:padding="@dimen/margin_10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                  <TextView
+                      android:layout_alignParentStart="true"
+                      android:maxLines="2"
+                      android:padding="5dp"
+                      android:id="@+id/text_recovered"
+                      style="@style/grid_text_titles"
+                      android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:text="Tested Person"/>
+
+                  <TextView
+                      android:layout_alignParentEnd="true"
+                      android:gravity="end"
+                      android:layout_marginTop="@dimen/margin_10dp"
+                      android:layout_marginStart="5dp"
+                      android:layout_below="@id/text_recovered"
+                      style="@style/grid_stats_text"
+                      android:textColor="@color/test_color"
+                      android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:text="@{Utils.formatNumber(String.valueOf(countryViewModel.liveData.test))}"/>
+
+                </RelativeLayout>
+              </androidx.cardview.widget.CardView>
+
+              <androidx.cardview.widget.CardView
+                  android:layout_marginBottom="@dimen/margin_5dp"
+                  android:layout_marginTop="@dimen/_10dp"
+                  android:layout_gravity="clip_horizontal|end"
+                  app:cardCornerRadius="@dimen/_10dp"
+                  app:cardBackgroundColor="@color/grayScale"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content">
+
+                <RelativeLayout
+                    android:id="@+id/container_tested"
+                    android:padding="@dimen/margin_10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                  <TextView
+                      android:padding="5dp"
+                      android:id="@+id/text_tested"
+                      style="@style/grid_text_titles"
+                      android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:text="Currently Infected"/>
+
+                  <TextView
+                      android:layout_alignParentEnd="true"
+                      android:gravity="end"
+                      android:layout_marginTop="@dimen/margin_10dp"
+                      android:layout_marginStart="5dp"
+                      android:layout_below="@id/text_tested"
+                      style="@style/grid_stats_text"
+                      android:textColor="@color/infected_color"
+                      android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:text="@{Utils.formatNumber(String.valueOf(countryViewModel.liveData.active))}"/>
+
+                </RelativeLayout>
+              </androidx.cardview.widget.CardView>
+            </GridLayout>
+          </RelativeLayout>
 
           <TextView
               android:layout_marginTop="@dimen/margin_10dp"
-              android:id="@+id/text_title"
-              android:layout_below="@id/text"
+              android:id="@+id/last_update"
+              android:layout_centerHorizontal="true"
               android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:text="@{String.format(@string/last_update_my, Utils.getLongDate(countryViewModel.liveData.updated))}"
+              android:textSize="13sp"
+              android:fontFamily="@font/poppin_regular"
+              android:layout_below="@id/recycler_card_container"/>
+
+          <TextView
+              android:layout_centerHorizontal="true"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:text="Source JHUCSSE, DOH"
+              android:textSize="13sp"
+              android:layout_marginBottom="@dimen/margin_10dp"
+              android:fontFamily="@font/poppin_regular"
+              android:layout_below="@id/last_update"/>
+
+          <androidx.cardview.widget.CardView
+              android:id="@+id/recycler_card_container"
+              android:layout_marginTop="@dimen/margin_10dp"
               android:layout_marginStart="@dimen/margin_10dp"
               android:layout_marginEnd="@dimen/margin_10dp"
-              android:textSize="20sp"
-              android:textColor="@color/white"
-              android:fontFamily="@font/poppin_medium"
-              android:layout_height="wrap_content"
-              android:text="Total Confirmed Cases"/>
+              app:cardCornerRadius="@dimen/_10dp"
+              app:cardBackgroundColor="@color/grayScale"
+              android:layout_below="@id/grid_container"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content">
 
-          <com.github.mikephil.charting.charts.LineChart
-              android:id="@+id/line_chart"
-              android:layout_width="50dp"
-              android:layout_height="wrap_content"
-              android:layout_alignParentBottom="true"
-              android:layout_alignParentStart="true"
-              android:layout_below="@id/text_title"
-              android:layout_marginEnd="@dimen/_20dp"
-              android:layout_alignBottom="@id/new_cases"
-              android:layout_toStartOf="@id/cases_number"
-              />
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
 
-          <TextView
-              android:includeFontPadding="true"
-              android:id="@+id/cases_number"
-              style="@style/stats_big_text"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:text="@{Utils.formatNumber(String.valueOf(countryViewModel.liveData.cases))}"
-              android:layout_below="@id/text_title"
-              android:layout_alignParentEnd="true"
-              android:layout_marginEnd="10dp"/>
+              <TextView
+                  android:layout_margin="@dimen/margin_10dp"
+                  android:id="@+id/top_regions"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:text="Top Regions"
+                  android:fontFamily="@font/poppin_bold"
+                  android:textColor="@color/white"/>
 
-          <TextView
-              android:layout_marginEnd="@dimen/margin_5dp"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:layout_below="@id/cases_number"
-              android:layout_marginTop="-20dp"
-              android:layout_toStartOf="@id/new_cases"
-              android:text="New Cases:"
-              android:textStyle="italic"
-              style="@style/new_cases_increment"/>
+              <androidx.recyclerview.widget.RecyclerView
+                  android:id="@+id/top_Regions_rv"
+                  android:layout_below="@id/top_regions"
+                  android:nestedScrollingEnabled="false"
+                  tools:listitem="@layout/layout_top_regions"
+                  android:layout_width="match_parent"
+                  android:layout_height="match_parent"/>
 
-          <TextView
-              android:layout_marginEnd="@dimen/margin_10dp"
-              android:id="@+id/new_cases"
-              android:layout_alignParentEnd="true"
-              android:layout_marginTop="-20dp"
-              style="@style/new_cases_increment_num"
-              android:layout_below="@id/cases_number"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:text="@{String.format(@string/plus_cases, Utils.formatNumber(String.valueOf(countryViewModel.liveData.todayCases)))}"/>
+            </RelativeLayout>
 
+          </androidx.cardview.widget.CardView>
         </RelativeLayout>
-
-      </androidx.cardview.widget.CardView>
-
-      <RelativeLayout
-          android:layout_below="@id/card"
-          android:id="@+id/grid_container"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content">
-
-        <GridLayout
-            android:layout_marginStart="@dimen/margin_10dp"
-            android:layout_marginEnd="@dimen/margin_10dp"
-            android:id="@+id/grid"
-            android:layout_centerHorizontal="true"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:rowCount="2"
-            android:columnCount="2">
-
-          <androidx.cardview.widget.CardView
-              android:id="@+id/test_card"
-              android:layout_gravity="start"
-              app:cardCornerRadius="@dimen/_10dp"
-              app:cardBackgroundColor="@color/grayScale"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content">
-
-            <RelativeLayout
-                android:padding="@dimen/_10dp"
-                android:id="@+id/container_deaths"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-              <TextView
-                  android:layout_alignParentStart="true"
-                  android:id="@+id/text_deaths"
-                  style="@style/grid_text_titles"
-                  android:padding="5dp"
-                  android:layout_width="wrap_content"
-                  android:layout_height="wrap_content"
-                  android:text="Deceased"/>
-
-              <TextView
-                  android:id="@+id/decease_number"
-                  android:layout_alignParentEnd="true"
-                  android:layout_marginTop="@dimen/margin_10dp"
-                  android:layout_marginStart="5dp"
-                  android:layout_below="@id/text_deaths"
-                  style="@style/grid_stats_text"
-                  android:textColor="@color/red"
-                  android:layout_width="wrap_content"
-                  android:layout_height="wrap_content"
-                  android:text="@{Utils.formatNumber(String.valueOf(countryViewModel.liveData.deaths))}"/>
-
-              <TextView
-                  android:layout_width="wrap_content"
-                  android:layout_height="wrap_content"
-                  style="@style/grid_stats_small"
-                  android:text="@{String.format(@string/plus_cases, Utils.formatNumber(String.valueOf(countryViewModel.liveData.todayDeaths)))}"
-                  android:textColor="@color/red"
-                  android:layout_marginTop="-5dp"
-                  android:layout_below="@id/decease_number"
-                  android:layout_alignParentEnd="true"/>
-
-            </RelativeLayout>
-          </androidx.cardview.widget.CardView>
-
-          <androidx.cardview.widget.CardView
-              android:layout_gravity="clip_horizontal|end"
-              app:cardCornerRadius="@dimen/_10dp"
-              app:cardBackgroundColor="@color/grayScale"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content">
-
-            <RelativeLayout
-                android:id="@+id/container_infected"
-                android:padding="@dimen/margin_10dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-              <TextView
-                  android:padding="5dp"
-                  android:id="@+id/text_infected"
-                  style="@style/grid_text_titles"
-                  android:layout_width="wrap_content"
-                  android:layout_height="wrap_content"
-                  android:text="Recovered"/>
-
-              <TextView
-                  android:id="@+id/recovered_number"
-                  android:layout_alignParentEnd="true"
-                  android:gravity="end"
-                  android:layout_marginTop="@dimen/margin_10dp"
-                  android:layout_marginStart="5dp"
-                  android:layout_below="@id/text_infected"
-                  style="@style/grid_stats_text"
-                  android:textColor="@color/green"
-                  android:layout_width="wrap_content"
-                  android:layout_height="wrap_content"
-                  android:text="@{Utils.formatNumber(String.valueOf(countryViewModel.liveData.recovered))}"/>
-
-              <TextView
-                  android:layout_width="wrap_content"
-                  android:layout_height="wrap_content"
-                  style="@style/grid_stats_small"
-                  android:text="@{String.format(@string/plus_cases, Utils.formatNumber(String.valueOf(countryViewModel.liveData.todayRecovered)))}"
-                  android:textColor="@color/green"
-                  android:layout_marginTop="-5dp"
-                  android:layout_below="@id/recovered_number"
-                  android:layout_alignParentEnd="true"/>
-
-            </RelativeLayout>
-          </androidx.cardview.widget.CardView>
-
-          <androidx.cardview.widget.CardView
-              android:layout_marginTop="@dimen/_10dp"
-              android:layout_gravity="clip_horizontal|end"
-              app:cardCornerRadius="@dimen/_10dp"
-              app:cardBackgroundColor="@color/grayScale"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content">
-
-            <RelativeLayout
-                android:id="@+id/container_recovered"
-                android:padding="@dimen/margin_10dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-              <TextView
-                  android:layout_alignParentStart="true"
-                  android:maxLines="2"
-                  android:padding="5dp"
-                  android:id="@+id/text_recovered"
-                  style="@style/grid_text_titles"
-                  android:layout_width="wrap_content"
-                  android:layout_height="wrap_content"
-                  android:text="Tested Person"/>
-
-              <TextView
-                  android:layout_alignParentEnd="true"
-                  android:gravity="end"
-                  android:layout_marginTop="@dimen/margin_10dp"
-                  android:layout_marginStart="5dp"
-                  android:layout_below="@id/text_recovered"
-                  style="@style/grid_stats_text"
-                  android:layout_width="wrap_content"
-                  android:layout_height="wrap_content"
-                  android:text="@{Utils.formatNumber(String.valueOf(countryViewModel.liveData.test))}"/>
-
-            </RelativeLayout>
-          </androidx.cardview.widget.CardView>
-
-          <androidx.cardview.widget.CardView
-              android:layout_marginTop="@dimen/_10dp"
-              android:layout_gravity="clip_horizontal|end"
-              app:cardCornerRadius="@dimen/_10dp"
-              app:cardBackgroundColor="@color/grayScale"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content">
-
-            <RelativeLayout
-                android:id="@+id/container_tested"
-                android:padding="@dimen/margin_10dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-              <TextView
-                  android:padding="5dp"
-                  android:id="@+id/text_tested"
-                  style="@style/grid_text_titles"
-                  android:layout_width="wrap_content"
-                  android:layout_height="wrap_content"
-                  android:text="Currently Infected"/>
-
-              <TextView
-                  android:layout_alignParentEnd="true"
-                  android:gravity="end"
-                  android:layout_marginTop="@dimen/margin_10dp"
-                  android:layout_marginStart="5dp"
-                  android:layout_below="@id/text_tested"
-                  style="@style/grid_stats_text"
-                  android:layout_width="wrap_content"
-                  android:layout_height="wrap_content"
-                  android:text="@{Utils.formatNumber(String.valueOf(countryViewModel.liveData.active))}"/>
-
-            </RelativeLayout>
-          </androidx.cardview.widget.CardView>
-        </GridLayout>
-      </RelativeLayout>
-
-      <androidx.recyclerview.widget.RecyclerView
-          android:layout_below="@id/grid_container"
-          android:layout_width="match_parent"
-          android:layout_height="match_parent"
-          android:layout_marginEnd="@dimen/margin_10dp"
-          android:layout_marginStart="@dimen/margin_10dp"/>
-    </RelativeLayout>
-    </ScrollView>
+      </ScrollView>
   </RelativeLayout>
+  
   <data>
     <import
         type="com.force.codes.project.app.presentation_layer.controller.utils.Utils"/>

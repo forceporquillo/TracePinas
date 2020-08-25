@@ -8,7 +8,9 @@
 package com.force.codes.project.app.presentation_layer.views.viewmodels;
 
 import androidx.lifecycle.MutableLiveData;
+import com.force.codes.project.app.data_layer.model.philippines.Philippines;
 import com.force.codes.project.app.data_layer.model.country.CountryDetails;
+import com.force.codes.project.app.data_layer.model.philippines.TopRegions;
 import com.force.codes.project.app.data_layer.repositories.interfaces.MyCountryRepository;
 import com.force.codes.project.app.presentation_layer.views.base.BaseViewModel;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -21,12 +23,16 @@ public class MyCountryViewModel extends BaseViewModel {
   private final MyCountryRepository repository;
   private final MutableLiveData<CountryDetails> liveData;
   private final MutableLiveData<String> stringLiveData;
+  private final MutableLiveData<Philippines> phLiveData;
+  private final MutableLiveData<TopRegions> topRegionsLiveData;
 
   @Inject
   public MyCountryViewModel(MyCountryRepository repository) {
     this.repository = repository;
     liveData = new MutableLiveData<>();
     stringLiveData = new MutableLiveData<>();
+    phLiveData = new MutableLiveData<>();
+    topRegionsLiveData = new MutableLiveData<>();
   }
 
   public MutableLiveData<CountryDetails> getCountryData(String country) {
@@ -37,6 +43,24 @@ public class MyCountryViewModel extends BaseViewModel {
 
     addToUnsubscribed(disposable);
     return liveData;
+  }
+
+  public MutableLiveData<Philippines> getPhData() {
+    Disposable disposable = repository.getPhData()
+        .subscribeOn(Schedulers.computation())
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe(phLiveData::setValue, Timber::e);
+    addToUnsubscribed(disposable);
+    return phLiveData;
+  }
+
+  public MutableLiveData<TopRegions> getTopRegions() {
+    Disposable disposable = repository.getTopRegions()
+        .subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe(topRegionsLiveData::setValue, Timber::e);
+    addToUnsubscribed(disposable);
+    return topRegionsLiveData;
   }
 
   public MutableLiveData<String> getStringLiveData() {

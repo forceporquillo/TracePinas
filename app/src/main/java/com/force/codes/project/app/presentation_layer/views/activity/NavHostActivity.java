@@ -25,12 +25,12 @@ import androidx.fragment.app.Fragment;
 import com.force.codes.project.app.R;
 import com.force.codes.project.app.databinding.ActivityNavHostBinding;
 import com.force.codes.project.app.databinding.BottombarLayoutBinding;
-import com.force.codes.project.app.presentation_layer.controller.navigation.NavigationView;
+import com.force.codes.project.app.presentation_layer.controller.navigation.BottomNavigationView;
 import com.force.codes.project.app.presentation_layer.controller.support.StackEventListener;
 import com.force.codes.project.app.presentation_layer.controller.navigation.BottomBarItem;
 import com.force.codes.project.app.presentation_layer.controller.navigation.BottomBar;
 import com.force.codes.project.app.presentation_layer.controller.service.AppExecutors;
-import com.force.codes.project.app.presentation_layer.controller.navigation.NavigationView.BottomBarDrawableArray;
+import com.force.codes.project.app.presentation_layer.controller.navigation.BottomNavigationView.BottomBarDrawableArray;
 import com.force.codes.project.app.presentation_layer.views.base.BaseActivity;
 import com.force.codes.project.app.presentation_layer.views.fragments.bottombar.HelpCenterFragment;
 import com.force.codes.project.app.presentation_layer.views.fragments.bottombar.LiveDataFragment;
@@ -39,8 +39,8 @@ import com.force.codes.project.app.presentation_layer.views.fragments.bottombar.
 import com.force.codes.project.app.presentation_layer.views.fragments.bottombar.StatisticsFragment;
 import org.jetbrains.annotations.NotNull;
 
-import static com.force.codes.project.app.presentation_layer.controller.navigation.NavigationView.BottomBarDrawableArray.DRAWABLE_ICONS;
-import static com.force.codes.project.app.presentation_layer.controller.navigation.NavigationView.setDelegateFragment;
+import static com.force.codes.project.app.presentation_layer.controller.navigation.BottomNavigationView.BottomBarDrawableArray.DRAWABLE_ICONS;
+import static com.force.codes.project.app.presentation_layer.controller.navigation.BottomNavigationView.setDelegateFragment;
 
 public class NavHostActivity extends BaseActivity
     implements StackEventListener.BottomItemListener {
@@ -78,7 +78,7 @@ public class NavHostActivity extends BaseActivity
     }
     new AppExecutors(savedInstanceState == null ? 3000 : 0)
         .delayUIThread().execute(() -> {
-      NavigationView.setSupportFragmentManager(getSupportFragmentManager());
+      BottomNavigationView.setSupportFragmentManager(getSupportFragmentManager());
       setPrimaryFragment(savedInstanceState);
       setBottomBarItems(bottomBar, savedInstanceState);
       layoutBinding.bottomParentContainer.setVisibility(View.VISIBLE);
@@ -105,7 +105,7 @@ public class NavHostActivity extends BaseActivity
     for (int i = 0; i < DRAWABLE_ICONS.length; ++i) {
       for (int j = 0; j < DRAWABLE_ICONS[0].length; ++j) {
         if (j == 0) {
-          bottomBarItems[i] = new BottomBarItem(i, NavigationView
+          bottomBarItems[i] = new BottomBarItem(i, BottomNavigationView
               .BottomBarDrawableArray.getFragmentIds(context)[i],
               DRAWABLE_ICONS[i][j], DRAWABLE_ICONS[i][START_MATRIX + 1]
           );
