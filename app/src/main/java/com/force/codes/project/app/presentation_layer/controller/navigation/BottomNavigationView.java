@@ -16,7 +16,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
-public class NavigationView {
+public class BottomNavigationView {
 
   public static final HashMap<Integer, Fragment> FRAGMENT_LOOKUP_MAP = new HashMap<>();
 
@@ -24,7 +24,7 @@ public class NavigationView {
 
   private static int FRAGMENT_INDEX = 0;
 
-  NavigationView() {
+  BottomNavigationView() {
     throw new AssertionError("No instance required");
   }
 
