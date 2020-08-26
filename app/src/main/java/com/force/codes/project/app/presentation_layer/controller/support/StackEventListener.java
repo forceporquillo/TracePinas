@@ -6,7 +6,7 @@ public interface StackEventListener {
     void onStartListViewActivity();
   }
 
-  interface BottomItemListener{
+  interface BottomItemListener {
     void onBottomBarItemSelected(final int itemId);
   }
 
@@ -14,12 +14,16 @@ public interface StackEventListener {
     void onItemClicked(final int index);
   }
 
-  interface NewsItemCallback{
+  interface NewsItemCallback {
     void onRecentTweetsListener(final int index);
     void onLocalNewsListener(final int index);
   }
 
-  interface LiveStateResponse{
+  interface LiveStateResponse {
     void onErrorResponse(boolean isError);
+  }
+
+  interface ViewTopRegionsListener {
+    void onViewAllRegions();
   }
 }
