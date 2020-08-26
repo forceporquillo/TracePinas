@@ -5,7 +5,7 @@
  * Last modified 7/1/20 6:24 AM
  */
 
-package com.force.codes.project.app.app.di.module;
+package com.force.codes.project.app.app.di.key;
 
 import androidx.lifecycle.ViewModel;
 import dagger.MapKey;
@@ -18,6 +18,6 @@ import java.lang.annotation.Target;
     ElementType.METHOD
 })
 @Retention(RetentionPolicy.RUNTIME)
-@MapKey @interface ViewModelKey {
+public @MapKey @interface ViewModelKey {
   Class<? extends ViewModel> value();
 }
