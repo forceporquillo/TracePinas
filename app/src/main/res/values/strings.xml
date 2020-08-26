@@ -91,6 +91,8 @@
   <string name="plus_cases">+%1s</string>
   <string name="NOT_CONNECTED">Failed to set network request. Please try again when connection improves.</string>
 
+  <string name="collapse">Collapse</string>
+  <string name="view_all">View All</string>
   <!--
   URL
   -->

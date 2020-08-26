@@ -575,7 +575,25 @@
                   android:fontFamily="@font/poppin_bold"
                   android:textColor="@color/white"/>
 
+              <TextView
+                  android:layout_marginTop="12dp"
+                  android:layout_alignParentTop="true"
+                  android:id="@+id/clickable_tv"
+                  android:clickable="true"
+                  android:focusable="true"
+                  android:onClick="@{(v) -> listener.onViewAllRegions()}"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:text="View All"
+                  android:layout_alignParentEnd="true"
+                  android:layout_marginEnd="@dimen/margin_10dp"
+                  android:layout_centerVertical="true"
+                  android:textColor="@color/white"
+                  android:fontFamily="@font/poppin_medium"
+                  android:textSize="12sp"/>
+
               <androidx.recyclerview.widget.RecyclerView
+                  android:visibility="gone"
                   android:id="@+id/top_Regions_rv"
                   android:layout_below="@id/top_regions"
                   android:nestedScrollingEnabled="false"
@@ -589,10 +607,13 @@
         </RelativeLayout>
       </ScrollView>
   </RelativeLayout>
-  
+
   <data>
     <import
         type="com.force.codes.project.app.presentation_layer.controller.utils.Utils"/>
+    <variable
+        name="listener"
+      type="com.force.codes.project.app.presentation_layer.controller.support.StackEventListener.ViewTopRegionsListener"/>
     <variable
         name="listCallback"
         type="com.force.codes.project.app.presentation_layer.controller.support.StackEventListener.ListActivityListener"/>
