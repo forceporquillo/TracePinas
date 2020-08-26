@@ -7,7 +7,7 @@
 
 package com.force.codes.project.app.data_layer.repositories.implementations;
 
-import com.force.codes.project.app.app.constants.ApiConstants;
+import com.force.codes.project.app.app.constants.ApiConstantEndpoints;
 import com.force.codes.project.app.data_layer.model.map_data.WorldData;
 import com.force.codes.project.app.data_layer.repositories.interfaces.LiveOverviewRepository;
 import com.force.codes.project.app.data_layer.resources.api.ApiService;
@@ -28,7 +28,7 @@ public class LiveOverviewRepositoryImpl implements LiveOverviewRepository {
 
   @Override
   public Flowable<WorldData> getWorldDataFromNetwork() {
-    return apiAdapter.getWorldData(ApiConstants.getBaseUrlPath("all"))
+    return apiAdapter.getWorldData(ApiConstantEndpoints.getBaseUrlPath("all"))
         .subscribeOn(Schedulers.io());
   }
 }

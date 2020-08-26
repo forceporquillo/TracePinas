@@ -7,7 +7,7 @@
 
 package com.force.codes.project.app.data_layer.repositories.implementations;
 
-import com.force.codes.project.app.app.constants.ApiConstants;
+import com.force.codes.project.app.app.constants.ApiConstantEndpoints;
 import com.force.codes.project.app.data_layer.model.map_data.LocalData;
 import com.force.codes.project.app.data_layer.model.world.GlobalData;
 import com.force.codes.project.app.data_layer.repositories.interfaces.MapRepository;
@@ -33,7 +33,7 @@ public class MapRepositoryImpl implements MapRepository {
   @Override
   public Flowable<LocalData> getAllPHData() {
     return Flowable.mergeDelayError(serviceAdapter
-        .getPhData(ApiConstants.LOCAL_URL)
+        .getPhData(ApiConstantEndpoints.LOCAL_URL)
         .doOnNext(mapDao::savePhData)
         .subscribeOn(Schedulers.io()), mapDao.getPHDataFromDB()
         .subscribeOn(Schedulers.io()));
@@ -42,7 +42,7 @@ public class MapRepositoryImpl implements MapRepository {
   @Override
   public Flowable<List<GlobalData>> getAllGlobalData() {
     return Flowable.mergeDelayError(serviceAdapter
-        .getGlobalData(ApiConstants.GLOBAL_CASE)
+        .getGlobalData(ApiConstantEndpoints.GLOBAL_CASE)
         .doOnNext(mapDao::saveGlobalData)
         .subscribeOn(Schedulers.io()), mapDao.getGlobalDataFromDB()
         .subscribeOn(Schedulers.io()));
