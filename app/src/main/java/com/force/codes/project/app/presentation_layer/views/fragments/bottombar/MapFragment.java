@@ -34,7 +34,7 @@ import com.force.codes.project.app.BR;
 import com.force.codes.project.app.R;
 import com.force.codes.project.app.data_layer.model.map_data.PHDataSet;
 import com.force.codes.project.app.databinding.FragmentMapBinding;
-import com.force.codes.project.app.presentation_layer.controller.service.AppExecutors;
+import com.force.codes.project.app.presentation_layer.controller.service.ThreadExecutor;
 import com.force.codes.project.app.presentation_layer.controller.utils.Utils;
 import com.force.codes.project.app.presentation_layer.views.adapters.CustomInfoWindowAdapter;
 import com.force.codes.project.app.presentation_layer.views.base.BaseFragment;
@@ -79,7 +79,7 @@ public class MapFragment extends BaseFragment implements
   @Inject
   ViewModelProviderFactory factory;
   @Inject
-  AppExecutors executors;
+  ThreadExecutor executors;
   @Inject
   @Named("MapListDataSet")
   List<String> dataSet;

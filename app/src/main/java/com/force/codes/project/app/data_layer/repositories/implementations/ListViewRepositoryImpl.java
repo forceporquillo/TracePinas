@@ -4,7 +4,7 @@ import com.force.codes.project.app.data_layer.model.PrimarySelected;
 import com.force.codes.project.app.data_layer.model.country.CountryDetails;
 import com.force.codes.project.app.data_layer.repositories.interfaces.ListViewRepository;
 import com.force.codes.project.app.data_layer.resources.database.ListViewDao;
-import com.force.codes.project.app.presentation_layer.controller.service.AppExecutors;
+import com.force.codes.project.app.presentation_layer.controller.service.ThreadExecutor;
 import io.reactivex.Flowable;
 import java.util.List;
 import javax.inject.Inject;
@@ -12,12 +12,12 @@ import timber.log.Timber;
 
 public class ListViewRepositoryImpl implements ListViewRepository {
   private final ListViewDao listViewDao;
-  private final AppExecutors executors;
+  private final ThreadExecutor executors;
 
   @Inject
   public ListViewRepositoryImpl(
       ListViewDao listViewDao,
-      AppExecutors executors
+      ThreadExecutor executors
   ) {
     this.listViewDao = listViewDao;
     this.executors = executors;

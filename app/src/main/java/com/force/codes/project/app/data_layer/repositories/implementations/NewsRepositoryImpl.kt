@@ -10,24 +10,23 @@ import androidx.lifecycle.LiveData
 import androidx.paging.LivePagedListBuilder
 import androidx.paging.PagedList
 import androidx.paging.PagedList.Config
-import com.force.codes.project.app.app.constants.ApiConstants
-import com.force.codes.project.app.app.constants.ApiConstants.getTwitterEndpoint
+import com.force.codes.project.app.app.constants.ApiConstantEndpoints
+import com.force.codes.project.app.app.constants.ApiConstantEndpoints.getTwitterEndpoint
 import com.force.codes.project.app.data_layer.model.news.ArticlesItem
 import com.force.codes.project.app.data_layer.model.news.NewsData
 import com.force.codes.project.app.data_layer.model.twitter.TwitterData
 import com.force.codes.project.app.data_layer.repositories.interfaces.NewsRepository
 import com.force.codes.project.app.data_layer.resources.api.ApiService
 import com.force.codes.project.app.data_layer.resources.database.NewsDao
-import com.force.codes.project.app.presentation_layer.controller.service.AppExecutors
+import com.force.codes.project.app.presentation_layer.controller.service.ThreadExecutor
 import io.reactivex.Flowable
-import timber.log.Timber
 import javax.inject.Inject
 
 class NewsRepositoryImpl
 @Inject internal constructor(
   private val newsDao: NewsDao,
   private val apiService: ApiService,
-  private val executors: AppExecutors
+  private val executors: ThreadExecutor
 ) : NewsRepository {
 
   override fun getTwitterUser(
@@ -44,7 +43,7 @@ class NewsRepositoryImpl
       Flowable<NewsData?>
     get() {
       return apiService.getNewsResponse(
-          ApiConstants.NEWS_DATA
+          ApiConstantEndpoints.NEWS_DATA
       )
     }
 

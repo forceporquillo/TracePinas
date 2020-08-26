@@ -7,7 +7,7 @@
 
 package com.force.codes.project.app.data_layer.repositories.implementations;
 
-import com.force.codes.project.app.app.constants.ApiConstants;
+import com.force.codes.project.app.app.constants.ApiConstantEndpoints;
 import com.force.codes.project.app.data_layer.model.CountryDayOne;
 import com.force.codes.project.app.data_layer.model.philippines.Philippines;
 import com.force.codes.project.app.data_layer.model.country.CountryDetails;
@@ -36,7 +36,7 @@ public class MyCountryRepositoryImpl implements MyCountryRepository {
   }
 
   @Override public Single<CountryDetails> getCountryDetails(String country) {
-    return apiService.getCountryDetails(ApiConstants
+    return apiService.getCountryDetails(ApiConstantEndpoints
         .getBaseUrlPath("countries/".concat(country)))
         .subscribeOn(Schedulers.computation());
   }
@@ -46,12 +46,12 @@ public class MyCountryRepositoryImpl implements MyCountryRepository {
   }
 
   @Override public Flowable<Philippines> getPhData() {
-    return apiService.getPhDataSet(ApiConstants.PH_FROM_DAY_ONE
+    return apiService.getPhDataSet(ApiConstantEndpoints.PH_FROM_DAY_ONE
         .concat("timeline"));
   }
 
   @Override public Flowable<TopRegions> getTopRegions() {
-    return apiService.getTopRegions(ApiConstants.PH_FROM_DAY_ONE
+    return apiService.getTopRegions(ApiConstantEndpoints.PH_FROM_DAY_ONE
         .concat("top-regions"));
   }
 }

@@ -11,7 +11,7 @@
             type="com.force.codes.project.app.presentation_layer.views.viewholders.NewsGroupViewHolder" />
         <variable
             name="group"
-            type="com.force.codes.project.app.presentation_layer.controller.model.Group" />
+            type="com.force.codes.project.app.presentation_layer.controller.navigation.BottomBarGroup" />
     </data>
 
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"

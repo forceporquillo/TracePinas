@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <integer name="STATISTICS">0</integer>
+  <integer name="NEWS">1</integer>
+  <integer name="MAP">2</integer>
+  <integer name="LIVE">3</integer>
+  <integer name="HELP">4</integer>
+  <integer name="READ">5</integer>
+</resources>

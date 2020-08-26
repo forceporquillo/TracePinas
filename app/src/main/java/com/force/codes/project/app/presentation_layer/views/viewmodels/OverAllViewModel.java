@@ -10,7 +10,7 @@ package com.force.codes.project.app.presentation_layer.views.viewmodels;
 import android.os.Build;
 import androidx.annotation.RequiresApi;
 import androidx.lifecycle.MutableLiveData;
-import com.force.codes.project.app.app.constants.ApiConstants;
+import com.force.codes.project.app.app.constants.ApiConstantEndpoints;
 import com.force.codes.project.app.app.constants.GlobalConstants;
 import com.force.codes.project.app.data_layer.model.overall.TotalByDate;
 import com.force.codes.project.app.data_layer.repositories.interfaces.OverAllRepository;
@@ -50,7 +50,7 @@ public class OverAllViewModel extends BaseViewModel {
       final LocalDate end = LocalDate.parse(formatter.format(Utils.getTodayDate()));
       Stream.iterate(start, d -> d.plusDays(1))
           .limit(ChronoUnit.DAYS.between(start, end))
-          .forEach(x -> endpointList.add(ApiConstants.TOTAL_BY_DATE
+          .forEach(x -> endpointList.add(ApiConstantEndpoints.TOTAL_BY_DATE
               .concat(x.toString()))
           );
     }

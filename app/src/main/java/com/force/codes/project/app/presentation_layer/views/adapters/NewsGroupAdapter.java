@@ -16,7 +16,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.force.codes.project.app.R;
 import com.force.codes.project.app.databinding.NewsGroupLayoutBinding;
-import com.force.codes.project.app.presentation_layer.controller.model.Group;
+import com.force.codes.project.app.presentation_layer.controller.navigation.BottomBarGroup;
 import com.force.codes.project.app.presentation_layer.controller.layout.ItemDecoration;
 import com.force.codes.project.app.presentation_layer.views.viewholders.NewsGroupViewHolder;
 import java.util.ArrayList;
@@ -35,10 +35,10 @@ public class NewsGroupAdapter extends RecyclerView.Adapter<NewsGroupViewHolder> 
   }
 
   @JvmStatic
-  private static ArrayList<Group> groups() {
+  private static ArrayList<BottomBarGroup> groups() {
     return new ArrayList<>(Arrays.asList(
-        new Group("Recent Tweets", false),
-        new Group("Hot Topics", false))
+        new BottomBarGroup("Recent Tweets", false),
+        new BottomBarGroup("Hot Topics", false))
     );
   }
 
@@ -57,8 +57,8 @@ public class NewsGroupAdapter extends RecyclerView.Adapter<NewsGroupViewHolder> 
 
   @Override
   public void onBindViewHolder(@NonNull NewsGroupViewHolder holder, int position) {
-    Group group = groups().get(position);
-    holder.bind(group);
+    BottomBarGroup bottomBarGroup = groups().get(position);
+    holder.bind(bottomBarGroup);
     if (position == 1) {
       holder.setMarginAtRuntime();
     }
