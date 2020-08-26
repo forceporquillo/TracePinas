@@ -14,7 +14,7 @@ import androidx.databinding.BindingAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 import com.force.codes.project.app.BR;
 import com.force.codes.project.app.databinding.NewsGroupLayoutBinding;
-import com.force.codes.project.app.presentation_layer.controller.model.Group;
+import com.force.codes.project.app.presentation_layer.controller.navigation.BottomBarGroup;
 import com.force.codes.project.app.presentation_layer.controller.utils.Utils;
 
 public class NewsGroupViewHolder extends RecyclerView.ViewHolder {
@@ -38,9 +38,9 @@ public class NewsGroupViewHolder extends RecyclerView.ViewHolder {
     visibility.setVisibility(View.GONE);
   }
 
-  public void bind(Group group) {
-    binding.setGroup(group);
-    binding.setVariable(BR.group, group);
+  public void bind(BottomBarGroup bottomBarGroup) {
+    binding.setGroup(bottomBarGroup);
+    binding.setVariable(BR.group, bottomBarGroup);
     binding.setGroupAdapter(NewsGroupViewHolder.this);
     binding.setVariable(BR.groupAdapter, NewsGroupViewHolder.this);
     binding.executePendingBindings();
