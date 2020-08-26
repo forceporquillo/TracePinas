@@ -12,7 +12,7 @@ import com.force.codes.project.app.presentation_layer.controller.utils.Utils.thr
 import java.util.concurrent.Executor
 import java.util.concurrent.Executors
 
-class AppExecutors private constructor(
+class ThreadExecutor private constructor(
   private val diskIO: Executor,
   private val delay: Executor,
   private val mainThread: Executor,
