@@ -29,7 +29,7 @@ import com.force.codes.project.app.presentation_layer.controller.navigation.Bott
 import com.force.codes.project.app.presentation_layer.controller.support.StackEventListener;
 import com.force.codes.project.app.presentation_layer.controller.navigation.BottomBarItem;
 import com.force.codes.project.app.presentation_layer.controller.navigation.BottomBar;
-import com.force.codes.project.app.presentation_layer.controller.service.AppExecutors;
+import com.force.codes.project.app.presentation_layer.controller.service.ThreadExecutor;
 import com.force.codes.project.app.presentation_layer.controller.navigation.BottomNavigationView.BottomBarDrawableArray;
 import com.force.codes.project.app.presentation_layer.views.base.BaseActivity;
 import com.force.codes.project.app.presentation_layer.views.fragments.bottombar.HelpCenterFragment;
@@ -76,7 +76,7 @@ public class NavHostActivity extends BaseActivity
       fragment = getSupportFragmentManager()
           .getFragment(savedInstanceState, SAVE_FRAGMENT_STATE);
     }
-    new AppExecutors(savedInstanceState == null ? 3000 : 0)
+    new ThreadExecutor(savedInstanceState == null ? 3000 : 0)
         .delayUIThread().execute(() -> {
       BottomNavigationView.setSupportFragmentManager(getSupportFragmentManager());
       setPrimaryFragment(savedInstanceState);
