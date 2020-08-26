@@ -1,5 +1,7 @@
 package com.force.codes.project.app.presentation_layer.controller.support;
 
+import android.view.View;
+
 public interface StackEventListener {
 
   interface ListActivityListener {
@@ -24,6 +26,7 @@ public interface StackEventListener {
   }
 
   interface ViewTopRegionsListener {
-    void onViewAllRegions();
+    void onViewAllRegions(View view);
+    void onRegionSelected(View view);
   }
 }
