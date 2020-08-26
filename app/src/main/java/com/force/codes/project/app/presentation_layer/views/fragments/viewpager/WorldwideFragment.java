@@ -20,7 +20,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.force.codes.project.app.R;
 import com.force.codes.project.app.databinding.FragmentWorldwideBinding;
 import com.force.codes.project.app.presentation_layer.controller.support.StackEventListener;
-import com.force.codes.project.app.presentation_layer.controller.service.AppExecutors;
+import com.force.codes.project.app.presentation_layer.controller.service.ThreadExecutor;
 import com.force.codes.project.app.presentation_layer.views.adapters.CountryAdapter;
 import com.force.codes.project.app.presentation_layer.views.base.BaseFragment;
 import com.force.codes.project.app.presentation_layer.views.factory.ViewModelProviderFactory;
@@ -38,7 +38,7 @@ public class WorldwideFragment extends BaseFragment implements
   @Inject
   ViewModelProviderFactory factory;
   @Inject
-  AppExecutors appExecutors;
+  ThreadExecutor threadExecutor;
 
   private FragmentWorldwideBinding binding;
 

@@ -18,7 +18,7 @@ import com.force.codes.project.app.databinding.FragmentCountryStatisticsBinding
 import com.force.codes.project.app.presentation_layer.controller.utils.Utils.animationUtils
 import com.force.codes.project.app.presentation_layer.controller.utils.NetworkCallback
 import com.force.codes.project.app.presentation_layer.controller.utils.NetworkUtils
-import com.force.codes.project.app.presentation_layer.controller.service.AppExecutors
+import com.force.codes.project.app.presentation_layer.controller.service.ThreadExecutor
 import com.force.codes.project.app.presentation_layer.views.fragments.viewpager.MyCountryFragment
 import com.force.codes.project.app.presentation_layer.views.fragments.viewpager.OverAllFragment
 import com.force.codes.project.app.presentation_layer.views.fragments.viewpager.WorldwideFragment
@@ -137,7 +137,7 @@ class StatisticsFragment : Fragment(),
     Timber.i("Network status: %s", available)
     if (!available!!) {
       enable = true
-      AppExecutors(
+      ThreadExecutor(
           100
       )
           .delayUIThread()

@@ -7,7 +7,6 @@
 
 package com.force.codes.project.app.presentation_layer.views.fragments.viewpager;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -28,12 +27,10 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.force.codes.project.app.BuildConfig;
 import com.force.codes.project.app.R;
-import com.force.codes.project.app.data_layer.model.philippines.Philippines;
 import com.force.codes.project.app.data_layer.model.country.CountryDetails;
-import com.force.codes.project.app.data_layer.model.philippines.TopRegions;
+import com.force.codes.project.app.data_layer.model.philippines.Philippines;
 import com.force.codes.project.app.databinding.FragmentMyCountryBinding;
-import com.force.codes.project.app.presentation_layer.controller.layout.ItemDecoration;
-import com.force.codes.project.app.presentation_layer.controller.service.AppExecutors;
+import com.force.codes.project.app.presentation_layer.controller.service.ThreadExecutor;
 import com.force.codes.project.app.presentation_layer.controller.support.StackEventListener;
 import com.force.codes.project.app.presentation_layer.controller.utils.Utils;
 import com.force.codes.project.app.presentation_layer.views.activity.ListViewActivity;
@@ -64,7 +61,7 @@ import timber.log.Timber;
  */
 
 public class MyCountryFragment extends BaseFragment
-    implements StackEventListener.ListActivityListener, StackEventListener.ViewTopRegionsListener{
+    implements StackEventListener.ListActivityListener, StackEventListener.ViewTopRegionsListener {
 
   private static final String ARGS_KEY = "country";
 
@@ -103,8 +100,7 @@ public class MyCountryFragment extends BaseFragment
     }
   }
 
-  @Override public View
-  onCreateView(@NotNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+  @Override public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     binding = FragmentMyCountryBinding.inflate(inflater, container, false);
     binding.setCountryViewModel(viewModel);
     binding.setLifecycleOwner(this);
@@ -120,7 +116,7 @@ public class MyCountryFragment extends BaseFragment
     viewModel.getPrimarySelected().observe(this, country ->
         Timber.i("LiveData auto update UI emits: %s", getArgsKey = country)
     );
-    new AppExecutors(100).mainThread().execute(() ->
+    new ThreadExecutor(100).mainThread().execute(() ->
         viewModel.getCountryData(getArgsKey).observe(this, data ->
             setPieChart(data, getArgsKey.equals(DEFAULT_ENDPOINT))
         )
@@ -323,13 +319,13 @@ public class MyCountryFragment extends BaseFragment
     IS_CONNECTED.set(connected);
   }
 
-  @Override public void onViewAllRegions() {
+  @Override public void onViewAllRegions(View view) {
     final AutoTransition transition = new AutoTransition();
     if (binding.topRegionsRv.getVisibility() == View.GONE) {
       startExpandableAnim(transition);
       binding.topRegionsRv.setVisibility(View.VISIBLE);
       binding.clickableTv.setText(getString(R.string.collapse));
-    }else {
+    } else {
       startExpandableAnim(transition);
       binding.topRegionsRv.setVisibility(View.GONE);
       binding.clickableTv.setText(getString(R.string.view_all));
@@ -337,7 +333,11 @@ public class MyCountryFragment extends BaseFragment
     binding.invalidateAll();
   }
 
-  private  void startExpandableAnim(AutoTransition transition) {
+  private void startExpandableAnim(AutoTransition transition) {
     TransitionManager.beginDelayedTransition(binding.recyclerCardContainer, transition);
+  }
+
+  @Override public void onRegionSelected(View view) {
+    Toast.makeText(getContext(), "clicked", Toast.LENGTH_SHORT).show();
   }
 }

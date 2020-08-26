@@ -14,7 +14,6 @@ package com.force.codes.project.app.presentation_layer.views.fragments.bottombar
  *
  */
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -42,7 +41,7 @@ import com.force.codes.project.app.data_layer.model.news.ArticlesItem;
 import com.force.codes.project.app.data_layer.model.twitter.TwitterData;
 import com.force.codes.project.app.databinding.FragmentNewsBinding;
 import com.force.codes.project.app.presentation_layer.controller.support.StackEventListener;
-import com.force.codes.project.app.presentation_layer.controller.service.AppExecutors;
+import com.force.codes.project.app.presentation_layer.controller.service.ThreadExecutor;
 import com.force.codes.project.app.presentation_layer.controller.utils.NetworkUtils;
 import com.force.codes.project.app.presentation_layer.controller.utils.Utils;
 import com.force.codes.project.app.presentation_layer.views.adapters.HeaderNewsAdapter;
@@ -147,7 +146,7 @@ public class NewsFragment extends BaseFragment implements
   public void onStart() {
     super.onStart();
     startListeningNetwork();
-    new AppExecutors(500).delayUIThread().execute(() -> {
+    new ThreadExecutor(500).delayUIThread().execute(() -> {
       newsViewModel.getTwitterLiveData().observe(this, twitterDataPagedList -> {
         if (isPagedListEmpty(twitterDataPagedList)) {
           headerNewsAdapter.submitList((PagedList<TwitterData>)
@@ -288,7 +287,7 @@ public class NewsFragment extends BaseFragment implements
     final RelativeLayout networkBanner = binding.network.relativeLayout;
     if (isConnected = !connectivity.available()) {
       networkBanner.setAnimation(animationUtils(true, getContext()));
-      new AppExecutors(DELAY_MILL)
+      new ThreadExecutor(DELAY_MILL)
           .delayUIThread()
           .execute(() -> {
             networkBanner.setVisibility(View.VISIBLE);
