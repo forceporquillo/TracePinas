@@ -9,7 +9,7 @@ package com.force.codes.project.app.app.constants
 import com.force.codes.project.app.BaseApplication
 import com.force.codes.project.app.R
 
-object ApiConstants{
+object ApiConstantEndpoints{
   const val NEWS_DATA = "https://newsapi.org/v2/everything?q=COVID, Philippines&" +
       "from=2020&sortBy=publishedAt&apiKey=0bf6fe738d0f4279a5c1169f11fe4c3f&pageSize=100&page=1"
 
