@@ -11,7 +11,7 @@ import android.app.Application;
 import androidx.lifecycle.MutableLiveData;
 import com.force.codes.project.app.data_layer.model.map_data.WorldData;
 import com.force.codes.project.app.presentation_layer.controller.navigation.BottomBarItem;
-import com.force.codes.project.app.presentation_layer.controller.service.AppExecutors;
+import com.force.codes.project.app.presentation_layer.controller.service.ThreadExecutor;
 import com.google.android.gms.maps.model.Marker;
 import dagger.Module;
 import dagger.Provides;
@@ -39,8 +39,8 @@ public class AppModule {
 
   @Provides
   @Singleton
-  static AppExecutors providesAppExecutor() {
-    return new AppExecutors(0);
+  static ThreadExecutor providesAppExecutor() {
+    return new ThreadExecutor(0);
   }
 
   @Provides
@@ -75,5 +75,12 @@ public class AppModule {
   @Singleton
   public Disposable[] providesDisposable() {
     return new Disposable[3];
+  }
+
+
+  @Provides
+  @Singleton
+  public MutableLiveData<?> providesMutableLiveData() {
+    return new MutableLiveData<>();
   }
 }
