@@ -8,13 +8,13 @@ package com.force.codes.project.app.data_layer.resources.api;
  */
 
 import com.force.codes.project.app.data_layer.model.CountryDayOne;
-import com.force.codes.project.app.data_layer.model.philippines.Philippines;
+import com.force.codes.project.app.data_layer.model.doh_data_drop_csv.DOHDataDrop;
 import com.force.codes.project.app.data_layer.model.country.CountryDetails;
 import com.force.codes.project.app.data_layer.model.map_data.LocalData;
 import com.force.codes.project.app.data_layer.model.map_data.WorldData;
 import com.force.codes.project.app.data_layer.model.news.NewsData;
 import com.force.codes.project.app.data_layer.model.overall.TotalByDate;
-import com.force.codes.project.app.data_layer.model.philippines.TopRegions;
+import com.force.codes.project.app.data_layer.model.doh_data_drop_csv.TopRegions;
 import com.force.codes.project.app.data_layer.model.twitter.TwitterData;
 import com.force.codes.project.app.data_layer.model.world.GlobalData;
 import io.reactivex.Flowable;
@@ -52,7 +52,7 @@ public interface ApiService {
   Single<CountryDetails> getCountryDetails(@Url String url);
 
   @GET
-  Flowable<Philippines> getPhDataSet(@Url String url);
+  Flowable<DOHDataDrop> getPhDataSet(@Url String url);
 
   @GET
   Flowable<TopRegions> getTopRegions(@Url String ur);

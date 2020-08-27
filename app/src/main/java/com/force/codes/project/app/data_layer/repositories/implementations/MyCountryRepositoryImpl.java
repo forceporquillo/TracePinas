@@ -9,9 +9,9 @@ package com.force.codes.project.app.data_layer.repositories.implementations;
 
 import com.force.codes.project.app.app.constants.ApiConstantEndpoints;
 import com.force.codes.project.app.data_layer.model.CountryDayOne;
-import com.force.codes.project.app.data_layer.model.philippines.Philippines;
+import com.force.codes.project.app.data_layer.model.doh_data_drop_csv.DOHDataDrop;
 import com.force.codes.project.app.data_layer.model.country.CountryDetails;
-import com.force.codes.project.app.data_layer.model.philippines.TopRegions;
+import com.force.codes.project.app.data_layer.model.doh_data_drop_csv.TopRegions;
 import com.force.codes.project.app.data_layer.repositories.interfaces.MyCountryRepository;
 import com.force.codes.project.app.data_layer.resources.api.ApiService;
 import com.force.codes.project.app.data_layer.resources.database.MyCountryDao;
@@ -45,7 +45,7 @@ public class MyCountryRepositoryImpl implements MyCountryRepository {
     return dao.getPrimarySelected();
   }
 
-  @Override public Flowable<Philippines> getPhData() {
+  @Override public Flowable<DOHDataDrop> getPhData() {
     return apiService.getPhDataSet(ApiConstantEndpoints.PH_FROM_DAY_ONE
         .concat("timeline"));
   }
