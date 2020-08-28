@@ -338,6 +338,47 @@ public class MyCountryFragment extends BaseFragment
   }
 
   @Override public void onRegionSelected(View view) {
-    Toast.makeText(getContext(), "clicked", Toast.LENGTH_SHORT).show();
+    if (!getArgsKey.equals(DEFAULT_ENDPOINT)) {
+      materialDialog().show();
+      return;
+    }
+    dialogPlus().show();
+  }
+
+  final DialogPlus dialogPlus() {
+    assert getContext() != null;
+    return DialogPlus.newDialog(getContext())
+        .setAdapter(new TopRegionsDialogAdapter(topRegions))
+        .setExpanded(true)
+        .setHeader(R.layout.dialog_header)
+        .setOnCancelListener(this)
+        .setOnItemClickListener(this)
+        .setGravity(Gravity.CENTER)
+        .create();
+  }
+
+  @Override public void onCancel(@NotNull DialogPlus dialog) {
+    dialog.dismiss();
+  }
+
+  @Override
+  public void onItemClick(@NotNull DialogPlus dialog, Object item, View view, int position) {
+    Toast.makeText(getContext(), "item selected " + topRegions.get(position).getRegion(),
+        Toast.LENGTH_SHORT).show();
+    dialog.onBackPressed(dialog);
+  }
+
+  @NotNull final MaterialDialog materialDialog() {
+    assert getActivity() != null;
+    return new MaterialDialog.Builder(getActivity())
+        .setTitle("Sorry!")
+        .setMessage("This feature is only available for Philippines.")
+        .setCancelable(false)
+        .setAnimation(R.raw.lootie_lady_guitar)
+        .setPositiveButton("Set country",
+            (dialogInterface, which) -> dialogInterface.dismiss())
+        .setNegativeButton("Close",
+            (dialogInterface, which) -> dialogInterface.dismiss())
+        .build();
   }
 }

@@ -8,9 +8,9 @@
 package com.force.codes.project.app.presentation_layer.views.viewmodels;
 
 import androidx.lifecycle.MutableLiveData;
-import com.force.codes.project.app.data_layer.model.philippines.Philippines;
+import com.force.codes.project.app.data_layer.model.doh_data_drop_csv.DOHDataDrop;
 import com.force.codes.project.app.data_layer.model.country.CountryDetails;
-import com.force.codes.project.app.data_layer.model.philippines.TopRegions;
+import com.force.codes.project.app.data_layer.model.doh_data_drop_csv.TopRegions;
 import com.force.codes.project.app.data_layer.repositories.interfaces.MyCountryRepository;
 import com.force.codes.project.app.presentation_layer.views.base.BaseViewModel;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -23,7 +23,7 @@ public class MyCountryViewModel extends BaseViewModel {
   private final MyCountryRepository repository;
   private final MutableLiveData<CountryDetails> liveData;
   private final MutableLiveData<String> stringLiveData;
-  private final MutableLiveData<Philippines> phLiveData;
+  private final MutableLiveData<DOHDataDrop> phLiveData;
   private final MutableLiveData<TopRegions> topRegionsLiveData;
 
   @Inject
@@ -45,7 +45,7 @@ public class MyCountryViewModel extends BaseViewModel {
     return liveData;
   }
 
-  public MutableLiveData<Philippines> getPhData() {
+  public MutableLiveData<DOHDataDrop> getPhData() {
     Disposable disposable = repository.getPhData()
         .subscribeOn(Schedulers.computation())
         .observeOn(AndroidSchedulers.mainThread())

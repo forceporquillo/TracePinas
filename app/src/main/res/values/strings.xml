@@ -93,6 +93,8 @@
 
   <string name="collapse">Collapse</string>
   <string name="view_all">View All</string>
+  <string name="confirmed_cases_text">%s Confirmed Cases</string>
+
   <!--
   URL
   -->

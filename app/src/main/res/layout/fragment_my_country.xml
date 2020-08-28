@@ -7,16 +7,14 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-  <RelativeLayout
-      android:layout_width="match_parent"
-      android:id="@+id/my_country_fragment"
-      android:layout_height="match_parent"
-      android:background="@color/white"
-      tools:context=".presentation_layer.views.fragments.viewpager.MyCountryFragment">
 
     <ScrollView
+        android:id="@+id/my_country_fragment"
+        android:background="@color/white"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        tools:context=".presentation_layer.views.fragments.viewpager.MyCountryFragment">
+
         <RelativeLayout
             android:id="@+id/parent_container"
             android:layout_width="match_parent"
@@ -31,7 +29,7 @@
               android:id="@+id/card_spinner"
               android:layout_width="match_parent"
               android:layout_height="45dp"
-              android:onClick="@{(v) -> listCallback.onStartListViewActivity()}"
+              android:onClick="@{(v) -> listCallback.onStartListViewActivity(v)}"
               android:layout_margin="@dimen/margin_10dp">
 
             <RelativeLayout
@@ -44,7 +42,7 @@
                   android:layout_marginStart="20dp"
                   android:layout_width="wrap_content"
                   android:layout_height="wrap_content"
-                  android:text="@{countryViewModel.stringLiveData}"
+                  android:text="@{countryFrag.argsKey}"
                   android:fontFamily="@font/poppin_regular"
                   android:textColor="@color/white"
                   android:textSize="16sp"/>
@@ -260,36 +258,59 @@
               android:layout_margin="10dp">
 
             <RelativeLayout
-                android:padding="@dimen/margin_10dp"
+                android:paddingStart="@dimen/_10dp"
+                android:paddingEnd="@dimen/_10dp"
+                android:paddingBottom="@dimen/_10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-              <TextView
-                  style="@style/stats_update"
-                  android:layout_margin="@dimen/margin_10dp"
-                  android:id="@+id/text"
-                  android:layout_width="wrap_content"
-                  android:layout_height="wrap_content"
-                  android:text="Filter by region:" />
+              <RelativeLayout
+                  android:clickable="true"
+                  android:focusable="true"
+                  android:onClick="@{(v) -> listener.onRegionSelected(v)}"
+                  android:foreground="?attr/selectableItemBackground"
+                  android:id="@+id/filter_container"
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content">
+
+                <TextView
+                    style="@style/stats_update"
+                    android:layout_margin="@dimen/margin_10dp"
+                    android:id="@+id/text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Filter by region:" />
+
+                <TextView
+                    android:id="@+id/filter_regions"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="ALL REGIONS"
+                    style="@style/stats_update"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginEnd="@dimen/margin_10dp"
+                    android:layout_margin="@dimen/margin_10dp"/>
+              </RelativeLayout>
 
               <View
                   android:background="@color/white"
-                  android:layout_below="@id/text"
+                  android:layout_below="@id/filter_container"
                   android:layout_width="match_parent"
                   android:layout_height="0.5dp"/>
 
               <TextView
-                  android:layout_marginTop="@dimen/margin_10dp"
                   android:id="@+id/text_title"
-                  android:layout_below="@id/text"
                   android:layout_width="wrap_content"
-                  android:layout_marginStart="@dimen/margin_10dp"
-                  android:layout_marginEnd="@dimen/margin_10dp"
-                  android:textSize="20sp"
-                  android:textColor="@color/white"
-                  android:fontFamily="@font/poppin_medium"
                   android:layout_height="wrap_content"
-                  android:text="Nationwide Confirmed Cases"/>
+                  android:layout_below="@id/filter_container"
+                  android:layout_marginEnd="@dimen/margin_10dp"
+                  android:layout_marginStart="@dimen/margin_10dp"
+                  android:layout_marginTop="7dp"
+                  android:fontFamily="@font/poppin_medium"
+                  android:text="@{String.format(@string/confirmed_cases_text, countryFrag.countryTitle)}"
+                  android:textColor="@color/white"
+                  android:textSize="20sp"
+                  />
 
               <com.github.mikephil.charting.charts.LineChart
                   android:id="@+id/line_chart"
@@ -537,7 +558,7 @@
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               android:text="@{String.format(@string/last_update_my, Utils.getLongDate(countryViewModel.liveData.updated))}"
-              android:textSize="13sp"
+              android:textSize="12sp"
               android:fontFamily="@font/poppin_regular"
               android:layout_below="@id/recycler_card_container"/>
 
@@ -546,7 +567,7 @@
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               android:text="Source JHUCSSE, DOH"
-              android:textSize="13sp"
+              android:textSize="12sp"
               android:layout_marginBottom="@dimen/margin_10dp"
               android:fontFamily="@font/poppin_regular"
               android:layout_below="@id/last_update"/>
@@ -581,7 +602,7 @@
                   android:id="@+id/clickable_tv"
                   android:clickable="true"
                   android:focusable="true"
-                  android:onClick="@{(v) -> listener.onViewAllRegions()}"
+                  android:onClick="@{(v) -> listener.onViewAllRegions(v)}"
                   android:layout_width="wrap_content"
                   android:layout_height="wrap_content"
                   android:text="View All"
@@ -606,7 +627,6 @@
           </androidx.cardview.widget.CardView>
         </RelativeLayout>
       </ScrollView>
-  </RelativeLayout>
 
   <data>
     <import
@@ -620,6 +640,10 @@
     <variable
         name="countryViewModel"
         type="com.force.codes.project.app.presentation_layer.views.viewmodels.MyCountryViewModel"/>
+    <variable
+        name="countryFrag"
+        type="com.force.codes.project.app.presentation_layer.views.fragments.viewpager.MyCountryFragment"/>
+        />
   </data>
 </layout>
 

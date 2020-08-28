@@ -1,11 +1,8 @@
 package com.force.codes.project.app.presentation_layer.views.viewholders;
 
-import android.view.View;
 import androidx.annotation.NonNull;
-import androidx.databinding.library.baseAdapters.BR;
 import androidx.recyclerview.widget.RecyclerView;
-import com.force.codes.project.app.data_layer.model.philippines.DataItem;
-import com.force.codes.project.app.data_layer.model.philippines.TopRegions;
+import com.force.codes.project.app.data_layer.model.doh_data_drop_csv.PHProvinces;
 import com.force.codes.project.app.databinding.LayoutTopRegionsBinding;
 
 public class TopRegionsViewHolder extends RecyclerView.ViewHolder {
@@ -16,8 +13,8 @@ public class TopRegionsViewHolder extends RecyclerView.ViewHolder {
     this.binding = binding;
   }
 
-  public void setBinding(DataItem item) {
-    binding.setDataItem(item);
+  public void setBinding(PHProvinces provinces) {
+    binding.setPhProvinces(provinces);
     binding.invalidateAll();
   }
 }

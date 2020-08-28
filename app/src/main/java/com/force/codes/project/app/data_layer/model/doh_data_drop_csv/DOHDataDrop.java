@@ -1,9 +1,9 @@
-package com.force.codes.project.app.data_layer.model.philippines;
+package com.force.codes.project.app.data_layer.model.doh_data_drop_csv;
 
 import java.util.List;
 import com.google.gson.annotations.SerializedName;
 
-public class Philippines{
+public class DOHDataDrop {
 
 	@SerializedName("data")
 	private List<DataFromDayOne> data;

@@ -185,7 +185,7 @@ dependencies {
 
     implementation 'com.github.arcadefire:nice-spinner:1.4.4'
 
-    implementation "androidx.vectordrawable:vectordrawable-seekable:1.0.0-alpha01"
+    implementation "androidx.vectordrawable:vectordrawable-seekable:1.0.0-alpha02"
 
     implementation 'com.ogaclejapan.smarttablayout:library:2.0.0@aar'
 
@@ -195,4 +195,12 @@ dependencies {
     implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
 
     implementation 'com.github.razerdp:AnimatedPieView:1.2.6'
+
+    implementation 'com.orhanobut:dialogplus:1.11@aar'
+
+    // Material Dialog Library
+    implementation 'com.shreyaspatil:MaterialDialog:2.1'
+
+    // Material Design Library
+    implementation 'com.google.android.material:material:1.0.0'
 }

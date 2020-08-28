@@ -4,16 +4,15 @@ import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-import com.force.codes.project.app.data_layer.model.philippines.DataItem;
-import com.force.codes.project.app.data_layer.model.philippines.TopRegions;
+import com.force.codes.project.app.data_layer.model.doh_data_drop_csv.PHProvinces;
 import com.force.codes.project.app.databinding.LayoutTopRegionsBinding;
 import com.force.codes.project.app.presentation_layer.views.viewholders.TopRegionsViewHolder;
 import java.util.List;
 
 public class TopRegionsAdapter extends RecyclerView.Adapter<TopRegionsViewHolder> {
-  private final List<DataItem> data;
+  private final List<PHProvinces> data;
 
-  public TopRegionsAdapter(List<DataItem> data) {
+  public TopRegionsAdapter(List<PHProvinces> data) {
     this.data = data;
   }
 
@@ -26,7 +25,7 @@ public class TopRegionsAdapter extends RecyclerView.Adapter<TopRegionsViewHolder
   }
 
   @Override public void onBindViewHolder(@NonNull TopRegionsViewHolder holder, int position) {
-    DataItem item = data.get(position);
+    PHProvinces item = data.get(position);
 
     holder.setBinding(item);
   }

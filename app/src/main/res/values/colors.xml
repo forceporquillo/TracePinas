@@ -20,4 +20,7 @@
     <color name="text_enabled">#FFFFFF</color>
     <color name="status_bar">#000000</color>
     <color name="red">#FF3838</color>
+    <color name="test_color">#6A75CA</color>
+    <color name="infected_color">#C96C15</color>
+    <color name="selector">#F8F8F8</color>
 </resources>

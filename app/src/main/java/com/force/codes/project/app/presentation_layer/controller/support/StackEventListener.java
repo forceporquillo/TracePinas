@@ -5,7 +5,7 @@ import android.view.View;
 public interface StackEventListener {
 
   interface ListActivityListener {
-    void onStartListViewActivity();
+    void onStartListViewActivity(View view);
   }
 
   interface BottomItemListener {
