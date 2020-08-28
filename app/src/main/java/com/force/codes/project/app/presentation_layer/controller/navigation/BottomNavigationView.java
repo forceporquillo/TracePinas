@@ -85,8 +85,8 @@ public class BottomNavigationView {
           resources.getString(R.string.statistics),
           resources.getString(R.string.news),
           resources.getString(R.string.map),
-          resources.getString(R.string.help),
-          resources.getString(R.string.caution),
+          resources.getString(R.string.facilities),
+          resources.getString(R.string.help)
       };
     }
 
@@ -94,7 +94,7 @@ public class BottomNavigationView {
         { R.drawable.ic_stats, R.drawable.ic_fill_stats },
         { R.drawable.ic_news, R.drawable.ic_fill_news },
         { R.drawable.ic_map, R.drawable.ic_fill_map },
-        { R.drawable.ic_heart, R.drawable.ic_fill_heart },
+        { R.drawable.ic_hospital, R.drawable.ic_fill_hospital },
         { R.drawable.ic_phone, R.drawable.ic_fill_phone }
     };
 
