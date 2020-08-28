@@ -185,7 +185,7 @@ dependencies {
 
     implementation 'com.github.arcadefire:nice-spinner:1.4.4'
 
-    implementation "androidx.vectordrawable:vectordrawable-seekable:1.0.0-alpha01"
+    implementation "androidx.vectordrawable:vectordrawable-seekable:1.0.0-alpha02"
 
     implementation 'com.ogaclejapan.smarttablayout:library:2.0.0@aar'
 
