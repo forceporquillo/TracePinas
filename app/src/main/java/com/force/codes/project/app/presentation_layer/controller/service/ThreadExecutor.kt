@@ -36,7 +36,7 @@ class ThreadExecutor private constructor(
     return diskIO
   }
 
-  fun delayUIThread(): Executor {
+  fun thisUIThread(): Executor {
     return delay
   }
 
@@ -55,7 +55,9 @@ class ThreadExecutor private constructor(
     }
   }
 
-  private class ThreadExecutor(private val delay: Int) : Executor {
+  private class ThreadExecutor(
+    private val delay: Int,
+  ) : Executor {
     private val handler = Handler(Looper.getMainLooper())
     override fun execute(command: Runnable) {
       handler.postDelayed(command, delay.toLong())
