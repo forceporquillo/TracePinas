@@ -140,7 +140,7 @@ class StatisticsFragment : Fragment(),
       ThreadExecutor(
           100
       )
-          .delayUIThread()
+          .thisUIThread()
           .execute {
             banner.visibility = View.VISIBLE
           }
