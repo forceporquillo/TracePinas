@@ -14,7 +14,7 @@ import java.util.List;
 public interface ListViewDao {
   @Query(DatabaseConstants.QUERY_LIST_VIEW_DATA)
   Flowable<List<CountryDetails>>
-  getCountryDetails(boolean cases);
+  queryListViewBy(boolean cases);
 
   @Insert(onConflict = OnConflictStrategy.REPLACE)
   void insertSelected(PrimarySelected selected);
