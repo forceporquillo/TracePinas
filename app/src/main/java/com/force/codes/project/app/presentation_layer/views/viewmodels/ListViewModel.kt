@@ -14,20 +14,20 @@ import javax.inject.Inject
 class ListViewModel
 @Inject internal constructor(
   private val listViewDao: ListViewDao,
-  private val threadExecutor: ThreadExecutor
+  private val threadExecutor: ThreadExecutor,
 ) : BaseViewModel() {
 
-  private val liveData: MutableLiveData<List<CountryDetails>> by lazy {
+  private val liveData: MutableLiveData<List<CountryDetails?>> by lazy {
     MutableLiveData()
   }
 
-  val getLiveData: MutableLiveData<List<CountryDetails>>
+  val getLiveData: MutableLiveData<List<CountryDetails?>>
     get() {
       getListLiveData(true)
       return liveData
     }
 
-  fun insertSelectedCountry(country: String) {
+  fun setPrimarySelected(country: String) {
     threadExecutor.diskIO()
         .execute {
           listViewDao.insertSelected(
@@ -41,16 +41,15 @@ class ListViewModel
   }
 
   private fun getListLiveData(
-    defaultOrder: Boolean
-  ): MutableLiveData<List<CountryDetails>> {
-    super.addToUnsubscribed(listViewDao
-        .queryListViewBy(defaultOrder)
+    defaultOrder: Boolean,
+  ): MutableLiveData<List<CountryDetails?>> {
+    val disposable = listViewDao.queryListViewBy(defaultOrder)
         .observeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
-        .subscribe(
-            { value: List<CountryDetails> ->
-              liveData.setValue(value)
-            }) { t: Throwable? -> Timber.e(t) })
+        .subscribe({
+          liveData.value = it
+        }) { t: Throwable -> Timber.e(t) }
+    addToUnsubscribed(disposable)
     return liveData
   }
 }
