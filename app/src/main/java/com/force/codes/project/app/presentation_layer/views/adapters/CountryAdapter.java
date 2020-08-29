@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.paging.PagedListAdapter;
+import androidx.recyclerview.widget.AsyncListDiffer;
 import androidx.recyclerview.widget.DiffUtil;
 import com.force.codes.project.app.data_layer.model.country.CountryDetails;
 import com.force.codes.project.app.databinding.CountryRowsBinding;
@@ -20,9 +21,9 @@ import org.jetbrains.annotations.NotNull;
 
 public class CountryAdapter extends PagedListAdapter<CountryDetails, CountryViewHolder> {
   private static final int HEADER_TOP = 0;
-  private StackEventListener.onGetAdapterPosition callback;
+  private StackEventListener.OnGetAdapterPosition callback;
 
-  public CountryAdapter(StackEventListener.onGetAdapterPosition callback) {
+  public CountryAdapter(StackEventListener.OnGetAdapterPosition callback) {
     super(DIFF_CALLBACK);
     this.callback = callback;
   }
