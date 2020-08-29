@@ -25,6 +25,7 @@ public class MyCountryViewModel extends BaseViewModel {
   private final MutableLiveData<String> stringLiveData;
   private final MutableLiveData<DOHDataDrop> phLiveData;
   private final MutableLiveData<TopRegions> topRegionsLiveData;
+  private final MutableLiveData<String> data1 = new MutableLiveData<>();
 
   @Inject
   public MyCountryViewModel(MyCountryRepository repository) {
@@ -45,7 +46,7 @@ public class MyCountryViewModel extends BaseViewModel {
     return liveData;
   }
 
-  public MutableLiveData<DOHDataDrop> getPhData() {
+  public MutableLiveData<DOHDataDrop> getDOHDataDrop() {
     Disposable disposable = repository.getPhData()
         .subscribeOn(Schedulers.computation())
         .observeOn(AndroidSchedulers.mainThread())
@@ -54,7 +55,7 @@ public class MyCountryViewModel extends BaseViewModel {
     return phLiveData;
   }
 
-  public MutableLiveData<TopRegions> getTopRegions() {
+  public MutableLiveData<TopRegions> getTopRegionsInPh() {
     Disposable disposable = repository.getTopRegions()
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
@@ -63,7 +64,7 @@ public class MyCountryViewModel extends BaseViewModel {
     return topRegionsLiveData;
   }
 
-  public MutableLiveData<String> getStringLiveData() {
+  public MutableLiveData<String> getLastSelectedCountry() {
     return stringLiveData;
   }
 
