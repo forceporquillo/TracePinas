@@ -17,10 +17,10 @@ import com.force.codes.project.app.presentation_layer.controller.support.StackEv
 
 public class ListViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
   private ListViewItemsBinding binding;
-  private StackEventListener.onGetAdapterPosition callback;
+  private StackEventListener.OnGetAdapterPosition callback;
 
   public ListViewHolder(@NonNull ListViewItemsBinding binding,
-      StackEventListener.onGetAdapterPosition callback) {
+      StackEventListener.OnGetAdapterPosition callback) {
     super(binding.getRoot());
     this.binding = binding;
     this.callback = callback;

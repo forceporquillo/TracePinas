@@ -9,28 +9,26 @@ package com.force.codes.project.app.presentation_layer.views.viewholders;
 import android.content.res.Resources;
 import android.view.View;
 import androidx.databinding.BindingAdapter;
-import androidx.databinding.library.baseAdapters.BR;
 import androidx.recyclerview.widget.RecyclerView;
-import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
+import com.force.codes.project.app.BR;
 import com.force.codes.project.app.R;
 import com.force.codes.project.app.data_layer.model.country.CountryDetails;
 import com.force.codes.project.app.databinding.CountryRowsBinding;
 import com.force.codes.project.app.presentation_layer.controller.support.GlideApp;
-import com.force.codes.project.app.presentation_layer.controller.support.GlideAppImpl;
 import com.force.codes.project.app.presentation_layer.controller.support.StackEventListener;
 import com.force.codes.project.app.presentation_layer.controller.utils.Utils;
 import de.hdodenhof.circleimageview.CircleImageView;
 import org.jetbrains.annotations.NotNull;
 
 public class CountryViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-  private final StackEventListener.onGetAdapterPosition callback;
+  private final StackEventListener.OnGetAdapterPosition callback;
   private final CountryRowsBinding binding;
 
   public CountryViewHolder(
       @NotNull final CountryRowsBinding binding,
-      final StackEventListener.onGetAdapterPosition callback
+      final StackEventListener.OnGetAdapterPosition callback
   ) {
     super(binding.getRoot());
     this.binding = binding;

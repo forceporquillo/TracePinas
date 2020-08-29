@@ -12,7 +12,7 @@ public interface StackEventListener {
     void onBottomBarItemSelected(final int itemId);
   }
 
-  interface onGetAdapterPosition {
+  interface OnGetAdapterPosition {
     void onItemClicked(final int index);
   }
 

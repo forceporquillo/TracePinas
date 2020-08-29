@@ -25,14 +25,13 @@ import com.force.codes.project.app.presentation_layer.views.adapters.CountryAdap
 import com.force.codes.project.app.presentation_layer.views.base.BaseFragment;
 import com.force.codes.project.app.presentation_layer.views.factory.ViewModelProviderFactory;
 import com.force.codes.project.app.presentation_layer.views.fragments.bottombar.HelpCenterFragment;
-import com.force.codes.project.app.presentation_layer.views.fragments.bottombar.StatisticsFragment;
 import com.force.codes.project.app.presentation_layer.views.viewmodels.WorldwideViewModel;
 import com.github.pwittchen.reactivenetwork.library.rx2.Connectivity;
 import javax.inject.Inject;
 import org.jetbrains.annotations.NotNull;
 
 public class WorldwideFragment extends BaseFragment implements
-    StackEventListener.onGetAdapterPosition, View.OnClickListener,
+    StackEventListener.OnGetAdapterPosition, View.OnClickListener,
     StackEventListener.LiveStateResponse {
 
   @Inject

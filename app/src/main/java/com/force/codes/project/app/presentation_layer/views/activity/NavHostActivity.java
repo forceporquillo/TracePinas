@@ -22,21 +22,25 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import com.force.codes.project.app.R;
 import com.force.codes.project.app.databinding.ActivityNavHostBinding;
 import com.force.codes.project.app.databinding.BottombarLayoutBinding;
-import com.force.codes.project.app.presentation_layer.controller.navigation.BottomNavigationView;
-import com.force.codes.project.app.presentation_layer.controller.support.StackEventListener;
-import com.force.codes.project.app.presentation_layer.controller.navigation.BottomBarItem;
 import com.force.codes.project.app.presentation_layer.controller.navigation.BottomBar;
-import com.force.codes.project.app.presentation_layer.controller.service.ThreadExecutor;
+import com.force.codes.project.app.presentation_layer.controller.navigation.BottomBarItem;
+import com.force.codes.project.app.presentation_layer.controller.navigation.BottomNavigationView;
 import com.force.codes.project.app.presentation_layer.controller.navigation.BottomNavigationView.BottomBarDrawableArray;
+import com.force.codes.project.app.presentation_layer.controller.service.ThreadExecutor;
+import com.force.codes.project.app.presentation_layer.controller.support.StackEventListener;
 import com.force.codes.project.app.presentation_layer.views.base.BaseActivity;
+import com.force.codes.project.app.presentation_layer.views.factory.ViewModelProviderFactory;
 import com.force.codes.project.app.presentation_layer.views.fragments.bottombar.HelpCenterFragment;
 import com.force.codes.project.app.presentation_layer.views.fragments.bottombar.LiveDataFragment;
 import com.force.codes.project.app.presentation_layer.views.fragments.bottombar.MapFragment;
 import com.force.codes.project.app.presentation_layer.views.fragments.bottombar.NewsFragment;
 import com.force.codes.project.app.presentation_layer.views.fragments.bottombar.StatisticsFragment;
+import com.force.codes.project.app.presentation_layer.views.viewmodels.NavHostViewModel;
+import javax.inject.Inject;
 import org.jetbrains.annotations.NotNull;
 
 import static com.force.codes.project.app.presentation_layer.controller.navigation.BottomNavigationView.BottomBarDrawableArray.DRAWABLE_ICONS;
@@ -66,18 +70,26 @@ public class NavHostActivity extends BaseActivity
 
   private ActivityNavHostBinding binding;
 
+  @Inject ViewModelProviderFactory factory;
+
   @Override protected void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
+    setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
     binding = DataBindingUtil.setContentView(this, R.layout.activity_nav_host);
     final BottombarLayoutBinding layoutBinding = binding.bottomBar;
     final BottomBar bottomBar = new BottomBar(layoutBinding.recyclerView, this, this);
+
     if (savedInstanceState != null) {
       fragment = getSupportFragmentManager()
           .getFragment(savedInstanceState, SAVE_FRAGMENT_STATE);
     }
-    new ThreadExecutor(savedInstanceState == null ? 3000 : 0)
-        .thisUIThread().execute(() -> {
+
+    if (IS_FRESH_INSTALL) {
+      NavHostViewModel viewModel = new ViewModelProvider(this, factory).get(NavHostViewModel.class);
+      viewModel.insertDefaultCountryAtFirstInstall(getString(R.string.default_country));
+    }
+
+    new ThreadExecutor(savedInstanceState == null ? 3000 : 0).thisUIThread().execute(() -> {
       BottomNavigationView.setSupportFragmentManager(getSupportFragmentManager());
       setPrimaryFragment(savedInstanceState);
       setBottomBarItems(bottomBar, savedInstanceState);
@@ -93,11 +105,11 @@ public class NavHostActivity extends BaseActivity
       throw new IllegalArgumentException(fragment.getClass().getSimpleName()
           .concat(" is not present in BottomDrawableArray.ListStack index " + index));
     }
-    if (FRAGMENT_HASHCODE[0] == FRAGMENT_HASHCODE[1]) {
-      return false;
+    if (FRAGMENT_HASHCODE[0] != FRAGMENT_HASHCODE[1]) {
+      FRAGMENT_HASHCODE[0] = FRAGMENT_HASHCODE[1];
+      return true;
     }
-    FRAGMENT_HASHCODE[0] = FRAGMENT_HASHCODE[1];
-    return true;
+    return false;
   }
 
   private static BottomBarItem[] bottomItems(final Context context) {
@@ -161,11 +173,8 @@ public class NavHostActivity extends BaseActivity
   final void setPrimaryFragment(final Bundle savedInstanceState) {
     if (savedInstanceState == null) {
       setDelegateFragment(StatisticsFragment.newInstance(),
-          FRAGMENT_HASHCODE[0] = STATISTICS
-      );
-      return;
+          FRAGMENT_HASHCODE[0] = STATISTICS);
     }
-    super.setFragment(fragment).commit();
   }
 
   @Override protected void onResume() {
