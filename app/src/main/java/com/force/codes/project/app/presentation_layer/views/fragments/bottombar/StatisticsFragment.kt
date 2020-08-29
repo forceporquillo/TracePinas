@@ -65,16 +65,6 @@ class StatisticsFragment : Fragment(),
     }
   }
 
-  override fun onPause() {
-    super.onPause()
-    Timber.e("onPause called")
-  }
-
-  override fun onDestroy() {
-    super.onDestroy()
-    Timber.e("onDestroy called")
-  }
-
   override fun onCreateView(
     inflater: LayoutInflater,
     container: ViewGroup?,
