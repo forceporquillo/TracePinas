@@ -43,7 +43,8 @@ class ListViewModel
   private fun getListLiveData(
     defaultOrder: Boolean,
   ): MutableLiveData<List<CountryDetails?>> {
-    val disposable = listViewDao.queryListViewBy(defaultOrder)
+    val disposable = listViewDao
+        .queryListViewBy(defaultOrder)
         .observeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe({
