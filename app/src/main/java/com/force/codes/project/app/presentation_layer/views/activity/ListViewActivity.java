@@ -60,7 +60,7 @@ public class ListViewActivity extends BaseActivity
 
   @Override protected void onStart() {
     super.onStart();
-    viewModel.getListMutableLiveData(true).observe(this, this::setRecyclerView);
+    viewModel.getGetLiveData().observe(this, this::setRecyclerView);
   }
 
   final void setRecyclerView(final List<CountryDetails> details) {
@@ -84,7 +84,7 @@ public class ListViewActivity extends BaseActivity
         order = false;
         break;
     }
-    viewModel.setListViewOrder(order);
+    viewModel.orderListViewBy(order);
     binding.invalidateAll();
     return super.onOptionsItemSelected(item);
   }
@@ -108,6 +108,8 @@ public class ListViewActivity extends BaseActivity
 
   @Override public void onItemClicked(int index) {
     viewModel.insertSelectedCountry(details.get(index).getCountry());
-    this.finish();
+    finish();
   }
+
+
 }
