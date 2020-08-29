@@ -5,19 +5,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
+import androidx.annotation.Nullable;
 import com.force.codes.project.app.R;
 import com.force.codes.project.app.data_layer.model.doh_data_drop_csv.PHProvinces;
 import java.util.ArrayList;
 import java.util.List;
 
 public class TopRegionsDialogAdapter extends BaseAdapter {
-  private List<PHProvinces> provinces = new ArrayList<>();
+  private List<PHProvinces> provinces;
 
-  public TopRegionsDialogAdapter(final List<PHProvinces> provinces) {
-    if (provinces != null) {
-      provinces.add(0, new PHProvinces("ALL REGIONS"));
-      this.provinces.addAll(provinces);
-    }
+  public TopRegionsDialogAdapter(@Nullable final List<PHProvinces> provinces) {
+    this.provinces = provinces;
   }
 
   @Override public View getView(int position, View convertView, ViewGroup parent) {
@@ -56,5 +54,4 @@ public class TopRegionsDialogAdapter extends BaseAdapter {
   @Override public long getItemId(int position) {
     return position;
   }
-
 }
