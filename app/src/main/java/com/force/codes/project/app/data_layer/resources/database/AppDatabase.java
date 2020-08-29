@@ -47,4 +47,6 @@ public abstract class AppDatabase extends RoomDatabase {
   public abstract MyCountryDao myCountryDao();
 
   public abstract ListViewDao listViewDao();
+
+  public abstract NavHostDao navHostDao();
 }

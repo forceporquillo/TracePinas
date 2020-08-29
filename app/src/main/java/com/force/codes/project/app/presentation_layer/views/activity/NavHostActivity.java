@@ -77,7 +77,7 @@ public class NavHostActivity extends BaseActivity
           .getFragment(savedInstanceState, SAVE_FRAGMENT_STATE);
     }
     new ThreadExecutor(savedInstanceState == null ? 3000 : 0)
-        .delayUIThread().execute(() -> {
+        .thisUIThread().execute(() -> {
       BottomNavigationView.setSupportFragmentManager(getSupportFragmentManager());
       setPrimaryFragment(savedInstanceState);
       setBottomBarItems(bottomBar, savedInstanceState);

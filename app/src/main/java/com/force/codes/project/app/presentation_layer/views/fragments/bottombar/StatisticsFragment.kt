@@ -65,16 +65,6 @@ class StatisticsFragment : Fragment(),
     }
   }
 
-  override fun onPause() {
-    super.onPause()
-    Timber.e("onPause called")
-  }
-
-  override fun onDestroy() {
-    super.onDestroy()
-    Timber.e("onDestroy called")
-  }
-
   override fun onCreateView(
     inflater: LayoutInflater,
     container: ViewGroup?,
@@ -140,7 +130,7 @@ class StatisticsFragment : Fragment(),
       ThreadExecutor(
           100
       )
-          .delayUIThread()
+          .thisUIThread()
           .execute {
             banner.visibility = View.VISIBLE
           }

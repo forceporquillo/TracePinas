@@ -142,7 +142,7 @@ public class WorldwideFragment extends BaseFragment implements
   }
 
   @Override public void onItemClicked(int index) {
-    Fragment fragment = StatisticsFragment.newInstance();
+    //Fragment fragment = StatisticsFragment.newInstance();
   }
 
   @Override public void onErrorResponse(boolean isError) {

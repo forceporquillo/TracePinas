@@ -15,6 +15,7 @@ import com.force.codes.project.app.presentation_layer.views.viewmodels.ListViewM
 import com.force.codes.project.app.presentation_layer.views.viewmodels.LiveDataViewModel;
 import com.force.codes.project.app.presentation_layer.views.viewmodels.MapViewModel;
 import com.force.codes.project.app.presentation_layer.views.viewmodels.MyCountryViewModel;
+import com.force.codes.project.app.presentation_layer.views.viewmodels.NavHostViewModel;
 import com.force.codes.project.app.presentation_layer.views.viewmodels.NewsViewModel;
 import com.force.codes.project.app.presentation_layer.views.viewmodels.OverAllViewModel;
 import com.force.codes.project.app.presentation_layer.views.viewmodels.WorldwideViewModel;
@@ -61,4 +62,9 @@ public abstract class ViewModelModule {
   @IntoMap
   @ViewModelKey(ListViewModel.class)
   abstract ViewModel providesListViewModel(ListViewModel listViewModel);
+
+  @Binds
+  @IntoMap
+  @ViewModelKey(NavHostViewModel.class)
+  abstract ViewModel providesNavHostViewModel(NavHostViewModel navHostViewModel);
 }

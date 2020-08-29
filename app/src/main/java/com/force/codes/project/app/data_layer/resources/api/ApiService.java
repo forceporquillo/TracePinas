@@ -55,5 +55,5 @@ public interface ApiService {
   Flowable<DOHDataDrop> getPhDataSet(@Url String url);
 
   @GET
-  Flowable<TopRegions> getTopRegions(@Url String ur);
+  Flowable<TopRegions> getPhTopAffectedRegions(@Url String ur);
 }
