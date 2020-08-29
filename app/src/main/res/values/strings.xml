@@ -15,7 +15,7 @@
   <string name="news">News</string>
   <string name="map">Map</string>
   <string name="help">Help</string>
-  <string name="caution">Caution</string>
+  <string name="facilities">Facilities</string>
   <string name="layout_binding_npe">Layout Binding must be instantiated from\u0020</string>
   <string name="deaths_cases">Deaths</string>
   <string name="confirmed_cases">Confirmed</string>
