@@ -11,6 +11,7 @@ import com.force.codes.project.app.data_layer.repositories.implementations.ListV
 import com.force.codes.project.app.data_layer.repositories.implementations.LiveOverviewRepositoryImpl;
 import com.force.codes.project.app.data_layer.repositories.implementations.MapRepositoryImpl;
 import com.force.codes.project.app.data_layer.repositories.implementations.MyCountryRepositoryImpl;
+import com.force.codes.project.app.data_layer.repositories.implementations.NavHostRepositoryImpl;
 import com.force.codes.project.app.data_layer.repositories.implementations.NewsRepositoryImpl;
 import com.force.codes.project.app.data_layer.repositories.implementations.OverAllRepositoryImpl;
 import com.force.codes.project.app.data_layer.repositories.implementations.WorldwideRepositoryImpl;
@@ -18,6 +19,7 @@ import com.force.codes.project.app.data_layer.repositories.interfaces.ListViewRe
 import com.force.codes.project.app.data_layer.repositories.interfaces.LiveOverviewRepository;
 import com.force.codes.project.app.data_layer.repositories.interfaces.MapRepository;
 import com.force.codes.project.app.data_layer.repositories.interfaces.MyCountryRepository;
+import com.force.codes.project.app.data_layer.repositories.interfaces.NavHostRepository;
 import com.force.codes.project.app.data_layer.repositories.interfaces.NewsRepository;
 import com.force.codes.project.app.data_layer.repositories.interfaces.OverAllRepository;
 import com.force.codes.project.app.data_layer.repositories.interfaces.WorldwideRepository;
@@ -54,4 +56,7 @@ public abstract class RepositoryModule {
   abstract ListViewRepository
   ListViewRepository(ListViewRepositoryImpl repository);
 
+  @Binds
+  abstract NavHostRepository
+  NavHostRepository(NavHostRepositoryImpl repository);
 }
