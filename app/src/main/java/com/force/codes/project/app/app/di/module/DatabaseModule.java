@@ -17,6 +17,7 @@ import com.force.codes.project.app.data_layer.resources.database.ListViewDao;
 import com.force.codes.project.app.data_layer.resources.database.LiveDataDao;
 import com.force.codes.project.app.data_layer.resources.database.MapDao;
 import com.force.codes.project.app.data_layer.resources.database.MyCountryDao;
+import com.force.codes.project.app.data_layer.resources.database.NavHostDao;
 import com.force.codes.project.app.data_layer.resources.database.NewsDao;
 import com.force.codes.project.app.data_layer.resources.database.WorldwideDao;
 import dagger.Module;
@@ -74,5 +75,11 @@ public class DatabaseModule {
   @Provides
   static ListViewDao providesListViewDao(AppDatabase database) {
     return database.listViewDao();
+  }
+
+  @Singleton
+  @Provides
+  static NavHostDao providesNavHostDao(AppDatabase database) {
+    return database.navHostDao();
   }
 }
