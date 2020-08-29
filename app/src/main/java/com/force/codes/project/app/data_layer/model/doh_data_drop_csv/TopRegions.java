@@ -6,16 +6,16 @@ import com.google.gson.annotations.SerializedName;
 public class TopRegions{
 
 	@SerializedName("data")
-	private List<PHProvinces> data;
+	private List<PHProvinces> provinces;
 
-  public TopRegions(List<PHProvinces> data) {
+  public TopRegions(List<PHProvinces> provinces) {
   }
 
-  public void setData(List<PHProvinces> data){
-		this.data = data;
+  public void setProvinces(List<PHProvinces> provinces){
+		this.provinces = provinces;
 	}
 
-	public List<PHProvinces> getData(){
-		return data;
+	public List<PHProvinces> getProvinces(){
+		return provinces;
 	}
 }
