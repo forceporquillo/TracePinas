@@ -22,7 +22,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.RelativeLayout;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -37,6 +36,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.force.codes.project.app.BR;
 import com.force.codes.project.app.BuildConfig;
 import com.force.codes.project.app.R;
+import com.force.codes.project.app.app.di.module.ViewModelProviderFactory;
 import com.force.codes.project.app.data_layer.model.news.ArticlesItem;
 import com.force.codes.project.app.data_layer.model.twitter.TwitterData;
 import com.force.codes.project.app.databinding.FragmentNewsBinding;
@@ -48,7 +48,6 @@ import com.force.codes.project.app.presentation_layer.views.adapters.HeaderNewsA
 import com.force.codes.project.app.presentation_layer.views.adapters.HotNewsAdapter;
 import com.force.codes.project.app.presentation_layer.views.adapters.NewsGroupAdapter;
 import com.force.codes.project.app.presentation_layer.views.base.BaseFragment;
-import com.force.codes.project.app.presentation_layer.views.factory.ViewModelProviderFactory;
 import com.force.codes.project.app.presentation_layer.views.fragments.ReadNewsFragment;
 import com.force.codes.project.app.presentation_layer.views.viewmodels.NewsViewModel;
 import com.github.pwittchen.reactivenetwork.library.rx2.Connectivity;
@@ -57,8 +56,6 @@ import java.util.Objects;
 import javax.inject.Inject;
 import org.jetbrains.annotations.NotNull;
 import timber.log.Timber;
-
-import static com.force.codes.project.app.presentation_layer.controller.utils.Utils.animationUtils;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -115,7 +112,6 @@ public class NewsFragment extends BaseFragment implements
     super.onCreate(savedInstanceState);
     if (savedInstanceState == null) {
       connectivity = getNetworkUtils();
-      hotNewsAdapter = new HotNewsAdapter(this);
       headerNewsAdapter = new HeaderNewsAdapter(this);
       newsViewModel = new ViewModelProvider(this, factory).get(NewsViewModel.class);
     }
@@ -132,37 +128,29 @@ public class NewsFragment extends BaseFragment implements
     connectivity.startInternetConnectivity();
   }
 
-  @Override public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-    super.onActivityCreated(savedInstanceState);
-    if (getArguments() != null && getArguments().getBoolean(BOOLEAN_ARGS)) {
-      if (observableBoolean.get()) {
-        newsViewModel.forceUpdate();
-        Timber.d("updating...");
-      }
-    }
-  }
-
   @RequiresApi(api = Build.VERSION_CODES.M) @Override
   public void onStart() {
     super.onStart();
     startListeningNetwork();
-    new ThreadExecutor(500).delayUIThread().execute(() -> {
+    newsViewModel.forceUpdate();
+    new ThreadExecutor(100).getCurrentThread().execute(() -> {
       newsViewModel.getTwitterLiveData().observe(this, twitterDataPagedList -> {
         if (isPagedListEmpty(twitterDataPagedList)) {
           headerNewsAdapter.submitList((PagedList<TwitterData>)
-              (twitterDataList = twitterDataPagedList)
-          );
+              (this.twitterDataList = twitterDataPagedList));
           binding.swipeFresh.setRefreshing(false);
         }
       });
 
       newsViewModel.getNewsLiveData().observe(this, articlesItems -> {
         if (isPagedListEmpty(articlesItems)) {
-          hotNewsAdapter.submitList((PagedList<ArticlesItem>)
-              (articlesItemList = articlesItems)
-          );
+          //hotNewsAdapter.submitList((PagedList<ArticlesItem>)
+          //    (this.articlesItemList = articlesItems));
+          hotNewsAdapter = new HotNewsAdapter(this, articlesItems);
           binding.swipeFresh.setRefreshing(false);
         }
+
+        setRecyclerView();
       });
     });
   }
@@ -191,7 +179,6 @@ public class NewsFragment extends BaseFragment implements
   @Override public void onViewCreated(@NonNull View view,
       @Nullable Bundle savedInstanceState) {
     super.onViewCreated(view, savedInstanceState);
-    setRecyclerView();
     setSwipeRefresh(view);
     if (savedInstanceState != null) {
       savedInstanceState.getParcelableArrayList(RECENT_TWEETS_ARGS);
@@ -201,9 +188,7 @@ public class NewsFragment extends BaseFragment implements
 
   @Override
   public void onRefresh() {
-    if (isConnected) {
-      newsViewModel.forceUpdate();
-    }
+    newsViewModel.forceUpdate();
   }
 
   @Override
@@ -284,27 +269,27 @@ public class NewsFragment extends BaseFragment implements
   private static final int DELAY_MILL = 100;
 
   @Override public void onNetworkConnectionChanged(Connectivity connectivity) {
-    final RelativeLayout networkBanner = binding.network.relativeLayout;
-    if (isConnected = !connectivity.available()) {
-      networkBanner.setAnimation(animationUtils(true, getContext()));
-      new ThreadExecutor(DELAY_MILL)
-          .delayUIThread()
-          .execute(() -> {
-            networkBanner.setVisibility(View.VISIBLE);
-            Timber.i("Thread : " +
-                Thread.currentThread() +
-                "sleeps for %s", DELAY_MILL
-            );
-          });
-    } else {
-      networkBanner.setAnimation(animationUtils(false, getContext()));
-      networkBanner.setVisibility(View.GONE);
-    }
-    // refresh UI state since we update the network views.
-    binding.executePendingBindings();
+    //final RelativeLayout networkBanner = binding.network.relativeLayout;
+    //if (isConnected = !connectivity.available()) {
+    //  networkBanner.setAnimation(animationUtils(true, getContext()));
+    //  new ThreadExecutor(DELAY_MILL)
+    //      .delayUIThread()
+    //      .execute(() -> {
+    //        networkBanner.setVisibility(View.VISIBLE);
+    //        Timber.i("Thread : " +
+    //            Thread.currentThread() +
+    //            "sleeps for %s", DELAY_MILL
+    //        );
+    //      });
+    //} else {
+    //  networkBanner.setAnimation(animationUtils(false, getContext()));
+    //  networkBanner.setVisibility(View.GONE);
+    //}
+    //// refresh UI state since we update the network views.
+    //binding.executePendingBindings();
   }
 
   @Override public void onInternetConnectionChanged(Boolean connected) {
-   observableBoolean.set(connected);
+   //observableBoolean.set(connected);
   }
 }

@@ -7,13 +7,13 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.force.codes.project.app.R
+import com.force.codes.project.app.app.di.module.ViewModelProviderFactory
 import com.force.codes.project.app.data_layer.model.country.CountryDetails
 import com.force.codes.project.app.databinding.ActivityListViewBinding
 import com.force.codes.project.app.presentation_layer.controller.layout.ItemDecoration
 import com.force.codes.project.app.presentation_layer.controller.support.StackEventListener.OnGetAdapterPosition
 import com.force.codes.project.app.presentation_layer.views.adapters.ListViewAdapter
 import com.force.codes.project.app.presentation_layer.views.base.BaseActivity
-import com.force.codes.project.app.presentation_layer.views.factory.ViewModelProviderFactory
 import com.force.codes.project.app.presentation_layer.views.viewmodels.ListViewModel
 import timber.log.Timber
 import javax.inject.Inject
