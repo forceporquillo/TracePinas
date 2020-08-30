@@ -5,7 +5,7 @@
         statistics information</string>
 
   <string name="countries_affected">COUNTRIES AFFECTED</string>
-  <string name="dummy">Philippines</string>
+  <string name="default_country">Philippines</string>
   <string name="dummy_continent">ASIA</string>
 
   <string name="worldwide_cases">Worldwide</string>
