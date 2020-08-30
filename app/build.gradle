@@ -1,6 +1,8 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+
 android {
     compileSdkVersion 29
     buildToolsVersion "29.0.3"
@@ -70,6 +72,7 @@ android {
 }
 
 dependencies {
+    implementation 'junit:junit:4.12'
     def lifecycle_version = "2.2.0"
     def room_version = "2.2.5"
     def lottieVersion = "3.4.0"
