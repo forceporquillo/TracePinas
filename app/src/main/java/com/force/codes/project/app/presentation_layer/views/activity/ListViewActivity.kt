@@ -15,6 +15,7 @@ import com.force.codes.project.app.presentation_layer.views.adapters.ListViewAda
 import com.force.codes.project.app.presentation_layer.views.base.BaseActivity
 import com.force.codes.project.app.presentation_layer.views.factory.ViewModelProviderFactory
 import com.force.codes.project.app.presentation_layer.views.viewmodels.ListViewModel
+import timber.log.Timber
 import javax.inject.Inject
 
 class ListViewActivity : BaseActivity(), OnGetAdapterPosition {
@@ -28,6 +29,8 @@ class ListViewActivity : BaseActivity(), OnGetAdapterPosition {
   private lateinit var listViewAdapter: ListViewAdapter
 
   @Inject lateinit var factory: ViewModelProviderFactory
+
+  private var lastItemId = 2131296607
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -103,8 +106,20 @@ class ListViewActivity : BaseActivity(), OnGetAdapterPosition {
         onBackPressed()
         return true
       }
-      R.id.order_cases -> order = true
-      R.id.order_alphabetical -> order = false
+      R.id.order_cases -> {
+        if (lastItemId != item.itemId) {
+          lastItemId = item.itemId
+          Timber.e("cases")
+          order = true
+        }
+      }
+      R.id.order_alphabetical -> {
+        if (lastItemId != item.itemId) {
+          lastItemId = item.itemId
+          Timber.e("alphabetical")
+          order = false
+        }
+      }
     }
     viewModel.orderListViewBy(order)
     binding.invalidateAll()
