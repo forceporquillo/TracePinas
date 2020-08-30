@@ -29,45 +29,60 @@ object DatabaseModule {
   fun providesLocalDatabase(
     application: Application?,
   ): AppDatabase {
-    return Room.databaseBuilder(application!!, AppDatabase::class.java,
+    return Room.databaseBuilder(application!!,
+        AppDatabase::class.java,
         "AppDatabase.db")
         .fallbackToDestructiveMigration()
         .addCallback(roomCallback)
         .build()
   }
 
-  @JvmStatic @Singleton @Provides
-  fun provideMapDao(database: AppDatabase): MapDao {
+  @JvmStatic @Singleton
+  @Provides fun provideMapDao(
+    database: AppDatabase
+  ): MapDao {
     return database.mapDao()
   }
 
-  @JvmStatic @Singleton @Provides
-  fun provideWorldwideDao(database: AppDatabase): WorldwideDao {
+  @JvmStatic @Singleton
+  @Provides fun provideWorldwideDao(
+    database: AppDatabase
+  ): WorldwideDao {
     return database.worldwideDao()
   }
 
-  @JvmStatic @Singleton @Provides
-  fun provideLiveDataDao(database: AppDatabase): LiveDataDao {
+  @JvmStatic @Singleton
+  @Provides fun provideLiveDataDao(
+    database: AppDatabase
+  ): LiveDataDao {
     return database.liveDataDao()
   }
 
-  @JvmStatic @Singleton @Provides
-  fun provideNewsDao(database: AppDatabase): NewsDao {
+  @JvmStatic @Singleton
+  @Provides fun provideNewsDao(
+    database: AppDatabase
+  ): NewsDao {
     return database.newsDao()
   }
 
-  @JvmStatic @Singleton @Provides
-  fun providesMyCountryDao(database: AppDatabase): MyCountryDao {
+  @JvmStatic @Singleton
+  @Provides fun providesMyCountryDao(
+    database: AppDatabase
+  ): MyCountryDao {
     return database.myCountryDao()
   }
 
-  @JvmStatic @Singleton @Provides
-  fun providesListViewDao(database: AppDatabase): ListViewDao {
+  @JvmStatic @Singleton
+  @Provides fun providesListViewDao(
+    database: AppDatabase
+  ): ListViewDao {
     return database.listViewDao()
   }
 
-  @JvmStatic @Singleton @Provides
-  fun providesNavHostDao(database: AppDatabase): NavHostDao {
+  @JvmStatic @Singleton
+  @Provides fun providesNavHostDao(
+    database: AppDatabase
+  ): NavHostDao {
     return database.navHostDao()
   }
 }
