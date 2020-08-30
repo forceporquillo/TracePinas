@@ -201,5 +201,5 @@ dependencies {
     implementation 'com.shreyaspatil:MaterialDialog:2.1'
 
     // Material Design Library
-    implementation 'com.google.android.material:material:1.0.0'
+    implementation 'com.google.android.material:material:1.2.0'
 }
