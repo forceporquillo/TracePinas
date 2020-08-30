@@ -10,11 +10,14 @@ import timber.log.Timber
 abstract class BaseActivity : DaggerAppCompatActivity() {
 
   companion object {
-    @JvmStatic var isFreshInstalled: Boolean = false
+    private var isFreshInstalled: Boolean = false
     const val SHARED_PREF: String = "SHARED_PREF"
     const val PREF_VERSION_CODE_KEY = "VERSION_CODE"
     const val NOT_EXIST = -1
     const val VERSION_CODE = BuildConfig.VERSION_CODE
+
+    @JvmStatic val isFirstRun : Boolean
+    get() = isFreshInstalled
   }
 
   override fun onCreate(savedInstanceState: Bundle?) {
