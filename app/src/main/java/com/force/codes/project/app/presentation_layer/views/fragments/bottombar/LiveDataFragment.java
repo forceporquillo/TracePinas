@@ -19,9 +19,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import androidx.lifecycle.ViewModelProvider;
+import com.force.codes.project.app.app.di.module.ViewModelProviderFactory;
 import com.force.codes.project.app.databinding.FragmentLiveDataBinding;
 import com.force.codes.project.app.presentation_layer.views.base.BaseFragment;
-import com.force.codes.project.app.presentation_layer.views.factory.ViewModelProviderFactory;
+
 import com.force.codes.project.app.presentation_layer.views.viewmodels.LiveDataViewModel;
 import com.github.pwittchen.reactivenetwork.library.rx2.Connectivity;
 import javax.inject.Inject;

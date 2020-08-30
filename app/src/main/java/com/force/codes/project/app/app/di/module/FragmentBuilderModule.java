@@ -7,6 +7,7 @@
 
 package com.force.codes.project.app.app.di.module;
 
+import com.force.codes.project.app.app.di.scope.AppScope;
 import com.force.codes.project.app.presentation_layer.views.fragments.bottombar.LiveDataFragment;
 import com.force.codes.project.app.presentation_layer.views.fragments.bottombar.MapFragment;
 import com.force.codes.project.app.presentation_layer.views.fragments.bottombar.NewsFragment;
@@ -18,21 +19,27 @@ import dagger.android.ContributesAndroidInjector;
 
 @Module
 public abstract class FragmentBuilderModule {
+  @AppScope
   @ContributesAndroidInjector
   abstract LiveDataFragment contributeLiveDataFragment();
 
+  @AppScope
   @ContributesAndroidInjector
   abstract MapFragment contributeMapFragment();
 
+  @AppScope
   @ContributesAndroidInjector
   abstract WorldwideFragment contributeWorldwideFragment();
 
+  @AppScope
   @ContributesAndroidInjector
   abstract NewsFragment contributeNewsFragment();
 
+  @AppScope
   @ContributesAndroidInjector
   abstract OverAllFragment contributeOverAllFragment();
 
+  @AppScope
   @ContributesAndroidInjector
   abstract MyCountryFragment contributeMyFragment();
 }

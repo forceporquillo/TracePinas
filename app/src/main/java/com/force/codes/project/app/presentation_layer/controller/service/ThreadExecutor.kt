@@ -16,13 +16,13 @@ class ThreadExecutor private constructor(
   private val diskIO: Executor,
   private val delay: Executor,
   private val mainThread: Executor,
-  private val computation: Executor
+  private val computation: Executor,
 ) {
 
-  constructor(delay: Int) : this(
+  constructor(delayQueue: Int) : this(
       Executors.newSingleThreadExecutor(),
       ThreadExecutor(
-          delay
+          delayQueue
       ),
       MainThreadExecutor(),
       Executors.newFixedThreadPool(
@@ -36,9 +36,8 @@ class ThreadExecutor private constructor(
     return diskIO
   }
 
-  fun thisUIThread(): Executor {
-    return delay
-  }
+  val currentThread: Executor
+    get() = delay
 
   fun mainThread(): Executor {
     return mainThread

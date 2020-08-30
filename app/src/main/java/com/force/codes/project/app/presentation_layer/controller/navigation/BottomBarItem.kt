@@ -6,7 +6,7 @@
  */
 package com.force.codes.project.app.presentation_layer.controller.navigation
 
-class BottomBarItem(
+data class BottomBarItem(
   var itemId: Int,
   var itemTitle: String,
   var itemIconId: Int,

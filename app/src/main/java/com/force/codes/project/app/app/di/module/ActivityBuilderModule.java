@@ -7,6 +7,7 @@
 
 package com.force.codes.project.app.app.di.module;
 
+import com.force.codes.project.app.app.di.scope.AppScope;
 import com.force.codes.project.app.presentation_layer.views.activity.ListViewActivity;
 import com.force.codes.project.app.presentation_layer.views.activity.NavHostActivity;
 import dagger.Module;

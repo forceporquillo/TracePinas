@@ -5,45 +5,34 @@
  */
 package com.force.codes.project.app.presentation_layer.views.base
 
-import android.os.Build
-import android.os.Build.VERSION_CODES
 import android.os.Bundle
-import android.widget.Toast
-import androidx.annotation.RequiresApi
-import androidx.databinding.ObservableBoolean
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import com.force.codes.project.app.R
 import com.force.codes.project.app.R.anim
 import com.force.codes.project.app.presentation_layer.controller.utils.NetworkCallback
 import com.force.codes.project.app.presentation_layer.controller.utils.NetworkUtils
-import com.force.codes.project.app.presentation_layer.controller.utils.Utils
 import com.force.codes.project.app.presentation_layer.views.fragments.viewpager.CountryListFragment
-import com.github.pwittchen.reactivenetwork.library.rx2.Connectivity
 import dagger.android.support.DaggerFragment
-import timber.log.Timber
 
 abstract class BaseFragment :
-    DaggerFragment(), NetworkCallback
-{
+    DaggerFragment(), NetworkCallback {
   protected val fragment: Fragment? = null
   protected var networkUtils: NetworkUtils? = null
     private set
 
   override fun onCreate(
-    savedInstanceState: Bundle?
+    savedInstanceState: Bundle?,
   ) {
     super.onCreate(savedInstanceState)
     networkUtils = NetworkUtils(context)
   }
 
   protected fun setFragment(
-    fragment: Fragment
+    fragment: Fragment,
   ): FragmentTransaction {
-    val fragmentManager
-        = parentFragmentManager
-    val transaction
-        = fragmentManager.beginTransaction()
+    val fragmentManager = parentFragmentManager
+    val transaction = fragmentManager.beginTransaction()
 
     return if (fragment is CountryListFragment) {
       transaction.setCustomAnimations(anim.slide_in_up, anim.slide_down_out)

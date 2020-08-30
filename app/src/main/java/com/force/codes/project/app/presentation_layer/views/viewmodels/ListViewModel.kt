@@ -43,14 +43,14 @@ class ListViewModel
   private fun getListLiveData(
     defaultOrder: Boolean,
   ): MutableLiveData<List<CountryDetails?>> {
-    val disposable = listViewDao
+    super.addToUnsubscribed(listViewDao
         .queryListViewBy(defaultOrder)
         .observeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe({
           liveData.value = it
         }) { t: Throwable -> Timber.e(t) }
-    addToUnsubscribed(disposable)
+    )
     return liveData
   }
 }

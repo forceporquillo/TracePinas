@@ -21,7 +21,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import com.force.codes.project.app.R;
-import com.force.codes.project.app.presentation_layer.views.factory.ViewModelProviderFactory;
+import com.force.codes.project.app.app.di.module.ViewModelProviderFactory;
 import com.force.codes.project.app.presentation_layer.views.viewmodels.HelpCenterViewModel;
 import javax.inject.Inject;
 
