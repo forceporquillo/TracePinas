@@ -21,23 +21,20 @@ class ThreadExecutor private constructor(
 
   constructor(delayQueue: Int) : this(
       Executors.newSingleThreadExecutor(),
-      ThreadExecutor(
-          delayQueue
-      ),
+      ThreadExecutor(delayQueue),
       MainThreadExecutor(),
       Executors.newFixedThreadPool(
           threadCount
       )
-  ) {
-    // empty constructor
-  }
+  )
 
   fun diskIO(): Executor {
     return diskIO
   }
 
-  val currentThread: Executor
-    get() = delay
+  fun currentThread(): Executor {
+    return delay
+  }
 
   fun mainThread(): Executor {
     return mainThread
