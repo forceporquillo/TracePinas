@@ -14,9 +14,9 @@ import io.reactivex.Flowable
 import io.reactivex.Single
 
 interface MyCountryRepository {
-  fun getCountryDataFromDayOne(country: String): Flowable<List<CountryDayOne>>
-  fun getCountryDetails(country: String): Single<CountryDetails>
-  val country: Flowable<String>
-  val phData: Flowable<DOHDataDrop>
-  val topRegions: Flowable<TopRegions>
+  fun getCountryDataFromDayOne(country: String): Flowable<List<CountryDayOne?>?>
+  fun getCountryDetails(country: String): Single<CountryDetails?>
+  val country: Flowable<String?>
+  val phData: Flowable<DOHDataDrop?>
+  val topRegions: Flowable<TopRegions?>
 }
