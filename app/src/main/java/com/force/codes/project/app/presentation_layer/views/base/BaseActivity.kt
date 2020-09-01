@@ -11,43 +11,42 @@ abstract class BaseActivity : DaggerAppCompatActivity() {
 
   companion object {
     private var isFreshInstalled: Boolean = false
-    const val SHARED_PREF: String = "SHARED_PREF"
-    const val PREF_VERSION_CODE_KEY = "VERSION_CODE"
-    const val NOT_EXIST = -1
-    const val VERSION_CODE = BuildConfig.VERSION_CODE
+    private const val SHARED_PREF: String = "SHARED_PREF"
+    private const val PREF_VERSION_CODE_KEY = "VERSION_CODE_START"
+    private const val NOT_EXIST = -1
 
-    @JvmStatic val isFirstRun : Boolean
-    get() = isFreshInstalled
+    @JvmStatic val checkIfFirstRun
+      get() = isFreshInstalled
   }
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    savedInstanceState?.let {
-      checkIfFreshInstall()
-    }
+    checkIfFreshInstalled()
   }
 
-  private fun checkIfFreshInstall() {
+  private fun checkIfFreshInstalled() {
     ThreadExecutor(0).diskIO()
         .execute {
           val pref: SharedPreferences = getSharedPreferences(SHARED_PREF, MODE_PRIVATE)
-          val currentSaveVersion = pref.getInt(PREF_VERSION_CODE_KEY, NOT_EXIST)
+          val saveVersionCode = pref.getInt(PREF_VERSION_CODE_KEY, NOT_EXIST)
 
           when {
-            VERSION_CODE == currentSaveVersion -> {
+            BuildConfig.VERSION_CODE == saveVersionCode -> {
+              Timber.e("normal run")
               return@execute
             }
-            currentSaveVersion == NOT_EXIST -> {
-              Timber.e("First run")
+            saveVersionCode == NOT_EXIST -> {
+              Timber.e("app is freshly installed")
               isFreshInstalled = true
             }
-            VERSION_CODE > currentSaveVersion -> {
-              Timber.e("Upgrade")
+            BuildConfig.VERSION_CODE > saveVersionCode -> {
+              Timber.e("app upgraded")
             }
           }
           pref.edit()
-              .putInt(PREF_VERSION_CODE_KEY, VERSION_CODE)
+              .putInt(PREF_VERSION_CODE_KEY, BuildConfig.VERSION_CODE)
               .apply()
         }
   }
+
 }
