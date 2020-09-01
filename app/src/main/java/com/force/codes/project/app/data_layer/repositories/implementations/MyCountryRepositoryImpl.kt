@@ -28,24 +28,24 @@ class MyCountryRepositoryImpl
 
   override fun getCountryDataFromDayOne(
     country: String
-  ): Flowable<List<CountryDayOne>> {
+  ): Flowable<List<CountryDayOne?>?> {
     return apiService.getCountryFromDayOne(country)
         .subscribeOn(Schedulers.computation())
   }
 
   override fun getCountryDetails(
     country: String
-  ): Single<CountryDetails> {
+  ): Single<CountryDetails?> {
     return apiService.getCountryDetails(
         getBaseUrlPath("countries/$country")
     )
         .subscribeOn(Schedulers.computation())
   }
 
-  override val country: Flowable<String>
+  override val country: Flowable<String?>
     get() = dao.primarySelected
 
-  override val phData: Flowable<DOHDataDrop>
+  override val phData: Flowable<DOHDataDrop?>
     get() {
       return apiService.getPhDataSet(
           ApiConstantEndpoints.PH_FROM_DAY_ONE
@@ -53,7 +53,7 @@ class MyCountryRepositoryImpl
       )
     }
 
-  override val topRegions: Flowable<TopRegions>
+  override val topRegions: Flowable<TopRegions?>
     get() {
       return apiService.getPhTopAffectedRegions(
           ApiConstantEndpoints.PH_FROM_DAY_ONE

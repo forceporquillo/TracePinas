@@ -26,13 +26,12 @@ class BaseApplication : Application(), HasAndroidInjector {
 
   override fun onCreate() {
     super.onCreate()
-
     component = DaggerAppComponent.builder()
         .application(this)
         ?.appModule(AppModule(this))
         ?.build()!!
     component.inject(this)
-
+    setDebugInstance()
   }
 
   val appComponent: AppComponent?

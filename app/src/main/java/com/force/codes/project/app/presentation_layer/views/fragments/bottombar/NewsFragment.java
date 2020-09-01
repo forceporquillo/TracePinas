@@ -133,7 +133,7 @@ public class NewsFragment extends BaseFragment implements
     super.onStart();
     startListeningNetwork();
     newsViewModel.forceUpdate();
-    new ThreadExecutor(100).getCurrentThread().execute(() -> {
+    new ThreadExecutor(100).currentThread().execute(() -> {
       newsViewModel.getTwitterLiveData().observe(this, twitterDataPagedList -> {
         if (isPagedListEmpty(twitterDataPagedList)) {
           headerNewsAdapter.submitList((PagedList<TwitterData>)
