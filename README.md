@@ -7,7 +7,7 @@ This COVID19 Tracker app is a mobile version of a virus tracker inspired by vari
 
 
 ## Summary 📋
-This [app](https://github.com/forceporquillo/android-covid19-tracker) showcase how I apply what I've learned in learning mobile programming in amidst of this pandemic.
+This [app](https://github.com/forceporquillo/android-covid19-tracker) showcase the app Architecture and its dependencies.
 
 This app uses:
 -   [MVVM](https://en.wikipedia.org/wiki/Model_View_ViewModel)  architecture pattern to separate and organized module dependencies to make development clean, easy to maintain and update.
